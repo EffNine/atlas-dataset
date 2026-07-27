@@ -1,0 +1,3189 @@
+{
+  "version": "v0.2",
+  "engine": "Quality Evaluation Engine v2",
+  "gate_minimum_quality_score": 7,
+  "distribution": {
+    "min": 7,
+    "max": 8,
+    "mean": 7.08,
+    "median": 7,
+    "pass_count": 150,
+    "fail_count": 0,
+    "pass_rate_pct": 100.0
+  },
+  "dimension_averages": {
+    "accuracy": 1.0,
+    "completeness": 1.0,
+    "technical_correctness": 0.389,
+    "clarity": 0.771,
+    "usefulness": 0.298,
+    "originality": 1.0,
+    "relevance": 0.097
+  },
+  "confidence_distribution": {
+    "min": 0.85,
+    "max": 1.0,
+    "mean": 0.985
+  },
+  "all_evaluations": [
+    {
+      "id": "f1_01_foundation_instruction_following_0001",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.188,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 0.933,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f2_01_foundation_general_reasoning_0002",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.142,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.89,
+      "confidence_level": 4,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f3_01_foundation_instruction_following_0003",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.263,
+        "originality": 1.0,
+        "relevance": 0.25
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f4_01_foundation_general_reasoning_0004",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.205,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 0.942,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f5_01_foundation_instruction_following_0005",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.323,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f6_01_foundation_general_reasoning_0006",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.13,
+        "originality": 1.0,
+        "relevance": 0.429
+      },
+      "confidence": 0.873,
+      "confidence_level": 4,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f7_01_foundation_instruction_following_0007",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.325,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f1_01_foundation_general_reasoning_0008",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.207,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.954,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f2_01_foundation_instruction_following_0009",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.307,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f3_01_foundation_general_reasoning_0010",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.182,
+        "originality": 1.0,
+        "relevance": 0.111
+      },
+      "confidence": 0.9,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f4_01_foundation_instruction_following_0011",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.265,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f5_01_foundation_general_reasoning_0012",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.142,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.89,
+      "confidence_level": 4,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f6_01_foundation_instruction_following_0013",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.188,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 0.933,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f7_01_foundation_general_reasoning_0014",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.205,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 0.942,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "f1_01_foundation_instruction_following_0015",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.263,
+        "originality": 1.0,
+        "relevance": 0.25
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s1_02_software_engineering_programming_0001",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.67,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.902,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s2_02_software_engineering_debugging_0002",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 1.0,
+        "usefulness": 0.297,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s3_02_software_engineering_software_architecture_0003",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.195,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.96,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s4_02_software_engineering_algorithms_0004",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.292,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s5_02_software_engineering_programming_0005",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.32,
+        "originality": 1.0,
+        "relevance": 0.5
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s6_02_software_engineering_debugging_0006",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.31,
+        "originality": 1.0,
+        "relevance": 0.2
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s7_02_software_engineering_software_architecture_0007",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.323,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s8_02_software_engineering_algorithms_0008",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.263,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s1_02_software_engineering_programming_0009",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.74,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s2_02_software_engineering_debugging_0010",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.28,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s3_02_software_engineering_software_architecture_0011",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.253,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s4_02_software_engineering_algorithms_0012",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.2,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.952,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s5_02_software_engineering_programming_0013",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.113,
+        "originality": 1.0,
+        "relevance": 0.25
+      },
+      "confidence": 0.85,
+      "confidence_level": 4,
+      "rationale": [
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s6_02_software_engineering_debugging_0014",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.328,
+        "originality": 1.0,
+        "relevance": 0.2
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s7_02_software_engineering_software_architecture_0015",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.195,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.96,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s8_02_software_engineering_algorithms_0016",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.278,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s1_02_software_engineering_programming_0017",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.242,
+        "originality": 1.0,
+        "relevance": 0.25
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s2_02_software_engineering_debugging_0018",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.28,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s3_02_software_engineering_software_architecture_0019",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.323,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s4_02_software_engineering_algorithms_0020",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.27,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s5_02_software_engineering_programming_0021",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.67,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.902,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s6_02_software_engineering_debugging_0022",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 1.0,
+        "usefulness": 0.297,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s7_02_software_engineering_software_architecture_0023",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.253,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s8_02_software_engineering_algorithms_0024",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.292,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s1_02_software_engineering_programming_0025",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.32,
+        "originality": 1.0,
+        "relevance": 0.5
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s2_02_software_engineering_debugging_0026",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.31,
+        "originality": 1.0,
+        "relevance": 0.2
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s3_02_software_engineering_software_architecture_0027",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.195,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.96,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s4_02_software_engineering_algorithms_0028",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.263,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s5_02_software_engineering_programming_0029",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.74,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "s6_02_software_engineering_debugging_0030",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.28,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y1_03_system_engineering_linux_0001",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 1.0,
+        "usefulness": 0.233,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 0.995,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y2_03_system_engineering_docker_0002",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 1.0,
+        "usefulness": 0.24,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y3_03_system_engineering_networking_0003",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.177,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.891,
+      "confidence_level": 4,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y4_03_system_engineering_kubernetes_0004",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.205,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.973,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y5_03_system_engineering_devops_0005",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.24,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y6_03_system_engineering_linux_0006",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.71,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.98,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y7_03_system_engineering_docker_0007",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.228,
+        "originality": 1.0,
+        "relevance": 0.2
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y1_03_system_engineering_networking_0008",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.177,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.891,
+      "confidence_level": 4,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y2_03_system_engineering_kubernetes_0009",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.205,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.973,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y3_03_system_engineering_devops_0010",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.228,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y4_03_system_engineering_linux_0011",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.282,
+        "originality": 1.0,
+        "relevance": 0.5
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y5_03_system_engineering_docker_0012",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.235,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y6_03_system_engineering_networking_0013",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.177,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.891,
+      "confidence_level": 4,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y7_03_system_engineering_kubernetes_0014",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.205,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.973,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y1_03_system_engineering_devops_0015",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.225,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y2_03_system_engineering_linux_0016",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.258,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y3_03_system_engineering_docker_0017",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.212,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.983,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y4_03_system_engineering_networking_0018",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.177,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.891,
+      "confidence_level": 4,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y5_03_system_engineering_kubernetes_0019",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.205,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.973,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y6_03_system_engineering_devops_0020",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.24,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y7_03_system_engineering_linux_0021",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.667,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.923,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "y1_03_system_engineering_docker_0022",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.273,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m1_04_ai_machine_learning_transformers_0001",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.255,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m2_04_ai_machine_learning_mlops_0002",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.242,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m3_04_ai_machine_learning_rag_0003",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.27,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m4_04_ai_machine_learning_fine_tuning_0004",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.29,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m5_04_ai_machine_learning_transformers_0005",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.258,
+        "originality": 1.0,
+        "relevance": 0.667
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity",
+        "Directly addresses question"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m6_04_ai_machine_learning_mlops_0006",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.735,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m1_04_ai_machine_learning_rag_0007",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.265,
+        "originality": 1.0,
+        "relevance": 0.5
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m2_04_ai_machine_learning_fine_tuning_0008",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.247,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m3_04_ai_machine_learning_transformers_0009",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.255,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m4_04_ai_machine_learning_mlops_0010",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.255,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m5_04_ai_machine_learning_rag_0011",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.967,
+        "clarity": 0.667,
+        "usefulness": 0.258,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Strong technical terminology usage",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m6_04_ai_machine_learning_fine_tuning_0012",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.255,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m1_04_ai_machine_learning_transformers_0013",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.258,
+        "originality": 1.0,
+        "relevance": 0.667
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity",
+        "Directly addresses question"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m2_04_ai_machine_learning_mlops_0014",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.247,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m3_04_ai_machine_learning_rag_0015",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.255,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m4_04_ai_machine_learning_fine_tuning_0016",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.26,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m5_04_ai_machine_learning_transformers_0017",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.255,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m6_04_ai_machine_learning_mlops_0018",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.237,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m1_04_ai_machine_learning_rag_0019",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.217,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.99,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m2_04_ai_machine_learning_fine_tuning_0020",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.967,
+        "clarity": 0.667,
+        "usefulness": 0.24,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Strong technical terminology usage",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m3_04_ai_machine_learning_transformers_0021",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.258,
+        "originality": 1.0,
+        "relevance": 0.667
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity",
+        "Directly addresses question"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m4_04_ai_machine_learning_mlops_0022",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.242,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m5_04_ai_machine_learning_rag_0023",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.27,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m6_04_ai_machine_learning_fine_tuning_0024",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.29,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m1_04_ai_machine_learning_transformers_0025",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.255,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m2_04_ai_machine_learning_mlops_0026",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.735,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m3_04_ai_machine_learning_rag_0027",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.265,
+        "originality": 1.0,
+        "relevance": 0.5
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m4_04_ai_machine_learning_fine_tuning_0028",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.247,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m5_04_ai_machine_learning_transformers_0029",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.258,
+        "originality": 1.0,
+        "relevance": 0.667
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity",
+        "Directly addresses question"
+      ],
+      "flags": []
+    },
+    {
+      "id": "m6_04_ai_machine_learning_mlops_0030",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.255,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h1_05_hardware_engineering_cpu_0001",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 1.0,
+        "usefulness": 0.775,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h2_05_hardware_engineering_gpu_0002",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.265,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h3_05_hardware_engineering_firmware_0003",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.207,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.977,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h4_05_hardware_engineering_embedded_systems_0004",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.748,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h6_05_hardware_engineering_cpu_0005",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 1.0,
+        "usefulness": 0.775,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h1_05_hardware_engineering_gpu_0006",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.967,
+        "clarity": 1.0,
+        "usefulness": 0.28,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Strong technical terminology usage",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h2_05_hardware_engineering_firmware_0007",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.207,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.977,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h3_05_hardware_engineering_embedded_systems_0008",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.748,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h4_05_hardware_engineering_cpu_0009",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 1.0,
+        "usefulness": 0.775,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h6_05_hardware_engineering_gpu_0010",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.967,
+        "clarity": 0.667,
+        "usefulness": 0.263,
+        "originality": 1.0,
+        "relevance": 0.2
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Strong technical terminology usage",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h1_05_hardware_engineering_firmware_0011",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.207,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.977,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "h2_05_hardware_engineering_embedded_systems_0012",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.748,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c1_06_science_engineering_physics_0001",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.273,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c2_06_science_engineering_chemistry_0002",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.253,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c3_06_science_engineering_biology_0003",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.263,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c4_06_science_engineering_math_0004",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.715,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.951,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c5_06_science_engineering_environmental_0005",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.215,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.987,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c6_06_science_engineering_sciq_0006",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.237,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c7_06_science_engineering_physics_0007",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.22,
+        "originality": 1.0,
+        "relevance": 0.25
+      },
+      "confidence": 0.967,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c1_06_science_engineering_chemistry_0008",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.253,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c2_06_science_engineering_biology_0009",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.263,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c3_06_science_engineering_math_0010",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.228,
+        "originality": 1.0,
+        "relevance": 0.25
+      },
+      "confidence": 0.991,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c4_06_science_engineering_environmental_0011",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.215,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.987,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c5_06_science_engineering_sciq_0012",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.237,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c6_06_science_engineering_physics_0013",
+      "quality_score": 8,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.967,
+        "clarity": 0.667,
+        "usefulness": 0.24,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Strong technical terminology usage",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c7_06_science_engineering_chemistry_0014",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.253,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "c1_06_science_engineering_biology_0015",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.263,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "b1_07_business_knowledge_finance_0001",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.24,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "b2_07_business_knowledge_finance_0002",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.217,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.99,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "b3_07_business_knowledge_finance_0003",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.237,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "b4_07_business_knowledge_finance_0004",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.338,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "b1_07_business_knowledge_finance_0005",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.268,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "b2_07_business_knowledge_finance_0006",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.24,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "b3_07_business_knowledge_finance_0007",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.217,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 0.99,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "b4_07_business_knowledge_finance_0008",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.237,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "b1_07_business_knowledge_finance_0009",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.338,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "b2_07_business_knowledge_finance_0010",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.268,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "b3_07_business_knowledge_finance_0011",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.24,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "r1_08_creative_knowledge_writing_0001",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.195,
+        "originality": 1.0,
+        "relevance": 0.167
+      },
+      "confidence": 0.96,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "r2_08_creative_knowledge_art_0002",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.242,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "r3_08_creative_knowledge_music_0003",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.217,
+        "originality": 1.0,
+        "relevance": 0.5
+      },
+      "confidence": 0.99,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "r1_08_creative_knowledge_writing_0004",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.242,
+        "originality": 1.0,
+        "relevance": 0.6
+      },
+      "confidence": 0.993,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity",
+        "Directly addresses question"
+      ],
+      "flags": []
+    },
+    {
+      "id": "r2_08_creative_knowledge_art_0005",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.25,
+        "originality": 1.0,
+        "relevance": 0.25
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "r3_08_creative_knowledge_music_0006",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.245,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "r1_08_creative_knowledge_writing_0007",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.273,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "r2_08_creative_knowledge_art_0008",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.28,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "g1_09_personal_assistant_personal_knowledge_0001",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.367,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "g1_09_personal_assistant_personal_knowledge_0002",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.258,
+        "originality": 1.0,
+        "relevance": 0.25
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "g1_09_personal_assistant_personal_knowledge_0003",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 1.0,
+        "usefulness": 0.37,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "g1_09_personal_assistant_personal_knowledge_0004",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.31,
+        "originality": 1.0,
+        "relevance": 0.333
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "g1_09_personal_assistant_personal_knowledge_0005",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.345,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "g1_09_personal_assistant_personal_knowledge_0006",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.3,
+        "clarity": 0.667,
+        "usefulness": 0.367,
+        "originality": 1.0,
+        "relevance": 0.0
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    },
+    {
+      "id": "g1_09_personal_assistant_personal_knowledge_0007",
+      "quality_score": 7,
+      "dimensions": {
+        "accuracy": 1.0,
+        "completeness": 1.0,
+        "technical_correctness": 0.633,
+        "clarity": 0.667,
+        "usefulness": 0.258,
+        "originality": 1.0,
+        "relevance": 0.25
+      },
+      "confidence": 1.0,
+      "confidence_level": 5,
+      "rationale": [
+        "Sufficiently detailed answer length",
+        "Good answer structure",
+        "Good lexical diversity"
+      ],
+      "flags": []
+    }
+  ]
+}
