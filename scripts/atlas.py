@@ -25,7 +25,7 @@ Subcommands:
                          (review_queue/quality_reviews.example.jsonl) for
                          demoing the harness — delete before real runs.
   atlas calibrate        Measure automated quality_score.py vs structured
-                         human review (review_queue/quality_reviews.jsonl):
+                         human review (review/quality_reviews.jsonl):
                          scoring accuracy, bias by category/source, confidence,
                          and bulk-ingestion recommendations. Writes
                          metadata/calibration_report.json + a markdown digest.
@@ -529,7 +529,7 @@ def cmd_calibrate(argv) -> int:
     _install_network_block()
     import calibrate_quality as cq
     ap = argparse.ArgumentParser(description="Calibrate the quality scorer against human review.")
-    ap.add_argument("--reviews", default=str(ROOT / "review_queue" / "quality_reviews.jsonl"))
+    ap.add_argument("--reviews", default=str(ROOT / "review" / "quality_reviews.jsonl"))
     ap.add_argument("--candidates", default=str(ROOT / "curated" / "v0.1" / "pilot_candidates.jsonl"))
     ap.add_argument("--report-out", default=str(ROOT / "metadata" / "calibration_report.json"))
     ap.add_argument("--md-out", default=str(ROOT / "docs" / "quality_calibration_report.md"))
@@ -582,7 +582,7 @@ def main(argv=None) -> int:
     p_gen.add_argument("--seed", type=int, default=7)
     p_gen.add_argument("--no-example", action="store_true")
     p_cal = sub.add_parser("calibrate", help="calibrate quality scorer vs human review")
-    p_cal.add_argument("--reviews", default=str(ROOT / "review_queue" / "quality_reviews.jsonl"))
+    p_cal.add_argument("--reviews", default=str(ROOT / "review" / "quality_reviews.jsonl"))
     p_cal.add_argument("--candidates", default=str(ROOT / "curated" / "v0.1" / "pilot_candidates.jsonl"))
     p_cal.add_argument("--report-out", default=str(ROOT / "metadata" / "calibration_report.json"))
     p_cal.add_argument("--md-out", default=str(ROOT / "docs" / "quality_calibration_report.md"))

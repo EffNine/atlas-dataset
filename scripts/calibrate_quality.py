@@ -33,7 +33,7 @@ Design guarantees (consistent with the rest of Atlas):
 Usage:
   # calibrate against a human-review file (joined with pilot candidates)
   python scripts/calibrate_quality.py \
-      --reviews review_queue/quality_reviews.jsonl \
+      --reviews review/quality_reviews.jsonl \
       --candidates curated/v0.1/pilot_candidates.jsonl
 
   # write machine-readable + markdown reports
@@ -497,7 +497,7 @@ def render_markdown(report: dict) -> str:
 # --------------------------------------------------------------------------- #
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Atlas quality-calibration framework.")
-    ap.add_argument("--reviews", default=str(ROOT / "review_queue" / "quality_reviews.jsonl"),
+    ap.add_argument("--reviews", default=str(ROOT / "review" / "quality_reviews.jsonl"),
                     help="structured human-review JSONL (schema: quality_review_schema.json)")
     ap.add_argument("--candidates", default=str(ROOT / "curated" / "v0.1" / "pilot_candidates.jsonl"),
                     help="canonical candidate records to join auto-scores against")

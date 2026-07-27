@@ -30,5 +30,6 @@ tmp/
 review_queue/quality_reviews.example.jsonl
 # - the worksheet is deterministically regenerable from candidates
 review_queue/calibration_sample.jsonl
-# Keep (do NOT ignore): review_queue/quality_reviews.jsonl (real human input)
-# and metadata/calibration_report.json (real analysis output).
+# Keep (do NOT ignore): review/quality_reviews.jsonl (real human ground-truth),
+# metadata/calibration_report.json (real analysis output), and
+# review_queue/pending.jsonl (pilot review queue per ADR-007).

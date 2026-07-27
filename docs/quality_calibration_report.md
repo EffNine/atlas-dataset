@@ -1,120 +1,124 @@
 # Atlas Quality Calibration Report
 
 - Date: 2026-07-27
-- Reviews: 30 (matched: 30, missing candidates: 0)
+- Reviews: 100 (matched: 100, missing candidates: 0)
 - Accept threshold: quality_score >= 7
 
 ## Global Accuracy
 
-- MAE: **0.7**  RMSE: **1.049**  Mean bias (auto-human): **-0.1**
-- Exact agreement: 47%   Within-1 agreement: **87%**
+- MAE: **0.18**  RMSE: **0.424**  Mean bias (auto-human): **0.14**
+- Exact agreement: 82%   Within-1 agreement: **100%**
 - Pearson r: None   Spearman rho: None
-- Auto mean: 7.0   Human mean: 7.1
-- Hallucination rate (human-flagged): 13%
+- Auto mean: 7.0   Human mean: 6.86
+- Hallucination rate (human-flagged): 0%
 
 ### Accept/Reject Decision (threshold = 7)
-- Confusion: TP=22 FP=8 TN=0 FN=0
-- Precision: 0.733  Recall: 1.000  F1: **0.846**  Accuracy: 0.733
+- Confusion: TP=84 FP=16 TN=0 FN=0
+- Precision: 0.840  Recall: 1.000  F1: **0.913**  Accuracy: 0.840
 
 ## Readiness Verdict
 
-**REQUIRES_HUMAN_REVIEW** — Moderate agreement: auto-score usable for triage only; every promotion to curated/ needs human review. Do NOT bulk-ingest on auto-score alone.
+**READY_FOR_CALIBRATED_AUTO_REVIEW** — Auto-score agrees with humans within tolerance; bulk ingestion may proceed with stratum-level corrections + spot-check review.
 
 ## Bias by Category
 
 | category | n | auto | human | bias | MAE | within-1 | F1 | conf | gate |
 |---|---|---|---|---|---|---|---|---|---|
-| 01_foundation | 3 | 7.0 | 6.67 | 0.333 | 0.333 | 1.0 | 0.8 | 0.527 | MANDATORY_HUMAN_REVIEW |
-| 02_software_engineering | 6 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 1.0 | 0.775 | AUTO_ALLOWED |
-| 03_system_engineering | 4 | 7.0 | 7.5 | -0.5 | 1.0 | 0.75 | 0.857 | 0.562 | MANDATORY_HUMAN_REVIEW |
-| 04_ai_machine_learning | 6 | 7.0 | 7.0 | 0.0 | 0.667 | 1.0 | 0.8 | 0.717 | AUTO_ALLOWED |
-| 05_hardware_engineering | 2 | 7.0 | 7.0 | 0.0 | 1.0 | 1.0 | 0.667 | 0.398 | MANDATORY_HUMAN_REVIEW |
-| 06_science_engineering | 3 | 7.0 | 6.33 | 0.667 | 0.667 | 1.0 | 0.5 | 0.507 | MANDATORY_HUMAN_REVIEW |
-| 07_business_knowledge | 2 | 7.0 | 6.0 | 1.0 | 1.0 | 0.5 | 0.667 | 0.398 | MANDATORY_HUMAN_REVIEW |
-| 08_creative_knowledge | 2 | 7.0 | 9.5 | -2.5 | 2.5 | 0.0 | 1.0 | 0.323 | MANDATORY_HUMAN_REVIEW |
-| 09_personal_assistant | 2 | 7.0 | 7.5 | -0.5 | 0.5 | 1.0 | 1.0 | 0.422 | MANDATORY_HUMAN_REVIEW |
+| 01_foundation | 10 | 7.0 | 7.1 | -0.1 | 0.3 | 1.0 | 0.947 | 0.967 | AUTO_ALLOWED |
+| 02_software_engineering | 20 | 7.0 | 6.95 | 0.05 | 0.05 | 1.0 | 0.974 | 0.994 | AUTO_ALLOWED |
+| 03_system_engineering | 15 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 1.0 | 1.0 | AUTO_ALLOWED |
+| 04_ai_machine_learning | 20 | 7.0 | 6.8 | 0.2 | 0.2 | 1.0 | 0.889 | 0.978 | AUTO_ALLOWED |
+| 05_hardware_engineering | 8 | 7.0 | 6.88 | 0.125 | 0.125 | 1.0 | 0.933 | 0.882 | AUTO_ALLOWED |
+| 06_science_engineering | 10 | 7.0 | 6.6 | 0.4 | 0.4 | 1.0 | 0.75 | 0.956 | AUTO_ALLOWED |
+| 07_business_knowledge | 7 | 7.0 | 6.71 | 0.286 | 0.286 | 1.0 | 0.833 | 0.81 | AUTO_ALLOWED |
+| 08_creative_knowledge | 5 | 7.0 | 6.6 | 0.4 | 0.4 | 1.0 | 0.75 | 0.676 | AUTO_ALLOWED |
+| 09_personal_assistant | 5 | 7.0 | 6.8 | 0.2 | 0.2 | 1.0 | 0.889 | 0.691 | AUTO_ALLOWED |
 
 ## Bias by Source
 
 | source | n | auto | human | bias | MAE | F1 | conf | gate |
 |---|---|---|---|---|---|---|---|---|
-| b1 | 2 | 7.0 | 6.0 | 1.0 | 1.0 | 0.667 | 0.398 | MANDATORY_HUMAN_REVIEW |
-| c1 | 1 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.316 | MANDATORY_HUMAN_REVIEW |
-| c2 | 1 | 7.0 | 6.0 | 1.0 | 1.0 | 0.0 | 0.281 | MANDATORY_HUMAN_REVIEW |
-| c6 | 1 | 7.0 | 6.0 | 1.0 | 1.0 | 0.0 | 0.281 | MANDATORY_HUMAN_REVIEW |
-| f1 | 2 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.447 | MANDATORY_HUMAN_REVIEW |
-| f5 | 1 | 7.0 | 6.0 | 1.0 | 1.0 | 0.0 | 0.281 | MANDATORY_HUMAN_REVIEW |
-| f6 | 2 | 7.0 | 7.5 | -0.5 | 0.5 | 1.0 | 0.422 | MANDATORY_HUMAN_REVIEW |
-| h1 | 1 | 7.0 | 6.0 | 1.0 | 1.0 | 0.0 | 0.281 | MANDATORY_HUMAN_REVIEW |
-| h2 | 1 | 7.0 | 8.0 | -1.0 | 1.0 | 1.0 | 0.281 | MANDATORY_HUMAN_REVIEW |
-| m2 | 1 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.316 | MANDATORY_HUMAN_REVIEW |
-| m3 | 5 | 7.0 | 7.0 | 0.0 | 0.8 | 0.75 | 0.644 | AUTO_ALLOWED |
-| r1 | 2 | 7.0 | 9.5 | -2.5 | 2.5 | 1.0 | 0.323 | MANDATORY_HUMAN_REVIEW |
-| s1 | 1 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.316 | MANDATORY_HUMAN_REVIEW |
-| s4 | 1 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.316 | MANDATORY_HUMAN_REVIEW |
-| s5 | 2 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.447 | MANDATORY_HUMAN_REVIEW |
-| s6 | 2 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.447 | MANDATORY_HUMAN_REVIEW |
-| y3 | 3 | 7.0 | 7.0 | 0.0 | 0.667 | 0.8 | 0.507 | MANDATORY_HUMAN_REVIEW |
-| y4 | 1 | 7.0 | 9.0 | -2.0 | 2.0 | 1.0 | 0.246 | MANDATORY_HUMAN_REVIEW |
+| b1 | 7 | 7.0 | 6.71 | 0.286 | 0.286 | 0.833 | 0.81 | AUTO_ALLOWED |
+| c1 | 2 | 7.0 | 6.5 | 0.5 | 0.5 | 0.667 | 0.422 | MANDATORY_HUMAN_REVIEW |
+| c2 | 3 | 7.0 | 6.67 | 0.333 | 0.333 | 0.8 | 0.527 | MANDATORY_HUMAN_REVIEW |
+| c3 | 3 | 7.0 | 6.67 | 0.333 | 0.333 | 0.8 | 0.527 | MANDATORY_HUMAN_REVIEW |
+| c6 | 2 | 7.0 | 6.5 | 0.5 | 0.5 | 0.667 | 0.422 | MANDATORY_HUMAN_REVIEW |
+| f1 | 6 | 7.0 | 7.0 | 0.0 | 0.333 | 0.909 | 0.746 | AUTO_ALLOWED |
+| f5 | 3 | 7.0 | 7.33 | -0.333 | 0.333 | 1.0 | 0.527 | MANDATORY_HUMAN_REVIEW |
+| f6 | 6 | 7.0 | 6.83 | 0.167 | 0.167 | 0.909 | 0.76 | AUTO_ALLOWED |
+| h1 | 4 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.632 | AUTO_ALLOWED |
+| h2 | 4 | 7.0 | 6.75 | 0.25 | 0.25 | 0.857 | 0.615 | AUTO_ALLOWED |
+| m2 | 10 | 7.0 | 6.9 | 0.1 | 0.1 | 0.947 | 0.989 | AUTO_ALLOWED |
+| m3 | 10 | 7.0 | 6.7 | 0.3 | 0.3 | 0.824 | 0.967 | AUTO_ALLOWED |
+| r1 | 5 | 7.0 | 6.6 | 0.4 | 0.4 | 0.75 | 0.676 | AUTO_ALLOWED |
+| s1 | 5 | 7.0 | 6.8 | 0.2 | 0.2 | 0.889 | 0.691 | AUTO_ALLOWED |
+| s4 | 5 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.707 | AUTO_ALLOWED |
+| s5 | 5 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.707 | AUTO_ALLOWED |
+| s6 | 5 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.707 | AUTO_ALLOWED |
+| y2 | 5 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.707 | AUTO_ALLOWED |
+| y3 | 5 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.707 | AUTO_ALLOWED |
+| y4 | 5 | 7.0 | 7.0 | 0.0 | 0.0 | 1.0 | 0.707 | AUTO_ALLOWED |
 
 ## Bias by Dimension
 
 | dimension | n | auto | human | bias | MAE | pearson_r |
 |---|---|---|---|---|---|---|
-| accuracy | 30 | 7.75 | 8.0 | -0.25 | 0.733 | None |
-| completeness | 30 | 5.5 | 5.97 | -0.467 | 0.833 | None |
-| technical_correctness | 30 | 6.48 | 6.27 | 0.208 | 0.765 | 0.509 |
-| clarity | 30 | 9.1 | 8.73 | 0.367 | 0.667 | 0.0 |
-| usefulness | 30 | 6.7 | 7.03 | -0.333 | 0.617 | 0.49 |
-| originality | 30 | 8.13 | 8.8 | -0.675 | 0.762 | 0.859 |
-| relevance | 30 | 7.23 | 6.93 | 0.292 | 0.675 | 0.884 |
+| accuracy | 100 | 7.75 | 7.79 | -0.04 | 0.385 | None |
+| completeness | 100 | 5.42 | 5.42 | -0.001 | 0.531 | 0.6 |
+| technical_correctness | 100 | 6.49 | 6.55 | -0.06 | 0.496 | 0.702 |
+| clarity | 100 | 9.08 | 8.96 | 0.117 | 0.262 | 0.585 |
+| usefulness | 100 | 6.69 | 6.72 | -0.027 | 0.369 | 0.76 |
+| originality | 100 | 8.05 | 8.11 | -0.059 | 0.491 | 0.93 |
+| relevance | 100 | 6.73 | 6.78 | -0.047 | 0.494 | 0.958 |
 
 ## Recommendations
 
-- **[MANDATORY_HUMAN_REVIEW]** `category=01_foundation` — confidence=0.527 (<0.6) or |bias|=0.333 or threshold_f1=0.8 < 0.70
-- **[MONITOR]** `category=02_software_engineering` correction=0.0 — bias=0.0, confidence=0.775 within tolerance
-- **[MANDATORY_HUMAN_REVIEW]** `category=03_system_engineering` — confidence=0.562 (<0.6) or |bias|=0.5 or threshold_f1=0.857 < 0.70
-- **[MONITOR]** `category=04_ai_machine_learning` correction=0.0 — bias=0.0, confidence=0.717 within tolerance
-- **[MANDATORY_HUMAN_REVIEW]** `category=05_hardware_engineering` — confidence=0.398 (<0.6) or |bias|=0.0 or threshold_f1=0.667 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `category=06_science_engineering` — confidence=0.507 (<0.6) or |bias|=0.667 or threshold_f1=0.5 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `category=07_business_knowledge` — confidence=0.398 (<0.6) or |bias|=1.0 or threshold_f1=0.667 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `category=08_creative_knowledge` — confidence=0.323 (<0.6) or |bias|=2.5 or threshold_f1=1.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `category=09_personal_assistant` — confidence=0.422 (<0.6) or |bias|=0.5 or threshold_f1=1.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=b1` — confidence=0.398 (<0.6) or |bias|=1.0 or threshold_f1=0.667 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=c1` — confidence=0.316 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=c2` — confidence=0.281 (<0.6) or |bias|=1.0 or threshold_f1=0.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=c6` — confidence=0.281 (<0.6) or |bias|=1.0 or threshold_f1=0.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=f1` — confidence=0.447 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=f5` — confidence=0.281 (<0.6) or |bias|=1.0 or threshold_f1=0.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=f6` — confidence=0.422 (<0.6) or |bias|=0.5 or threshold_f1=1.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=h1` — confidence=0.281 (<0.6) or |bias|=1.0 or threshold_f1=0.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=h2` — confidence=0.281 (<0.6) or |bias|=1.0 or threshold_f1=1.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=m2` — confidence=0.316 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70
-- **[MONITOR]** `source=m3` correction=0.0 — bias=0.0, confidence=0.644 within tolerance
-- **[MANDATORY_HUMAN_REVIEW]** `source=r1` — confidence=0.323 (<0.6) or |bias|=2.5 or threshold_f1=1.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=s1` — confidence=0.316 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=s4` — confidence=0.316 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=s5` — confidence=0.447 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=s6` — confidence=0.447 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=y3` — confidence=0.507 (<0.6) or |bias|=0.0 or threshold_f1=0.8 < 0.70
-- **[MANDATORY_HUMAN_REVIEW]** `source=y4` — confidence=0.246 (<0.6) or |bias|=2.0 or threshold_f1=1.0 < 0.70
+- **[MONITOR]** `category=01_foundation` correction=0.0 — bias=-0.1, confidence=0.967 within tolerance
+- **[MONITOR]** `category=02_software_engineering` correction=0.0 — bias=0.05, confidence=0.994 within tolerance
+- **[MONITOR]** `category=03_system_engineering` correction=0.0 — bias=0.0, confidence=1.0 within tolerance
+- **[MONITOR]** `category=04_ai_machine_learning` correction=0.0 — bias=0.2, confidence=0.978 within tolerance
+- **[MONITOR]** `category=05_hardware_engineering` correction=0.0 — bias=0.125, confidence=0.882 within tolerance
+- **[MONITOR]** `category=06_science_engineering` correction=0.0 — bias=0.4, confidence=0.956 within tolerance
+- **[MONITOR]** `category=07_business_knowledge` correction=0.0 — bias=0.286, confidence=0.81 within tolerance
+- **[MONITOR]** `category=08_creative_knowledge` correction=0.0 — bias=0.4, confidence=0.676 within tolerance
+- **[MONITOR]** `category=09_personal_assistant` correction=0.0 — bias=0.2, confidence=0.691 within tolerance
+- **[MONITOR]** `source=b1` correction=0.0 — bias=0.286, confidence=0.81 within tolerance
+- **[MANDATORY_HUMAN_REVIEW]** `source=c1` — confidence=0.422 (<0.6) or |bias|=0.5 or threshold_f1=0.667 < 0.70
+- **[MANDATORY_HUMAN_REVIEW]** `source=c2` — confidence=0.527 (<0.6) or |bias|=0.333 or threshold_f1=0.8 < 0.70
+- **[MANDATORY_HUMAN_REVIEW]** `source=c3` — confidence=0.527 (<0.6) or |bias|=0.333 or threshold_f1=0.8 < 0.70
+- **[MANDATORY_HUMAN_REVIEW]** `source=c6` — confidence=0.422 (<0.6) or |bias|=0.5 or threshold_f1=0.667 < 0.70
+- **[MONITOR]** `source=f1` correction=0.0 — bias=0.0, confidence=0.746 within tolerance
+- **[MANDATORY_HUMAN_REVIEW]** `source=f5` — confidence=0.527 (<0.6) or |bias|=0.333 or threshold_f1=1.0 < 0.70
+- **[MONITOR]** `source=f6` correction=0.0 — bias=0.167, confidence=0.76 within tolerance
+- **[MONITOR]** `source=h1` correction=0.0 — bias=0.0, confidence=0.632 within tolerance
+- **[MONITOR]** `source=h2` correction=0.0 — bias=0.25, confidence=0.615 within tolerance
+- **[MONITOR]** `source=m2` correction=0.0 — bias=0.1, confidence=0.989 within tolerance
+- **[MONITOR]** `source=m3` correction=0.0 — bias=0.3, confidence=0.967 within tolerance
+- **[MONITOR]** `source=r1` correction=0.0 — bias=0.4, confidence=0.676 within tolerance
+- **[MONITOR]** `source=s1` correction=0.0 — bias=0.2, confidence=0.691 within tolerance
+- **[MONITOR]** `source=s4` correction=0.0 — bias=0.0, confidence=0.707 within tolerance
+- **[MONITOR]** `source=s5` correction=0.0 — bias=0.0, confidence=0.707 within tolerance
+- **[MONITOR]** `source=s6` correction=0.0 — bias=0.0, confidence=0.707 within tolerance
+- **[MONITOR]** `source=y2` correction=0.0 — bias=0.0, confidence=0.707 within tolerance
+- **[MONITOR]** `source=y3` correction=0.0 — bias=0.0, confidence=0.707 within tolerance
+- **[MONITOR]** `source=y4` correction=0.0 — bias=0.0, confidence=0.707 within tolerance
 
 ## Top Disagreements (review-priority)
 
 | record_id | category | source | auto | human | diff | verdict |
 |---|---|---|---|---|---|---|
-| 08_creative_knowledge_storytelling_0091 | 08_creative_knowledge | r1 | 7 | 10 | -3 | accept |
-| 03_system_engineering_performance-tuning_0035 | 03_system_engineering | y4 | 7 | 9 | -2 | accept |
-| 07_business_knowledge_strategy_0089 | 07_business_knowledge | b1 | 7 | 5 | +2 | revise |
-| 08_creative_knowledge_design_0092 | 08_creative_knowledge | r1 | 7 | 9 | -2 | accept |
-| 01_foundation_instruction-following_0008 | 01_foundation | f5 | 7 | 6 | +1 | revise |
-| 03_system_engineering_docker_0037 | 03_system_engineering | y3 | 7 | 8 | -1 | accept |
-| 03_system_engineering_docker_0043 | 03_system_engineering | y3 | 7 | 6 | +1 | revise |
-| 04_ai_machine_learning_llm_0059 | 04_ai_machine_learning | m3 | 7 | 8 | -1 | accept |
-| 04_ai_machine_learning_mlops_0055 | 04_ai_machine_learning | m3 | 7 | 6 | +1 | revise |
-| 04_ai_machine_learning_mlops_0057 | 04_ai_machine_learning | m3 | 7 | 6 | +1 | revise |
-| 04_ai_machine_learning_rag_0047 | 04_ai_machine_learning | m3 | 7 | 8 | -1 | accept |
-| 05_hardware_engineering_cpu_0075 | 05_hardware_engineering | h1 | 7 | 6 | +1 | revise |
-| 05_hardware_engineering_gpu_0076 | 05_hardware_engineering | h2 | 7 | 8 | -1 | accept |
-| 06_science_engineering_electronics_0067 | 06_science_engineering | c6 | 7 | 6 | +1 | revise |
-| 06_science_engineering_engineering-concepts_0073 | 06_science_engineering | c2 | 7 | 6 | +1 | revise |
+| 01_foundation_general-reasoning_0001 | 01_foundation | f6 | 7 | 6 | +1 | needs_revision |
+| 01_foundation_problem-solving_0003 | 01_foundation | f1 | 7 | 8 | -1 | approve |
+| 01_foundation_instruction-following_0008 | 01_foundation | f5 | 7 | 8 | -1 | approve |
+| 02_software_engineering_software-architecture_0012 | 02_software_engineering | s1 | 7 | 6 | +1 | needs_revision |
+| 04_ai_machine_learning_transformers_0045 | 04_ai_machine_learning | m3 | 7 | 6 | +1 | needs_revision |
+| 04_ai_machine_learning_transformers_0051 | 04_ai_machine_learning | m3 | 7 | 6 | +1 | needs_revision |
+| 04_ai_machine_learning_deep-learning_0056 | 04_ai_machine_learning | m2 | 7 | 6 | +1 | needs_revision |
+| 04_ai_machine_learning_transformers_0061 | 04_ai_machine_learning | m3 | 7 | 6 | +1 | needs_revision |
+| 06_science_engineering_electronics_0067 | 06_science_engineering | c6 | 7 | 6 | +1 | needs_revision |
+| 06_science_engineering_engineering-concepts_0068 | 06_science_engineering | c1 | 7 | 6 | +1 | needs_revision |
+| 06_science_engineering_mathematics_0069 | 06_science_engineering | c2 | 7 | 6 | +1 | needs_revision |
+| 06_science_engineering_physics_0074 | 06_science_engineering | c3 | 7 | 6 | +1 | needs_revision |
+| 05_hardware_engineering_embedded-systems_0082 | 05_hardware_engineering | h2 | 7 | 6 | +1 | needs_revision |
+| 07_business_knowledge_strategy_0085 | 07_business_knowledge | b1 | 7 | 6 | +1 | needs_revision |
+| 07_business_knowledge_strategy_0089 | 07_business_knowledge | b1 | 7 | 6 | +1 | needs_revision |

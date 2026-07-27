@@ -77,7 +77,8 @@ Each review line (keyed by `record_id`):
 
 `human_score` and the seven `dimension_scores` use the **same 1–10 scale** as
 `quality_score.py`, so agreement is directly comparable. `verdict` uses the
-v0.1 gate (accept/reject/revise). `confidence` (1–5) weights the human's
+`verdict` uses the v0.1 gate (`approve` / `needs_revision` / `reject` — see
+`schemas/quality_review_schema.json`). `confidence` (1–5) weights the human's
 reliability; `hallucination` feeds the hallucination-rate metric.
 
 ## 5. Metrics
