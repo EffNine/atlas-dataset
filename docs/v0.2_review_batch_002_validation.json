@@ -25,8 +25,8 @@
   "duplicate_decisions": [],
   "unknown_decisions": [],
   "batch_001_decisions_unchanged": true,
-  "unreviewed_pending_count": 100,
-  "remaining_pending_after_batch002": 100,
+  "unreviewed_pending_count": 127,
+  "remaining_pending_after_batch002": 127,
   "curated_dataset_unchanged": true,
   "dataset_hashes": {
     "curated/v0.2/data/phase4b_expansion.jsonl": "e5d8cb35a7739ab1ff7eedb01ab4c1a71d73aad505a3394ba4ebfc6fb7d8dd16",

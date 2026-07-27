@@ -8,21 +8,21 @@
   "status": "candidate",
   "pipeline_stage": "Phase 4B Progressive Expansion",
   "atlas_architecture": "v1.0",
-  "changelog": "Phase 4B: Added 150 knowledge objects from 48 approved Phase 2 sources.",
-  "total_records": 250,
-  "new_records_added": 150,
+  "changelog": "Phase 4B: Added 152 knowledge objects from approved Phase 2 sources after review-manifest governance repair.",
+  "total_records": 252,
+  "new_records_added": 152,
   "stop_condition": "STOP at 250 (cap enforced)",
   "statistics": {
     "new_by_category": {
-      "01_foundation": 15,
-      "02_software_engineering": 30,
-      "03_system_engineering": 22,
-      "04_ai_machine_learning": 30,
-      "05_hardware_engineering": 12,
-      "06_science_engineering": 15,
       "07_business_knowledge": 11,
+      "06_science_engineering": 15,
+      "01_foundation": 16,
+      "09_personal_assistant": 7,
+      "05_hardware_engineering": 12,
+      "04_ai_machine_learning": 31,
       "08_creative_knowledge": 8,
-      "09_personal_assistant": 7
+      "02_software_engineering": 30,
+      "03_system_engineering": 22
     },
     "new_by_license": {
       "Apache-2.0": 16,
@@ -182,6 +182,9 @@
     "release_check_passes": true,
     "semantic_diff_generated": true,
     "checksums_verified": true,
-    "no_previous_release_modified": true
-  }
+    "no_previous_release_modified": true,
+    "150_total_objects": false,
+    "152_total_objects": true
+  },
+  "generated_at": "2026-07-27T15:58:09.774130+00:00"
 }

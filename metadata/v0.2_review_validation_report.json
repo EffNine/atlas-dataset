@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-27T13:28:50.190278+00:00",
+  "generated_at": "2026-07-27T15:58:09.774130+00:00",
   "status": "pass",
-  "output": "{\n  \"total_records\": 150,\n  \"status_counts\": {\n    \"pending\": 150\n  },\n  \"invalid_states\": [],\n  \"duplicate_record_ids\": [],\n  \"approved_records\": [],\n  \"release_blocked\": true\n}"
+  "output": "{\n  \"total_records\": 152,\n  \"status_counts\": {\n    \"pending\": 152\n  },\n  \"invalid_states\": [],\n  \"duplicate_record_ids\": [],\n  \"approved_records\": [],\n  \"release_blocked\": true\n}"
 }
