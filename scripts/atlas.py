@@ -55,9 +55,20 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 # Reuse the SINGLE license gate from validate_dataset.py
 _vspec = importlib.util.spec_from_file_location("validate_mod", ROOT / "scripts" / "validate_dataset.py")
+if _vspec is None or _vspec.loader is None:
+    raise ImportError("Could not load validate_dataset.py")
 _validate = importlib.util.module_from_spec(_vspec)
 _vspec.loader.exec_module(_validate)
 is_denied_license = _validate.is_denied_license
+
+# Acquisition Engine (loaded lazily in command functions)
+_ENGINE = None
+def _get_engine(mode="dry-run") -> "AcquisitionEngine":
+    global _ENGINE
+    if _ENGINE is None:
+        from acquisition_engine import AcquisitionEngine
+        _ENGINE = AcquisitionEngine(ROOT, mode=mode)
+    return _ENGINE
 
 
 # ---------------------------------------------------------------------------
@@ -567,9 +578,292 @@ def cmd_calibrate(argv) -> int:
     return 0
 
 
+# --------------------------------------------------------------------------- #
+# Acquire — Acquisition Engine dry-run / execute / resume
+# --------------------------------------------------------------------------- #
+
+def cmd_acquire(argv) -> int:
+    ap = argparse.ArgumentParser(description="Atlas Acquisition Engine.")
+    ap.add_argument("--dry-run", action="store_true", help="plan only, no side effects")
+    ap.add_argument("--execute", action="store_true", help="run the ingestion pipeline")
+    ap.add_argument("--resume", action="store_true", help="resume from checkpoint")
+    ap.add_argument("--max", type=int, default=100, help="max records (execute mode)")
+    ap.add_argument("--report", default=str(ROOT / "docs" / "acquisition_plan_report.md"),
+                    help="output path for dry-run report")
+    args = ap.parse_args(argv)
+
+    if args.execute:
+        engine = _get_engine(mode="execute")
+        if args.resume:
+            print("[acquire] Resuming from checkpoint...")
+            result = engine.resume(max_records=args.max)
+        else:
+            print("[acquire] Executing ingestion pipeline...")
+            result = engine.execute(max_records=args.max)
+    else:
+        # Default or --dry-run
+        engine = _get_engine(mode="dry-run")
+        print("[acquire] Running dry-run (no data will be modified)...")
+        result = engine.dry_run()
+
+    if result.get("status") == "error":
+        print(f"[acquire] ERROR: {result.get('error', 'unknown')}", file=sys.stderr)
+        return 1
+
+    if args.execute:
+        print(f"[acquire] Mode: execute")
+        print(f"  Attempted: {result.get('records_attempted', 0)}")
+        print(f"  Accepted:  {result.get('records_accepted', 0)}")
+        print(f"  Rejected:  {result.get('records_rejected', 0)}")
+        print(f"  Quality:   {result.get('avg_quality', 0)}")
+        print(f"  Time:      {result.get('execution_time_s', 0)}s")
+    else:
+        print(f"[acquire] Mode: dry-run")
+        checks = result.get("checks", {})
+        print(f"  Sources:     {result.get('sources_planned', 0)}")
+        print(f"  Batches:     {result.get('batches_planned', 0)}")
+        print(f"  Target:      {result.get('total_target', 0)}")
+        print(f"  Est. DL:     {result.get('estimated_download', '?')}")
+        print(f"  License:     {'PASS' if checks.get('license_gate_passed') else 'BLOCKED'}")
+        print(f"  Synthetic:   {checks.get('synthetic_count', 0)} ({checks.get('synthetic_pct', 0)}%)")
+        print(f"  Registry:    {'OK' if checks.get('registry_ok') else 'ISSUES'}")
+
+        # Write plan report
+        report_path = Path(args.report)
+        _assert_write_safe(report_path)
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_md = engine.render_plan_report(result)
+        report_path.write_text(report_md, encoding="utf-8")
+        print(f"[acquire] Report -> {report_path}")
+
+    cp = engine.checkpoint_summary()
+    print(f"[acquire] Checkpoint: {cp.get('status', 'none')} "
+          f"(session={cp.get('session_id', '-')})")
+    return 0
+
+
+# --------------------------------------------------------------------------- #
+# Verify — integrity verification
+# --------------------------------------------------------------------------- #
+
+def cmd_verify(argv) -> int:
+    ap = argparse.ArgumentParser(description="Verify integrity of a frozen version.")
+    ap.add_argument("--version", default="v0.1", help="version to verify")
+    args = ap.parse_args(argv)
+
+    engine = _get_engine(mode="dry-run")
+    result = engine.verify_integrity(args.version)
+
+    print("=" * 60)
+    print(f"INTEGRITY VERIFICATION — version {args.version}")
+    print("=" * 60)
+    print(f"Status: {'PASS' if result.get('status') == 'passed' else 'FAIL'}")
+
+    reg = result.get("checksum_registry", {})
+    print(f"  Checksum registry: {'VERIFIED' if reg.get('verified') else 'FAILED'}")
+    if reg.get("mismatches"):
+        for m in reg["mismatches"]:
+            print(f"    MISMATCH: {m}")
+    if reg.get("missing"):
+        for m in reg["missing"]:
+            print(f"    MISSING: {m}")
+    print(f"  Verification log chain: {'INTACT' if result.get('verification_log_chain') else 'BROKEN'}")
+    print(f"  Log entries: {result.get('verification_log_entries', 0)}")
+    print(f"  Version manifest: {'EXISTS' if result.get('version_manifest_exists') else 'MISSING'}")
+    print(f"  Curated files: {result.get('curated_file_count', 0)}")
+
+    if result.get("status") != "passed":
+        return 1
+    return 0
+
+
+# --------------------------------------------------------------------------- #
+# Pack — Knowledge Pack generation / verification
+# --------------------------------------------------------------------------- #
+
+def cmd_pack(argv) -> int:
+    ap = argparse.ArgumentParser(description="Generate or verify a Knowledge Pack.")
+    ap.add_argument("--generate", help="pack name (e.g. foundation-v0.1)")
+    ap.add_argument("--category", nargs="*", help="category filter(s)")
+    ap.add_argument("--min-quality", type=int, default=7, help="minimum quality score")
+    ap.add_argument("--describe", default="", help="pack description")
+    ap.add_argument("--verify", action="store_true", help="verify existing pack(s)")
+    args = ap.parse_args(argv)
+
+    engine = _get_engine(mode="dry-run")
+
+    if args.verify:
+        print("[pack] Verifying Knowledge Packs...")
+        result = engine.verify_knowledge_pack()
+        if result.get("verified"):
+            print("[pack] All packs verified successfully")
+            for p in result.get("packs", []):
+                print(f"  ✅ {p.get('pack_name')} ({p.get('record_count')} records)")
+        else:
+            print("[pack] Verification FAILED")
+            for p in result.get("packs", []):
+                if not p.get("verified"):
+                    print(f"  ❌ {p.get('pack_name')}: {p.get('errors', ['unknown'])}")
+            return 1
+        return 0
+
+    if args.generate:
+        print(f"[pack] Generating Knowledge Pack '{args.generate}'...")
+        manifest = engine.generate_knowledge_pack(
+            name=args.generate,
+            category_filter=args.category,
+            min_quality=args.min_quality,
+            description=args.describe,
+        )
+        print(f"[pack] Pack '{args.generate}' generated — {manifest.get('total_records', 0)} records")
+        return 0
+
+    print("[pack] Specify --generate <name> or --verify", file=sys.stderr)
+    return 2
+
+
+# --------------------------------------------------------------------------- #
+# Version — dataset version management
+# --------------------------------------------------------------------------- #
+
+def cmd_version(argv) -> int:
+    ap = argparse.ArgumentParser(description="Manage dataset versions.")
+    ap.add_argument("--list", action="store_true", help="list all versions")
+    ap.add_argument("--freeze", help="freeze current state as a version (e.g. v0.2)")
+    ap.add_argument("--changelog", default="", help="changelog for frozen version")
+    ap.add_argument("--diff", nargs=2, metavar=("FROM", "TO"),
+                    help="diff two versions")
+    args = ap.parse_args(argv)
+
+    engine = _get_engine(mode="dry-run")
+
+    if args.list:
+        versions = engine.list_versions()
+        if not versions:
+            print("[version] No versions recorded")
+        else:
+            print("=" * 60)
+            print("DATASET VERSIONS")
+            print("=" * 60)
+            for v in versions:
+                print(f"  {v.get('version', '?')}  "
+                      f"({v.get('total_records', 0)} records)  "
+                      f"frozen: {v.get('frozen_at', '?')[:19]}")
+        return 0
+
+    if args.freeze:
+        print(f"[version] Freezing version '{args.freeze}'...")
+        changelog = args.changelog or f"Release of {args.freeze}"
+        manifest = engine.freeze_version(args.freeze, changelog=changelog)
+        if manifest is None:
+            print("[version] ERROR: No curated data to freeze", file=sys.stderr)
+            return 1
+        print(f"[version] Frozen '{args.freeze}' — {manifest.get('total_records', 0)} records")
+        return 0
+
+    if args.diff:
+        from_v, to_v = args.diff
+        print(f"[version] Diffing {from_v} -> {to_v}...")
+        diff = engine.diff_versions(from_v, to_v)
+        if diff is None:
+            print(f"[version] ERROR: One or both versions not found", file=sys.stderr)
+            return 1
+        print(f"  From: {diff.get('from_records', 0)} records")
+        print(f"  To:   {diff.get('to_records', 0)} records")
+        print(f"  Added:   {diff.get('added', 0)}")
+        print(f"  Removed: {diff.get('removed', 0)}")
+        print(f"  Changed: {diff.get('changed', 0)}")
+        # Write diff report
+        diff_path = ROOT / "docs" / f"diff_{from_v}_{to_v}.md"
+        from acquisition_engine.dataset_diff import render_diff_markdown
+        diff_detail = engine.version_mgr.diff(from_v, to_v)
+        if diff_detail:
+            md = render_diff_markdown(diff_detail)
+            diff_path.write_text(md, encoding="utf-8")
+            print(f"[version] Diff report -> {diff_path}")
+        return 0
+
+    print("[version] Specify --list, --freeze, or --diff", file=sys.stderr)
+    return 2
+
+
+# --------------------------------------------------------------------------- #
+# Lifecycle — lifecycle state management
+# --------------------------------------------------------------------------- #
+
+def cmd_lifecycle(argv) -> int:
+    ap = argparse.ArgumentParser(description="Report on record lifecycle state.")
+    ap.add_argument("--report", action="store_true", help="print lifecycle state summary")
+    args = ap.parse_args(argv)
+
+    engine = _get_engine(mode="dry-run")
+    report = engine.lifecycle_report()
+
+    if args.report:
+        print("=" * 60)
+        print("LIFECYCLE STATE REPORT")
+        print("=" * 60)
+        print(f"Total records tracked: {report.get('total_records', 0)}")
+        print("")
+        states = report.get("state_summary", {})
+        if states:
+            print("| State | Count |")
+            print("|---|---|")
+            for state in ["raw", "processing", "curated", "review", "approved",
+                          "released", "archived", "rejected"]:
+                count = states.get(state, 0)
+                if count > 0:
+                    print(f"| {state} | {count} |")
+        print("")
+        # Write lifecycle report
+        report_path = ROOT / "docs" / "lifecycle_report.md"
+        _assert_write_safe(report_path)
+        report_path.write_text(
+            "# Lifecycle State Report\n\n"
+            f"**Generated:** {report.get('generated', '?')}\n\n"
+            f"Total records: {report.get('total_records', 0)}\n\n"
+            f"```json\n{json.dumps(states, indent=2)}\n```\n",
+            encoding="utf-8",
+        )
+        print(f"[lifecycle] Report -> {report_path}")
+    return 0
+
+
+# --------------------------------------------------------------------------- #
+# Checkpoint — checkpoint status
+# --------------------------------------------------------------------------- #
+
+def cmd_checkpoint(argv) -> int:
+    ap = argparse.ArgumentParser(description="Show checkpoint status.")
+    ap.add_argument("--status", action="store_true", help="show checkpoint summary")
+    args = ap.parse_args(argv)
+
+    engine = _get_engine(mode="dry-run")
+    cp = engine.checkpoint_summary()
+    if cp.get("status") == "no_checkpoint":
+        print("[checkpoint] No checkpoint found — engine has not been run yet")
+        return 0
+
+    print("=" * 60)
+    print("ENGINE CHECKPOINT STATUS")
+    print("=" * 60)
+    print(f"Session ID:      {cp.get('session_id', '?')}")
+    print(f"Mode:            {cp.get('mode', '?')}")
+    print(f"Status:          {cp.get('status', '?')}")
+    print(f"Total sources:   {cp.get('total_sources', 0)}")
+    print(f"Completed:       {cp.get('completed', 0)}")
+    print(f"Failed:          {cp.get('failed', 0)}")
+    print(f"Pending:         {cp.get('pending', 0)}")
+    print(f"Completed batches: {cp.get('completed_batches', [])}")
+    print(f"Current batch:   {cp.get('current_batch', 'none')}")
+    print(f"Last updated:    {cp.get('updated_at', '?')}")
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="atlas", description="Atlas Dataset Foundation CLI.")
     sub = ap.add_subparsers(dest="cmd", required=True)
+    # Existing commands
     sub.add_parser("self-test", help="run permanent invariant checks")
     p_ing = sub.add_parser("ingest-pilot", help="run Phase 3A controlled pilot ingestion")
     p_ing.add_argument("--max", type=int, default=100)
@@ -586,6 +880,38 @@ def main(argv=None) -> int:
     p_cal.add_argument("--candidates", default=str(ROOT / "curated" / "v0.1" / "pilot_candidates.jsonl"))
     p_cal.add_argument("--report-out", default=str(ROOT / "metadata" / "calibration_report.json"))
     p_cal.add_argument("--md-out", default=str(ROOT / "docs" / "quality_calibration_report.md"))
+
+    # ---- Acquisition Engine commands (Phase 3D) ----
+    p_acquire = sub.add_parser("acquire", help="run the Acquisition Engine (dry-run, execute, or resume)")
+    p_acquire.add_argument("--dry-run", action="store_true", help="plan only, no side effects")
+    p_acquire.add_argument("--execute", action="store_true", help="run the ingestion pipeline")
+    p_acquire.add_argument("--resume", action="store_true", help="resume from checkpoint")
+    p_acquire.add_argument("--max", type=int, default=100, help="max records (execute mode)")
+    p_acquire.add_argument("--report", default=str(ROOT / "docs" / "acquisition_plan_report.md"),
+                           help="output path for dry-run report")
+
+    p_verify = sub.add_parser("verify", help="verify integrity of a frozen version")
+    p_verify.add_argument("--version", default="v0.1", help="version to verify")
+
+    p_pack = sub.add_parser("pack", help="generate or verify a Knowledge Pack")
+    p_pack.add_argument("--generate", help="pack name (e.g. foundation-v0.1)")
+    p_pack.add_argument("--category", nargs="*", help="category filter(s)")
+    p_pack.add_argument("--min-quality", type=int, default=7, help="minimum quality score")
+    p_pack.add_argument("--describe", default="", help="pack description")
+    p_pack.add_argument("--verify", action="store_true", help="verify existing pack(s)")
+
+    p_version = sub.add_parser("version", help="manage dataset versions")
+    p_version.add_argument("--list", action="store_true", help="list all versions")
+    p_version.add_argument("--freeze", help="freeze current state as a version (e.g. v0.2)")
+    p_version.add_argument("--changelog", default="", help="changelog for frozen version")
+    p_version.add_argument("--diff", nargs=2, metavar=("FROM", "TO"),
+                           help="diff two versions (e.g. v0.1 v0.2)")
+
+    p_lifecycle = sub.add_parser("lifecycle", help="report on record lifecycle state")
+    p_lifecycle.add_argument("--report", action="store_true", help="print lifecycle state summary")
+
+    p_ckpt = sub.add_parser("checkpoint", help="show checkpoint status")
+    p_ckpt.add_argument("--status", action="store_true", help="show checkpoint summary")
     args = ap.parse_args(argv)
     # Args after the program name + subcommand name are for the subcommand.
     # Stripping the subcommand token avoids argparse choking on it inside the
@@ -600,6 +926,20 @@ def main(argv=None) -> int:
         return cmd_gen_calibration_sample(rest)
     if args.cmd == "calibrate":
         return cmd_calibrate(rest)
+
+    # ---- Acquisition Engine commands ----
+    if args.cmd == "acquire":
+        return cmd_acquire(rest)
+    if args.cmd == "verify":
+        return cmd_verify(rest)
+    if args.cmd == "pack":
+        return cmd_pack(rest)
+    if args.cmd == "version":
+        return cmd_version(rest)
+    if args.cmd == "lifecycle":
+        return cmd_lifecycle(rest)
+    if args.cmd == "checkpoint":
+        return cmd_checkpoint(rest)
     return 2
 
 

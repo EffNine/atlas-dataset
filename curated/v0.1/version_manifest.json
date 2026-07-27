@@ -1,0 +1,86 @@
+{
+  "version": "v0.1",
+  "frozen_at": "2026-07-27T12:02:43.351848+00:00",
+  "total_records": 179,
+  "source_files": [
+    "pilot_candidates.jsonl",
+    "atlas_synthetic_test_v0.1.jsonl"
+  ],
+  "statistics": {
+    "by_category": {
+      "01_foundation": 24,
+      "02_software_engineering": 37,
+      "03_system_engineering": 31,
+      "04_ai_machine_learning": 36,
+      "05_hardware_engineering": 24,
+      "06_science_engineering": 10,
+      "07_business_knowledge": 7,
+      "08_creative_knowledge": 5,
+      "09_personal_assistant": 5
+    },
+    "by_license": {
+      "Apache-2.0": 26,
+      "CC-BY-4.0": 13,
+      "CC-BY-SA-3.0": 4,
+      "CC-BY-SA-4.0": 10,
+      "MIT": 23,
+      "ODC-BY": 15,
+      "Public Domain (US)": 5,
+      "arXiv non-exclusive license": 4,
+      "unknown": 79
+    },
+    "by_verification_status": {
+      "pending": 100,
+      "unknown": 79
+    },
+    "quality": {
+      "avg": 8.1,
+      "min": 5,
+      "max": 9,
+      "scores": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        "...",
+        9,
+        9,
+        9,
+        9,
+        9
+      ]
+    }
+  },
+  "pipeline_stats": {
+    "total_records": 179,
+    "by_category": {
+      "01_foundation": 24,
+      "02_software_engineering": 37,
+      "03_system_engineering": 31,
+      "04_ai_machine_learning": 36,
+      "06_science_engineering": 10,
+      "05_hardware_engineering": 24,
+      "07_business_knowledge": 7,
+      "08_creative_knowledge": 5,
+      "09_personal_assistant": 5
+    },
+    "by_license": {
+      "Apache-2.0": 26,
+      "CC-BY-4.0": 13,
+      "MIT": 23,
+      "ODC-BY": 15,
+      "CC-BY-SA-4.0": 10,
+      "CC-BY-SA-3.0": 4,
+      "arXiv non-exclusive license": 4,
+      "Public Domain (US)": 5,
+      "unknown": 79
+    },
+    "by_verification_status": {
+      "pending": 100,
+      "unknown": 79
+    },
+    "avg_quality": 8.1
+  },
+  "changelog": "Initial release from Phase 3A pilot"
+}

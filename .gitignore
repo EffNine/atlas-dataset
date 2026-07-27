@@ -33,3 +33,13 @@ review_queue/calibration_sample.jsonl
 # Keep (do NOT ignore): review/quality_reviews.jsonl (real human ground-truth),
 # metadata/calibration_report.json (real analysis output), and
 # review_queue/pending.jsonl (pilot review queue per ADR-007).
+
+# Acquisition Engine ephemeral artifacts (regenerated on each run)
+metadata/engine_checkpoint.json
+metadata/verification_log.json
+metadata/lifecycle_state.json
+knowledge_packs/*
+!knowledge_packs/.gitkeep
+curated/**/data/*
+metadata/engine_checksums.json
+docs/diff_*.md
