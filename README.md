@@ -92,6 +92,29 @@ python scripts/convert_format.py --format qwen_chatml \
     --input examples/sample_dataset.jsonl --output tmp/qwen.jsonl
 ```
 
+### Quality Calibration (pre-bulk-ingestion gate)
+
+Before bulk ingestion, measure how much to trust the automated scorer against
+structured human review. This phase is **read-only on the dataset** (no size
+growth) — it emits review artifacts keyed by existing `record_id`s.
+
+```bash
+# 1. Generate a deterministic, stratified review worksheet (read-only on data)
+python scripts/atlas.py gen-calibration-sample
+#    -> review_queue/calibration_sample.jsonl  (worksheet)
+#    -> review_queue/quality_reviews.example.jsonl (ILLUSTRATIVE seed; delete before real runs)
+
+# 2. A human fills review_queue/quality_reviews.jsonl from the worksheet
+#    (schema: schemas/quality_review_schema.json).
+
+# 3. Calibrate: accuracy, bias by category/source, confidence, recommendations
+python scripts/atlas.py calibrate --reviews review_queue/quality_reviews.jsonl
+#    -> metadata/calibration_report.json + docs/quality_calibration_report.md
+```
+
+The readiness verdict gates the roadmap's "Begin bulk ingestion" decision. See
+`docs/quality_calibration.md`.
+
 ---
 
 ## Scripts
@@ -104,6 +127,8 @@ python scripts/convert_format.py --format qwen_chatml \
 | `scripts/dedup_dataset.py` | Exact (SHA-1) + near-duplicate (MinHash/LSH, stdlib-only) detection and optional drop. |
 | `scripts/convert_format.py` | Convert canonical JSONL → 6 model formats (see below). |
 | `scripts/eval_dataset.py` | Reproducible train/eval split + coverage/quality gate report. |
+| `scripts/gen_calibration_sample.py` | Stratified review-worksheet generator for the quality-calibration framework (READ-ONLY on data). |
+| `scripts/calibrate_quality.py` | Calibrate `quality_score.py` vs structured human review: accuracy, bias by category/source, confidence, bulk-ingestion recommendations. |
 
 All scripts are **stdlib-only** (no pip install) and deterministic, so the
 pipeline runs anywhere and is reproducible in CI.

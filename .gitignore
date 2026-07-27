@@ -24,3 +24,11 @@ venv/
 outputs/
 tmp/
 *.log
+
+# Quality-calibration artifacts
+# - the synthetic illustrative seed is NOT real human review; never commit it
+review_queue/quality_reviews.example.jsonl
+# - the worksheet is deterministically regenerable from candidates
+review_queue/calibration_sample.jsonl
+# Keep (do NOT ignore): review_queue/quality_reviews.jsonl (real human input)
+# and metadata/calibration_report.json (real analysis output).

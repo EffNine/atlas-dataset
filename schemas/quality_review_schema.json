@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.dataset/schemas/quality_review_schema.json",
+  "title": "Atlas Human Quality Review",
+  "description": "Structured human review of an Atlas canonical record, used by the quality-calibration framework (scripts/calibrate_quality.py) to measure how well the automated quality_score.py heuristic agrees with human judgment. This artifact is a REVIEW INPUT, never a dataset record; it is keyed by the reviewed record's id and must NOT change the size or content of raw/curated data.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_id",
+    "category",
+    "source_id",
+    "reviewer",
+    "review_date",
+    "human_score",
+    "dimension_scores",
+    "verdict",
+    "hallucination",
+    "confidence"
+  ],
+  "properties": {
+    "record_id": {
+      "type": "string",
+      "description": "id of the reviewed canonical record (must resolve to a real record in curated/v0.1/pilot_candidates.jsonl).",
+      "pattern": "^[a-z0-9_-]+$",
+      "minLength": 3,
+      "maxLength": 128
+    },
+    "category": {
+      "type": "string",
+      "description": "Category of the reviewed record; used for bias analysis. Must be an Atlas category enum.",
+      "enum": [
+        "01_foundation",
+        "02_software_engineering",
+        "03_system_engineering",
+        "04_ai_machine_learning",
+        "05_hardware_engineering",
+        "06_science_engineering",
+        "07_business_knowledge",
+        "08_creative_knowledge",
+        "09_personal_assistant"
+      ]
+    },
+    "source_id": {
+      "type": "string",
+      "description": "Source registry id (metadata/source_registry.json) the record was traced to. Used for source-bias analysis.",
+      "minLength": 1,
+      "maxLength": 32
+    },
+    "reviewer": {
+      "type": "string",
+      "description": "Reviewer identifier / initials. Multiple reviewers on the same record enables agreement stats.",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "review_date": {
+      "type": "string",
+      "description": "ISO-8601 date of review (YYYY-MM-DD).",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "human_score": {
+      "type": "integer",
+      "description": "Human-assigned overall quality, 1-10, on the SAME scale as quality_score.py.",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "dimension_scores": {
+      "type": "object",
+      "description": "Human scores (1-10) per Atlas quality dimension. Mirrors scripts/quality_score.py WEIGHTS keys.",
+      "additionalProperties": false,
+      "required": [
+        "accuracy",
+        "completeness",
+        "technical_correctness",
+        "clarity",
+        "usefulness",
+        "originality",
+        "relevance"
+      ],
+      "properties": {
+        "accuracy": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "completeness": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "technical_correctness": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "clarity": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "usefulness": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "originality": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "relevance": { "type": "integer", "minimum": 1, "maximum": 10 }
+      }
+    },
+    "verdict": {
+      "type": "string",
+      "description": "Accept/reject decision on the record under the v0.1 gate (quality_score>=7 AND verified==true).",
+      "enum": ["accept", "reject", "revise"]
+    },
+    "hallucination": {
+      "type": "boolean",
+      "description": "True if the human found any hallucinated or factually wrong claim in the assistant answer."
+    },
+    "confidence": {
+      "type": "integer",
+      "description": "How confident the human is in their score (1-5). Used as a weight in calibration accuracy.",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-text reviewer notes / rationale.",
+      "maxLength": 2000,
+      "default": ""
+    }
+  }
+}

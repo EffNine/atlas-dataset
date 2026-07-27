@@ -1,0 +1,759 @@
+{
+  "framework": "atlas-quality-calibration",
+  "version": "0.1.0",
+  "date": "2026-07-27",
+  "n_reviews": 30,
+  "n_matched": 30,
+  "n_missing_candidates": 0,
+  "missing_candidate_ids": [],
+  "accept_threshold": 7,
+  "thresholds": {
+    "within1_target": 0.8,
+    "threshold_f1_target": 0.85,
+    "bias_flag": 1.0,
+    "stratum_conf_floor": 0.6
+  },
+  "global": {
+    "mae": 0.7,
+    "rmse": 1.049,
+    "pearson_r": null,
+    "spearman_rho": null,
+    "exact_agree": 0.467,
+    "within1_agree": 0.867,
+    "mean_bias": -0.1,
+    "auto_mean": 7.0,
+    "human_mean": 7.1,
+    "threshold": {
+      "tp": 22,
+      "fp": 8,
+      "tn": 0,
+      "fn": 0,
+      "precision": 0.733,
+      "recall": 1.0,
+      "f1": 0.846,
+      "accuracy": 0.733
+    },
+    "hallucination_rate": 0.133
+  },
+  "by_category": {
+    "01_foundation": {
+      "n": 3,
+      "auto_mean": 7.0,
+      "human_mean": 6.67,
+      "mean_bias": 0.333,
+      "mae": 0.333,
+      "within1_agree": 1.0,
+      "threshold_f1": 0.8,
+      "recommended_correction": -0.333,
+      "confidence": 0.527,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "02_software_engineering": {
+      "n": 6,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 0.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 0.0,
+      "confidence": 0.775,
+      "gate": "AUTO_ALLOWED"
+    },
+    "03_system_engineering": {
+      "n": 4,
+      "auto_mean": 7.0,
+      "human_mean": 7.5,
+      "mean_bias": -0.5,
+      "mae": 1.0,
+      "within1_agree": 0.75,
+      "threshold_f1": 0.857,
+      "recommended_correction": 0.5,
+      "confidence": 0.562,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "04_ai_machine_learning": {
+      "n": 6,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 0.667,
+      "within1_agree": 1.0,
+      "threshold_f1": 0.8,
+      "recommended_correction": 0.0,
+      "confidence": 0.717,
+      "gate": "AUTO_ALLOWED"
+    },
+    "05_hardware_engineering": {
+      "n": 2,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 1.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 0.667,
+      "recommended_correction": 0.0,
+      "confidence": 0.398,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "06_science_engineering": {
+      "n": 3,
+      "auto_mean": 7.0,
+      "human_mean": 6.33,
+      "mean_bias": 0.667,
+      "mae": 0.667,
+      "within1_agree": 1.0,
+      "threshold_f1": 0.5,
+      "recommended_correction": -0.667,
+      "confidence": 0.507,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "07_business_knowledge": {
+      "n": 2,
+      "auto_mean": 7.0,
+      "human_mean": 6.0,
+      "mean_bias": 1.0,
+      "mae": 1.0,
+      "within1_agree": 0.5,
+      "threshold_f1": 0.667,
+      "recommended_correction": -1.0,
+      "confidence": 0.398,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "08_creative_knowledge": {
+      "n": 2,
+      "auto_mean": 7.0,
+      "human_mean": 9.5,
+      "mean_bias": -2.5,
+      "mae": 2.5,
+      "within1_agree": 0.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 2.5,
+      "confidence": 0.323,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "09_personal_assistant": {
+      "n": 2,
+      "auto_mean": 7.0,
+      "human_mean": 7.5,
+      "mean_bias": -0.5,
+      "mae": 0.5,
+      "within1_agree": 1.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 0.5,
+      "confidence": 0.422,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    }
+  },
+  "by_source": {
+    "b1": {
+      "n": 2,
+      "auto_mean": 7.0,
+      "human_mean": 6.0,
+      "mean_bias": 1.0,
+      "mae": 1.0,
+      "within1_agree": 0.5,
+      "threshold_f1": 0.667,
+      "recommended_correction": -1.0,
+      "confidence": 0.398,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "c1": {
+      "n": 1,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 0.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 0.0,
+      "confidence": 0.316,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "c2": {
+      "n": 1,
+      "auto_mean": 7.0,
+      "human_mean": 6.0,
+      "mean_bias": 1.0,
+      "mae": 1.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 0.0,
+      "recommended_correction": -1.0,
+      "confidence": 0.281,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "c6": {
+      "n": 1,
+      "auto_mean": 7.0,
+      "human_mean": 6.0,
+      "mean_bias": 1.0,
+      "mae": 1.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 0.0,
+      "recommended_correction": -1.0,
+      "confidence": 0.281,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "f1": {
+      "n": 2,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 0.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 0.0,
+      "confidence": 0.447,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "f5": {
+      "n": 1,
+      "auto_mean": 7.0,
+      "human_mean": 6.0,
+      "mean_bias": 1.0,
+      "mae": 1.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 0.0,
+      "recommended_correction": -1.0,
+      "confidence": 0.281,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "f6": {
+      "n": 2,
+      "auto_mean": 7.0,
+      "human_mean": 7.5,
+      "mean_bias": -0.5,
+      "mae": 0.5,
+      "within1_agree": 1.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 0.5,
+      "confidence": 0.422,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "h1": {
+      "n": 1,
+      "auto_mean": 7.0,
+      "human_mean": 6.0,
+      "mean_bias": 1.0,
+      "mae": 1.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 0.0,
+      "recommended_correction": -1.0,
+      "confidence": 0.281,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "h2": {
+      "n": 1,
+      "auto_mean": 7.0,
+      "human_mean": 8.0,
+      "mean_bias": -1.0,
+      "mae": 1.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 1.0,
+      "confidence": 0.281,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "m2": {
+      "n": 1,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 0.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 0.0,
+      "confidence": 0.316,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "m3": {
+      "n": 5,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 0.8,
+      "within1_agree": 1.0,
+      "threshold_f1": 0.75,
+      "recommended_correction": 0.0,
+      "confidence": 0.644,
+      "gate": "AUTO_ALLOWED"
+    },
+    "r1": {
+      "n": 2,
+      "auto_mean": 7.0,
+      "human_mean": 9.5,
+      "mean_bias": -2.5,
+      "mae": 2.5,
+      "within1_agree": 0.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 2.5,
+      "confidence": 0.323,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "s1": {
+      "n": 1,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 0.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 0.0,
+      "confidence": 0.316,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "s4": {
+      "n": 1,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 0.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 0.0,
+      "confidence": 0.316,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "s5": {
+      "n": 2,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 0.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 0.0,
+      "confidence": 0.447,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "s6": {
+      "n": 2,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 0.0,
+      "within1_agree": 1.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 0.0,
+      "confidence": 0.447,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "y3": {
+      "n": 3,
+      "auto_mean": 7.0,
+      "human_mean": 7.0,
+      "mean_bias": 0.0,
+      "mae": 0.667,
+      "within1_agree": 1.0,
+      "threshold_f1": 0.8,
+      "recommended_correction": 0.0,
+      "confidence": 0.507,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    },
+    "y4": {
+      "n": 1,
+      "auto_mean": 7.0,
+      "human_mean": 9.0,
+      "mean_bias": -2.0,
+      "mae": 2.0,
+      "within1_agree": 0.0,
+      "threshold_f1": 1.0,
+      "recommended_correction": 2.0,
+      "confidence": 0.246,
+      "gate": "MANDATORY_HUMAN_REVIEW"
+    }
+  },
+  "by_dimension": {
+    "accuracy": {
+      "n": 30,
+      "auto_mean": 7.75,
+      "human_mean": 8.0,
+      "mean_bias": -0.25,
+      "mae": 0.733,
+      "pearson_r": null
+    },
+    "completeness": {
+      "n": 30,
+      "auto_mean": 5.5,
+      "human_mean": 5.97,
+      "mean_bias": -0.467,
+      "mae": 0.833,
+      "pearson_r": null
+    },
+    "technical_correctness": {
+      "n": 30,
+      "auto_mean": 6.48,
+      "human_mean": 6.27,
+      "mean_bias": 0.208,
+      "mae": 0.765,
+      "pearson_r": 0.509
+    },
+    "clarity": {
+      "n": 30,
+      "auto_mean": 9.1,
+      "human_mean": 8.73,
+      "mean_bias": 0.367,
+      "mae": 0.667,
+      "pearson_r": 0.0
+    },
+    "usefulness": {
+      "n": 30,
+      "auto_mean": 6.7,
+      "human_mean": 7.03,
+      "mean_bias": -0.333,
+      "mae": 0.617,
+      "pearson_r": 0.49
+    },
+    "originality": {
+      "n": 30,
+      "auto_mean": 8.13,
+      "human_mean": 8.8,
+      "mean_bias": -0.675,
+      "mae": 0.762,
+      "pearson_r": 0.859
+    },
+    "relevance": {
+      "n": 30,
+      "auto_mean": 7.23,
+      "human_mean": 6.93,
+      "mean_bias": 0.292,
+      "mae": 0.675,
+      "pearson_r": 0.884
+    }
+  },
+  "recommendations": [
+    {
+      "scope": "category",
+      "target": "01_foundation",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.527 (<0.6) or |bias|=0.333 or threshold_f1=0.8 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "category",
+      "target": "02_software_engineering",
+      "action": "MONITOR",
+      "correction": 0.0,
+      "reason": "bias=0.0, confidence=0.775 within tolerance",
+      "detail": "No action; include in periodic re-calibration."
+    },
+    {
+      "scope": "category",
+      "target": "03_system_engineering",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.562 (<0.6) or |bias|=0.5 or threshold_f1=0.857 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "category",
+      "target": "04_ai_machine_learning",
+      "action": "MONITOR",
+      "correction": 0.0,
+      "reason": "bias=0.0, confidence=0.717 within tolerance",
+      "detail": "No action; include in periodic re-calibration."
+    },
+    {
+      "scope": "category",
+      "target": "05_hardware_engineering",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.398 (<0.6) or |bias|=0.0 or threshold_f1=0.667 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "category",
+      "target": "06_science_engineering",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.507 (<0.6) or |bias|=0.667 or threshold_f1=0.5 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "category",
+      "target": "07_business_knowledge",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.398 (<0.6) or |bias|=1.0 or threshold_f1=0.667 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "category",
+      "target": "08_creative_knowledge",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.323 (<0.6) or |bias|=2.5 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "category",
+      "target": "09_personal_assistant",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.422 (<0.6) or |bias|=0.5 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "b1",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.398 (<0.6) or |bias|=1.0 or threshold_f1=0.667 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "c1",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.316 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "c2",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.281 (<0.6) or |bias|=1.0 or threshold_f1=0.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "c6",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.281 (<0.6) or |bias|=1.0 or threshold_f1=0.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "f1",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.447 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "f5",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.281 (<0.6) or |bias|=1.0 or threshold_f1=0.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "f6",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.422 (<0.6) or |bias|=0.5 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "h1",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.281 (<0.6) or |bias|=1.0 or threshold_f1=0.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "h2",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.281 (<0.6) or |bias|=1.0 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "m2",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.316 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "m3",
+      "action": "MONITOR",
+      "correction": 0.0,
+      "reason": "bias=0.0, confidence=0.644 within tolerance",
+      "detail": "No action; include in periodic re-calibration."
+    },
+    {
+      "scope": "source",
+      "target": "r1",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.323 (<0.6) or |bias|=2.5 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "s1",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.316 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "s4",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.316 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "s5",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.447 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "s6",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.447 (<0.6) or |bias|=0.0 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "y3",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.507 (<0.6) or |bias|=0.0 or threshold_f1=0.8 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    },
+    {
+      "scope": "source",
+      "target": "y4",
+      "action": "MANDATORY_HUMAN_REVIEW",
+      "reason": "confidence=0.246 (<0.6) or |bias|=2.0 or threshold_f1=1.0 < 0.70",
+      "detail": "Do not bulk-ingest records in this stratum on auto-score; require a human verdict before promotion."
+    }
+  ],
+  "readiness": {
+    "verdict": "REQUIRES_HUMAN_REVIEW",
+    "detail": "Moderate agreement: auto-score usable for triage only; every promotion to curated/ needs human review. Do NOT bulk-ingest on auto-score alone."
+  },
+  "top_disagreements": [
+    {
+      "record_id": "08_creative_knowledge_storytelling_0091",
+      "category": "08_creative_knowledge",
+      "source_id": "r1",
+      "auto": 7,
+      "human": 10,
+      "diff": -3,
+      "verdict": "accept"
+    },
+    {
+      "record_id": "03_system_engineering_performance-tuning_0035",
+      "category": "03_system_engineering",
+      "source_id": "y4",
+      "auto": 7,
+      "human": 9,
+      "diff": -2,
+      "verdict": "accept"
+    },
+    {
+      "record_id": "07_business_knowledge_strategy_0089",
+      "category": "07_business_knowledge",
+      "source_id": "b1",
+      "auto": 7,
+      "human": 5,
+      "diff": 2,
+      "verdict": "revise"
+    },
+    {
+      "record_id": "08_creative_knowledge_design_0092",
+      "category": "08_creative_knowledge",
+      "source_id": "r1",
+      "auto": 7,
+      "human": 9,
+      "diff": -2,
+      "verdict": "accept"
+    },
+    {
+      "record_id": "01_foundation_instruction-following_0008",
+      "category": "01_foundation",
+      "source_id": "f5",
+      "auto": 7,
+      "human": 6,
+      "diff": 1,
+      "verdict": "revise"
+    },
+    {
+      "record_id": "03_system_engineering_docker_0037",
+      "category": "03_system_engineering",
+      "source_id": "y3",
+      "auto": 7,
+      "human": 8,
+      "diff": -1,
+      "verdict": "accept"
+    },
+    {
+      "record_id": "03_system_engineering_docker_0043",
+      "category": "03_system_engineering",
+      "source_id": "y3",
+      "auto": 7,
+      "human": 6,
+      "diff": 1,
+      "verdict": "revise"
+    },
+    {
+      "record_id": "04_ai_machine_learning_llm_0059",
+      "category": "04_ai_machine_learning",
+      "source_id": "m3",
+      "auto": 7,
+      "human": 8,
+      "diff": -1,
+      "verdict": "accept"
+    },
+    {
+      "record_id": "04_ai_machine_learning_mlops_0055",
+      "category": "04_ai_machine_learning",
+      "source_id": "m3",
+      "auto": 7,
+      "human": 6,
+      "diff": 1,
+      "verdict": "revise"
+    },
+    {
+      "record_id": "04_ai_machine_learning_mlops_0057",
+      "category": "04_ai_machine_learning",
+      "source_id": "m3",
+      "auto": 7,
+      "human": 6,
+      "diff": 1,
+      "verdict": "revise"
+    },
+    {
+      "record_id": "04_ai_machine_learning_rag_0047",
+      "category": "04_ai_machine_learning",
+      "source_id": "m3",
+      "auto": 7,
+      "human": 8,
+      "diff": -1,
+      "verdict": "accept"
+    },
+    {
+      "record_id": "05_hardware_engineering_cpu_0075",
+      "category": "05_hardware_engineering",
+      "source_id": "h1",
+      "auto": 7,
+      "human": 6,
+      "diff": 1,
+      "verdict": "revise"
+    },
+    {
+      "record_id": "05_hardware_engineering_gpu_0076",
+      "category": "05_hardware_engineering",
+      "source_id": "h2",
+      "auto": 7,
+      "human": 8,
+      "diff": -1,
+      "verdict": "accept"
+    },
+    {
+      "record_id": "06_science_engineering_electronics_0067",
+      "category": "06_science_engineering",
+      "source_id": "c6",
+      "auto": 7,
+      "human": 6,
+      "diff": 1,
+      "verdict": "revise"
+    },
+    {
+      "record_id": "06_science_engineering_engineering-concepts_0073",
+      "category": "06_science_engineering",
+      "source_id": "c2",
+      "auto": 7,
+      "human": 6,
+      "diff": 1,
+      "verdict": "revise"
+    }
+  ]
+}
