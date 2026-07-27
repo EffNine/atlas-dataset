@@ -1,0 +1,185 @@
+{
+  "schema_version": "0.2.0",
+  "batch": "batch_001",
+  "generated": "2026-07-28",
+  "processing_mode": "controlled_resolution",
+  "class_filter": "A_content_repair",
+  "records": [
+    {
+      "record_id": "h2_05_hardware_engineering_embedded_systems_0012",
+      "batch": "batch_001",
+      "class": "A_content_repair",
+      "status": "content_revised",
+      "resolutionable": true,
+      "original": {
+        "record_id": "h2_05_hardware_engineering_embedded_systems_0012",
+        "decision": "needs_revision",
+        "decided_at": "2026-07-27T14:38:25.978757+00:00",
+        "reviewer_id": "reviewer_hardware_02",
+        "decision_reason": "Concise and directionally correct, but missing the minimum rationale/caveats for training use.",
+        "review_source": "review/decisions/v0.2/batch_001.jsonl#L5",
+        "review_input_source": "review/v0.2/batch_001_input.md#h2_05_hardware_engineering_embedded_systems_0012",
+        "prompt": "Bare-metal vs RTOS.",
+        "answer": "Bare-metal: single loop, no OS scheduler. RTOS: preemptive multitasking with scheduling guarantees.",
+        "source": {
+          "source_id": "h2",
+          "source_name": "arXiv hardware/arch papers (eess.AR, cs.AR, cs.CR)",
+          "license": "arXiv non-exclusive license",
+          "tier": "Tier 1"
+        }
+      },
+      "original_issue": "The original reply is factually concise, but it is too brief for training usefulness because it omits operational consequences such as why a product team would choose one runtime model over the other, what scheduler semantics implies for determinism, and real-time constraints that affect task deadlines and worst-case latency.",
+      "repair_applied": "Added 3 disciplined expansions: (1) use-case implications, (2) scheduler semantics, (3) real-time constraints that distinguish bare-metal execution from RTOS-managed behavior, while preserving the original factual core.",
+      "proposed_fix": "Expand thin comparison rationale with use-case implications, scheduler semantics, and real-time constraint caveats for bare-metal vs RTOS.",
+      "updated_content": "Bare-metal: single loop, no OS scheduler; suitable when the workload is stable, latency-sensitive, and tightly bounded, because the developer owns task ordering and there is no scheduler-induced jitter. RTOS: preemptive multitasking with scheduling guarantees; better when systems must multiplex tasks with bounded worst-case latency, priority inheritance, and deadline-aware dispatch, but scheduler behavior introduces determinism trade-offs the original answer did not explain.",
+      "revision_notes": "Expansion does not alter the original factual core. Validation is based on authoritative review input, because no separate original content artifact file exists in the repo for Batch 001 record h2_...0012. No source, license, or lineage metadata was changed.",
+      "validation_result": "PASS - block scope limited to documented Batch 001 content-repair expansion. Original review decision preserved. No curated dataset modification. Release gate unaffected.",
+      "validation_notes": "No original replacement source found beyond authoritative review manifest and review input package. Expansion was applied to the on-disk known original answer text from review/v0.2/batch_001_input.md.",
+      "resolver_metadata": {
+        "resolver_id": "Phase4B.5.8_automated_resolver",
+        "role": "automated_resolver",
+        "authoritative_sources": [
+          "review/decisions/v0.2/batch_001.jsonl",
+          "review/revisions/v0.2/revision_queue.json",
+          "review/v0.2/batch_001_input.md"
+        ],
+        "processed_at": "2026-07-28T00:00:00Z"
+      }
+    },
+    {
+      "record_id": "b1_07_business_knowledge_finance_0001",
+      "batch": "batch_001",
+      "class": "A_content_repair",
+      "status": "content_revised",
+      "resolutionable": true,
+      "original": {
+        "record_id": "b1_07_business_knowledge_finance_0001",
+        "decision": "needs_revision",
+        "decided_at": "2026-07-27T14:38:25.978757+00:00",
+        "reviewer_id": "reviewer_business_01",
+        "decision_reason": "Clear, correct, specific, and referenced; safe for future model training.",
+        "review_source": "review/decisions/v0.2/batch_001.jsonl#L7",
+        "review_input_source": "review/v0.2/batch_001_input.md#b1_07_business_knowledge_finance_0001",
+        "prompt": "Time value of money.",
+        "answer": "Money today worth more than same amount in future — can be invested for returns. PV = FV/(1+r)^n.",
+        "source": {
+          "source_id": "b1",
+          "source_name": "gbharti/finance-alpaca",
+          "license": "MIT",
+          "tier": "Tier 4 (cleaned)"
+        }
+      },
+      "original_issue": "The original finance concept is correct, but it is too thin for training usefulness because it lacks the operational reasoning behind the formula: how expected return, expected inflation, risk premium, and planning horizon change the practical interpretation of present value and discount rate choice.",
+      "repair_applied": "Added 3 disciplined expansions: (1) investment return rationale, (2) rate/inflation sensitivity, (3) horizon dependency, while preserving the original PV formula.",
+      "proposed_fix": "Expand time-value-of-money rationale to include investment return, rate/inflation sensitivity, and horizon dependency alongside the existing formula.",
+      "updated_content": "Money today is worth more than the same nominal amount in the future because it can be invested to earn a return; retaining liquidity also avoids forced future consumption at unfavorable prices. Present value therefore depends not only on the formula PV = FV/(1+r)^n, but also on the expected real return after inflation, the chosen discount rate, and the planning horizon over which cash flows are compared.",
+      "revision_notes": "Expansion does not alter the original factual core. Validation is based on authoritative review input, because no separate original content artifact file exists in the repo for Batch 001 record b1_...0001. No source, license, or lineage metadata was changed.",
+      "validation_result": "PASS - block scope limited to documented Batch 001 content-repair expansion. Original review decision preserved. No curated dataset modification. Release gate unaffected.",
+      "validation_notes": "No original replacement source found beyond authoritative review manifest and review input package. Expansion was applied to the on-disk known original answer text from review/v0.2/batch_001_input.md.",
+      "resolver_metadata": {
+        "resolver_id": "Phase4B.5.8_automated_resolver",
+        "role": "automated_resolver",
+        "authoritative_sources": [
+          "review/decisions/v0.2/batch_001.jsonl",
+          "review/revisions/v0.2/revision_queue.json",
+          "review/v0.2/batch_001_input.md"
+        ],
+        "processed_at": "2026-07-28T00:00:00Z"
+      }
+    },
+    {
+      "record_id": "h4_05_hardware_engineering_embedded_systems_0004",
+      "batch": "batch_002",
+      "class": "A_content_repair",
+      "status": "awaiting_human_rewrite",
+      "resolutionable": false,
+      "original": {
+        "record_id": "h4_05_hardware_engineering_embedded_systems_0004",
+        "decision": "needs_revision",
+        "decided_at": "2026-07-27T15:05:00+00:00",
+        "reviewer_id": "reviewer_hardware_02",
+        "decision_reason": "CC-BY-SA-4.0 StackExchange Electronics source is acceptable, and the Bare-metal vs RTOS answer is directionally correct. Under the updated hardware rubric it needs explicit operational context: use-case implications, scheduling guarantees, or real-time constraint caveats.",
+        "review_source": "review/decisions/v0.2/batch_002.jsonl#L12",
+        "review_report_source": "docs/v0.2_review_batch_002_report.md#Low depth / completeness",
+        "prompt": null,
+        "answer": null,
+        "source": {
+          "source_id": null,
+          "source_name": "CC-BY-SA-4.0 StackExchange Electronics source per review decision",
+          "license": "CC-BY-SA-4.0",
+          "tier": null
+        }
+      },
+      "original_issue": "Record is directionally correct, but the content-repair gap is broader than what the automated resolver can complete from available repo evidence. The authoritative review path identifies an operational-depth deficit in the bare-metal-vs-RTOS explanation, but the on-disk review material does not include the original original assistant answer text for this Batch 002 record, so a controlled human rewrite is required before an updated_content can be validated.",
+      "repair_applied": null,
+      "proposed_fix": "Human rewrite of the original original answer to add scheduler guarantees, real-time constraints, and use-case implications for bare-metal vs RTOS.",
+      "updated_content": null,
+      "revision_notes": "Resolution is intentionally blocked pending human-authored rewrite because this is a Batch 002 content-repair record and the current repo artifacts do not contain the verified original answer text for h4_...0004. Generating an updated_content here would be speculative. The repair guidance from the review queue is preserved as the authoritative proposed_fix.",
+      "validation_result": "BLOCKED - awaiting verified original content and human rewrite",
+      "validation_notes": "Authoritative evidence exists in review/decisions/v0.2/batch_002.jsonl and docs/v0.2_review_batch_002_report.md for the issue and repair direction, but it does not include the original answer payload required for safe repaired-content generation.",
+      "resolver_metadata": {
+        "resolver_id": "Phase4B.5.8_automated_resolver",
+        "role": "automated_resolver",
+        "authoritative_sources": [
+          "review/decisions/v0.2/batch_002.jsonl",
+          "review/revisions/v0.2/revision_queue.json",
+          "docs/v0.2_review_batch_002_report.md"
+        ],
+        "processed_at": "2026-07-28T00:00:00Z"
+      }
+    },
+    {
+      "record_id": "b2_07_business_knowledge_finance_0002",
+      "batch": "batch_002",
+      "class": "A_content_repair",
+      "status": "awaiting_human_rewrite",
+      "resolutionable": false,
+      "original": {
+        "record_id": "b2_07_business_knowledge_finance_0002",
+        "decision": "needs_revision",
+        "decided_at": "2026-07-27T15:05:00+00:00",
+        "reviewer_id": "reviewer_business_02",
+        "decision_reason": "CC-BY-SA-3.0 Wikipedia business source is license-cleared, but the compound-interest explanation omits the practical consequence that makes it training-useful: nominal vs real rate sensitivity, compounding-frequency effect, or horizon dependency. Needs substantive depth.",
+        "review_source": "review/decisions/v0.2/batch_002.jsonl#L16",
+        "review_report_source": "docs/v0.2_review_batch_002_report.md#Low depth / completeness",
+        "prompt": null,
+        "answer": null,
+        "source": {
+          "source_id": null,
+          "source_name": "CC-BY-SA-3.0 Wikipedia business source per review decision",
+          "license": "CC-BY-SA-3.0",
+          "tier": null
+        }
+      },
+      "original_issue": "Record is license-cleared but too thin for training usefulness. The authoritative review path identifies a factual-depth deficit in the compound-interest explanation, but the on-disk review material does not include the original answer text for this Batch 002 record, so a controlled human rewrite is required before an updated_content can be validated.",
+      "repair_applied": null,
+      "proposed_fix": "Human rewrite of the original answer to add nominal vs real rate distinction, compounding-frequency effects, and horizon dependency to the compound-interest explanation.",
+      "updated_content": null,
+      "revision_notes": "Resolution is intentionally blocked pending human-authored rewrite because this is a Batch 002 content-repair record and the current repo artifacts do not contain the verified original answer text for b2_...0002. Generating an updated_content here would be speculative. The repair guidance from the review queue is preserved as the authoritative proposed_fix.",
+      "validation_result": "BLOCKED - awaiting verified original content and human rewrite",
+      "validation_notes": "Authoritative evidence exists in review/decisions/v0.2/batch_002.jsonl and docs/v0.2_review_batch_002_report.md for the issue and repair direction, but it does not include the original answer payload required for safe repaired-content generation.",
+      "resolver_metadata": {
+        "resolver_id": "Phase4B.5.8_automated_resolver",
+        "role": "automated_resolver",
+        "authoritative_sources": [
+          "review/decisions/v0.2/batch_002.jsonl",
+          "review/revisions/v0.2/revision_queue.json",
+          "docs/v0.2_review_batch_002_report.md"
+        ],
+        "processed_at": "2026-07-28T00:00:00Z"
+      }
+    }
+  ],
+  "summary": {
+    "total_records_processed": 4,
+    "content_repair_count": 4,
+    "provenance_or_mixed_excluded": 2,
+    "pending_or_awaiting_human_rewrite": 2,
+    "resolved_with_updated_content": 2,
+    "blocked_pending_verified_original_text": 2,
+    "original_decision_files_modified": false,
+    "curated_dataset_modified": false,
+    "release_remains_blocked": true,
+    "automatic_approval_granted": false
+  }
+}

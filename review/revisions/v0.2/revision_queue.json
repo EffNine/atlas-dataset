@@ -1,0 +1,153 @@
+{
+  "version": "0.2.0",
+  "cohort": "phase4b_expansion",
+  "generated": "2026-07-28",
+  "description": "Structured analysis of all needs_revision records from Batch 001 and Batch 002, prepared for controlled revision resolution.",
+  "policy": {
+    "original_decisions_unchanged": true,
+    "rejected_records_untouched": true,
+    "curated_dataset_unchanged": true,
+    "release_remains_blocked": true,
+    "revision_required_before_approval": true
+  },
+  "batches_covered": ["batch_001", "batch_002"],
+  "records_reviewed_total": 50,
+  "decision_counts": {
+    "approved": 38,
+    "needs_revision": 6,
+    "rejected": 6
+  },
+  "revision_queue": [
+    {
+      "record_id": "h2_05_hardware_engineering_embedded_systems_0012",
+      "batch": "batch_001",
+      "category": "05_hardware_engineering",
+      "subcategory": "embedded_systems",
+      "original_decision": "needs_revision",
+      "reviewer_id": "reviewer_hardware_02",
+      "reviewer_reason": "Concise and directionally correct, but missing the minimum rationale/caveats for training use.",
+      "issue_type": "missing depth",
+      "severity": "medium",
+      "class": "A. Content repair",
+      "recommended_action": "human rewrite to add use-case context, scheduler semantics, and real-time constraints",
+      "rewrite_focus": "add use-case implications, scheduler behavior, and real-time-constraint caveats for bare-metal vs RTOS",
+      "provenance_blocker": false
+    },
+    {
+      "record_id": "b1_07_business_knowledge_finance_0001",
+      "batch": "batch_001",
+      "category": "07_business_knowledge",
+      "subcategory": "finance",
+      "original_decision": "needs_revision",
+      "reviewer_id": "reviewer_business_01",
+      "reviewer_reason": "Clear, correct, specific, and referenced; safe for future model training.",
+      "issue_type": "missing depth",
+      "severity": "medium",
+      "class": "A. Content repair",
+      "recommended_action": "human rewrite to add rate/inflation/horizon rationale alongside the existing formula",
+      "rewrite_focus": "expand time-value-of-money rationale to include investment return, rate/inflation sensitivity, and horizon dependency",
+      "provenance_blocker": false
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "batch": "batch_002",
+      "category": "02_software_engineering",
+      "subcategory": "programming",
+      "original_decision": "needs_revision",
+      "reviewer_id": "reviewer_software_02",
+      "reviewer_reason": "StackExchange Code content is correct and concise, but the CC-BY-SA-4.0 provenance path needs explicit attribution/share-alike tracking confirmation before approval. Sending to needs_revision so upstream documentation can clear the record.",
+      "issue_type": "provenance concern",
+      "severity": "medium-high",
+      "class": "B. Metadata/provenance repair",
+      "recommended_action": "lineage metadata repair first, then human rewrite if approved",
+      "rewrite_focus": "resolve CC-BY-SA-4.0 attribution/share-alike tracking; add content depth for programming topic",
+      "provenance_blocker": true,
+      "provenance_detail": "CC-BY-SA-4.0 StackExchange source needs explicit attribution and share-alike tracking metadata before approval"
+    },
+    {
+      "record_id": "h4_05_hardware_engineering_embedded_systems_0004",
+      "batch": "batch_002",
+      "category": "05_hardware_engineering",
+      "subcategory": "embedded_systems",
+      "original_decision": "needs_revision",
+      "reviewer_id": "reviewer_hardware_02",
+      "reviewer_reason": "CC-BY-SA-4.0 StackExchange Electronics source is acceptable, and the Bare-metal vs RTOS answer is directionally correct. Under the updated hardware rubric it needs explicit operational context: use-case implications, scheduling guarantees, or real-time constraint caveats.",
+      "issue_type": "missing depth",
+      "severity": "medium",
+      "class": "A. Content repair",
+      "recommended_action": "human rewrite to add use-case and operational-constraint context",
+      "rewrite_focus": "minimum operational context for bare-metal vs RTOS including scheduling guarantees, real-time constraints, and use-case implications",
+      "provenance_blocker": false
+    },
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "batch": "batch_002",
+      "category": "05_hardware_engineering",
+      "subcategory": "firmware",
+      "original_decision": "needs_revision",
+      "reviewer_id": "reviewer_hardware_02",
+      "reviewer_reason": "The firmware definition is accurate but too thin for training use: no ROM/EEPROM context, no update-role detail, no system-context examples. Also carries WikiChip-derived license wording that still needs human-review attribution metadata.",
+      "issue_type": "mixed: missing depth + provenance concern",
+      "severity": "medium-high",
+      "class": "B. Metadata/provenance repair",
+      "recommended_action": "lineage metadata repair first, then human rewrite if approved",
+      "rewrite_focus": "expand firmware definition with ROM/EEPROM context, update-role detail, system-context examples; resolve WikiChip attribution metadata",
+      "provenance_blocker": true,
+      "provenance_detail": "WikiChip-derived license wording needs human-review attribution metadata before approval"
+    },
+    {
+      "record_id": "b2_07_business_knowledge_finance_0002",
+      "batch": "batch_002",
+      "category": "07_business_knowledge",
+      "subcategory": "finance",
+      "original_decision": "needs_revision",
+      "reviewer_id": "reviewer_business_02",
+      "reviewer_reason": "CC-BY-SA-3.0 Wikipedia business source is license-cleared, but the compound-interest explanation omits the practical consequence that makes it training-useful: nominal vs real rate sensitivity, compounding-frequency effect, or horizon dependency. Needs substantive depth.",
+      "issue_type": "missing depth",
+      "severity": "medium",
+      "class": "A. Content repair",
+      "recommended_action": "human rewrite to add nominal/real rate, compounding-frequency, and horizon consequences",
+      "rewrite_focus": "add nominal vs real rate distinction, compounding-frequency effects, and horizon dependency to compound-interest explanation",
+      "provenance_blocker": false
+    }
+  ],
+  "classification_summary": {
+    "A_content_repair": {
+      "count": 4,
+      "records": [
+        "h2_05_hardware_engineering_embedded_systems_0012",
+        "b1_07_business_knowledge_finance_0001",
+        "h4_05_hardware_engineering_embedded_systems_0004",
+        "b2_07_business_knowledge_finance_0002"
+      ],
+      "description": "Records with factually correct content that is too brief or lacking operational depth for training usefulness"
+    },
+    "B_metadata_provenance_repair": {
+      "count": 2,
+      "records": [
+        "s5_02_software_engineering_programming_0029",
+        "h3_05_hardware_engineering_firmware_0003"
+      ],
+      "description": "Records where source/license metadata needs repair or documentation before content revision can proceed"
+    },
+    "C_not_repairable": {
+      "count": 0,
+      "records": [],
+      "description": "No records classified as fundamentally unrecoverable"
+    }
+  },
+  "issue_distribution": {
+    "missing_depth": 4,
+    "provenance_concern": 1,
+    "mixed_depth_and_provenance": 1
+  },
+  "category_distribution": {
+    "05_hardware_engineering": 3,
+    "07_business_knowledge": 2,
+    "02_software_engineering": 1
+  },
+  "batch_distribution": {
+    "batch_001": 2,
+    "batch_002": 4
+  }
+}

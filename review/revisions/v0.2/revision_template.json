@@ -1,0 +1,100 @@
+{
+  "version": "0.2.0",
+  "schema": "revision_template_v1",
+  "description": "Template for recording revision actions on needs_revision records. One file per record.",
+  "fields": {
+    "record_id": {
+      "type": "string",
+      "description": "Unique record identifier matching the review decision file",
+      "required": true
+    },
+    "original_issue": {
+      "type": "string",
+      "description": "The reviewer's stated reason for needs_revision decision",
+      "required": true
+    },
+    "issue_class": {
+      "type": "string",
+      "enum": ["content_depth", "provenance_metadata", "mixed", "other"],
+      "description": "Classification of the revision type",
+      "required": true
+    },
+    "proposed_fix": {
+      "type": "string",
+      "description": "Description of what fix was applied and why",
+      "required": true
+    },
+    "updated_content": {
+      "type": "string",
+      "description": "The rewritten knowledge object content",
+      "required": true
+    },
+    "revision_notes": {
+      "type": "string",
+      "description": "Additional context, rationale, or reviewer comments about the revision",
+      "required": false
+    },
+    "resolver_id": {
+      "type": "string",
+      "description": "Identity of the person or tool that performed the revision",
+      "required": true
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of the revision",
+      "required": true
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "identified",
+        "in_progress",
+        "provenance_pending",
+        "content_revised",
+        "re_evaluation_pending",
+        "re_evaluation_complete",
+        "escalated"
+      ],
+      "description": "Current status in the revision lifecycle",
+      "required": true
+    },
+    "provenance_blocker": {
+      "type": "boolean",
+      "description": "Whether a provenance/lineage issue blocks content revision",
+      "required": true
+    },
+    "provenance_notes": {
+      "type": "string",
+      "description": "Details of provenance resolution, if applicable",
+      "required": false
+    },
+    "second_reviewer_id": {
+      "type": "string",
+      "description": "Identity of the second human reviewer (populated after re-evaluation)",
+      "required": false
+    },
+    "second_reviewer_decision": {
+      "type": "string",
+      "enum": ["approved", "needs_further_revision", "rejected"],
+      "description": "Decision from the second human review (populated after re-evaluation)",
+      "required": false
+    },
+    "second_reviewer_reason": {
+      "type": "string",
+      "description": "Rationale for the second review decision",
+      "required": false
+    }
+  },
+  "required": [
+    "record_id",
+    "original_issue",
+    "issue_class",
+    "proposed_fix",
+    "updated_content",
+    "resolver_id",
+    "timestamp",
+    "status",
+    "provenance_blocker"
+  ]
+}
