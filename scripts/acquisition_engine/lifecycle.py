@@ -17,21 +17,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from atlas_constants import LIFECYCLE_STATES
+
 
 # ---------------------------------------------------------------------------
 # Valid lifecycle states and transitions
 # ---------------------------------------------------------------------------
-
-LIFECYCLE_STATES = [
-    "raw",           # Just ingested, no processing done
-    "processing",    # Being cleaned, deduplicated, scored
-    "curated",       # Passed pipeline, meets quality gate, not yet reviewed
-    "review",        # In human review queue
-    "approved",      # Human-approved, ready for release
-    "released",      # Included in a versioned release
-    "archived",      # Superseded or deprecated, kept for lineage
-    "rejected",      # Failed quality gate or human review
-]
 
 # Valid transitions: from -> [to states]
 VALID_TRANSITIONS: dict[str, list[str]] = {

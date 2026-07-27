@@ -30,37 +30,19 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from atlas_constants import VALID_CATEGORIES, VALID_TYPES, VALID_ROLES, is_denied_license
+from atlas_schema import (
+    ID_PATTERN, TAG_PATTERN, DATE_PATTERN,
+    BASE_ALLOWED_KEYS,
+    QUALITY_SCORE_MIN, QUALITY_SCORE_MAX,
+    DIFFICULTY_MIN, DIFFICULTY_MAX,
+    MIN_MESSAGE_TURNS,
+)
+from atlas_paths import schemas_dir, categories_metadata_path
+
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_DIR = ROOT / "schemas"
 CATEGORIES_FILE = ROOT / "metadata" / "categories.json"
-
-VALID_CATEGORIES = {
-    "01_foundation", "02_software_engineering", "03_system_engineering",
-    "04_ai_machine_learning", "05_hardware_engineering", "06_science_engineering",
-    "07_business_knowledge", "08_creative_knowledge", "09_personal_assistant",
-}
-VALID_TYPES = {"instruction", "conversation", "qa", "reasoning"}
-VALID_ROLES = {"system", "user", "assistant", "tool"}
-ID_RE = re.compile(r"^[a-z0-9_-]+$")
-
-# Commercial-safety gate (docs/source_policy.md): Atlas must stay commercial-safe
-# from day one. Any record whose resolved license matches a DENIED pattern is a
-# hard validation failure — never promoted to curated/.
-#   - CC-BY-NC*  : non-commercial -> blocks commercial use
-#   - CC-BY-ND*  : no-derivatives -> cannot reshape into instruction format
-#   - proprietary / all-rights-reserved : no redistribution/derivative rights
-#   - unknown    : cannot confirm commercial safety (denied until resolved)
-# Permissive (MIT/Apache/BSD/CC-BY*/CC0/ODC-BY/PD/arXiv) and conditional
-# (CC-BY-SA*, *-rail-m / RAIL) licenses are NOT denied here; CC-BY-SA/RAIL-M
-# carry tracking + subsetting obligations handled in the ingestion runbook.
-_DENIED_LICENSE_PATTERNS = ("cc-by-nc", "cc-by-nd", "proprietary", "all-rights-reserved", "unknown")
-def is_denied_license(lic: str) -> bool:
-    if not isinstance(lic, str):
-        return True
-    low = lic.strip().lower()
-    return any(p in low for p in _DENIED_LICENSE_PATTERNS)
-TAG_RE = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
-DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 _CATEGORIES_CACHE: dict | None = None
 
@@ -93,7 +75,7 @@ def structural_errors(rec: dict) -> list[str]:
         return ["record is not an object"]
 
     rid = rec.get("id")
-    if not isinstance(rid, str) or not ID_RE.match(rid):
+    if not isinstance(rid, str) or not ID_PATTERN.match(rid):
         errs.append("id invalid (must match ^[a-z0-9_]+$)")
 
     cat = rec.get("category")
@@ -123,12 +105,12 @@ def structural_errors(rec: dict) -> list[str]:
             errs.append("source.license missing")
         elif is_denied_license(lic):
             errs.append(f"source.license DENIED by commercial-safety policy: {lic!r} (NC/proprietary/ambiguous -> never ingest)")
-        if src.get("date") not in (None, "",) and not (isinstance(src.get("date"), str) and DATE_RE.match(src["date"])):
+        if src.get("date") not in (None, "",) and not (isinstance(src.get("date"), str) and DATE_PATTERN.match(src["date"])):
             errs.append("source.date not ISO-8601 (YYYY-MM-DD)")
 
     msgs = rec.get("messages")
-    if not isinstance(msgs, list) or len(msgs) < 2:
-        errs.append("messages must be a list with >=2 turns")
+    if not isinstance(msgs, list) or len(msgs) < MIN_MESSAGE_TURNS:
+        errs.append(f"messages must be a list with >= {MIN_MESSAGE_TURNS} turns")
     else:
         seen_user = seen_asst = False
         for j, m in enumerate(msgs):
@@ -153,12 +135,12 @@ def structural_errors(rec: dict) -> list[str]:
         errs.append("tags must be a list")
     else:
         for t in tags:
-            if not isinstance(t, str) or not TAG_RE.match(t):
+            if not isinstance(t, str) or not TAG_PATTERN.match(t):
                 errs.append(f"tag invalid: {t!r}")
 
     qs = rec.get("quality_score")
-    if not isinstance(qs, int) or not (0 <= qs <= 10):
-        errs.append(f"quality_score must be int 0-10: {qs!r}")
+    if not isinstance(qs, int) or not (QUALITY_SCORE_MIN <= qs <= QUALITY_SCORE_MAX):
+        errs.append(f"quality_score must be int {QUALITY_SCORE_MIN}-{QUALITY_SCORE_MAX}: {qs!r}")
 
     if not isinstance(rec.get("verified"), bool):
         errs.append("verified must be bool")
@@ -168,15 +150,14 @@ def structural_errors(rec: dict) -> list[str]:
         errs.append(f"language invalid: {lang!r}")
 
     diff = rec.get("difficulty", 0)
-    if diff not in (0, 1, 2, 3):
-        errs.append(f"difficulty must be 0-3: {diff!r}")
+    if diff not in (DIFFICULTY_MIN, DIFFICULTY_MIN + 1, DIFFICULTY_MAX - 1, DIFFICULTY_MAX):
+        errs.append(f"difficulty must be {DIFFICULTY_MIN}-{DIFFICULTY_MAX}: {diff!r}")
 
     if "notes" not in rec or not isinstance(rec.get("notes"), str):
         errs.append("notes missing or not string")
 
     # extra keys not in schema
-    allowed_keys = {"id", "category", "subcategory", "type", "source", "messages", "language", "difficulty", "tags", "quality_score", "verified", "notes"}
-    extra = set(rec.keys()) - allowed_keys
+    extra = set(rec.keys()) - BASE_ALLOWED_KEYS
     if extra:
         errs.append(f"unexpected keys: {sorted(extra)}")
 

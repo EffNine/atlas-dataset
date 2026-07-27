@@ -19,27 +19,30 @@ import json
 import sys
 from pathlib import Path
 
+from atlas_constants import (
+    VALID_CATEGORIES as CATS,
+    VALID_KNOWLEDGE_TYPES as KTYPES,
+    VERIFICATION_STATUSES as VSTATES,
+    VALID_TRAINING_MODELS as TVE,
+    VALID_ROLES as ROLES,
+)
+from atlas_schema import (
+    KNOWLEDGE_OBJECT_REQUIRED_FIELDS,
+    LINEAGE_SUB_FIELDS,
+    QUALITY_SCORE_MIN, QUALITY_SCORE_MAX,
+    DIFFICULTY_MIN, DIFFICULTY_MAX,
+    MIN_MESSAGE_TURNS,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 KO_SCHEMA = ROOT / "schemas" / "knowledge_object_schema.json"
-
-CATS = {"01_foundation", "02_software_engineering", "03_system_engineering",
-        "04_ai_machine_learning", "05_hardware_engineering", "06_science_engineering",
-        "07_business_knowledge", "08_creative_knowledge", "09_personal_assistant"}
-KTYPES = {"fact", "procedure", "concept", "reasoning", "code", "reference", "creative"}
-VSTATES = {"pending", "approved", "rejected", "needs_revision"}
-TVE = {"qwen", "llama", "deepseek"}
-ROLES = {"system", "user", "assistant", "tool"}
 
 
 def structural_errors(rec: dict) -> list[str]:
     errs = []
     if not isinstance(rec, dict):
         return ["not an object"]
-    req = ["id", "category", "subcategory", "difficulty", "knowledge_type",
-           "canonical_answer", "metadata", "source_attribution", "license", "tags",
-           "quality_score", "verification_status", "lineage", "training_view_eligibility",
-           "messages"]
-    miss = [k for k in req if k not in rec]
+    miss = [k for k in KNOWLEDGE_OBJECT_REQUIRED_FIELDS if k not in rec]
     if miss:
         errs.append("missing required: " + ",".join(miss))
     if rec.get("category") not in CATS:
@@ -50,13 +53,13 @@ def structural_errors(rec: dict) -> list[str]:
         errs.append(f"verification_status invalid: {rec.get('verification_status')!r}")
     try:
         qs = int(rec.get("quality_score", -1))
-        if not (0 <= qs <= 10):
+        if not (QUALITY_SCORE_MIN <= qs <= QUALITY_SCORE_MAX):
             errs.append("quality_score out of range")
     except (TypeError, ValueError):
         errs.append("quality_score not int")
     try:
         d = int(rec.get("difficulty", -1))
-        if not (0 <= d <= 3):
+        if not (DIFFICULTY_MIN <= d <= DIFFICULTY_MAX):
             errs.append("difficulty out of range")
     except (TypeError, ValueError):
         errs.append("difficulty not int")
@@ -72,16 +75,15 @@ def structural_errors(rec: dict) -> list[str]:
     if not isinstance(lin, dict):
         errs.append("lineage missing")
     else:
-        for k in ("source", "transformations", "knowledge_object", "curated_dataset",
-                  "training_view", "future_model"):
+        for k in LINEAGE_SUB_FIELDS:
             if k not in lin:
                 errs.append(f"lineage.{k} missing")
     tve = rec.get("training_view_eligibility")
     if not isinstance(tve, dict) or set(tve.keys()) != TVE:
         errs.append("training_view_eligibility must be {qwen,llama,deepseek}")
     msgs = rec.get("messages")
-    if not isinstance(msgs, list) or len(msgs) < 2:
-        errs.append("messages need >=2 turns")
+    if not isinstance(msgs, list) or len(msgs) < MIN_MESSAGE_TURNS:
+        errs.append(f"messages need >= {MIN_MESSAGE_TURNS} turns")
     else:
         seen_u = seen_a = False
         for m in msgs:

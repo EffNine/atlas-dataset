@@ -55,15 +55,12 @@ def install_network_block():
     urllib.request.urlopen = _blocked_urlopen
 
 
-ROOT = Path(__file__).resolve().parents[2]
-
 # Import the SINGLE source of truth for the license gate
-sys.path.insert(0, str(ROOT / "scripts"))
-import importlib.util as _ilu
-_v_spec = _ilu.spec_from_file_location("validate_mod", ROOT / "scripts" / "validate_dataset.py")
-_v_mod = _ilu.module_from_spec(_v_spec)
-_v_spec.loader.exec_module(_v_mod)
-is_denied_license = _v_mod.is_denied_license
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
+from atlas_constants import is_denied_license
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 # ---------------------------------------------------------------------------

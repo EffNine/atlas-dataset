@@ -70,16 +70,17 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from atlas_constants import (
+    VALID_CATEGORIES as CATS,
+    VALID_KNOWLEDGE_TYPES as KTYPES,
+    VERIFICATION_STATUSES as VSTATES,
+    VALID_TRAINING_MODELS as TVE,
+    is_denied_license,
+)
+from atlas_schema import KNOWLEDGE_OBJECT_REQUIRED_FIELDS
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-
-# Reuse the SINGLE license gate from validate_dataset.py
-_vspec = importlib.util.spec_from_file_location("validate_mod", ROOT / "scripts" / "validate_dataset.py")
-if _vspec is None or _vspec.loader is None:
-    raise ImportError("Could not load validate_dataset.py")
-_validate = importlib.util.module_from_spec(_vspec)
-_vspec.loader.exec_module(_validate)
-is_denied_license = _validate.is_denied_license
 
 # Acquisition Engine (loaded lazily in command functions)
 _ENGINE = None
@@ -219,20 +220,11 @@ def cmd_self_test(argv) -> int:
         check("canonical-schema-validation", schema_ok, f"schema errors: {errs}")
     except Exception as e:
         # Structural fallback: confirm all required keys present + enums valid.
-        required = {"id", "category", "subcategory", "difficulty", "knowledge_type",
-                    "canonical_answer", "metadata", "source_attribution", "license",
-                    "tags", "quality_score", "verification_status", "lineage",
-                    "training_view_eligibility", "messages"}
-        cats = {"01_foundation", "02_software_engineering", "03_system_engineering",
-                "04_ai_machine_learning", "05_hardware_engineering", "06_science_engineering",
-                "07_business_knowledge", "08_creative_knowledge", "09_personal_assistant"}
-        structural_ok = (required <= set(sample.keys())
-                         and sample["category"] in cats
-                         and sample["knowledge_type"] in {"fact", "procedure", "concept",
-                                                          "reasoning", "code", "reference", "creative"}
-                         and sample["verification_status"] in {"pending", "approved",
-                                                               "rejected", "needs_revision"}
-                         and set(sample["training_view_eligibility"]) == {"qwen", "llama", "deepseek"})
+        structural_ok = (set(KNOWLEDGE_OBJECT_REQUIRED_FIELDS) <= set(sample.keys())
+                         and sample["category"] in CATS
+                         and sample["knowledge_type"] in KTYPES
+                         and sample["verification_status"] in VSTATES
+                         and set(sample["training_view_eligibility"]) == TVE)
         check("canonical-schema-validation", structural_ok,
               f"jsonschema unavailable ({type(e).__name__}); structural fallback ok={structural_ok}")
 
@@ -257,16 +249,12 @@ def cmd_self_test(argv) -> int:
     for mid, mod in mods:
         migrated = mod.up(migrated)
         applied.append(f"migrate:{mid}")
-    required = ["id", "category", "subcategory", "difficulty", "knowledge_type",
-                "canonical_answer", "metadata", "source_attribution", "license", "tags",
-                "quality_score", "verification_status", "lineage", "training_view_eligibility",
-                "messages"]
-    missing = [f for f in required if f not in migrated]
+    missing = [f for f in KNOWLEDGE_OBJECT_REQUIRED_FIELDS if f not in migrated]
     check("knowledge-object-integrity", not missing, f"missing: {missing}")
 
     # 8. Training-view generation safety: views come only from eligibility flags
     tve = migrated.get("training_view_eligibility", {})
-    tvs_ok = isinstance(tve, dict) and set(tve.keys()) == {"qwen", "llama", "deepseek"}
+    tvs_ok = isinstance(tve, dict) and set(tve.keys()) == TVE
     check("training-view-safety", tvs_ok, "eligibility has exactly qwen/llama/deepseek")
 
     # ---- Phase 4A.5 Release Engineering invariants ----

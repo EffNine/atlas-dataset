@@ -1,0 +1,69 @@
+{
+  "_schema_version": "1.0",
+  "_description": "Atlas Dataset Foundation — centralized configuration policy. Values herein are canonical thresholds, limits, and parameters for quality gates, review workflows, release gates, and schema constraints. These values were extracted from duplicated instances across the codebase; all consumers should read from this file.",
+  "quality": {
+    "quality_score_range": {
+      "min": 0,
+      "max": 10
+    },
+    "difficulty_range": {
+      "min": 0,
+      "max": 3
+    },
+    "curated_strict_gate": {
+      "min_quality_score": 7,
+      "require_verified": true,
+      "denied_license": "unknown"
+    },
+    "knowledge_object_strict_gate": {
+      "min_quality_score": 8.5,
+      "require_verification_status": "approved"
+    },
+    "pilot_quality_floor": 8.5
+  },
+  "review": {
+    "pilot_max_records_default": 100,
+    "default_review_status": "pending",
+    "review_categories": {
+      "pending": "review_queue/pending.jsonl",
+      "approved": "review_queue/approved.jsonl",
+      "rejected": "review_queue/rejected.jsonl",
+      "needs_revision": "review_queue/needs_revision.jsonl"
+    }
+  },
+  "release_gates": {
+    "quality_gate_min_score": 7,
+    "category_balance_tolerance": 0.05,
+    "category_balance_targets_v01": {
+      "01_foundation": 0.10,
+      "02_software_engineering": 0.20,
+      "03_system_engineering": 0.15,
+      "04_ai_machine_learning": 0.20,
+      "05_hardware_engineering": 0.08,
+      "06_science_engineering": 0.10,
+      "07_business_knowledge": 0.07,
+      "08_creative_knowledge": 0.05,
+      "09_personal_assistant": 0.05
+    },
+    "gate_names": [
+      "quality_gate",
+      "license_gate",
+      "schema_gate",
+      "verification_gate",
+      "category_balance_gate",
+      "no_unknown_license_gate",
+      "no_rejected_source_gate"
+    ]
+  },
+  "schema": {
+    "supported_versions": ["0.1"],
+    "min_message_turns": 2,
+    "max_results_truncation": 20,
+    "max_errors_shown": 30
+  },
+  "pilot": {
+    "max_records": 100,
+    "seed_file": "raw/pilot/seed.jsonl",
+    "output_dir": "curated/v0.1"
+  }
+}

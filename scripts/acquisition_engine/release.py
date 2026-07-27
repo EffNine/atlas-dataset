@@ -14,7 +14,6 @@ Every Atlas release becomes a frozen, signed, and independently verifiable
 snapshot. The release chain forms an audit trail: given the genesis release,
 any subsequent release can be verified against the chain.
 """
-
 from __future__ import annotations
 
 import hashlib
@@ -25,19 +24,26 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import sys
+# Ensure scripts/ is on sys.path so atlas_constants and validate_dataset are importable
+_THIS_DIR = Path(__file__).resolve().parent
+_SCRIPTS_DIR = _THIS_DIR.parent
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
+
+from atlas_constants import (
+    VALID_CATEGORIES,
+    VERIFICATION_STATUSES,
+    VERIFICATION_STATUS_RANK,
+    is_denied_license,
+    is_share_alike,
+    requires_attribution,
+)
+
 
 # ---------------------------------------------------------------------------
 # Release gate checks
 # ---------------------------------------------------------------------------
-
-def _denied_license_gate():
-    """Import the SINGLE license gate lazily to avoid circular imports."""
-    import importlib.util as _ilu
-    ROOT = Path(__file__).resolve().parents[2]
-    _v_spec = _ilu.spec_from_file_location("validate_mod", ROOT / "scripts" / "validate_dataset.py")
-    _v_mod = _ilu.module_from_spec(_v_spec)
-    _v_spec.loader.exec_module(_v_mod)
-    return _v_mod.is_denied_license
 
 
 def _load_records(file_paths: list[Path]) -> list[dict[str, Any]]:
@@ -143,11 +149,10 @@ class ReleaseGates:
 
     def check_license_gate(self) -> ReleaseGateResult:
         """Check that no records have denied licenses."""
-        is_denied = _denied_license_gate()
         if not self.records:
             return ReleaseGateResult("license_gate", "fail", "No records to check")
         denied = [r for r in self.records
-                  if is_denied(r.get("license", "unknown"))]
+                  if is_denied_license(r.get("license", "unknown"))]
         if denied:
             lic_counts: dict[str, int] = {}
             for r in denied:
@@ -167,36 +172,43 @@ class ReleaseGates:
         )
 
     def check_schema_gate(self) -> ReleaseGateResult:
-        """Check all records pass knowledge-object structural validation."""
-        required_fields = {"id", "category", "subcategory", "messages",
-                           "quality_score", "license", "verification_status"}
-        valid_categories = {
-            "01_foundation", "02_software_engineering", "03_system_engineering",
-            "04_ai_machine_learning", "05_hardware_engineering", "06_science_engineering",
-            "07_business_knowledge", "08_creative_knowledge", "09_personal_assistant",
-        }
-        valid_verification = {"pending", "approved", "rejected", "needs_revision", "unknown"}
+        """Check all records pass knowledge-object structural validation.
+
+        Delegates to validate_dataset.structural_errors() as the canonical
+        implementation, which runs the full structural check (fields, types,
+        enums, source structure, messages, tags, quality_score, etc.).
+        """
+        # Import the canonical validator from validate_dataset.py
+        import importlib.util as _ilu
+        _ROOT = Path(__file__).resolve().parents[2]
+        _v_spec = _ilu.spec_from_file_location(
+            "validate_mod", _ROOT / "scripts" / "validate_dataset.py"
+        )
+        _v_mod = _ilu.module_from_spec(_v_spec)
+        _v_spec.loader.exec_module(_v_mod)
+        _structural_errors = _v_mod.structural_errors
+
+        # Remove the "DENIED by commercial-safety policy" errors from the
+        # structural check because the license_gate already covers that, and
+        # they produce confusing duplicate failures. Filter only errors that
+        # do NOT mention "DENIED".
         errors: list[dict[str, Any]] = []
         for r in self.records:
             rid = r.get("id", "?")
-            missing = required_fields - set(r.keys())
-            if missing:
-                errors.append({"id": rid, "issue": f"Missing fields: {missing}"})
-                continue
-            if r.get("category") not in valid_categories:
-                errors.append({"id": rid, "issue": f"Invalid category: {r.get('category')}"})
-            if not isinstance(r.get("messages"), list) or len(r["messages"]) < 2:
-                errors.append({"id": rid, "issue": "Messages must be a list with >= 2 entries"})
-            if r.get("verification_status") not in valid_verification:
-                errors.append({"id": rid, "issue": f"Invalid verification_status: {r.get('verification_status')}"})
-            qs = r.get("quality_score")
-            if not isinstance(qs, (int, float)) or qs < 0 or qs > 10:
-                errors.append({"id": rid, "issue": f"quality_score out of range: {qs}"})
+            all_errs = _structural_errors(r)
+            structural_errs = [e for e in all_errs if "DENIED" not in e]
+            if structural_errs:
+                errors.append({
+                    "id": rid,
+                    "issue": "; ".join(structural_errs[:5]),
+                    "total": len(structural_errs),
+                })
         if errors:
             return ReleaseGateResult(
                 "schema_gate", "fail",
                 f"{len(errors)}/{len(self.records)} records have schema errors",
-                {"errors": errors[:30], "total_errors": len(errors), "total": len(self.records)},
+                {"errors": errors[:30], "total_errors": len(errors),
+                 "total": len(self.records)},
             )
         return ReleaseGateResult(
             "schema_gate", "pass",
@@ -457,11 +469,8 @@ class SemanticDiff:
         for rid in common_ids:
             fv = self.from_records[rid].get("verification_status", "")
             tv = self.to_records[rid].get("verification_status", "")
-            status_order = {"approved": 4, "released": 4, "review": 3,
-                            "curated": 2, "pending": 2, "processing": 1,
-                            "raw": 0, "needs_revision": 1, "rejected": 0}
-            f_rank = status_order.get(fv, 0)
-            t_rank = status_order.get(tv, 0)
+            f_rank = VERIFICATION_STATUS_RANK.get(fv, 0)
+            t_rank = VERIFICATION_STATUS_RANK.get(tv, 0)
             if t_rank < f_rank:
                 regressed.append({"id": rid, "from": fv, "to": tv})
         if regressed:
