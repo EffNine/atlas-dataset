@@ -1,0 +1,210 @@
+{
+  "generated_at": "2026-07-27T13:45:01.854000+00:00",
+  "cohort": "phase4b_expansion",
+  "schema_version": "1.0",
+  "stats": {
+    "total_assigned": 150,
+    "completed": 0,
+    "pending": 150,
+    "needs_revision": 0,
+    "rejected": 0,
+    "approved": 0
+  },
+  "reviewer_workload": {
+    "reviewer_foundation_01": {
+      "assigned": 8,
+      "completed": 0,
+      "pending": 8,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_foundation_02": {
+      "assigned": 7,
+      "completed": 0,
+      "pending": 7,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_software_01": {
+      "assigned": 8,
+      "completed": 0,
+      "pending": 8,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_software_02": {
+      "assigned": 8,
+      "completed": 0,
+      "pending": 8,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_software_03": {
+      "assigned": 7,
+      "completed": 0,
+      "pending": 7,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_software_04": {
+      "assigned": 7,
+      "completed": 0,
+      "pending": 7,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_system_01": {
+      "assigned": 8,
+      "completed": 0,
+      "pending": 8,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_system_02": {
+      "assigned": 7,
+      "completed": 0,
+      "pending": 7,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_system_03": {
+      "assigned": 7,
+      "completed": 0,
+      "pending": 7,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_aiml_01": {
+      "assigned": 8,
+      "completed": 0,
+      "pending": 8,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_aiml_02": {
+      "assigned": 8,
+      "completed": 0,
+      "pending": 8,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_aiml_03": {
+      "assigned": 7,
+      "completed": 0,
+      "pending": 7,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_aiml_04": {
+      "assigned": 7,
+      "completed": 0,
+      "pending": 7,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_hardware_01": {
+      "assigned": 6,
+      "completed": 0,
+      "pending": 6,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_hardware_02": {
+      "assigned": 6,
+      "completed": 0,
+      "pending": 6,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_science_01": {
+      "assigned": 8,
+      "completed": 0,
+      "pending": 8,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_science_02": {
+      "assigned": 7,
+      "completed": 0,
+      "pending": 7,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_business_01": {
+      "assigned": 6,
+      "completed": 0,
+      "pending": 6,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_business_02": {
+      "assigned": 5,
+      "completed": 0,
+      "pending": 5,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_creative_01": {
+      "assigned": 4,
+      "completed": 0,
+      "pending": 4,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_creative_02": {
+      "assigned": 4,
+      "completed": 0,
+      "pending": 4,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_pa_01": {
+      "assigned": 4,
+      "completed": 0,
+      "pending": 4,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    },
+    "reviewer_pa_02": {
+      "assigned": 3,
+      "completed": 0,
+      "pending": 3,
+      "needs_revision": 0,
+      "rejected": 0,
+      "approved": 0
+    }
+  },
+  "category_breakdown": {
+    "01_foundation": 15,
+    "02_software_engineering": 30,
+    "03_system_engineering": 22,
+    "04_ai_machine_learning": 30,
+    "05_hardware_engineering": 12,
+    "06_science_engineering": 15,
+    "07_business_knowledge": 11,
+    "08_creative_knowledge": 8,
+    "09_personal_assistant": 7
+  }
+}

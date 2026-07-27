@@ -1,0 +1,1508 @@
+{
+  "generated_at": "2026-07-27T13:45:01.854000+00:00",
+  "cohort": "phase4b_expansion",
+  "schema_version": "1.0",
+  "total_records": 150,
+  "assignments": [
+    {
+      "record_id": "f1_01_foundation_instruction_following_0001",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f2_01_foundation_general_reasoning_0002",
+      "category": "01_foundation",
+      "priority": "high",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f3_01_foundation_instruction_following_0003",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f4_01_foundation_general_reasoning_0004",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f5_01_foundation_instruction_following_0005",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f6_01_foundation_general_reasoning_0006",
+      "category": "01_foundation",
+      "priority": "high",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f7_01_foundation_instruction_following_0007",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f1_01_foundation_general_reasoning_0008",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f2_01_foundation_instruction_following_0009",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f3_01_foundation_general_reasoning_0010",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f4_01_foundation_instruction_following_0011",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f5_01_foundation_general_reasoning_0012",
+      "category": "01_foundation",
+      "priority": "high",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f6_01_foundation_instruction_following_0013",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f7_01_foundation_general_reasoning_0014",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "f1_01_foundation_instruction_following_0015",
+      "category": "01_foundation",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_foundation_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0001",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s2_02_software_engineering_debugging_0002",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s3_02_software_engineering_software_architecture_0003",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s4_02_software_engineering_algorithms_0004",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0005",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s6_02_software_engineering_debugging_0006",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s7_02_software_engineering_software_architecture_0007",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s8_02_software_engineering_algorithms_0008",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0009",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s2_02_software_engineering_debugging_0010",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s3_02_software_engineering_software_architecture_0011",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s4_02_software_engineering_algorithms_0012",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0013",
+      "category": "02_software_engineering",
+      "priority": "high",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s6_02_software_engineering_debugging_0014",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s7_02_software_engineering_software_architecture_0015",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s8_02_software_engineering_algorithms_0016",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0017",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s2_02_software_engineering_debugging_0018",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s3_02_software_engineering_software_architecture_0019",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s4_02_software_engineering_algorithms_0020",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0021",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s6_02_software_engineering_debugging_0022",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s7_02_software_engineering_software_architecture_0023",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s8_02_software_engineering_algorithms_0024",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0025",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s2_02_software_engineering_debugging_0026",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s3_02_software_engineering_software_architecture_0027",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s4_02_software_engineering_algorithms_0028",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "s6_02_software_engineering_debugging_0030",
+      "category": "02_software_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y1_03_system_engineering_linux_0001",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y2_03_system_engineering_docker_0002",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y3_03_system_engineering_networking_0003",
+      "category": "03_system_engineering",
+      "priority": "high",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y4_03_system_engineering_kubernetes_0004",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y5_03_system_engineering_devops_0005",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y6_03_system_engineering_linux_0006",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y7_03_system_engineering_docker_0007",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y1_03_system_engineering_networking_0008",
+      "category": "03_system_engineering",
+      "priority": "high",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y2_03_system_engineering_kubernetes_0009",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y3_03_system_engineering_devops_0010",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y4_03_system_engineering_linux_0011",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y5_03_system_engineering_docker_0012",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y6_03_system_engineering_networking_0013",
+      "category": "03_system_engineering",
+      "priority": "high",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y7_03_system_engineering_kubernetes_0014",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y1_03_system_engineering_devops_0015",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y2_03_system_engineering_linux_0016",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y3_03_system_engineering_docker_0017",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y4_03_system_engineering_networking_0018",
+      "category": "03_system_engineering",
+      "priority": "high",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y5_03_system_engineering_kubernetes_0019",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y6_03_system_engineering_devops_0020",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y7_03_system_engineering_linux_0021",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "y1_03_system_engineering_docker_0022",
+      "category": "03_system_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_system_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m1_04_ai_machine_learning_transformers_0001",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m2_04_ai_machine_learning_mlops_0002",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m3_04_ai_machine_learning_rag_0003",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m4_04_ai_machine_learning_fine_tuning_0004",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m5_04_ai_machine_learning_transformers_0005",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m6_04_ai_machine_learning_mlops_0006",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m1_04_ai_machine_learning_rag_0007",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m2_04_ai_machine_learning_fine_tuning_0008",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m3_04_ai_machine_learning_transformers_0009",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m4_04_ai_machine_learning_mlops_0010",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m5_04_ai_machine_learning_rag_0011",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m6_04_ai_machine_learning_fine_tuning_0012",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m1_04_ai_machine_learning_transformers_0013",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m2_04_ai_machine_learning_mlops_0014",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m3_04_ai_machine_learning_rag_0015",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m4_04_ai_machine_learning_fine_tuning_0016",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m5_04_ai_machine_learning_transformers_0017",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m6_04_ai_machine_learning_mlops_0018",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m1_04_ai_machine_learning_rag_0019",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m2_04_ai_machine_learning_fine_tuning_0020",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m3_04_ai_machine_learning_transformers_0021",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m4_04_ai_machine_learning_mlops_0022",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m5_04_ai_machine_learning_rag_0023",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m6_04_ai_machine_learning_fine_tuning_0024",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m1_04_ai_machine_learning_transformers_0025",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m2_04_ai_machine_learning_mlops_0026",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m3_04_ai_machine_learning_rag_0027",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_03",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m4_04_ai_machine_learning_fine_tuning_0028",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_04",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m5_04_ai_machine_learning_transformers_0029",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "m6_04_ai_machine_learning_mlops_0030",
+      "category": "04_ai_machine_learning",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_aiml_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h1_05_hardware_engineering_cpu_0001",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h2_05_hardware_engineering_gpu_0002",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h4_05_hardware_engineering_embedded_systems_0004",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h6_05_hardware_engineering_cpu_0005",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h1_05_hardware_engineering_gpu_0006",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h2_05_hardware_engineering_firmware_0007",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h3_05_hardware_engineering_embedded_systems_0008",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h4_05_hardware_engineering_cpu_0009",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h6_05_hardware_engineering_gpu_0010",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h1_05_hardware_engineering_firmware_0011",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "h2_05_hardware_engineering_embedded_systems_0012",
+      "category": "05_hardware_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_hardware_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c1_06_science_engineering_physics_0001",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c2_06_science_engineering_chemistry_0002",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c3_06_science_engineering_biology_0003",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c4_06_science_engineering_math_0004",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c5_06_science_engineering_environmental_0005",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c6_06_science_engineering_sciq_0006",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c7_06_science_engineering_physics_0007",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c1_06_science_engineering_chemistry_0008",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c2_06_science_engineering_biology_0009",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c3_06_science_engineering_math_0010",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c4_06_science_engineering_environmental_0011",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c5_06_science_engineering_sciq_0012",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c6_06_science_engineering_physics_0013",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c7_06_science_engineering_chemistry_0014",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "c1_06_science_engineering_biology_0015",
+      "category": "06_science_engineering",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_science_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "b1_07_business_knowledge_finance_0001",
+      "category": "07_business_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_business_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "b2_07_business_knowledge_finance_0002",
+      "category": "07_business_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_business_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "b3_07_business_knowledge_finance_0003",
+      "category": "07_business_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_business_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "b4_07_business_knowledge_finance_0004",
+      "category": "07_business_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_business_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "b1_07_business_knowledge_finance_0005",
+      "category": "07_business_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_business_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "b2_07_business_knowledge_finance_0006",
+      "category": "07_business_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_business_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "b3_07_business_knowledge_finance_0007",
+      "category": "07_business_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_business_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "b4_07_business_knowledge_finance_0008",
+      "category": "07_business_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_business_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "b1_07_business_knowledge_finance_0009",
+      "category": "07_business_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_business_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "b2_07_business_knowledge_finance_0010",
+      "category": "07_business_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_business_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "b3_07_business_knowledge_finance_0011",
+      "category": "07_business_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_business_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "r1_08_creative_knowledge_writing_0001",
+      "category": "08_creative_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_creative_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "r2_08_creative_knowledge_art_0002",
+      "category": "08_creative_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_creative_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "r3_08_creative_knowledge_music_0003",
+      "category": "08_creative_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_creative_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "r1_08_creative_knowledge_writing_0004",
+      "category": "08_creative_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_creative_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "r2_08_creative_knowledge_art_0005",
+      "category": "08_creative_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_creative_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "r3_08_creative_knowledge_music_0006",
+      "category": "08_creative_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_creative_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "r1_08_creative_knowledge_writing_0007",
+      "category": "08_creative_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_creative_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "r2_08_creative_knowledge_art_0008",
+      "category": "08_creative_knowledge",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_creative_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0001",
+      "category": "09_personal_assistant",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_pa_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0002",
+      "category": "09_personal_assistant",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_pa_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0003",
+      "category": "09_personal_assistant",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_pa_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0004",
+      "category": "09_personal_assistant",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_pa_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0005",
+      "category": "09_personal_assistant",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_pa_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0006",
+      "category": "09_personal_assistant",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_pa_02",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0007",
+      "category": "09_personal_assistant",
+      "priority": "normal",
+      "review_status": "assigned",
+      "assigned_reviewer": "reviewer_pa_01",
+      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "completed_timestamp": null,
+      "notes": "Awaiting human review completion."
+    }
+  ]
+}
