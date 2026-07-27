@@ -1,0 +1,1641 @@
+{
+  "manifest_version": "0.1.0",
+  "atlas_target_version": "v0.1",
+  "mode": "dry-run",
+  "generated": "2026-07-27",
+  "checks": {
+    "license_gate_passed": true,
+    "denied_sources": [],
+    "synthetic_within_cap": true,
+    "synthetic_count": 37,
+    "synthetic_pct": 3.7,
+    "synthetic_cap_pct": 5,
+    "registry_status_ok": true,
+    "registry_missing": [],
+    "bad_registry_status": [],
+    "category_balance_ok": true,
+    "total_target": 1000,
+    "estimated_download_bytes": 3401179267197
+  },
+  "execution_plan": [
+    {
+      "batch_id": "B01",
+      "order": 1,
+      "theme": "Foundation SFT seed (verified, permissive)",
+      "steps": [
+        {
+          "step": "resolve:f1",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "f1"
+        },
+        {
+          "step": "download:f1",
+          "action": "download to raw/01_foundation/f1/ (est 100.7 MB)",
+          "source_id": "f1"
+        },
+        {
+          "step": "pipeline:f1",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "f1"
+        },
+        {
+          "step": "gate:f1",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "f1"
+        },
+        {
+          "step": "resolve:f6",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "f6"
+        },
+        {
+          "step": "download:f6",
+          "action": "download to raw/01_foundation/f6/ (est 28.6 MB)",
+          "source_id": "f6"
+        },
+        {
+          "step": "pipeline:f6",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "f6"
+        },
+        {
+          "step": "gate:f6",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "f6"
+        },
+        {
+          "step": "resolve:f5",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "f5"
+        },
+        {
+          "step": "download:f5",
+          "action": "download to raw/01_foundation/f5/ (est 762.9 MB)",
+          "source_id": "f5"
+        },
+        {
+          "step": "pipeline:f5",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "f5"
+        },
+        {
+          "step": "gate:f5",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "f5"
+        },
+        {
+          "step": "resolve:f2",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "f2"
+        },
+        {
+          "step": "download:f2",
+          "action": "download to raw/01_foundation/f2/ (est 15.3 MB)",
+          "source_id": "f2"
+        },
+        {
+          "step": "constraint:f2",
+          "action": "gated: accept HF terms; re-verify license on download; record date_added in sources.json",
+          "source_id": "f2"
+        },
+        {
+          "step": "pipeline:f2",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "f2"
+        },
+        {
+          "step": "gate:f2",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "f2"
+        }
+      ]
+    },
+    {
+      "batch_id": "B02",
+      "order": 2,
+      "theme": "Software engineering (verified + community)",
+      "steps": [
+        {
+          "step": "resolve:s1",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "s1"
+        },
+        {
+          "step": "download:s1",
+          "action": "download to raw/02_software_engineering/s1/ (est 397.2 MB)",
+          "source_id": "s1"
+        },
+        {
+          "step": "pipeline:s1",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "s1"
+        },
+        {
+          "step": "gate:s1",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "s1"
+        },
+        {
+          "step": "resolve:s4",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "s4"
+        },
+        {
+          "step": "download:s4",
+          "action": "download to raw/02_software_engineering/s4/ (est 38.1 MB)",
+          "source_id": "s4"
+        },
+        {
+          "step": "pipeline:s4",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "s4"
+        },
+        {
+          "step": "gate:s4",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "s4"
+        },
+        {
+          "step": "resolve:s6",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "s6"
+        },
+        {
+          "step": "download:s6",
+          "action": "download to raw/02_software_engineering/s6/ (est 1.9 GB)",
+          "source_id": "s6"
+        },
+        {
+          "step": "constraint:s6",
+          "action": "audit per-subset licenses; exclude any NC/restricted sub-component",
+          "source_id": "s6"
+        },
+        {
+          "step": "pipeline:s6",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "s6"
+        },
+        {
+          "step": "gate:s6",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "s6"
+        },
+        {
+          "step": "resolve:s5",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "s5"
+        },
+        {
+          "step": "download:s5",
+          "action": "download to raw/02_software_engineering/s5/ (est 55.9 GB)",
+          "source_id": "s5"
+        },
+        {
+          "step": "constraint:s5",
+          "action": "attribution per record (post id + author + URL)",
+          "source_id": "s5"
+        },
+        {
+          "step": "constraint:s5",
+          "action": "share-alike tracking in source.license",
+          "source_id": "s5"
+        },
+        {
+          "step": "constraint:s5",
+          "action": "filter score>=5",
+          "source_id": "s5"
+        },
+        {
+          "step": "constraint:s5",
+          "action": "strip PII",
+          "source_id": "s5"
+        },
+        {
+          "step": "pipeline:s5",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "s5"
+        },
+        {
+          "step": "gate:s5",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "s5"
+        },
+        {
+          "step": "resolve:s2",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "s2"
+        },
+        {
+          "step": "download:s2",
+          "action": "download to raw/02_software_engineering/s2/ (est 2.7 TB)",
+          "source_id": "s2"
+        },
+        {
+          "step": "constraint:s2",
+          "action": "subset to per-file permissive licenses only",
+          "source_id": "s2"
+        },
+        {
+          "step": "constraint:s2",
+          "action": "document RAIL-M behavioral use clauses",
+          "source_id": "s2"
+        },
+        {
+          "step": "constraint:s2",
+          "action": "record RAIL-M obligations in ingestion runbook",
+          "source_id": "s2"
+        },
+        {
+          "step": "pipeline:s2",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "s2"
+        },
+        {
+          "step": "gate:s2",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "s2"
+        }
+      ]
+    },
+    {
+      "batch_id": "B03",
+      "order": 3,
+      "theme": "System engineering (Tier-1 docs + community)",
+      "steps": [
+        {
+          "step": "resolve:y1",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "y1"
+        },
+        {
+          "step": "download:y1",
+          "action": "download to raw/03_system_engineering/y1/ (est 476.8 MB)",
+          "source_id": "y1"
+        },
+        {
+          "step": "constraint:y1",
+          "action": "pin doc version; flag any GFDL subsections for separate tracking",
+          "source_id": "y1"
+        },
+        {
+          "step": "pipeline:y1",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "y1"
+        },
+        {
+          "step": "gate:y1",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "y1"
+        },
+        {
+          "step": "resolve:y2",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "y2"
+        },
+        {
+          "step": "download:y2",
+          "action": "download to raw/03_system_engineering/y2/ (est 286.1 MB)",
+          "source_id": "y2"
+        },
+        {
+          "step": "constraint:y2",
+          "action": "pin doc version",
+          "source_id": "y2"
+        },
+        {
+          "step": "pipeline:y2",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "y2"
+        },
+        {
+          "step": "gate:y2",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "y2"
+        },
+        {
+          "step": "resolve:y3",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "y3"
+        },
+        {
+          "step": "download:y3",
+          "action": "download to raw/03_system_engineering/y3/ (est 190.7 MB)",
+          "source_id": "y3"
+        },
+        {
+          "step": "constraint:y3",
+          "action": "pin doc version",
+          "source_id": "y3"
+        },
+        {
+          "step": "pipeline:y3",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "y3"
+        },
+        {
+          "step": "gate:y3",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "y3"
+        },
+        {
+          "step": "resolve:y4",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "y4"
+        },
+        {
+          "step": "download:y4",
+          "action": "download to raw/03_system_engineering/y4/ (est 381.5 MB)",
+          "source_id": "y4"
+        },
+        {
+          "step": "constraint:y4",
+          "action": "attribution per article",
+          "source_id": "y4"
+        },
+        {
+          "step": "constraint:y4",
+          "action": "share-alike tracking",
+          "source_id": "y4"
+        },
+        {
+          "step": "constraint:y4",
+          "action": "restructure wiki tone to task format",
+          "source_id": "y4"
+        },
+        {
+          "step": "pipeline:y4",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "y4"
+        },
+        {
+          "step": "gate:y4",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "y4"
+        },
+        {
+          "step": "resolve:y5",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "y5"
+        },
+        {
+          "step": "download:y5",
+          "action": "download to raw/03_system_engineering/y5/ (est 74.5 GB)",
+          "source_id": "y5"
+        },
+        {
+          "step": "constraint:y5",
+          "action": "attribution per record",
+          "source_id": "y5"
+        },
+        {
+          "step": "constraint:y5",
+          "action": "share-alike tracking",
+          "source_id": "y5"
+        },
+        {
+          "step": "constraint:y5",
+          "action": "filter score>=5",
+          "source_id": "y5"
+        },
+        {
+          "step": "constraint:y5",
+          "action": "strip PII",
+          "source_id": "y5"
+        },
+        {
+          "step": "pipeline:y5",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "y5"
+        },
+        {
+          "step": "gate:y5",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "y5"
+        }
+      ]
+    },
+    {
+      "batch_id": "B04",
+      "order": 4,
+      "theme": "AI & ML (Tier-1 + verified open)",
+      "steps": [
+        {
+          "step": "resolve:m1",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "m1"
+        },
+        {
+          "step": "download:m1",
+          "action": "download to raw/04_ai_machine_learning/m1/ (est 46.6 GB)",
+          "source_id": "m1"
+        },
+        {
+          "step": "constraint:m1",
+          "action": "convert only well-sourced sections",
+          "source_id": "m1"
+        },
+        {
+          "step": "constraint:m1",
+          "action": "cite arXiv id",
+          "source_id": "m1"
+        },
+        {
+          "step": "constraint:m1",
+          "action": "flag preprint status",
+          "source_id": "m1"
+        },
+        {
+          "step": "pipeline:m1",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "m1"
+        },
+        {
+          "step": "gate:m1",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "m1"
+        },
+        {
+          "step": "resolve:m2",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "m2"
+        },
+        {
+          "step": "download:m2",
+          "action": "download to raw/04_ai_machine_learning/m2/ (est 114.4 MB)",
+          "source_id": "m2"
+        },
+        {
+          "step": "pipeline:m2",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "m2"
+        },
+        {
+          "step": "gate:m2",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "m2"
+        },
+        {
+          "step": "resolve:m3",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "m3"
+        },
+        {
+          "step": "download:m3",
+          "action": "download to raw/04_ai_machine_learning/m3/ (est 953.7 MB)",
+          "source_id": "m3"
+        },
+        {
+          "step": "constraint:m3",
+          "action": "audit per-subset licenses; exclude NC/restricted",
+          "source_id": "m3"
+        },
+        {
+          "step": "pipeline:m3",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "m3"
+        },
+        {
+          "step": "gate:m3",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "m3"
+        },
+        {
+          "step": "resolve:m4",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "m4"
+        },
+        {
+          "step": "download:m4",
+          "action": "download to raw/04_ai_machine_learning/m4/ (est 93.1 GB)",
+          "source_id": "m4"
+        },
+        {
+          "step": "constraint:m4",
+          "action": "subset ONLY to permissive components (arXiv, PubMed, FreeLaw, etc.)",
+          "source_id": "m4"
+        },
+        {
+          "step": "constraint:m4",
+          "action": "exclude restricted subsets",
+          "source_id": "m4"
+        },
+        {
+          "step": "constraint:m4",
+          "action": "per-record license tagging",
+          "source_id": "m4"
+        },
+        {
+          "step": "pipeline:m4",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "m4"
+        },
+        {
+          "step": "gate:m4",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "m4"
+        }
+      ]
+    },
+    {
+      "batch_id": "B05",
+      "order": 5,
+      "theme": "Science & engineering (verified benchmarks + open)",
+      "steps": [
+        {
+          "step": "resolve:c1",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "c1"
+        },
+        {
+          "step": "download:c1",
+          "action": "download to raw/06_science_engineering/c1/ (est 4.5 MB)",
+          "source_id": "c1"
+        },
+        {
+          "step": "constraint:c1",
+          "action": "reserve official test split as EVAL (do not SFT the test split)",
+          "source_id": "c1"
+        },
+        {
+          "step": "pipeline:c1",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "c1"
+        },
+        {
+          "step": "gate:c1",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "c1"
+        },
+        {
+          "step": "resolve:c2",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "c2"
+        },
+        {
+          "step": "download:c2",
+          "action": "download to raw/06_science_engineering/c2/ (est 161.0 MB)",
+          "source_id": "c2"
+        },
+        {
+          "step": "constraint:c2",
+          "action": "reserve official test split as EVAL",
+          "source_id": "c2"
+        },
+        {
+          "step": "constraint:c2",
+          "action": "convert MC to open-form for SFT",
+          "source_id": "c2"
+        },
+        {
+          "step": "pipeline:c2",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "c2"
+        },
+        {
+          "step": "gate:c2",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "c2"
+        },
+        {
+          "step": "resolve:c3",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "c3"
+        },
+        {
+          "step": "download:c3",
+          "action": "download to raw/06_science_engineering/c3/ (est 114.4 MB)",
+          "source_id": "c3"
+        },
+        {
+          "step": "pipeline:c3",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "c3"
+        },
+        {
+          "step": "gate:c3",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "c3"
+        },
+        {
+          "step": "resolve:c5",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "c5"
+        },
+        {
+          "step": "download:c5",
+          "action": "download to raw/06_science_engineering/c5/ (est 52.8 GB)",
+          "source_id": "c5"
+        },
+        {
+          "step": "pipeline:c5",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "c5"
+        },
+        {
+          "step": "gate:c5",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "c5"
+        },
+        {
+          "step": "resolve:c6",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "c6"
+        },
+        {
+          "step": "download:c6",
+          "action": "download to raw/06_science_engineering/c6/ (est 19.1 MB)",
+          "source_id": "c6"
+        },
+        {
+          "step": "pipeline:c6",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "c6"
+        },
+        {
+          "step": "gate:c6",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "c6"
+        }
+      ]
+    },
+    {
+      "batch_id": "B06",
+      "order": 6,
+      "theme": "Hardware (licensed + capped synthetic)",
+      "steps": [
+        {
+          "step": "resolve:h2",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "h2"
+        },
+        {
+          "step": "download:h2",
+          "action": "download to raw/05_hardware_engineering/h2/ (est 4.7 GB)",
+          "source_id": "h2"
+        },
+        {
+          "step": "constraint:h2",
+          "action": "convert only well-sourced sections",
+          "source_id": "h2"
+        },
+        {
+          "step": "constraint:h2",
+          "action": "cite arXiv id",
+          "source_id": "h2"
+        },
+        {
+          "step": "pipeline:h2",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "h2"
+        },
+        {
+          "step": "gate:h2",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "h2"
+        },
+        {
+          "step": "resolve:h1",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "h1"
+        },
+        {
+          "step": "download:h1",
+          "action": "download to raw/05_hardware_engineering/h1/ (est 286.1 MB)",
+          "source_id": "h1"
+        },
+        {
+          "step": "constraint:h1",
+          "action": "attribution per article",
+          "source_id": "h1"
+        },
+        {
+          "step": "constraint:h1",
+          "action": "share-alike tracking",
+          "source_id": "h1"
+        },
+        {
+          "step": "pipeline:h1",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "h1"
+        },
+        {
+          "step": "gate:h1",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "h1"
+        },
+        {
+          "step": "resolve:h4",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "h4"
+        },
+        {
+          "step": "download:h4",
+          "action": "download to raw/05_hardware_engineering/h4/ (est 18.6 GB)",
+          "source_id": "h4"
+        },
+        {
+          "step": "constraint:h4",
+          "action": "attribution per record",
+          "source_id": "h4"
+        },
+        {
+          "step": "constraint:h4",
+          "action": "filter score>=5",
+          "source_id": "h4"
+        },
+        {
+          "step": "constraint:h4",
+          "action": "strip PII",
+          "source_id": "h4"
+        },
+        {
+          "step": "pipeline:h4",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "h4"
+        },
+        {
+          "step": "gate:h4",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "h4"
+        },
+        {
+          "step": "resolve:h6",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "h6"
+        },
+        {
+          "step": "generate:h6",
+          "action": "generate locally from licensed docs via doc2qa (no download); human review mandatory",
+          "source_id": "h6"
+        },
+        {
+          "step": "constraint:h6",
+          "action": "capped <=15% of hardware category (<=12)",
+          "source_id": "h6"
+        },
+        {
+          "step": "constraint:h6",
+          "action": "only from licensed docs h1/h2/h4",
+          "source_id": "h6"
+        },
+        {
+          "step": "constraint:h6",
+          "action": "every record human-reviewed before curated/",
+          "source_id": "h6"
+        },
+        {
+          "step": "pipeline:h6",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "h6"
+        },
+        {
+          "step": "gate:h6",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "h6"
+        },
+        {
+          "step": "resolve:h3",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "h3"
+        },
+        {
+          "step": "download:h3",
+          "action": "download to raw/05_hardware_engineering/h3/ (est 190.7 MB)",
+          "source_id": "h3"
+        },
+        {
+          "step": "constraint:h3",
+          "action": "RE-VERIFY license on access",
+          "source_id": "h3"
+        },
+        {
+          "step": "constraint:h3",
+          "action": "attribution per article",
+          "source_id": "h3"
+        },
+        {
+          "step": "constraint:h3",
+          "action": "share-alike tracking",
+          "source_id": "h3"
+        },
+        {
+          "step": "pipeline:h3",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "h3"
+        },
+        {
+          "step": "gate:h3",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "h3"
+        }
+      ]
+    },
+    {
+      "batch_id": "B07",
+      "order": 7,
+      "theme": "Business (licensed + capped synthetic)",
+      "steps": [
+        {
+          "step": "resolve:b1",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "b1"
+        },
+        {
+          "step": "download:b1",
+          "action": "download to raw/07_business_knowledge/b1/ (est 76.3 MB)",
+          "source_id": "b1"
+        },
+        {
+          "step": "pipeline:b1",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "b1"
+        },
+        {
+          "step": "gate:b1",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "b1"
+        },
+        {
+          "step": "resolve:b3",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "b3"
+        },
+        {
+          "step": "download:b3",
+          "action": "download to raw/07_business_knowledge/b3/ (est 9.3 GB)",
+          "source_id": "b3"
+        },
+        {
+          "step": "constraint:b3",
+          "action": "attribution per record",
+          "source_id": "b3"
+        },
+        {
+          "step": "constraint:b3",
+          "action": "filter score>=5",
+          "source_id": "b3"
+        },
+        {
+          "step": "constraint:b3",
+          "action": "strip PII",
+          "source_id": "b3"
+        },
+        {
+          "step": "pipeline:b3",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "b3"
+        },
+        {
+          "step": "gate:b3",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "b3"
+        },
+        {
+          "step": "resolve:b2",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "b2"
+        },
+        {
+          "step": "download:b2",
+          "action": "download to raw/07_business_knowledge/b2/ (est 286.1 MB)",
+          "source_id": "b2"
+        },
+        {
+          "step": "constraint:b2",
+          "action": "attribution per article",
+          "source_id": "b2"
+        },
+        {
+          "step": "constraint:b2",
+          "action": "share-alike tracking",
+          "source_id": "b2"
+        },
+        {
+          "step": "pipeline:b2",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "b2"
+        },
+        {
+          "step": "gate:b2",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "b2"
+        },
+        {
+          "step": "resolve:b4",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "b4"
+        },
+        {
+          "step": "generate:b4",
+          "action": "generate locally from licensed docs via doc2qa (no download); human review mandatory",
+          "source_id": "b4"
+        },
+        {
+          "step": "constraint:b4",
+          "action": "capped <=15% of business category (<=10)",
+          "source_id": "b4"
+        },
+        {
+          "step": "constraint:b4",
+          "action": "only from licensed docs b1/b2",
+          "source_id": "b4"
+        },
+        {
+          "step": "constraint:b4",
+          "action": "every record human-reviewed",
+          "source_id": "b4"
+        },
+        {
+          "step": "pipeline:b4",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "b4"
+        },
+        {
+          "step": "gate:b4",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "b4"
+        }
+      ]
+    },
+    {
+      "batch_id": "B08",
+      "order": 8,
+      "theme": "Creative (licensed PD + capped synthetic)",
+      "steps": [
+        {
+          "step": "resolve:r1",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "r1"
+        },
+        {
+          "step": "download:r1",
+          "action": "download to raw/08_creative_knowledge/r1/ (est 9.3 GB)",
+          "source_id": "r1"
+        },
+        {
+          "step": "pipeline:r1",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "r1"
+        },
+        {
+          "step": "gate:r1",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "r1"
+        },
+        {
+          "step": "resolve:r2",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "r2"
+        },
+        {
+          "step": "download:r2",
+          "action": "download to raw/08_creative_knowledge/r2/ (est 286.1 MB)",
+          "source_id": "r2"
+        },
+        {
+          "step": "constraint:r2",
+          "action": "attribution per article",
+          "source_id": "r2"
+        },
+        {
+          "step": "constraint:r2",
+          "action": "share-alike tracking",
+          "source_id": "r2"
+        },
+        {
+          "step": "pipeline:r2",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "r2"
+        },
+        {
+          "step": "gate:r2",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "r2"
+        },
+        {
+          "step": "resolve:r3",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "r3"
+        },
+        {
+          "step": "generate:r3",
+          "action": "generate locally from licensed docs via doc2qa (no download); human review mandatory",
+          "source_id": "r3"
+        },
+        {
+          "step": "constraint:r3",
+          "action": "capped <=20% of creative category (<=10)",
+          "source_id": "r3"
+        },
+        {
+          "step": "constraint:r3",
+          "action": "only from PD/Gutenberg style text",
+          "source_id": "r3"
+        },
+        {
+          "step": "constraint:r3",
+          "action": "every record human-reviewed",
+          "source_id": "r3"
+        },
+        {
+          "step": "pipeline:r3",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "r3"
+        },
+        {
+          "step": "gate:r3",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "r3"
+        }
+      ]
+    },
+    {
+      "batch_id": "B09",
+      "order": 9,
+      "theme": "Personal assistant (derived + capped synthetic)",
+      "steps": [
+        {
+          "step": "resolve:f1",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "f1"
+        },
+        {
+          "step": "download:f1",
+          "action": "download to raw/09_personal_assistant/f1/ (est 100.7 MB)",
+          "source_id": "f1"
+        },
+        {
+          "step": "constraint:f1",
+          "action": "sub-filter: planning / productivity / workflow turns only",
+          "source_id": "f1"
+        },
+        {
+          "step": "pipeline:f1",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "f1"
+        },
+        {
+          "step": "gate:f1",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "f1"
+        },
+        {
+          "step": "resolve:s6",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "s6"
+        },
+        {
+          "step": "download:s6",
+          "action": "download to raw/09_personal_assistant/s6/ (est 1.9 GB)",
+          "source_id": "s6"
+        },
+        {
+          "step": "constraint:s6",
+          "action": "sub-filter: planning / agentic / decision-making",
+          "source_id": "s6"
+        },
+        {
+          "step": "pipeline:s6",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "s6"
+        },
+        {
+          "step": "gate:s6",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "s6"
+        },
+        {
+          "step": "resolve:g1",
+          "action": "resolve source_id -> registry; confirm status in (accepted,review)",
+          "source_id": "g1"
+        },
+        {
+          "step": "generate:g1",
+          "action": "generate locally from licensed docs via doc2qa (no download); human review mandatory",
+          "source_id": "g1"
+        },
+        {
+          "step": "constraint:g1",
+          "action": "capped <=20% of 09 category (<=10)",
+          "source_id": "g1"
+        },
+        {
+          "step": "constraint:g1",
+          "action": "only from licensed planning docs",
+          "source_id": "g1"
+        },
+        {
+          "step": "constraint:g1",
+          "action": "every record human-reviewed",
+          "source_id": "g1"
+        },
+        {
+          "step": "pipeline:g1",
+          "action": "clean -> dedup -> convert -> quality_score",
+          "source_id": "g1"
+        },
+        {
+          "step": "gate:g1",
+          "action": "apply quality_gate (score>=7); human review -> verified",
+          "source_id": "g1"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "f1",
+      "name": "OpenAssistant/oasst1",
+      "license": "Apache-2.0",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 40,
+      "est_bytes": 105611404,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "f6",
+      "name": "nvidia/HelpSteer2",
+      "license": "CC-BY-4.0",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 25,
+      "est_bytes": 30000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "f5",
+      "name": "HuggingFaceH4/ultrafeedback_binarized",
+      "license": "MIT",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 20,
+      "est_bytes": 800000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "f2",
+      "name": "databricks/dolly-15k",
+      "license": "CC-BY-4.0",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 15,
+      "est_bytes": 16000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "s1",
+      "name": "princeton-nlp/SWE-bench",
+      "license": "MIT",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 50,
+      "est_bytes": 416515483,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "s4",
+      "name": "sahil2801/CodeAlpaca-20k",
+      "license": "Apache-2.0",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 40,
+      "est_bytes": 40000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "s6",
+      "name": "allenai/tulu-3-sft-mixture",
+      "license": "ODC-BY",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 50,
+      "est_bytes": 2000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "s5",
+      "name": "StackExchange Code (Stack Overflow / Unix & Linux)",
+      "license": "CC-BY-SA-4.0",
+      "license_class": "share-alike",
+      "denied": false,
+      "registry_status": "review",
+      "target": 40,
+      "est_bytes": 60000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "s2",
+      "name": "bigcode/the-stack-v2",
+      "license": "BigCode Open RAIL-M",
+      "license_class": "use-restricted",
+      "denied": false,
+      "registry_status": "review",
+      "target": 20,
+      "est_bytes": 3000000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "y1",
+      "name": "Linux man-pages + kernel documentation",
+      "license": "Public domain / MIT-style (man-pages); GFDL for some kernel docs",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 30,
+      "est_bytes": 500000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "y2",
+      "name": "Kubernetes official documentation",
+      "license": "CC-BY-4.0",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 30,
+      "est_bytes": 300000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "y3",
+      "name": "Docker official documentation",
+      "license": "Apache-2.0",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 25,
+      "est_bytes": 200000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "y4",
+      "name": "Arch Wiki",
+      "license": "CC-BY-SA-4.0",
+      "license_class": "share-alike",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 25,
+      "est_bytes": 400000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "y5",
+      "name": "StackExchange Systems (ServerFault / Unix.SE / Super User / Network Engineering)",
+      "license": "CC-BY-SA-4.0",
+      "license_class": "share-alike",
+      "denied": false,
+      "registry_status": "review",
+      "target": 40,
+      "est_bytes": 80000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "m1",
+      "name": "arXiv (cs.LG / cs.CL / cs.AI / stat.ML)",
+      "license": "arXiv non-exclusive license",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 50,
+      "est_bytes": 50000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "m2",
+      "name": "Open-Platypus",
+      "license": "Apache-2.0",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 50,
+      "est_bytes": 120000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "m3",
+      "name": "allenai/tulu-3-sft-mixture (ML/LLM/agent subsets)",
+      "license": "ODC-BY",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 70,
+      "est_bytes": 1000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "m4",
+      "name": "EleutherAI/the_pile (permissive subsets)",
+      "license": "Mixed (per-subset)",
+      "license_class": "review",
+      "denied": false,
+      "registry_status": "review",
+      "target": 30,
+      "est_bytes": 100000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "c1",
+      "name": "openai/gsm8k",
+      "license": "MIT",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 25,
+      "est_bytes": 4676934,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "c2",
+      "name": "cais/mmlu",
+      "license": "MIT",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 25,
+      "est_bytes": 168856915,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "c3",
+      "name": "Hendrycks MATH (competition_math)",
+      "license": "MIT",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 20,
+      "est_bytes": 120000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "c5",
+      "name": "open-web-math/open-web-math",
+      "license": "ODC-BY",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 15,
+      "est_bytes": 56651995057,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "c6",
+      "name": "allenai/sciq",
+      "license": "CC-BY-4.0",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 15,
+      "est_bytes": 20000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "h2",
+      "name": "arXiv hardware/arch (eess.AR, cs.AR, cs.CR)",
+      "license": "arXiv non-exclusive license",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 30,
+      "est_bytes": 5000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "h1",
+      "name": "Wikipedia hardware articles",
+      "license": "CC-BY-SA-3.0",
+      "license_class": "share-alike",
+      "denied": false,
+      "registry_status": "review",
+      "target": 20,
+      "est_bytes": 300000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "h4",
+      "name": "StackExchange Electronics + Electrical Engineering",
+      "license": "CC-BY-SA-4.0",
+      "license_class": "share-alike",
+      "denied": false,
+      "registry_status": "review",
+      "target": 15,
+      "est_bytes": 20000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "h6",
+      "name": "Atlas synthetic-from-docs (hardware)",
+      "license": "CC-BY-4.0 (generated; human-review)",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "review",
+      "target": 12,
+      "est_bytes": 0,
+      "synthetic": true,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "h3",
+      "name": "WikiChip / SemiWiki-style semiconductor wikis",
+      "license": "CC-BY-SA-4.0 (verify)",
+      "license_class": "share-alike",
+      "denied": false,
+      "registry_status": "review",
+      "target": 3,
+      "est_bytes": 200000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "b1",
+      "name": "gbharti/finance-alpaca",
+      "license": "MIT",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 30,
+      "est_bytes": 80000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "b3",
+      "name": "StackExchange Finance/Economics/Personal Finance",
+      "license": "CC-BY-SA-4.0",
+      "license_class": "share-alike",
+      "denied": false,
+      "registry_status": "review",
+      "target": 20,
+      "est_bytes": 10000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "b2",
+      "name": "Wikipedia business / economics / strategy",
+      "license": "CC-BY-SA-3.0",
+      "license_class": "share-alike",
+      "denied": false,
+      "registry_status": "review",
+      "target": 15,
+      "est_bytes": 300000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "b4",
+      "name": "Atlas synthetic-from-cases (business)",
+      "license": "CC-BY-4.0 (generated; human-review)",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "review",
+      "target": 5,
+      "est_bytes": 0,
+      "synthetic": true,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "r1",
+      "name": "Project Gutenberg",
+      "license": "Public Domain (US)",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 30,
+      "est_bytes": 10000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "r2",
+      "name": "Wikipedia creative-writing / rhetoric / design",
+      "license": "CC-BY-SA-3.0",
+      "license_class": "share-alike",
+      "denied": false,
+      "registry_status": "review",
+      "target": 10,
+      "est_bytes": 300000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "r3",
+      "name": "Atlas synthetic-from-style (creative)",
+      "license": "CC-BY-4.0 (generated; human-review)",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "review",
+      "target": 10,
+      "est_bytes": 0,
+      "synthetic": true,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "f1",
+      "name": "OpenAssistant/oasst1 (planning/productivity turns)",
+      "license": "Apache-2.0",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 20,
+      "est_bytes": 105611404,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "s6",
+      "name": "allenai/tulu-3-sft-mixture (planning/agentic subset)",
+      "license": "ODC-BY",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "accepted",
+      "target": 20,
+      "est_bytes": 2000000000,
+      "synthetic": false,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    },
+    {
+      "source_id": "g1",
+      "name": "Atlas synthetic-from-licensed (personal assistant)",
+      "license": "CC-BY-4.0 (generated; human-review)",
+      "license_class": "permissive",
+      "denied": false,
+      "registry_status": "review",
+      "target": 10,
+      "est_bytes": 0,
+      "synthetic": true,
+      "schema_fields_mapped": 12,
+      "schema_missing_fields": []
+    }
+  ]
+}

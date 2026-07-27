@@ -1,0 +1,1329 @@
+{
+  "manifest_version": "0.1.0",
+  "atlas_target_version": "v0.1",
+  "generated": "2026-07-27",
+  "status": "planned",
+  "policy_ref": "docs/source_policy.md",
+  "registry_ref": "metadata/source_registry.json",
+  "total_target_examples": 1000,
+  "global_constraints": {
+    "commercial_safe_only": true,
+    "denied_licenses": [
+      "cc-by-nc*",
+      "cc-by-nd*",
+      "proprietary",
+      "all-rights-reserved",
+      "unknown"
+    ],
+    "synthetic_model_generated_cap_pct": 5,
+    "doc_derived_instruction_allowed": true,
+    "doc_derived_not_counted_as_synthetic": true,
+    "per_record_license_required": true,
+    "quality_gate": {
+      "min_quality_score": 7,
+      "verified_required": true
+    },
+    "share_alike_attribution_required": true,
+    "rail_m_subset_permissive_only": true,
+    "rejected_sources_never_ingested": true
+  },
+  "category_targets": {
+    "01_foundation": 100,
+    "02_software_engineering": 200,
+    "03_system_engineering": 150,
+    "04_ai_machine_learning": 200,
+    "05_hardware_engineering": 80,
+    "06_science_engineering": 100,
+    "07_business_knowledge": 70,
+    "08_creative_knowledge": 50,
+    "09_personal_assistant": 50
+  },
+  "success_criteria": [
+    "Curated total == 1000 examples, per-category within +/-5% of target.",
+    "100% pass schema validation + denied-license gate (scripts/validate_dataset.py).",
+    "100% have quality_score >= 7 AND verified == true.",
+    "Zero records sourced from rejected sources (status=='rejected' in registry).",
+    "Model-generated synthetic share <= 5% of total (cap).",
+    "No 'unknown' licenses; every record carries resolved license + attribution metadata where required.",
+    "Held-out 10% (100 ex) stratified test split frozen; external benchmarks (MMLU/GSM8K test) reserved.",
+    "Reproducibility: every curated record traceable to a manifest entry (source_id + batch_id)."
+  ],
+  "evaluation_plan": {
+    "held_out_split": {
+      "method": "stratified 10% from curated v0.1",
+      "size": 100
+    },
+    "external_benchmarks": [
+      "cais/mmlu (test)",
+      "openai/gsm8k (test)"
+    ],
+    "quality_metric": "quality_score>=7 and verified==true on 100% of curated"
+  },
+  "batches": [
+    {
+      "batch_id": "B01",
+      "order": 1,
+      "theme": "Foundation SFT seed (verified, permissive)",
+      "priority": "tier-2",
+      "datasets": [
+        {
+          "source_id": "f1",
+          "name": "OpenAssistant/oasst1",
+          "url": "https://huggingface.co/datasets/OpenAssistant/oasst1",
+          "license": "Apache-2.0",
+          "license_class": "permissive",
+          "license_constraints": [],
+          "category": "01_foundation",
+          "subcategories": [
+            "instruction-following",
+            "general-reasoning",
+            "communication"
+          ],
+          "target_examples": 40,
+          "extraction_method": "tree_to_ranked_turn",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "Apache-2.0; credit recommended",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Extract top-ranked assistant turns from message trees; drop unranked/low branches."
+        },
+        {
+          "source_id": "f6",
+          "name": "nvidia/HelpSteer2",
+          "url": "https://huggingface.co/datasets/nvidia/HelpSteer2",
+          "license": "CC-BY-4.0",
+          "license_class": "permissive",
+          "license_constraints": [],
+          "category": "01_foundation",
+          "subcategories": [
+            "communication",
+            "problem-solving"
+          ],
+          "target_examples": 25,
+          "extraction_method": "conversation_to_turn",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "CC-BY-4.0",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Human-annotated on helpfulness/correctness/coherence/complexity/verbosity."
+        },
+        {
+          "source_id": "f5",
+          "name": "HuggingFaceH4/ultrafeedback_binarized",
+          "url": "https://huggingface.co/datasets/HuggingFaceH4/ultrafeedback_binarized",
+          "license": "MIT",
+          "license_class": "permissive",
+          "license_constraints": [],
+          "category": "01_foundation",
+          "subcategories": [
+            "problem-solving",
+            "instruction-following"
+          ],
+          "target_examples": 20,
+          "extraction_method": "chosen_response_pair",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "MIT",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Use binarized 'chosen' responses as SFT after factual-accuracy filter (model-generated chosen)."
+        },
+        {
+          "source_id": "f2",
+          "name": "databricks/dolly-15k",
+          "url": "https://huggingface.co/datasets/databricks/dolly-15k",
+          "license": "CC-BY-4.0",
+          "license_class": "permissive",
+          "license_constraints": [
+            "gated: accept HF terms; re-verify license on download; record date_added in sources.json"
+          ],
+          "category": "01_foundation",
+          "subcategories": [
+            "instruction-following",
+            "communication"
+          ],
+          "target_examples": 15,
+          "extraction_method": "prompt_response_pair",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "CC-BY-4.0",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Human-written; access-gated (HF 401 at check). License reported CC-BY-4.0 by Databricks."
+        }
+      ]
+    },
+    {
+      "batch_id": "B02",
+      "order": 2,
+      "theme": "Software engineering (verified + community)",
+      "priority": "tier-2/3",
+      "datasets": [
+        {
+          "source_id": "s1",
+          "name": "princeton-nlp/SWE-bench",
+          "url": "https://huggingface.co/datasets/princeton-nlp/SWE-bench",
+          "license": "MIT",
+          "license_class": "permissive",
+          "license_constraints": [],
+          "category": "02_software_engineering",
+          "subcategories": [
+            "debugging",
+            "software-architecture"
+          ],
+          "target_examples": 50,
+          "extraction_method": "issue_to_patch",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "MIT",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "human_review",
+            "test_validate"
+          ],
+          "notes": "Gold patches verified by FAIL_TO_PASS/PASS_TO_PASS. Optionally run test harness to validate."
+        },
+        {
+          "source_id": "s4",
+          "name": "sahil2801/CodeAlpaca-20k",
+          "url": "https://huggingface.co/datasets/sahil2801/CodeAlpaca-20k",
+          "license": "Apache-2.0",
+          "license_class": "permissive",
+          "license_constraints": [],
+          "category": "02_software_engineering",
+          "subcategories": [
+            "algorithms",
+            "programming"
+          ],
+          "target_examples": 40,
+          "extraction_method": "instruction_pair",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "Apache-2.0",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Code instruction pairs; synthetic upstream but clean & permissive. Under global synthetic cap."
+        },
+        {
+          "source_id": "s6",
+          "name": "allenai/tulu-3-sft-mixture",
+          "url": "https://huggingface.co/datasets/allenai/tulu-3-sft-mixture",
+          "license": "ODC-BY",
+          "license_class": "permissive",
+          "license_constraints": [
+            "audit per-subset licenses; exclude any NC/restricted sub-component"
+          ],
+          "category": "02_software_engineering",
+          "subcategories": [
+            "open-source",
+            "programming",
+            "code-review"
+          ],
+          "target_examples": 50,
+          "extraction_method": "subset_sample",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "ODC-BY",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "license_audit",
+            "human_review"
+          ],
+          "notes": "Sample code/agent subsets; verify sub-licenses before ingest."
+        },
+        {
+          "source_id": "s5",
+          "name": "StackExchange Code (Stack Overflow / Unix & Linux)",
+          "url": "https://archive.org/details/stackexchange",
+          "license": "CC-BY-SA-4.0",
+          "license_class": "share-alike",
+          "license_constraints": [
+            "attribution per record (post id + author + URL)",
+            "share-alike tracking in source.license",
+            "filter score>=5",
+            "strip PII"
+          ],
+          "category": "02_software_engineering",
+          "subcategories": [
+            "code-review",
+            "debugging",
+            "programming"
+          ],
+          "target_examples": 40,
+          "extraction_method": "xml_dump_parse",
+          "synthetic": false,
+          "attribution_required": true,
+          "attribution_note": "CC-BY-SA-4.0 requires attribution + share-alike; record upstream license per record",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "parse",
+            "clean",
+            "filter_score",
+            "strip_pii",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Voted Q&A; parse XML dumps; keep accepted/voted answers only."
+        },
+        {
+          "source_id": "s2",
+          "name": "bigcode/the-stack-v2",
+          "url": "https://huggingface.co/datasets/bigcode/the-stack-v2",
+          "license": "BigCode Open RAIL-M",
+          "license_class": "use-restricted",
+          "license_constraints": [
+            "subset to per-file permissive licenses only",
+            "document RAIL-M behavioral use clauses",
+            "record RAIL-M obligations in ingestion runbook"
+          ],
+          "category": "02_software_engineering",
+          "subcategories": [
+            "programming"
+          ],
+          "target_examples": 20,
+          "extraction_method": "subset_permissive_license",
+          "synthetic": false,
+          "attribution_required": true,
+          "attribution_note": "RAIL-M is use-restricted; only permissively-licensed file subset ingested",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "license_filter",
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Small filtered subset; RAIL-M NOT bulk-ingested. Defer if subsetting tooling unavailable."
+        }
+      ]
+    },
+    {
+      "batch_id": "B03",
+      "order": 3,
+      "theme": "System engineering (Tier-1 docs + community)",
+      "priority": "tier-1/3",
+      "datasets": [
+        {
+          "source_id": "y1",
+          "name": "Linux man-pages + kernel documentation",
+          "url": "https://www.kernel.org/doc/html/latest/",
+          "license": "Public domain / MIT-style (man-pages); GFDL for some kernel docs",
+          "license_class": "permissive",
+          "license_constraints": [
+            "pin doc version; flag any GFDL subsections for separate tracking"
+          ],
+          "category": "03_system_engineering",
+          "subcategories": [
+            "linux",
+            "performance-tuning"
+          ],
+          "target_examples": 30,
+          "extraction_method": "doc_to_instruction",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "Man-pages public domain; kernel docs mostly MIT/GFDL",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "scrape_pin_version",
+            "doc2qa",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "Tier-1 authoritative. Convert reference docs to Q&A/instruction via template (not model-gen)."
+        },
+        {
+          "source_id": "y2",
+          "name": "Kubernetes official documentation",
+          "url": "https://kubernetes.io/docs/",
+          "license": "CC-BY-4.0",
+          "license_class": "permissive",
+          "license_constraints": [
+            "pin doc version"
+          ],
+          "category": "03_system_engineering",
+          "subcategories": [
+            "kubernetes",
+            "docker"
+          ],
+          "target_examples": 30,
+          "extraction_method": "doc_to_instruction",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "CC-BY-4.0",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "scrape_pin_version",
+            "doc2qa",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "Tier-1. Convert+verify; pin version to avoid drift."
+        },
+        {
+          "source_id": "y3",
+          "name": "Docker official documentation",
+          "url": "https://docs.docker.com/",
+          "license": "Apache-2.0",
+          "license_class": "permissive",
+          "license_constraints": [
+            "pin doc version"
+          ],
+          "category": "03_system_engineering",
+          "subcategories": [
+            "docker"
+          ],
+          "target_examples": 25,
+          "extraction_method": "doc_to_instruction",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "Apache-2.0",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "scrape_pin_version",
+            "doc2qa",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "Tier-1 docs repo (Apache-2.0)."
+        },
+        {
+          "source_id": "y4",
+          "name": "Arch Wiki",
+          "url": "https://wiki.archlinux.org/",
+          "license": "CC-BY-SA-4.0",
+          "license_class": "share-alike",
+          "license_constraints": [
+            "attribution per article",
+            "share-alike tracking",
+            "restructure wiki tone to task format"
+          ],
+          "category": "03_system_engineering",
+          "subcategories": [
+            "linux",
+            "networking",
+            "virtualization"
+          ],
+          "target_examples": 25,
+          "extraction_method": "doc_to_instruction",
+          "synthetic": false,
+          "attribution_required": true,
+          "attribution_note": "CC-BY-SA-4.0 requires attribution + share-alike",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "scrape",
+            "doc2qa",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "Exceptional practical systems depth; well-sourced."
+        },
+        {
+          "source_id": "y5",
+          "name": "StackExchange Systems (ServerFault / Unix.SE / Super User / Network Engineering)",
+          "url": "https://archive.org/details/stackexchange",
+          "license": "CC-BY-SA-4.0",
+          "license_class": "share-alike",
+          "license_constraints": [
+            "attribution per record",
+            "share-alike tracking",
+            "filter score>=5",
+            "strip PII"
+          ],
+          "category": "03_system_engineering",
+          "subcategories": [
+            "networking",
+            "linux",
+            "performance-tuning"
+          ],
+          "target_examples": 40,
+          "extraction_method": "xml_dump_parse",
+          "synthetic": false,
+          "attribution_required": true,
+          "attribution_note": "CC-BY-SA-4.0 requires attribution + share-alike",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "parse",
+            "clean",
+            "filter_score",
+            "strip_pii",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Real troubleshooting Q&A; expert-voted."
+        }
+      ]
+    },
+    {
+      "batch_id": "B04",
+      "order": 4,
+      "theme": "AI & ML (Tier-1 + verified open)",
+      "priority": "tier-1/2",
+      "datasets": [
+        {
+          "source_id": "m1",
+          "name": "arXiv (cs.LG / cs.CL / cs.AI / stat.ML)",
+          "url": "https://arxiv.org/",
+          "license": "arXiv non-exclusive license",
+          "license_class": "permissive",
+          "license_constraints": [
+            "convert only well-sourced sections",
+            "cite arXiv id",
+            "flag preprint status"
+          ],
+          "category": "04_ai_machine_learning",
+          "subcategories": [
+            "transformers",
+            "llm",
+            "rag",
+            "mlops"
+          ],
+          "target_examples": 50,
+          "extraction_method": "doc_to_instruction",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "arXiv non-exclusive license (preprint, no copyright transfer)",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "fetch_abstract_sections",
+            "doc2qa",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "Tier-1 academic. Doc-derived instruction (not model-gen)."
+        },
+        {
+          "source_id": "m2",
+          "name": "Open-Platypus",
+          "url": "https://huggingface.co/datasets/garage-bAInd/Open-Platypus",
+          "license": "Apache-2.0",
+          "license_class": "permissive",
+          "license_constraints": [],
+          "category": "04_ai_machine_learning",
+          "subcategories": [
+            "machine-learning",
+            "deep-learning"
+          ],
+          "target_examples": 50,
+          "extraction_method": "instruction_pair",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "Apache-2.0",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Expert-curated science/math/code; some GPT-4 generated (verify factual claims)."
+        },
+        {
+          "source_id": "m3",
+          "name": "allenai/tulu-3-sft-mixture (ML/LLM/agent subsets)",
+          "url": "https://huggingface.co/datasets/allenai/tulu-3-sft-mixture",
+          "license": "ODC-BY",
+          "license_class": "permissive",
+          "license_constraints": [
+            "audit per-subset licenses; exclude NC/restricted"
+          ],
+          "category": "04_ai_machine_learning",
+          "subcategories": [
+            "llm",
+            "ai-agents",
+            "mlops"
+          ],
+          "target_examples": 70,
+          "extraction_method": "subset_sample",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "ODC-BY",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "license_audit",
+            "human_review"
+          ],
+          "notes": "ML/LLM/agent instruction sampling; verify sub-licenses."
+        },
+        {
+          "source_id": "m4",
+          "name": "EleutherAI/the_pile (permissive subsets)",
+          "url": "https://huggingface.co/datasets/EleutherAI/pile",
+          "license": "Mixed (per-subset)",
+          "license_class": "mixed",
+          "license_constraints": [
+            "subset ONLY to permissive components (arXiv, PubMed, FreeLaw, etc.)",
+            "exclude restricted subsets",
+            "per-record license tagging"
+          ],
+          "category": "04_ai_machine_learning",
+          "subcategories": [
+            "deep-learning",
+            "machine-learning"
+          ],
+          "target_examples": 30,
+          "extraction_method": "subset_permissive",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "Mixed; only permissive subsets ingested, each tagged",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "subset_license",
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Pretraining/knowledge complement. Subset strictly by license."
+        }
+      ]
+    },
+    {
+      "batch_id": "B05",
+      "order": 5,
+      "theme": "Science & engineering (verified benchmarks + open)",
+      "priority": "tier-2",
+      "datasets": [
+        {
+          "source_id": "c1",
+          "name": "openai/gsm8k",
+          "url": "https://huggingface.co/datasets/openai/gsm8k",
+          "license": "MIT",
+          "license_class": "permissive",
+          "license_constraints": [
+            "reserve official test split as EVAL (do not SFT the test split)"
+          ],
+          "category": "06_science_engineering",
+          "subcategories": [
+            "mathematics"
+          ],
+          "target_examples": 25,
+          "extraction_method": "cot_pair",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "MIT",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Gold chain-of-thought math; MIT."
+        },
+        {
+          "source_id": "c2",
+          "name": "cais/mmlu",
+          "url": "https://huggingface.co/datasets/cais/mmlu",
+          "license": "MIT",
+          "license_class": "permissive",
+          "license_constraints": [
+            "reserve official test split as EVAL",
+            "convert MC to open-form for SFT"
+          ],
+          "category": "06_science_engineering",
+          "subcategories": [
+            "physics",
+            "engineering-concepts"
+          ],
+          "target_examples": 25,
+          "extraction_method": "mc_to_openqa",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "MIT",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "convert",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "57-subject reasoning; MIT; doubles as held-out eval."
+        },
+        {
+          "source_id": "c3",
+          "name": "Hendrycks MATH (competition_math)",
+          "url": "https://huggingface.co/datasets/hendrycks/competition_math",
+          "license": "MIT",
+          "license_class": "permissive",
+          "license_constraints": [],
+          "category": "06_science_engineering",
+          "subcategories": [
+            "mathematics"
+          ],
+          "target_examples": 20,
+          "extraction_method": "cot_pair",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "MIT",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Hard competition math CoT; MIT."
+        },
+        {
+          "source_id": "c5",
+          "name": "open-web-math/open-web-math",
+          "url": "https://huggingface.co/datasets/open-web-math/open-web-math",
+          "license": "ODC-BY",
+          "license_class": "permissive",
+          "license_constraints": [],
+          "category": "06_science_engineering",
+          "subcategories": [
+            "mathematics"
+          ],
+          "target_examples": 15,
+          "extraction_method": "doc_to_instruction",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "ODC-BY",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "filter",
+            "doc2qa",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "Math-dense web; ODC-BY; convert+verify."
+        },
+        {
+          "source_id": "c6",
+          "name": "allenai/sciq",
+          "url": "https://huggingface.co/datasets/allenai/sciq",
+          "license": "CC-BY-4.0",
+          "license_class": "permissive",
+          "license_constraints": [],
+          "category": "06_science_engineering",
+          "subcategories": [
+            "engineering-concepts",
+            "physics"
+          ],
+          "target_examples": 15,
+          "extraction_method": "qa_pair",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "CC-BY-4.0",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Human-written science Q&A; CC-BY-4.0."
+        }
+      ]
+    },
+    {
+      "batch_id": "B06",
+      "order": 6,
+      "theme": "Hardware (licensed + capped synthetic)",
+      "priority": "tier-1/2/4",
+      "datasets": [
+        {
+          "source_id": "h2",
+          "name": "arXiv hardware/arch (eess.AR, cs.AR, cs.CR)",
+          "url": "https://arxiv.org/",
+          "license": "arXiv non-exclusive license",
+          "license_class": "permissive",
+          "license_constraints": [
+            "convert only well-sourced sections",
+            "cite arXiv id"
+          ],
+          "category": "05_hardware_engineering",
+          "subcategories": [
+            "validation",
+            "benchmarking"
+          ],
+          "target_examples": 30,
+          "extraction_method": "doc_to_instruction",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "arXiv non-exclusive license",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "fetch_sections",
+            "doc2qa",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "Tier-1 architecture/validation depth."
+        },
+        {
+          "source_id": "h1",
+          "name": "Wikipedia hardware articles",
+          "url": "https://www.wikipedia.org/",
+          "license": "CC-BY-SA-3.0",
+          "license_class": "share-alike",
+          "license_constraints": [
+            "attribution per article",
+            "share-alike tracking"
+          ],
+          "category": "05_hardware_engineering",
+          "subcategories": [
+            "cpu",
+            "gpu",
+            "embedded-systems"
+          ],
+          "target_examples": 20,
+          "extraction_method": "doc_to_instruction",
+          "synthetic": false,
+          "attribution_required": true,
+          "attribution_note": "CC-BY-SA-3.0 requires attribution + share-alike",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "scrape",
+            "doc2qa",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "Conceptual hardware coverage."
+        },
+        {
+          "source_id": "h4",
+          "name": "StackExchange Electronics + Electrical Engineering",
+          "url": "https://archive.org/details/stackexchange",
+          "license": "CC-BY-SA-4.0",
+          "license_class": "share-alike",
+          "license_constraints": [
+            "attribution per record",
+            "filter score>=5",
+            "strip PII"
+          ],
+          "category": "05_hardware_engineering",
+          "subcategories": [
+            "embedded-systems",
+            "firmware"
+          ],
+          "target_examples": 15,
+          "extraction_method": "xml_dump_parse",
+          "synthetic": false,
+          "attribution_required": true,
+          "attribution_note": "CC-BY-SA-4.0 requires attribution + share-alike",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "parse",
+            "clean",
+            "filter_score",
+            "strip_pii",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Real hardware Q&A."
+        },
+        {
+          "source_id": "h6",
+          "name": "Atlas synthetic-from-docs (hardware)",
+          "url": "raw/generated/",
+          "license": "CC-BY-4.0 (generated; human-review)",
+          "license_class": "synthetic-generated",
+          "license_constraints": [
+            "capped <=15% of hardware category (<=12)",
+            "only from licensed docs h1/h2/h4",
+            "every record human-reviewed before curated/"
+          ],
+          "category": "05_hardware_engineering",
+          "subcategories": [
+            "benchmarking",
+            "validation"
+          ],
+          "target_examples": 12,
+          "extraction_method": "doc2qa_synthetic",
+          "synthetic": true,
+          "attribution_required": false,
+          "attribution_note": "Generated from licensed text; CC-BY-4.0; human-review mandatory",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "generate_from_docs",
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Bridges sparse hardware category. Strictly capped + human-verified."
+        },
+        {
+          "source_id": "h3",
+          "name": "WikiChip / SemiWiki-style semiconductor wikis",
+          "url": "https://en.wikichip.org/",
+          "license": "CC-BY-SA-4.0 (verify)",
+          "license_class": "share-alike",
+          "license_constraints": [
+            "RE-VERIFY license on access",
+            "attribution per article",
+            "share-alike tracking"
+          ],
+          "category": "05_hardware_engineering",
+          "subcategories": [
+            "gpu",
+            "cpu"
+          ],
+          "target_examples": 3,
+          "extraction_method": "doc_to_instruction",
+          "synthetic": false,
+          "attribution_required": true,
+          "attribution_note": "CC-BY-SA-4.0 (verify terms)",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "verify_license",
+            "scrape",
+            "doc2qa",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "Microarchitecture depth; license must be re-confirmed."
+        }
+      ]
+    },
+    {
+      "batch_id": "B07",
+      "order": 7,
+      "theme": "Business (licensed + capped synthetic)",
+      "priority": "tier-2/3/4",
+      "datasets": [
+        {
+          "source_id": "b1",
+          "name": "gbharti/finance-alpaca",
+          "url": "https://huggingface.co/datasets/gbharti/finance-alpaca",
+          "license": "MIT",
+          "license_class": "permissive",
+          "license_constraints": [],
+          "category": "07_business_knowledge",
+          "subcategories": [
+            "finance"
+          ],
+          "target_examples": 30,
+          "extraction_method": "instruction_pair",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "MIT",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Finance instruction pairs; synthetic upstream but MIT + verify numeric claims."
+        },
+        {
+          "source_id": "b3",
+          "name": "StackExchange Finance/Economics/Personal Finance",
+          "url": "https://archive.org/details/stackexchange",
+          "license": "CC-BY-SA-4.0",
+          "license_class": "share-alike",
+          "license_constraints": [
+            "attribution per record",
+            "filter score>=5",
+            "strip PII"
+          ],
+          "category": "07_business_knowledge",
+          "subcategories": [
+            "finance",
+            "management"
+          ],
+          "target_examples": 20,
+          "extraction_method": "xml_dump_parse",
+          "synthetic": false,
+          "attribution_required": true,
+          "attribution_note": "CC-BY-SA-4.0 requires attribution + share-alike",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "parse",
+            "clean",
+            "filter_score",
+            "strip_pii",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Real finance/econ Q&A."
+        },
+        {
+          "source_id": "b2",
+          "name": "Wikipedia business / economics / strategy",
+          "url": "https://www.wikipedia.org/",
+          "license": "CC-BY-SA-3.0",
+          "license_class": "share-alike",
+          "license_constraints": [
+            "attribution per article",
+            "share-alike tracking"
+          ],
+          "category": "07_business_knowledge",
+          "subcategories": [
+            "strategy",
+            "entrepreneurship",
+            "management"
+          ],
+          "target_examples": 15,
+          "extraction_method": "doc_to_instruction",
+          "synthetic": false,
+          "attribution_required": true,
+          "attribution_note": "CC-BY-SA-3.0 requires attribution + share-alike",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "scrape",
+            "doc2qa",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "Conceptual business knowledge."
+        },
+        {
+          "source_id": "b4",
+          "name": "Atlas synthetic-from-cases (business)",
+          "url": "raw/generated/",
+          "license": "CC-BY-4.0 (generated; human-review)",
+          "license_class": "synthetic-generated",
+          "license_constraints": [
+            "capped <=15% of business category (<=10)",
+            "only from licensed docs b1/b2",
+            "every record human-reviewed"
+          ],
+          "category": "07_business_knowledge",
+          "subcategories": [
+            "entrepreneurship",
+            "strategy"
+          ],
+          "target_examples": 5,
+          "extraction_method": "doc2qa_synthetic",
+          "synthetic": true,
+          "attribution_required": false,
+          "attribution_note": "Generated from licensed text; CC-BY-4.0; human-review mandatory",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "generate_from_docs",
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Bridges sparse business category. Strictly capped + human-verified."
+        }
+      ]
+    },
+    {
+      "batch_id": "B08",
+      "order": 8,
+      "theme": "Creative (licensed PD + capped synthetic)",
+      "priority": "tier-1/2/4",
+      "datasets": [
+        {
+          "source_id": "r1",
+          "name": "Project Gutenberg",
+          "url": "https://www.gutenberg.org/",
+          "license": "Public Domain (US)",
+          "license_class": "permissive",
+          "license_constraints": [],
+          "category": "08_creative_knowledge",
+          "subcategories": [
+            "writing",
+            "storytelling"
+          ],
+          "target_examples": 30,
+          "extraction_method": "task_frame",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "Public Domain",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "fetch_pd",
+            "task_frame",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "PD literary works; frame as rewrite/summarize/continue tasks (never copy verbatim)."
+        },
+        {
+          "source_id": "r2",
+          "name": "Wikipedia creative-writing / rhetoric / design",
+          "url": "https://www.wikipedia.org/",
+          "license": "CC-BY-SA-3.0",
+          "license_class": "share-alike",
+          "license_constraints": [
+            "attribution per article",
+            "share-alike tracking"
+          ],
+          "category": "08_creative_knowledge",
+          "subcategories": [
+            "design",
+            "writing"
+          ],
+          "target_examples": 10,
+          "extraction_method": "doc_to_instruction",
+          "synthetic": false,
+          "attribution_required": true,
+          "attribution_note": "CC-BY-SA-3.0 requires attribution + share-alike",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "scrape",
+            "doc2qa",
+            "clean",
+            "score",
+            "human_review"
+          ],
+          "notes": "Conceptual writing/design knowledge."
+        },
+        {
+          "source_id": "r3",
+          "name": "Atlas synthetic-from-style (creative)",
+          "url": "raw/generated/",
+          "license": "CC-BY-4.0 (generated; human-review)",
+          "license_class": "synthetic-generated",
+          "license_constraints": [
+            "capped <=20% of creative category (<=10)",
+            "only from PD/Gutenberg style text",
+            "every record human-reviewed"
+          ],
+          "category": "08_creative_knowledge",
+          "subcategories": [
+            "creativity",
+            "design"
+          ],
+          "target_examples": 10,
+          "extraction_method": "doc2qa_synthetic",
+          "synthetic": true,
+          "attribution_required": false,
+          "attribution_note": "Generated grounded in PD text; CC-BY-4.0; human-review mandatory",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "generate_from_docs",
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Bridges creative category. Strictly capped + human-verified."
+        }
+      ]
+    },
+    {
+      "batch_id": "B09",
+      "order": 9,
+      "theme": "Personal assistant (derived + capped synthetic)",
+      "priority": "tier-2/4 (lowest confidence)",
+      "datasets": [
+        {
+          "source_id": "f1",
+          "name": "OpenAssistant/oasst1 (planning/productivity turns)",
+          "url": "https://huggingface.co/datasets/OpenAssistant/oasst1",
+          "license": "Apache-2.0",
+          "license_class": "permissive",
+          "license_constraints": [
+            "sub-filter: planning / productivity / workflow turns only"
+          ],
+          "category": "09_personal_assistant",
+          "subcategories": [
+            "planning",
+            "workflow-optimization",
+            "productivity"
+          ],
+          "target_examples": 20,
+          "extraction_method": "tree_to_ranked_turn_filtered",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "Apache-2.0",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "filter_planning",
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Reuse oasst1; slice planning/productivity conversations (cross-category use of f1)."
+        },
+        {
+          "source_id": "s6",
+          "name": "allenai/tulu-3-sft-mixture (planning/agentic subset)",
+          "url": "https://huggingface.co/datasets/allenai/tulu-3-sft-mixture",
+          "license": "ODC-BY",
+          "license_class": "permissive",
+          "license_constraints": [
+            "sub-filter: planning / agentic / decision-making"
+          ],
+          "category": "09_personal_assistant",
+          "subcategories": [
+            "decision-making",
+            "planning"
+          ],
+          "target_examples": 20,
+          "extraction_method": "subset_sample_filtered",
+          "synthetic": false,
+          "attribution_required": false,
+          "attribution_note": "ODC-BY",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "filter_planning",
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Reuse tulu-3; slice planning/agentic examples (cross-category use of s6)."
+        },
+        {
+          "source_id": "g1",
+          "name": "Atlas synthetic-from-licensed (personal assistant)",
+          "url": "raw/generated/",
+          "license": "CC-BY-4.0 (generated; human-review)",
+          "license_class": "synthetic-generated",
+          "license_constraints": [
+            "capped <=20% of 09 category (<=10)",
+            "only from licensed planning docs",
+            "every record human-reviewed"
+          ],
+          "category": "09_personal_assistant",
+          "subcategories": [
+            "productivity",
+            "decision-making"
+          ],
+          "target_examples": 10,
+          "extraction_method": "doc2qa_synthetic",
+          "synthetic": true,
+          "attribution_required": false,
+          "attribution_note": "Generated from licensed text; CC-BY-4.0; human-review mandatory",
+          "quality_gate": {
+            "min_quality_score": 7
+          },
+          "preprocess": [
+            "generate_from_docs",
+            "clean",
+            "dedup",
+            "score",
+            "human_review"
+          ],
+          "notes": "Lowest-confidence batch; capped synthetic bridges the gap until richer licensed PA sources found."
+        }
+      ]
+    }
+  ]
+}

@@ -42,6 +42,23 @@ VALID_CATEGORIES = {
 VALID_TYPES = {"instruction", "conversation", "qa", "reasoning"}
 VALID_ROLES = {"system", "user", "assistant", "tool"}
 ID_RE = re.compile(r"^[a-z0-9_-]+$")
+
+# Commercial-safety gate (docs/source_policy.md): Atlas must stay commercial-safe
+# from day one. Any record whose resolved license matches a DENIED pattern is a
+# hard validation failure — never promoted to curated/.
+#   - CC-BY-NC*  : non-commercial -> blocks commercial use
+#   - CC-BY-ND*  : no-derivatives -> cannot reshape into instruction format
+#   - proprietary / all-rights-reserved : no redistribution/derivative rights
+#   - unknown    : cannot confirm commercial safety (denied until resolved)
+# Permissive (MIT/Apache/BSD/CC-BY*/CC0/ODC-BY/PD/arXiv) and conditional
+# (CC-BY-SA*, *-rail-m / RAIL) licenses are NOT denied here; CC-BY-SA/RAIL-M
+# carry tracking + subsetting obligations handled in the ingestion runbook.
+_DENIED_LICENSE_PATTERNS = ("cc-by-nc", "cc-by-nd", "proprietary", "all-rights-reserved", "unknown")
+def is_denied_license(lic: str) -> bool:
+    if not isinstance(lic, str):
+        return True
+    low = lic.strip().lower()
+    return any(p in low for p in _DENIED_LICENSE_PATTERNS)
 TAG_RE = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
@@ -104,6 +121,8 @@ def structural_errors(rec: dict) -> list[str]:
         lic = src.get("license")
         if not isinstance(lic, str) or not lic:
             errs.append("source.license missing")
+        elif is_denied_license(lic):
+            errs.append(f"source.license DENIED by commercial-safety policy: {lic!r} (NC/proprietary/ambiguous -> never ingest)")
         if src.get("date") not in (None, "",) and not (isinstance(src.get("date"), str) and DATE_RE.match(src["date"])):
             errs.append("source.date not ISO-8601 (YYYY-MM-DD)")
 

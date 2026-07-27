@@ -1,0 +1,8 @@
+{
+  "applied": [
+    "001_initial_schema",
+    "002_add_lineage",
+    "003_add_training_views"
+  ],
+  "applied_by": "atlas ingest-pilot"
+}

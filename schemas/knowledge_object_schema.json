@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.dataset/schemas/knowledge_object_schema.json",
+  "title": "Atlas Canonical Knowledge Object (Phase 3A superset)",
+  "description": "Canonical Knowledge Object record used in Atlas Phase 3A pilot and beyond. Extends the base canonical record (schemas/dataset_schema.json) with knowledge-type, canonical-answer, attribution, verification status, lineage, and training-view eligibility. A Knowledge Object is fully valid against the base schema when the base-required fields are present. This schema is additive: new fields are added via migrations/ and never require editing historical records manually.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id", "category", "subcategory", "difficulty", "knowledge_type",
+    "canonical_answer", "metadata", "source_attribution", "license", "tags",
+    "quality_score", "verification_status", "lineage", "training_view_eligibility",
+    "messages"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$",
+      "minLength": 3, "maxLength": 128,
+      "description": "Globally unique stable identifier: <category>_<subcategory>_<zero-padded-seq>."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "01_foundation", "02_software_engineering", "03_system_engineering",
+        "04_ai_machine_learning", "05_hardware_engineering", "06_science_engineering",
+        "07_business_knowledge", "08_creative_knowledge", "09_personal_assistant"
+      ]
+    },
+    "subcategory": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "difficulty": {
+      "type": "integer", "minimum": 0, "maximum": 3,
+      "description": "0=unassessed, 1=easy, 2=medium, 3=hard."
+    },
+    "knowledge_type": {
+      "type": "string",
+      "enum": ["fact", "procedure", "concept", "reasoning", "code", "reference", "creative"],
+      "description": "Kind of knowledge the object conveys."
+    },
+    "canonical_answer": {
+      "type": "string",
+      "description": "The authoritative answer text (a normalized extract of the assistant turn)."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Free-form structured metadata (e.g. language, generated flags, source confidence).",
+      "additionalProperties": true,
+      "properties": {
+        "language": { "type": "string", "pattern": "^[a-z]{2}(-[A-Z]{2})?$" },
+        "synthetic": { "type": "boolean" },
+        "model_generated": { "type": "boolean" },
+        "source_confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    },
+    "source_attribution": {
+      "type": "object",
+      "description": "Provenance required for every object (commercial-safety + share-alike compliance).",
+      "additionalProperties": false,
+      "required": ["source_id", "name", "url", "license", "attribution_text"],
+      "properties": {
+        "source_id": { "type": "string", "description": "FK to metadata/source_registry.json id." },
+        "name": { "type": "string" },
+        "url": { "type": "string", "maxLength": 2048 },
+        "license": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "attribution_text": { "type": "string", "description": "Full attribution string (required for CC-BY-SA).", "maxLength": 2000 },
+        "access_date": { "type": "string", "pattern": "^(\\d{4}-\\d{2}-\\d{2})?$" },
+        "share_alike": { "type": "boolean", "description": "True when upstream license is CC-BY-SA (attribution + share-alike obligation)." }
+      }
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1, "maxLength": 64,
+      "description": "Resolved SPDX/human-readable license (never 'unknown' at curated stage)."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+      "uniqueItems": true, "maxItems": 20
+    },
+    "quality_score": {
+      "type": "integer", "minimum": 0, "maximum": 10,
+      "description": "Heuristic + human quality score; Phase 3A gate requires >= 8.5."
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["pending", "approved", "rejected", "needs_revision"],
+      "description": "Human-review queue state. Pilot promotes nothing automatically."
+    },
+    "lineage": {
+      "type": "object",
+      "description": "Complete traceability chain for the object.",
+      "additionalProperties": false,
+      "required": ["source", "transformations", "knowledge_object", "curated_dataset", "training_view", "future_model"],
+      "properties": {
+        "source": { "type": "string", "description": "Origin (e.g. 'OpenAssistant/oasst1')." },
+        "transformations": {
+          "type": "array", "items": { "type": "string" },
+          "description": "Ordered pipeline stages applied (clean, dedup, convert, quality_score, migrate)."
+        },
+        "knowledge_object": { "type": "string", "description": "This object id." },
+        "curated_dataset": { "type": "string", "description": "Target curated set (e.g. 'curated/v0.1')." },
+        "training_view": { "type": "string", "description": "Future view ids eligible, e.g. 'qwen,llama,deepseek'." },
+        "future_model": { "type": "string", "description": "Intended downstream model class (e.g. '8B-class LLM')." }
+      }
+    },
+    "training_view_eligibility": {
+      "type": "object",
+      "description": "Which future training views this object can support (placeholder generation only).",
+      "additionalProperties": false,
+      "required": ["qwen", "llama", "deepseek"],
+      "properties": {
+        "qwen": { "type": "boolean" },
+        "llama": { "type": "boolean" },
+        "deepseek": { "type": "boolean" }
+      }
+    },
+    "messages": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "chat_schema.json#/$defs/message" },
+      "description": "Canonical conversation turns (user + assistant minimum)."
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "Backwards-compatible mirror of verification_status in {approved} state. True only when verification_status == 'approved'."
+    },
+    "notes": { "type": "string", "maxLength": 2000, "default": "" }
+  }
+}

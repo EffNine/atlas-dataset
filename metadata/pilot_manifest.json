@@ -1,0 +1,43 @@
+{
+  "pilot": "phase-3a",
+  "date": "2026-07-27",
+  "attempted": 100,
+  "accepted": 100,
+  "rejected": 0,
+  "duplicates": 0,
+  "license_blocked": 0,
+  "ko_validation_failures": 0,
+  "by_category": {
+    "01_foundation": 10,
+    "02_software_engineering": 20,
+    "03_system_engineering": 15,
+    "04_ai_machine_learning": 20,
+    "06_science_engineering": 10,
+    "05_hardware_engineering": 8,
+    "07_business_knowledge": 7,
+    "08_creative_knowledge": 5,
+    "09_personal_assistant": 5
+  },
+  "license_stats": {
+    "Apache-2.0": 26,
+    "CC-BY-4.0": 13,
+    "MIT": 23,
+    "ODC-BY": 15,
+    "CC-BY-SA-4.0": 10,
+    "CC-BY-SA-3.0": 4,
+    "arXiv non-exclusive license": 4,
+    "Public Domain (US)": 5
+  },
+  "review_states": {
+    "pending": 100,
+    "approved": 0,
+    "rejected": 0,
+    "needs_revision": 0
+  },
+  "avg_quality": 9.0,
+  "outputs": {
+    "curated": "/Users/afnanrudy/Github-Projects/ai-datasets/atlas-dataset/curated/v0.1/pilot_candidates.jsonl",
+    "review_queue": "/Users/afnanrudy/Github-Projects/ai-datasets/atlas-dataset/review_queue",
+    "training_views": "/Users/afnanrudy/Github-Projects/ai-datasets/atlas-dataset/training_views"
+  }
+}
