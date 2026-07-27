@@ -1,0 +1,2582 @@
+{
+  "cohort": "phase4b_expansion",
+  "version": "v0.2",
+  "generated_at": "2026-07-27T13:27:53.433870+00:00",
+  "counts": {
+    "total": 150,
+    "by_category": {
+      "01_foundation": 15,
+      "02_software_engineering": 30,
+      "03_system_engineering": 22,
+      "04_ai_machine_learning": 30,
+      "05_hardware_engineering": 12,
+      "06_science_engineering": 15,
+      "07_business_knowledge": 11,
+      "08_creative_knowledge": 8,
+      "09_personal_assistant": 7
+    },
+    "by_review_status": {
+      "pending": 150
+    }
+  },
+  "review_package": {
+    "instructions": "review/v0.2/instructions.md",
+    "checklist": "review/v0.2/checklist.md",
+    "template": "review/v0.2/template.json",
+    "filled_reviews": "review/v0.2/filled_reviews.jsonl"
+  },
+  "state_source_of_truth": "metadata/v0.2_review_manifest.json",
+  "release_blocked": true,
+  "review_roadmap": [
+    {
+      "record_id": "f1_01_foundation_instruction_following_0001",
+      "category": "01_foundation",
+      "source_id": "f1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Explain supervised learning.",
+        "assistant_message_canonical": "Supervised learning trains models on labeled data to map inputs to outputs.",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 0.933
+      }
+    },
+    {
+      "record_id": "f2_01_foundation_general_reasoning_0002",
+      "category": "01_foundation",
+      "source_id": "f2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "A square is a rectangle. A rectangle is a parallelogram. Is a square a parallelogram?",
+        "assistant_message_canonical": "Yes \u2014 by transitive property of the included-in relation.",
+        "license": "CC-BY-4.0 (gated; verify on access)",
+        "quality_score": 7,
+        "confidence": 0.89
+      }
+    },
+    {
+      "record_id": "f3_01_foundation_instruction_following_0003",
+      "category": "01_foundation",
+      "source_id": "f3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Describe the bias-variance tradeoff.",
+        "assistant_message_canonical": "The balance between a model fitting training data (low bias) and generalizing to new data (low variance).",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "f4_01_foundation_general_reasoning_0004",
+      "category": "01_foundation",
+      "source_id": "f4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Prove the sum of two even numbers is even.",
+        "assistant_message_canonical": "Let 2a and 2b be even numbers. Sum = 2a + 2b = 2(a+b), divisible by 2, hence even.",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 0.942
+      }
+    },
+    {
+      "record_id": "f5_01_foundation_instruction_following_0005",
+      "category": "01_foundation",
+      "source_id": "f5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Explain cross-validation.",
+        "assistant_message_canonical": "Evaluates model performance by partitioning data into folds, training on some and testing on held-out folds, rotating across all.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "f6_01_foundation_general_reasoning_0006",
+      "category": "01_foundation",
+      "source_id": "f6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "If X > Y and Y > Z, conclusion?",
+        "assistant_message_canonical": "X > Z, by transitivity of the greater-than relation.",
+        "license": "CC-BY-4.0",
+        "quality_score": 7,
+        "confidence": 0.873
+      }
+    },
+    {
+      "record_id": "f7_01_foundation_instruction_following_0007",
+      "category": "01_foundation",
+      "source_id": "f7",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Precision vs recall.",
+        "assistant_message_canonical": "Precision = correct positive predictions / all positive predictions. Recall = correct positive predictions / all actual positives.",
+        "license": "MIT (verify; PII caution)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "f1_01_foundation_general_reasoning_0008",
+      "category": "01_foundation",
+      "source_id": "f1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "What is the pigeonhole principle?",
+        "assistant_message_canonical": "If n > m items go into m containers, at least one container has more than one item.",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 0.954
+      }
+    },
+    {
+      "record_id": "f2_01_foundation_instruction_following_0009",
+      "category": "01_foundation",
+      "source_id": "f2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Explain embeddings.",
+        "assistant_message_canonical": "Dense vector representations of discrete objects where semantic similarity maps to geometric proximity in continuous space.",
+        "license": "CC-BY-4.0 (gated; verify on access)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "f3_01_foundation_general_reasoning_0010",
+      "category": "01_foundation",
+      "source_id": "f3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "If a number is divisible by 6, is it divisible by 3?",
+        "assistant_message_canonical": "Yes \u2014 6 = 2\u00d73, so divisibility by 6 implies divisibility by both factors.",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 0.9
+      }
+    },
+    {
+      "record_id": "f4_01_foundation_instruction_following_0011",
+      "category": "01_foundation",
+      "source_id": "f4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Describe the Transformer architecture.",
+        "assistant_message_canonical": "Self-attention-based architecture replacing recurrence and convolutions for sequence-to-sequence modeling.",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "f5_01_foundation_general_reasoning_0012",
+      "category": "01_foundation",
+      "source_id": "f5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "A square is a rectangle. A rectangle is a parallelogram. Is a square a parallelogram?",
+        "assistant_message_canonical": "Yes \u2014 by transitive property of the included-in relation.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 0.89
+      }
+    },
+    {
+      "record_id": "f6_01_foundation_instruction_following_0013",
+      "category": "01_foundation",
+      "source_id": "f6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Explain supervised learning.",
+        "assistant_message_canonical": "Supervised learning trains models on labeled data to map inputs to outputs.",
+        "license": "CC-BY-4.0",
+        "quality_score": 7,
+        "confidence": 0.933
+      }
+    },
+    {
+      "record_id": "f7_01_foundation_general_reasoning_0014",
+      "category": "01_foundation",
+      "source_id": "f7",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Prove the sum of two even numbers is even.",
+        "assistant_message_canonical": "Let 2a and 2b be even numbers. Sum = 2a + 2b = 2(a+b), divisible by 2, hence even.",
+        "license": "MIT (verify; PII caution)",
+        "quality_score": 7,
+        "confidence": 0.942
+      }
+    },
+    {
+      "record_id": "f1_01_foundation_instruction_following_0015",
+      "category": "01_foundation",
+      "source_id": "f1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Describe the bias-variance tradeoff.",
+        "assistant_message_canonical": "The balance between a model fitting training data (low bias) and generalizing to new data (low variance).",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0001",
+      "category": "02_software_engineering",
+      "source_id": "s1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Stack vs queue.",
+        "assistant_message_canonical": "Stack: LIFO (last-in, first-out). Queue: FIFO (first-in, first-out).",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 0.902
+      }
+    },
+    {
+      "record_id": "s2_02_software_engineering_debugging_0002",
+      "category": "02_software_engineering",
+      "source_id": "s2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Approach to debugging production issues.",
+        "assistant_message_canonical": "1) Reproduce safely. 2) Check logs/metrics. 3) Isolate component. 4) Hypothesis. 5) Test. 6) Apply fix with monitoring.",
+        "license": "BigCode Open RAIL-M (use-restricted)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s3_02_software_engineering_software_architecture_0003",
+      "category": "02_software_engineering",
+      "source_id": "s3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "API versioning strategies.",
+        "assistant_message_canonical": "URL (/v1/, /v2/), header-based (Accept version), query parameter (?version=2).",
+        "license": "BigCode Open RAIL-M",
+        "quality_score": 7,
+        "confidence": 0.96
+      }
+    },
+    {
+      "record_id": "s4_02_software_engineering_algorithms_0004",
+      "category": "02_software_engineering",
+      "source_id": "s4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Dynamic programming.",
+        "assistant_message_canonical": "Solves problems via overlapping subproblems, storing results (memoization/tabulation) to avoid redundant computation.",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0005",
+      "category": "02_software_engineering",
+      "source_id": "s5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Abstract class vs interface.",
+        "assistant_message_canonical": "Abstract class can have both abstract and concrete methods. Interface defines only signatures implementing classes must fulfill.",
+        "license": "CC-BY-SA-4.0 (attribution + share-alike)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s6_02_software_engineering_debugging_0006",
+      "category": "02_software_engineering",
+      "source_id": "s6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "What is a stack trace?",
+        "assistant_message_canonical": "List of active stack frames at execution point, read bottom (entry) to top (most recent call), showing function, file, line.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s7_02_software_engineering_software_architecture_0007",
+      "category": "02_software_engineering",
+      "source_id": "s7",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Microservices architecture.",
+        "assistant_message_canonical": "Decomposes app into small independently deployable services with own data stores, communicating over HTTP/gRPC or message queues.",
+        "license": "Apache-2.0 (verify; repo 404 at check)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s8_02_software_engineering_algorithms_0008",
+      "category": "02_software_engineering",
+      "source_id": "s8",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Quicksort.",
+        "assistant_message_canonical": "Chooses pivot, partitions array into <pivot and >pivot, recursively sorts each partition. Avg O(n log n).",
+        "license": "Apache-2.0 (gated; verify)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0009",
+      "category": "02_software_engineering",
+      "source_id": "s1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "TCP vs UDP.",
+        "assistant_message_canonical": "TCP: connection-oriented, reliable, ordered. UDP: connectionless, faster, no delivery guarantee.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s2_02_software_engineering_debugging_0010",
+      "category": "02_software_engineering",
+      "source_id": "s2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Segmentation fault causes.",
+        "assistant_message_canonical": "Null pointer dereference, buffer overflow, use-after-free, stack overflow \u2014 accessing memory without permission.",
+        "license": "BigCode Open RAIL-M (use-restricted)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s3_02_software_engineering_software_architecture_0011",
+      "category": "02_software_engineering",
+      "source_id": "s3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Circuit Breaker pattern.",
+        "assistant_message_canonical": "Monitors failures in external calls; opens circuit after threshold, fails fast instead of timing out.",
+        "license": "BigCode Open RAIL-M",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s4_02_software_engineering_algorithms_0012",
+      "category": "02_software_engineering",
+      "source_id": "s4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Binary search tree.",
+        "assistant_message_canonical": "BST where left subtree < node < right subtree, enabling O(log n) average search.",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 0.952
+      }
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0013",
+      "category": "02_software_engineering",
+      "source_id": "s5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Binary search time complexity.",
+        "assistant_message_canonical": "O(log n) \u2014 each step halves the search space.",
+        "license": "CC-BY-SA-4.0 (attribution + share-alike)",
+        "quality_score": 7,
+        "confidence": 0.85
+      }
+    },
+    {
+      "record_id": "s6_02_software_engineering_debugging_0014",
+      "category": "02_software_engineering",
+      "source_id": "s6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Debug a Python memory leak.",
+        "assistant_message_canonical": "Use tracemalloc, objgraph, pympler. Profile memory over time, identify growth patterns, check circular refs and unclosed resources.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s7_02_software_engineering_software_architecture_0015",
+      "category": "02_software_engineering",
+      "source_id": "s7",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "API versioning strategies.",
+        "assistant_message_canonical": "URL (/v1/, /v2/), header-based (Accept version), query parameter (?version=2).",
+        "license": "Apache-2.0 (verify; repo 404 at check)",
+        "quality_score": 7,
+        "confidence": 0.96
+      }
+    },
+    {
+      "record_id": "s8_02_software_engineering_algorithms_0016",
+      "category": "02_software_engineering",
+      "source_id": "s8",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Dijkstra's algorithm.",
+        "assistant_message_canonical": "Finds shortest path from source to all nodes in weighted graph with non-negative edges, using a priority queue.",
+        "license": "Apache-2.0 (gated; verify)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0017",
+      "category": "02_software_engineering",
+      "source_id": "s1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Memory leak and prevention.",
+        "assistant_message_canonical": "Unused memory not freed. Prevent via RAII, garbage collection awareness, proper resource cleanup.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s2_02_software_engineering_debugging_0018",
+      "category": "02_software_engineering",
+      "source_id": "s2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Race condition and avoidance.",
+        "assistant_message_canonical": "Program behavior depends on concurrent event timing. Avoid with locks, mutexes, atomics, thread-safe structures.",
+        "license": "BigCode Open RAIL-M (use-restricted)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s3_02_software_engineering_software_architecture_0019",
+      "category": "02_software_engineering",
+      "source_id": "s3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Microservices architecture.",
+        "assistant_message_canonical": "Decomposes app into small independently deployable services with own data stores, communicating over HTTP/gRPC or message queues.",
+        "license": "BigCode Open RAIL-M",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s4_02_software_engineering_algorithms_0020",
+      "category": "02_software_engineering",
+      "source_id": "s4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Heap data structure.",
+        "assistant_message_canonical": "Complete binary tree with heap property (min or max). Used for priority queues with O(log n) insert/extract.",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0021",
+      "category": "02_software_engineering",
+      "source_id": "s5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Stack vs queue.",
+        "assistant_message_canonical": "Stack: LIFO (last-in, first-out). Queue: FIFO (first-in, first-out).",
+        "license": "CC-BY-SA-4.0 (attribution + share-alike)",
+        "quality_score": 7,
+        "confidence": 0.902
+      }
+    },
+    {
+      "record_id": "s6_02_software_engineering_debugging_0022",
+      "category": "02_software_engineering",
+      "source_id": "s6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Approach to debugging production issues.",
+        "assistant_message_canonical": "1) Reproduce safely. 2) Check logs/metrics. 3) Isolate component. 4) Hypothesis. 5) Test. 6) Apply fix with monitoring.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s7_02_software_engineering_software_architecture_0023",
+      "category": "02_software_engineering",
+      "source_id": "s7",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Circuit Breaker pattern.",
+        "assistant_message_canonical": "Monitors failures in external calls; opens circuit after threshold, fails fast instead of timing out.",
+        "license": "Apache-2.0 (verify; repo 404 at check)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s8_02_software_engineering_algorithms_0024",
+      "category": "02_software_engineering",
+      "source_id": "s8",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Dynamic programming.",
+        "assistant_message_canonical": "Solves problems via overlapping subproblems, storing results (memoization/tabulation) to avoid redundant computation.",
+        "license": "Apache-2.0 (gated; verify)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0025",
+      "category": "02_software_engineering",
+      "source_id": "s1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Abstract class vs interface.",
+        "assistant_message_canonical": "Abstract class can have both abstract and concrete methods. Interface defines only signatures implementing classes must fulfill.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s2_02_software_engineering_debugging_0026",
+      "category": "02_software_engineering",
+      "source_id": "s2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "What is a stack trace?",
+        "assistant_message_canonical": "List of active stack frames at execution point, read bottom (entry) to top (most recent call), showing function, file, line.",
+        "license": "BigCode Open RAIL-M (use-restricted)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s3_02_software_engineering_software_architecture_0027",
+      "category": "02_software_engineering",
+      "source_id": "s3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "API versioning strategies.",
+        "assistant_message_canonical": "URL (/v1/, /v2/), header-based (Accept version), query parameter (?version=2).",
+        "license": "BigCode Open RAIL-M",
+        "quality_score": 7,
+        "confidence": 0.96
+      }
+    },
+    {
+      "record_id": "s4_02_software_engineering_algorithms_0028",
+      "category": "02_software_engineering",
+      "source_id": "s4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Quicksort.",
+        "assistant_message_canonical": "Chooses pivot, partitions array into <pivot and >pivot, recursively sorts each partition. Avg O(n log n).",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "category": "02_software_engineering",
+      "source_id": "s5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "TCP vs UDP.",
+        "assistant_message_canonical": "TCP: connection-oriented, reliable, ordered. UDP: connectionless, faster, no delivery guarantee.",
+        "license": "CC-BY-SA-4.0 (attribution + share-alike)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "s6_02_software_engineering_debugging_0030",
+      "category": "02_software_engineering",
+      "source_id": "s6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Segmentation fault causes.",
+        "assistant_message_canonical": "Null pointer dereference, buffer overflow, use-after-free, stack overflow \u2014 accessing memory without permission.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "y1_03_system_engineering_linux_0001",
+      "category": "03_system_engineering",
+      "source_id": "y1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Process vs thread.",
+        "assistant_message_canonical": "Process has own memory space. Threads share process memory; lighter weight context switching.",
+        "license": "Public domain / MIT-style (man-pages); GFDL for some kernel docs",
+        "quality_score": 8,
+        "confidence": 0.995
+      }
+    },
+    {
+      "record_id": "y2_03_system_engineering_docker_0002",
+      "category": "03_system_engineering",
+      "source_id": "y2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Docker vs VM.",
+        "assistant_message_canonical": "Containers share host OS kernel and are lightweight. VMs virtualize hardware with full guest OS.",
+        "license": "CC-BY-4.0 (docs repo)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "y3_03_system_engineering_networking_0003",
+      "category": "03_system_engineering",
+      "source_id": "y3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "DNS resolution.",
+        "assistant_message_canonical": "Domain \u2192 IP via resolver \u2192 root \u2192 TLD \u2192 authoritative server hierarchy.",
+        "license": "Apache-2.0 (docs repo)",
+        "quality_score": 7,
+        "confidence": 0.891
+      }
+    },
+    {
+      "record_id": "y4_03_system_engineering_kubernetes_0004",
+      "category": "03_system_engineering",
+      "source_id": "y4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Kubernetes Namespaces.",
+        "assistant_message_canonical": "Virtual clusters within physical cluster for resource isolation and multi-tenancy.",
+        "license": "CC-BY-SA-4.0 (some GFDL)",
+        "quality_score": 7,
+        "confidence": 0.973
+      }
+    },
+    {
+      "record_id": "y5_03_system_engineering_devops_0005",
+      "category": "03_system_engineering",
+      "source_id": "y5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Infrastructure as Code.",
+        "assistant_message_canonical": "Managing infra via machine-readable definition files (Terraform, Ansible), not manual processes.",
+        "license": "CC-BY-SA-4.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "y6_03_system_engineering_linux_0006",
+      "category": "03_system_engineering",
+      "source_id": "y6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Purpose of /etc/fstab.",
+        "assistant_message_canonical": "Defines static filesystem info: mount points, types, options for boot-time mounting.",
+        "license": "CC-BY-SA-4.0 (Red Hat Customer Portal docs)",
+        "quality_score": 7,
+        "confidence": 0.98
+      }
+    },
+    {
+      "record_id": "y7_03_system_engineering_docker_0007",
+      "category": "03_system_engineering",
+      "source_id": "y7",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "What is a Docker image?",
+        "assistant_message_canonical": "Read-only template for creating containers. Built from a Dockerfile as layered filesystems.",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "y1_03_system_engineering_networking_0008",
+      "category": "03_system_engineering",
+      "source_id": "y1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "DNS resolution.",
+        "assistant_message_canonical": "Domain \u2192 IP via resolver \u2192 root \u2192 TLD \u2192 authoritative server hierarchy.",
+        "license": "Public domain / MIT-style (man-pages); GFDL for some kernel docs",
+        "quality_score": 7,
+        "confidence": 0.891
+      }
+    },
+    {
+      "record_id": "y2_03_system_engineering_kubernetes_0009",
+      "category": "03_system_engineering",
+      "source_id": "y2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Kubernetes Namespaces.",
+        "assistant_message_canonical": "Virtual clusters within physical cluster for resource isolation and multi-tenancy.",
+        "license": "CC-BY-4.0 (docs repo)",
+        "quality_score": 7,
+        "confidence": 0.973
+      }
+    },
+    {
+      "record_id": "y3_03_system_engineering_devops_0010",
+      "category": "03_system_engineering",
+      "source_id": "y3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "CI/CD benefits.",
+        "assistant_message_canonical": "Automates building, testing, deploying. Faster feedback, reduced risk, consistent releases.",
+        "license": "Apache-2.0 (docs repo)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "y4_03_system_engineering_linux_0011",
+      "category": "03_system_engineering",
+      "source_id": "y4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Hard link vs symlink.",
+        "assistant_message_canonical": "Hard link = another directory entry pointing to same inode. Symlink = points to file path, can cross filesystems.",
+        "license": "CC-BY-SA-4.0 (some GFDL)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "y5_03_system_engineering_docker_0012",
+      "category": "03_system_engineering",
+      "source_id": "y5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Persisting data in Docker.",
+        "assistant_message_canonical": "Volumes (managed, outside layers) or bind mounts (host dir mapped). Survive container removal.",
+        "license": "CC-BY-SA-4.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "y6_03_system_engineering_networking_0013",
+      "category": "03_system_engineering",
+      "source_id": "y6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "DNS resolution.",
+        "assistant_message_canonical": "Domain \u2192 IP via resolver \u2192 root \u2192 TLD \u2192 authoritative server hierarchy.",
+        "license": "CC-BY-SA-4.0 (Red Hat Customer Portal docs)",
+        "quality_score": 7,
+        "confidence": 0.891
+      }
+    },
+    {
+      "record_id": "y7_03_system_engineering_kubernetes_0014",
+      "category": "03_system_engineering",
+      "source_id": "y7",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Kubernetes Namespaces.",
+        "assistant_message_canonical": "Virtual clusters within physical cluster for resource isolation and multi-tenancy.",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 7,
+        "confidence": 0.973
+      }
+    },
+    {
+      "record_id": "y1_03_system_engineering_devops_0015",
+      "category": "03_system_engineering",
+      "source_id": "y1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Blue-green deployment.",
+        "assistant_message_canonical": "Two identical environments; traffic shifted gradually for easy rollback by switching back.",
+        "license": "Public domain / MIT-style (man-pages); GFDL for some kernel docs",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "y2_03_system_engineering_linux_0016",
+      "category": "03_system_engineering",
+      "source_id": "y2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "System V init runlevels.",
+        "assistant_message_canonical": "0=halt, 1=single user, 2=multi-user no networking, 3=multi-user with networking, 5=graphical, 6=reboot.",
+        "license": "CC-BY-4.0 (docs repo)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "y3_03_system_engineering_docker_0017",
+      "category": "03_system_engineering",
+      "source_id": "y3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Container networking.",
+        "assistant_message_canonical": "Bridge (default isolated), host (shares), overlay (multi-host), none (no networking).",
+        "license": "Apache-2.0 (docs repo)",
+        "quality_score": 7,
+        "confidence": 0.983
+      }
+    },
+    {
+      "record_id": "y4_03_system_engineering_networking_0018",
+      "category": "03_system_engineering",
+      "source_id": "y4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "DNS resolution.",
+        "assistant_message_canonical": "Domain \u2192 IP via resolver \u2192 root \u2192 TLD \u2192 authoritative server hierarchy.",
+        "license": "CC-BY-SA-4.0 (some GFDL)",
+        "quality_score": 7,
+        "confidence": 0.891
+      }
+    },
+    {
+      "record_id": "y5_03_system_engineering_kubernetes_0019",
+      "category": "03_system_engineering",
+      "source_id": "y5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Kubernetes Namespaces.",
+        "assistant_message_canonical": "Virtual clusters within physical cluster for resource isolation and multi-tenancy.",
+        "license": "CC-BY-SA-4.0",
+        "quality_score": 7,
+        "confidence": 0.973
+      }
+    },
+    {
+      "record_id": "y6_03_system_engineering_devops_0020",
+      "category": "03_system_engineering",
+      "source_id": "y6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Infrastructure as Code.",
+        "assistant_message_canonical": "Managing infra via machine-readable definition files (Terraform, Ansible), not manual processes.",
+        "license": "CC-BY-SA-4.0 (Red Hat Customer Portal docs)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "y7_03_system_engineering_linux_0021",
+      "category": "03_system_engineering",
+      "source_id": "y7",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Linux file permissions.",
+        "assistant_message_canonical": "Owner/group/others with rwx bits (4/2/1). Example: 755 = rwxr-xr-x.",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 7,
+        "confidence": 0.923
+      }
+    },
+    {
+      "record_id": "y1_03_system_engineering_docker_0022",
+      "category": "03_system_engineering",
+      "source_id": "y1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Docker Compose.",
+        "assistant_message_canonical": "Tool for defining/running multi-container apps via docker-compose.yml describing services, networks, volumes.",
+        "license": "Public domain / MIT-style (man-pages); GFDL for some kernel docs",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m1_04_ai_machine_learning_transformers_0001",
+      "category": "04_ai_machine_learning",
+      "source_id": "m1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Self-attention mechanism.",
+        "assistant_message_canonical": "Computes attention scores between all positions, each attending to every other, weighted by relevance.",
+        "license": "arXiv.org perpetual non-exclusive license (preprint; no copyright transfer)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m2_04_ai_machine_learning_mlops_0002",
+      "category": "04_ai_machine_learning",
+      "source_id": "m2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Feature engineering.",
+        "assistant_message_canonical": "Transforms raw data into features better representing the problem, improving prediction accuracy.",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m3_04_ai_machine_learning_rag_0003",
+      "category": "04_ai_machine_learning",
+      "source_id": "m3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "RAG embeddings.",
+        "assistant_message_canonical": "Dense vector representations (queries + docs) from encoder model; similarity determines retrieval relevance.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m4_04_ai_machine_learning_fine_tuning_0004",
+      "category": "04_ai_machine_learning",
+      "source_id": "m4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "QLoRA training config.",
+        "assistant_message_canonical": "4-bit quantization + LoRA rank 8-64, LoRA alpha scaled to rank, LR 1e-4 to 5e-4, small batch with grad accumulation.",
+        "license": "Mixed (per-subset; many ODC-BY/CC; some restricted)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m5_04_ai_machine_learning_transformers_0005",
+      "category": "04_ai_machine_learning",
+      "source_id": "m5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "LoRA and QLoRA.",
+        "assistant_message_canonical": "LoRA injects trainable low-rank matrices into frozen layers. QLoRA quantizes to 4-bit and applies LoRA.",
+        "license": "Custom / research-only (verify)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m6_04_ai_machine_learning_mlops_0006",
+      "category": "04_ai_machine_learning",
+      "source_id": "m6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "MLflow purpose.",
+        "assistant_message_canonical": "Platform for ML lifecycle: experiment tracking, packaging reproducible runs, model deployment.",
+        "license": "ODC-BY",
+        "quality_score": 8,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m1_04_ai_machine_learning_rag_0007",
+      "category": "04_ai_machine_learning",
+      "source_id": "m1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Chunking strategies for RAG.",
+        "assistant_message_canonical": "Fixed-size, sentence-boundary, recursive character, semantic chunking \u2014 splits docs for optimal retrieval.",
+        "license": "arXiv.org perpetual non-exclusive license (preprint; no copyright transfer)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m2_04_ai_machine_learning_fine_tuning_0008",
+      "category": "04_ai_machine_learning",
+      "source_id": "m2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "DPO (Direct Preference Optimization).",
+        "assistant_message_canonical": "Directly optimizes policy to match preferred over dispreferred responses; no separate reward model.",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m3_04_ai_machine_learning_transformers_0009",
+      "category": "04_ai_machine_learning",
+      "source_id": "m3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Self-attention mechanism.",
+        "assistant_message_canonical": "Computes attention scores between all positions, each attending to every other, weighted by relevance.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m4_04_ai_machine_learning_mlops_0010",
+      "category": "04_ai_machine_learning",
+      "source_id": "m4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "A/B testing ML models.",
+        "assistant_message_canonical": "Routes fraction of production traffic to new model vs baseline, comparing metrics before full rollout.",
+        "license": "Mixed (per-subset; many ODC-BY/CC; some restricted)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m5_04_ai_machine_learning_rag_0011",
+      "category": "04_ai_machine_learning",
+      "source_id": "m5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Vector similarity search.",
+        "assistant_message_canonical": "Finds nearest vectors in embedding space; used in RAG to retrieve relevant docs by semantic similarity.",
+        "license": "Custom / research-only (verify)",
+        "quality_score": 8,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m6_04_ai_machine_learning_fine_tuning_0012",
+      "category": "04_ai_machine_learning",
+      "source_id": "m6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "RLHF.",
+        "assistant_message_canonical": "Aligns outputs with human preferences via reward model trained on rankings, optimizing via PPO or DPO.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m1_04_ai_machine_learning_transformers_0013",
+      "category": "04_ai_machine_learning",
+      "source_id": "m1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "LoRA and QLoRA.",
+        "assistant_message_canonical": "LoRA injects trainable low-rank matrices into frozen layers. QLoRA quantizes to 4-bit and applies LoRA.",
+        "license": "arXiv.org perpetual non-exclusive license (preprint; no copyright transfer)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m2_04_ai_machine_learning_mlops_0014",
+      "category": "04_ai_machine_learning",
+      "source_id": "m2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Model registry.",
+        "assistant_message_canonical": "Centralized repository for storing, versioning, managing models with metadata and lifecycle stages.",
+        "license": "Apache-2.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m3_04_ai_machine_learning_rag_0015",
+      "category": "04_ai_machine_learning",
+      "source_id": "m3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "LLM hallucination.",
+        "assistant_message_canonical": "Model generates factually incorrect content as if true. RAG reduces by grounding in retrieved context.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m4_04_ai_machine_learning_fine_tuning_0016",
+      "category": "04_ai_machine_learning",
+      "source_id": "m4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Supervised Fine-Tuning (SFT).",
+        "assistant_message_canonical": "Trains model on labeled input-output pairs (instruction-response), teaching instruction-following style.",
+        "license": "Mixed (per-subset; many ODC-BY/CC; some restricted)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m5_04_ai_machine_learning_transformers_0017",
+      "category": "04_ai_machine_learning",
+      "source_id": "m5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Self-attention mechanism.",
+        "assistant_message_canonical": "Computes attention scores between all positions, each attending to every other, weighted by relevance.",
+        "license": "Custom / research-only (verify)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m6_04_ai_machine_learning_mlops_0018",
+      "category": "04_ai_machine_learning",
+      "source_id": "m6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Model drift detection.",
+        "assistant_message_canonical": "Monitors input/prediction statistical properties over time; triggers retraining on degradation.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m1_04_ai_machine_learning_rag_0019",
+      "category": "04_ai_machine_learning",
+      "source_id": "m1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Re-ranking in RAG.",
+        "assistant_message_canonical": "Cross-encoder or more powerful scorer reorders top-k retrieved docs by query relevance.",
+        "license": "arXiv.org perpetual non-exclusive license (preprint; no copyright transfer)",
+        "quality_score": 7,
+        "confidence": 0.99
+      }
+    },
+    {
+      "record_id": "m2_04_ai_machine_learning_fine_tuning_0020",
+      "category": "04_ai_machine_learning",
+      "source_id": "m2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Tokenizer role in fine-tuning.",
+        "assistant_message_canonical": "Converts text to token IDs; consistency between training and inference tokenization is critical.",
+        "license": "Apache-2.0",
+        "quality_score": 8,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m3_04_ai_machine_learning_transformers_0021",
+      "category": "04_ai_machine_learning",
+      "source_id": "m3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "LoRA and QLoRA.",
+        "assistant_message_canonical": "LoRA injects trainable low-rank matrices into frozen layers. QLoRA quantizes to 4-bit and applies LoRA.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m4_04_ai_machine_learning_mlops_0022",
+      "category": "04_ai_machine_learning",
+      "source_id": "m4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Feature engineering.",
+        "assistant_message_canonical": "Transforms raw data into features better representing the problem, improving prediction accuracy.",
+        "license": "Mixed (per-subset; many ODC-BY/CC; some restricted)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m5_04_ai_machine_learning_rag_0023",
+      "category": "04_ai_machine_learning",
+      "source_id": "m5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "RAG embeddings.",
+        "assistant_message_canonical": "Dense vector representations (queries + docs) from encoder model; similarity determines retrieval relevance.",
+        "license": "Custom / research-only (verify)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m6_04_ai_machine_learning_fine_tuning_0024",
+      "category": "04_ai_machine_learning",
+      "source_id": "m6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "QLoRA training config.",
+        "assistant_message_canonical": "4-bit quantization + LoRA rank 8-64, LoRA alpha scaled to rank, LR 1e-4 to 5e-4, small batch with grad accumulation.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m1_04_ai_machine_learning_transformers_0025",
+      "category": "04_ai_machine_learning",
+      "source_id": "m1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Self-attention mechanism.",
+        "assistant_message_canonical": "Computes attention scores between all positions, each attending to every other, weighted by relevance.",
+        "license": "arXiv.org perpetual non-exclusive license (preprint; no copyright transfer)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m2_04_ai_machine_learning_mlops_0026",
+      "category": "04_ai_machine_learning",
+      "source_id": "m2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "MLflow purpose.",
+        "assistant_message_canonical": "Platform for ML lifecycle: experiment tracking, packaging reproducible runs, model deployment.",
+        "license": "Apache-2.0",
+        "quality_score": 8,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m3_04_ai_machine_learning_rag_0027",
+      "category": "04_ai_machine_learning",
+      "source_id": "m3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Chunking strategies for RAG.",
+        "assistant_message_canonical": "Fixed-size, sentence-boundary, recursive character, semantic chunking \u2014 splits docs for optimal retrieval.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m4_04_ai_machine_learning_fine_tuning_0028",
+      "category": "04_ai_machine_learning",
+      "source_id": "m4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "DPO (Direct Preference Optimization).",
+        "assistant_message_canonical": "Directly optimizes policy to match preferred over dispreferred responses; no separate reward model.",
+        "license": "Mixed (per-subset; many ODC-BY/CC; some restricted)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m5_04_ai_machine_learning_transformers_0029",
+      "category": "04_ai_machine_learning",
+      "source_id": "m5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "LoRA and QLoRA.",
+        "assistant_message_canonical": "LoRA injects trainable low-rank matrices into frozen layers. QLoRA quantizes to 4-bit and applies LoRA.",
+        "license": "Custom / research-only (verify)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "m6_04_ai_machine_learning_mlops_0030",
+      "category": "04_ai_machine_learning",
+      "source_id": "m6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "A/B testing ML models.",
+        "assistant_message_canonical": "Routes fraction of production traffic to new model vs baseline, comparing metrics before full rollout.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "h1_05_hardware_engineering_cpu_0001",
+      "category": "05_hardware_engineering",
+      "source_id": "h1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "RISC vs CISC.",
+        "assistant_message_canonical": "RISC: simple fixed instructions, one cycle. CISC: complex variable-length, multiple micro-ops per instruction.",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 8,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "h2_05_hardware_engineering_gpu_0002",
+      "category": "05_hardware_engineering",
+      "source_id": "h2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Tensor cores.",
+        "assistant_message_canonical": "Specialized NVIDIA GPU units for matrix multiply-accumulate, accelerating mixed-precision DL computations.",
+        "license": "arXiv non-exclusive license",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "category": "05_hardware_engineering",
+      "source_id": "h3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "What is firmware?",
+        "assistant_message_canonical": "Permanent software in read-only memory providing low-level device hardware control.",
+        "license": "CC-BY-SA-4.0 (verify)",
+        "quality_score": 7,
+        "confidence": 0.977
+      }
+    },
+    {
+      "record_id": "h4_05_hardware_engineering_embedded_systems_0004",
+      "category": "05_hardware_engineering",
+      "source_id": "h4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Bare-metal vs RTOS.",
+        "assistant_message_canonical": "Bare-metal: single loop, no OS scheduler. RTOS: preemptive multitasking with scheduling guarantees.",
+        "license": "CC-BY-SA-4.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "h6_05_hardware_engineering_cpu_0005",
+      "category": "05_hardware_engineering",
+      "source_id": "h6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "RISC vs CISC.",
+        "assistant_message_canonical": "RISC: simple fixed instructions, one cycle. CISC: complex variable-length, multiple micro-ops per instruction.",
+        "license": "CC-BY-4.0 (generated; must human-review)",
+        "quality_score": 8,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "h1_05_hardware_engineering_gpu_0006",
+      "category": "05_hardware_engineering",
+      "source_id": "h1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "VRAM.",
+        "assistant_message_canonical": "GPU-specific memory for model weights, activations, gradients. Larger VRAM allows bigger models and batch sizes.",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 8,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "h2_05_hardware_engineering_firmware_0007",
+      "category": "05_hardware_engineering",
+      "source_id": "h2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "What is firmware?",
+        "assistant_message_canonical": "Permanent software in read-only memory providing low-level device hardware control.",
+        "license": "arXiv non-exclusive license",
+        "quality_score": 7,
+        "confidence": 0.977
+      }
+    },
+    {
+      "record_id": "h3_05_hardware_engineering_embedded_systems_0008",
+      "category": "05_hardware_engineering",
+      "source_id": "h3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Bare-metal vs RTOS.",
+        "assistant_message_canonical": "Bare-metal: single loop, no OS scheduler. RTOS: preemptive multitasking with scheduling guarantees.",
+        "license": "CC-BY-SA-4.0 (verify)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "h4_05_hardware_engineering_cpu_0009",
+      "category": "05_hardware_engineering",
+      "source_id": "h4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "RISC vs CISC.",
+        "assistant_message_canonical": "RISC: simple fixed instructions, one cycle. CISC: complex variable-length, multiple micro-ops per instruction.",
+        "license": "CC-BY-SA-4.0",
+        "quality_score": 8,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "h6_05_hardware_engineering_gpu_0010",
+      "category": "05_hardware_engineering",
+      "source_id": "h6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Why GPUs for deep learning?",
+        "assistant_message_canonical": "Thousands of parallel cores optimized for the matrix operations (GEMM) dominating training and inference.",
+        "license": "CC-BY-4.0 (generated; must human-review)",
+        "quality_score": 8,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "h1_05_hardware_engineering_firmware_0011",
+      "category": "05_hardware_engineering",
+      "source_id": "h1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "What is firmware?",
+        "assistant_message_canonical": "Permanent software in read-only memory providing low-level device hardware control.",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 7,
+        "confidence": 0.977
+      }
+    },
+    {
+      "record_id": "h2_05_hardware_engineering_embedded_systems_0012",
+      "category": "05_hardware_engineering",
+      "source_id": "h2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Bare-metal vs RTOS.",
+        "assistant_message_canonical": "Bare-metal: single loop, no OS scheduler. RTOS: preemptive multitasking with scheduling guarantees.",
+        "license": "arXiv non-exclusive license",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "c1_06_science_engineering_physics_0001",
+      "category": "06_science_engineering",
+      "source_id": "c1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Newton's three laws.",
+        "assistant_message_canonical": "1) Object at rest stays at rest unless acted upon. 2) F=ma. 3) For every action, equal and opposite reaction.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "c2_06_science_engineering_chemistry_0002",
+      "category": "06_science_engineering",
+      "source_id": "c2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "States of matter.",
+        "assistant_message_canonical": "Solid (fixed shape/volume), liquid (fixed volume, takes shape), gas (no fixed), plasma (ionized gas).",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "c3_06_science_engineering_biology_0003",
+      "category": "06_science_engineering",
+      "source_id": "c3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Photosynthesis.",
+        "assistant_message_canonical": "Plants convert light energy, CO\u2082, H\u2082O into glucose (C\u2086H\u2081\u2082O\u2086) and O\u2082 via light reactions and Calvin cycle.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "c4_06_science_engineering_math_0004",
+      "category": "06_science_engineering",
+      "source_id": "c4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Limit in calculus.",
+        "assistant_message_canonical": "lim(x\u2192a) f(x) = L: f(x) gets arbitrarily close to L when x is sufficiently close to a.",
+        "license": "MIT (gated; verify)",
+        "quality_score": 8,
+        "confidence": 0.951
+      }
+    },
+    {
+      "record_id": "c5_06_science_engineering_environmental_0005",
+      "category": "06_science_engineering",
+      "source_id": "c5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Greenhouse effect.",
+        "assistant_message_canonical": "GHGs (CO\u2082, CH\u2084, H\u2082O) trap IR radiation emitted by Earth's surface, warming the planet.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 0.987
+      }
+    },
+    {
+      "record_id": "c6_06_science_engineering_sciq_0006",
+      "category": "06_science_engineering",
+      "source_id": "c6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Controlled experiment.",
+        "assistant_message_canonical": "Tests one variable comparing treatment vs control group, keeping all other conditions constant.",
+        "license": "CC-BY-4.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "c7_06_science_engineering_physics_0007",
+      "category": "06_science_engineering",
+      "source_id": "c7",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Newton's law of gravitation.",
+        "assistant_message_canonical": "F = Gm\u2081m\u2082/r\u00b2 \u2014 force proportional to product of masses, inversely to square of distance.",
+        "license": "arXiv non-exclusive license",
+        "quality_score": 7,
+        "confidence": 0.967
+      }
+    },
+    {
+      "record_id": "c1_06_science_engineering_chemistry_0008",
+      "category": "06_science_engineering",
+      "source_id": "c1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "States of matter.",
+        "assistant_message_canonical": "Solid (fixed shape/volume), liquid (fixed volume, takes shape), gas (no fixed), plasma (ionized gas).",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "c2_06_science_engineering_biology_0009",
+      "category": "06_science_engineering",
+      "source_id": "c2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Photosynthesis.",
+        "assistant_message_canonical": "Plants convert light energy, CO\u2082, H\u2082O into glucose (C\u2086H\u2081\u2082O\u2086) and O\u2082 via light reactions and Calvin cycle.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "c3_06_science_engineering_math_0010",
+      "category": "06_science_engineering",
+      "source_id": "c3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "What is a derivative?",
+        "assistant_message_canonical": "Measures instantaneous rate of change at a point \u2014 slope of tangent line to function curve.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 0.991
+      }
+    },
+    {
+      "record_id": "c4_06_science_engineering_environmental_0011",
+      "category": "06_science_engineering",
+      "source_id": "c4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Greenhouse effect.",
+        "assistant_message_canonical": "GHGs (CO\u2082, CH\u2084, H\u2082O) trap IR radiation emitted by Earth's surface, warming the planet.",
+        "license": "MIT (gated; verify)",
+        "quality_score": 7,
+        "confidence": 0.987
+      }
+    },
+    {
+      "record_id": "c5_06_science_engineering_sciq_0012",
+      "category": "06_science_engineering",
+      "source_id": "c5",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Controlled experiment.",
+        "assistant_message_canonical": "Tests one variable comparing treatment vs control group, keeping all other conditions constant.",
+        "license": "ODC-BY",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "c6_06_science_engineering_physics_0013",
+      "category": "06_science_engineering",
+      "source_id": "c6",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Schr\u00f6dinger equation.",
+        "assistant_message_canonical": "Fundamental equation of QM describing how quantum state evolves via its wave function over time.",
+        "license": "CC-BY-4.0",
+        "quality_score": 8,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "c7_06_science_engineering_chemistry_0014",
+      "category": "06_science_engineering",
+      "source_id": "c7",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "States of matter.",
+        "assistant_message_canonical": "Solid (fixed shape/volume), liquid (fixed volume, takes shape), gas (no fixed), plasma (ionized gas).",
+        "license": "arXiv non-exclusive license",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "c1_06_science_engineering_biology_0015",
+      "category": "06_science_engineering",
+      "source_id": "c1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Photosynthesis.",
+        "assistant_message_canonical": "Plants convert light energy, CO\u2082, H\u2082O into glucose (C\u2086H\u2081\u2082O\u2086) and O\u2082 via light reactions and Calvin cycle.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "b1_07_business_knowledge_finance_0001",
+      "category": "07_business_knowledge",
+      "source_id": "b1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Time value of money.",
+        "assistant_message_canonical": "Money today worth more than same amount in future \u2014 can be invested for returns. PV = FV/(1+r)\u207f.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "b2_07_business_knowledge_finance_0002",
+      "category": "07_business_knowledge",
+      "source_id": "b2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Compound interest.",
+        "assistant_message_canonical": "Earns interest on principal plus accumulated interest, growing exponentially over time.",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 7,
+        "confidence": 0.99
+      }
+    },
+    {
+      "record_id": "b3_07_business_knowledge_finance_0003",
+      "category": "07_business_knowledge",
+      "source_id": "b3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Sharpe ratio.",
+        "assistant_message_canonical": "(Return \u2212 risk-free rate) / std dev of return. Measures risk-adjusted return; higher is better.",
+        "license": "CC-BY-SA-4.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "b4_07_business_knowledge_finance_0004",
+      "category": "07_business_knowledge",
+      "source_id": "b4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "EBITDA.",
+        "assistant_message_canonical": "Earnings Before Interest, Taxes, Depreciation, and Amortization \u2014 operating profitability excluding non-cash and non-operating expense.",
+        "license": "CC-BY-4.0 (must human-review)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "b1_07_business_knowledge_finance_0005",
+      "category": "07_business_knowledge",
+      "source_id": "b1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Stocks vs bonds.",
+        "assistant_message_canonical": "Stocks = ownership equity with growth + dividends. Bonds = debt with fixed coupons + principal at maturity.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "b2_07_business_knowledge_finance_0006",
+      "category": "07_business_knowledge",
+      "source_id": "b2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Time value of money.",
+        "assistant_message_canonical": "Money today worth more than same amount in future \u2014 can be invested for returns. PV = FV/(1+r)\u207f.",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "b3_07_business_knowledge_finance_0007",
+      "category": "07_business_knowledge",
+      "source_id": "b3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Compound interest.",
+        "assistant_message_canonical": "Earns interest on principal plus accumulated interest, growing exponentially over time.",
+        "license": "CC-BY-SA-4.0",
+        "quality_score": 7,
+        "confidence": 0.99
+      }
+    },
+    {
+      "record_id": "b4_07_business_knowledge_finance_0008",
+      "category": "07_business_knowledge",
+      "source_id": "b4",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Sharpe ratio.",
+        "assistant_message_canonical": "(Return \u2212 risk-free rate) / std dev of return. Measures risk-adjusted return; higher is better.",
+        "license": "CC-BY-4.0 (must human-review)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "b1_07_business_knowledge_finance_0009",
+      "category": "07_business_knowledge",
+      "source_id": "b1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "EBITDA.",
+        "assistant_message_canonical": "Earnings Before Interest, Taxes, Depreciation, and Amortization \u2014 operating profitability excluding non-cash and non-operating expense.",
+        "license": "MIT",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "b2_07_business_knowledge_finance_0010",
+      "category": "07_business_knowledge",
+      "source_id": "b2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Stocks vs bonds.",
+        "assistant_message_canonical": "Stocks = ownership equity with growth + dividends. Bonds = debt with fixed coupons + principal at maturity.",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "b3_07_business_knowledge_finance_0011",
+      "category": "07_business_knowledge",
+      "source_id": "b3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Time value of money.",
+        "assistant_message_canonical": "Money today worth more than same amount in future \u2014 can be invested for returns. PV = FV/(1+r)\u207f.",
+        "license": "CC-BY-SA-4.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "r1_08_creative_knowledge_writing_0001",
+      "category": "08_creative_knowledge",
+      "source_id": "r1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Key elements of a short story.",
+        "assistant_message_canonical": "Setting, characters, conflict, plot, theme, point of view shape narrative arc.",
+        "license": "Public Domain (US)",
+        "quality_score": 7,
+        "confidence": 0.96
+      }
+    },
+    {
+      "record_id": "r2_08_creative_knowledge_art_0002",
+      "category": "08_creative_knowledge",
+      "source_id": "r2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Rule of thirds.",
+        "assistant_message_canonical": "3\u00d73 grid; placing key elements along lines or at intersections for dynamic, balanced composition.",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "r3_08_creative_knowledge_music_0003",
+      "category": "08_creative_knowledge",
+      "source_id": "r3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Major vs minor keys.",
+        "assistant_message_canonical": "Major sounds bright/happy; minor darker/somber, with lowered 3rd/6th/7th scale degrees.",
+        "license": "CC-BY-4.0 (must human-review)",
+        "quality_score": 7,
+        "confidence": 0.99
+      }
+    },
+    {
+      "record_id": "r1_08_creative_knowledge_writing_0004",
+      "category": "08_creative_knowledge",
+      "source_id": "r1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Poetic prose vs free verse.",
+        "assistant_message_canonical": "Poetic prose uses poetic devices within prose structure. Free verse abandons regular meter/rhyme.",
+        "license": "Public Domain (US)",
+        "quality_score": 7,
+        "confidence": 0.993
+      }
+    },
+    {
+      "record_id": "r2_08_creative_knowledge_art_0005",
+      "category": "08_creative_knowledge",
+      "source_id": "r2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Contrast in visual art.",
+        "assistant_message_canonical": "Opposing elements (light/dark, large/small) create visual interest, direct eye, establish hierarchy.",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "r3_08_creative_knowledge_music_0006",
+      "category": "08_creative_knowledge",
+      "source_id": "r3",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Musical scale.",
+        "assistant_message_canonical": "Ascending/descending pitch sequence; major has W-W-H-W-W-W-H pattern, minor has different pattern.",
+        "license": "CC-BY-4.0 (must human-review)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "r1_08_creative_knowledge_writing_0007",
+      "category": "08_creative_knowledge",
+      "source_id": "r1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "'Show, don't tell.'",
+        "assistant_message_canonical": "Convey emotion/meaning through actions, dialogue, sensory details rather than direct narration or exposition.",
+        "license": "Public Domain (US)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "r2_08_creative_knowledge_art_0008",
+      "category": "08_creative_knowledge",
+      "source_id": "r2",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Perspective in art.",
+        "assistant_message_canonical": "Illusion of depth via vanishing points, converging lines, relative size (linear) or color/clarity (atmospheric).",
+        "license": "CC-BY-SA-3.0",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0001",
+      "category": "09_personal_assistant",
+      "source_id": "g1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Home office setup for productivity.",
+        "assistant_message_canonical": "Dedicated space with good lighting, ergonomic chair, clutter-free desk, reliable internet, noise-cancelling headphones, scheduled deep work blocks.",
+        "license": "CC-BY-4.0 (generated; human-review)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0002",
+      "category": "09_personal_assistant",
+      "source_id": "g1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Effective time management techniques.",
+        "assistant_message_canonical": "Pomodoro (25+5), time blocking, Eisenhower matrix (urgent/important), two-minute rule (<2 min, do now).",
+        "license": "CC-BY-4.0 (generated; human-review)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0003",
+      "category": "09_personal_assistant",
+      "source_id": "g1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Saving vs investing.",
+        "assistant_message_canonical": "Saving = low-risk liquid accounts for short-term goals. Investing = allocating to assets (stocks, bonds, funds) for long-term growth at higher risk.",
+        "license": "CC-BY-4.0 (generated; human-review)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0004",
+      "category": "09_personal_assistant",
+      "source_id": "g1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Sleep hygiene importance.",
+        "assistant_message_canonical": "Consistent schedule, cool dark room, no screens before bed, limited caffeine \u2014 improves sleep quality and daytime cognition.",
+        "license": "CC-BY-4.0 (generated; human-review)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0005",
+      "category": "09_personal_assistant",
+      "source_id": "g1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Balanced diet maintenance.",
+        "assistant_message_canonical": "Balance macros (protein/carb/fat), diverse whole foods, control portions, hydrate (8 glasses/day), limit processed foods and added sugars.",
+        "license": "CC-BY-4.0 (generated; human-review)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0006",
+      "category": "09_personal_assistant",
+      "source_id": "g1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Home office setup for productivity.",
+        "assistant_message_canonical": "Dedicated space with good lighting, ergonomic chair, clutter-free desk, reliable internet, noise-cancelling headphones, scheduled deep work blocks.",
+        "license": "CC-BY-4.0 (generated; human-review)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0007",
+      "category": "09_personal_assistant",
+      "source_id": "g1",
+      "review_status": "pending",
+      "next_action": "Assign reviewer and set review_status/decision in manifest",
+      "review_manifest": "metadata/v0.2_review_manifest.json",
+      "review_template": "review/v0.2/template.json",
+      "review_output": "review/v0.2/filled_reviews.jsonl",
+      "evidence": {
+        "user_message": "Effective time management techniques.",
+        "assistant_message_canonical": "Pomodoro (25+5), time blocking, Eisenhower matrix (urgent/important), two-minute rule (<2 min, do now).",
+        "license": "CC-BY-4.0 (generated; human-review)",
+        "quality_score": 7,
+        "confidence": 1.0
+      }
+    }
+  ]
+}

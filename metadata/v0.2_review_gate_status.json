@@ -1,0 +1,31 @@
+{
+  "schema": "metadata/v0.2_review_gate_status.json",
+  "version": "v0.2",
+  "generated_at": "2026-07-27T13:27:05.363201+00:00",
+  "source_of_truth": "metadata/v0.2_review_manifest.json",
+  "review_completed": false,
+  "human_decision_authoritative": true,
+  "no_auto_approval": true,
+  "release_gate": {
+    "review_gate": {
+      "status": "BLOCKED",
+      "pending_count": 150,
+      "approved_count": 0,
+      "needs_revision_count": 0,
+      "rejected_count": 0,
+      "blocked_when": [
+        "pending > 0",
+        "needs_revision > 0",
+        "rejected > 0"
+      ],
+      "proceeds_only_when": "all records approved"
+    }
+  },
+  "dataset_modifications_made_during_review_setup": false,
+  "required_human_actions": [
+    "Assign reviewers to 150 expansion records",
+    "Complete reviews using review/v0.2/package",
+    "Update review_status in metadata/v0.2_review_manifest.json",
+    "Re-run review-state validation/gate verification before release"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "record_id": "01_foundation_instruction-following_0000",
+  "source_id": "f1",
+  "category": "01_foundation",
+  "subcategory": "instruction-following",
+  "quality_score": 9,
+  "confidence": 0.98,
+  "review_status": "pending",
+  "review_timestamp": "YYYY-MM-DDTHH:MM:SSZ",
+  "reviewer_id": "REVIEWER_ID",
+  "decision": "approved|needs_revision|rejected",
+  "hallucination_found": false,
+  "accuracy_pass": true,
+  "usefulness_pass": true,
+  "consistency_pass": true,
+  "safety_pass": true,
+  "revision_target": "Required only if decision is needs_revision.",
+  "notes": "Concise evidence-based rationale."
+}

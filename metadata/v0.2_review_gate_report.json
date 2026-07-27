@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-07-27T13:27:05.363201+00:00",
+  "cohort": "phase4b_expansion",
+  "status_counts": {
+    "pending": 150
+  },
+  "release_approved_count": 0,
+  "release_pending_count": 150,
+  "release_needs_revision_count": 0,
+  "release_rejected_count": 0,
+  "missing_states": [],
+  "unexpected_states": [],
+  "duplicate_decisions": [],
+  "no_auto_approval": true,
+  "release_blocked": true,
+  "gate_rules": {
+    "blocked_when": [
+      "pending > 0",
+      "needs_revision > 0",
+      "rejected > 0"
+    ],
+    "proceeds_only_when": "all records approved"
+  }
+}
