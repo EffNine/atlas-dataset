@@ -1,0 +1,30 @@
+{
+  "reviewed_count": 25,
+  "decision_distribution": {
+    "approved": 18,
+    "needs_revision": 2,
+    "rejected": 5
+  },
+  "duplicate_decisions": [],
+  "unknown_decisions": [],
+  "unreviewed_pending_count": 125,
+  "unreviewed_sample": [
+    "f3_01_foundation_instruction_following_0003",
+    "f5_01_foundation_instruction_following_0005",
+    "f7_01_foundation_instruction_following_0007",
+    "f1_01_foundation_general_reasoning_0008",
+    "f2_01_foundation_instruction_following_0009",
+    "f4_01_foundation_instruction_following_0011",
+    "s2_02_software_engineering_debugging_0002",
+    "s3_02_software_engineering_software_architecture_0003",
+    "s4_02_software_engineering_algorithms_0004",
+    "s5_02_software_engineering_programming_0005"
+  ],
+  "dataset_unchanged": true,
+  "dataset_hashes": {
+    "phase_before": "e5d8cb35a7739ab1ff7eedb01ab4c1a71d73aad505a3394ba4ebfc6fb7d8dd16",
+    "phase_after": "e5d8cb35a7739ab1ff7eedb01ab4c1a71d73aad505a3394ba4ebfc6fb7d8dd16",
+    "full_before": "d9a1abed104599fc0db6d4c97a27ee87c2ed6b7182d18a78903fcfb82714be12",
+    "full_after": "d9a1abed104599fc0db6d4c97a27ee87c2ed6b7182d18a78903fcfb82714be12"
+  }
+}

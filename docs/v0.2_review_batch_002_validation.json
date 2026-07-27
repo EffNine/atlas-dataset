@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-07-27T15:10:00+00:00",
+  "batch": "batch_002",
+  "reviewed_count": 25,
+  "decision_distribution": {
+    "approved": 20,
+    "needs_revision": 4,
+    "rejected": 1
+  },
+  "selection_strategy_counts": {
+    "provenance_source_risk": 9,
+    "depth_completeness": 7,
+    "baseline": 9
+  },
+  "category_counts": {
+    "02_software_engineering": 9,
+    "05_hardware_engineering": 4,
+    "07_business_knowledge": 3,
+    "01_foundation": 3,
+    "04_ai_machine_learning": 2,
+    "06_science_engineering": 2,
+    "03_system_engineering": 1,
+    "08_creative_knowledge": 1
+  },
+  "duplicate_decisions": [],
+  "unknown_decisions": [],
+  "batch_001_decisions_unchanged": true,
+  "unreviewed_pending_count": 100,
+  "remaining_pending_after_batch002": 100,
+  "curated_dataset_unchanged": true,
+  "dataset_hashes": {
+    "curated/v0.2/data/phase4b_expansion.jsonl": "e5d8cb35a7739ab1ff7eedb01ab4c1a71d73aad505a3394ba4ebfc6fb7d8dd16",
+    "curated/v0.2/data/v0.2_full.jsonl": "d9a1abed104599fc0db6d4c97a27ee87c2ed6b7182d18a78903fcfb82714be12"
+  },
+  "release_blocked": true,
+  "validation_notes": [
+    "Exactly one decision per reviewed record",
+    "No duplicate decisions",
+    "Previous Batch 001 decisions unchanged",
+    "Remaining pending count updated correctly: 150 total - 25 batch1 - 25 batch2 = 100",
+    "Curated dataset unchanged",
+    "Release remains blocked"
+  ]
+}
