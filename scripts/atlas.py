@@ -1428,6 +1428,16 @@ def cmd_release_check(argv) -> int:
 
 
 # --------------------------------------------------------------------------- #
+# Payload Resolver — canonical 6-priority record payload lookup (Phase 4B.5)
+# --------------------------------------------------------------------------- #
+
+def cmd_payload(argv) -> int:
+    """Resolve a record payload through the canonical priority search."""
+    from payload_resolver import cli_resolve
+    return cli_resolve(argv)
+
+
+# --------------------------------------------------------------------------- #
 # Checkpoint — checkpoint status
 # --------------------------------------------------------------------------- #
 
@@ -1541,6 +1551,13 @@ def main(argv=None) -> int:
                          help="curated version directory to query (default: v0.1)")
 
     p_rc = sub.add_parser("release-check", help="Phase 4A.5 release verification checks")
+
+    # ---- Phase 4B.5 Canonical Payload Resolver ----
+    p_payload = sub.add_parser("payload",
+                               help="resolve a record payload through canonical priority search")
+    p_payload.add_argument("--resolve", help="record ID to resolve")
+    p_payload.add_argument("--explain", help="record ID to explain (full lookup trace)")
+
     args = ap.parse_args(argv)
     # Args after the program name + subcommand name are for the subcommand.
     # Stripping the subcommand token avoids argparse choking on it inside the
@@ -1579,6 +1596,11 @@ def main(argv=None) -> int:
         return cmd_query(rest)
     if args.cmd == "release-check":
         return cmd_release_check(rest)
+
+    # ---- Phase 4B.5 Canonical Payload Resolver ----
+    if args.cmd == "payload":
+        return cmd_payload(rest)
+
     return 2
 
 
