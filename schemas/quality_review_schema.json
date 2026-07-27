@@ -88,8 +88,8 @@
     },
     "verdict": {
       "type": "string",
-      "description": "Accept/reject decision on the record under the v0.1 gate (quality_score>=7 AND verified==true).",
-      "enum": ["accept", "reject", "revise"]
+      "description": "Decision on the record under the v0.1 gate.",
+      "enum": ["approve", "needs_revision", "reject"]
     },
     "hallucination": {
       "type": "boolean",
