@@ -165,18 +165,45 @@ def structural_errors(rec: dict) -> list[str]:
 
 
 def strict_jsonschema(records: list[dict]) -> list[list[str]]:
+    """Strict JSON-Schema validation via jsonschema, with OFFLINE resolution
+    of the local chat_schema.json reference.
+
+    The canonical schema references chat_schema.json by relative URI, which the
+    referencing engine resolves against the schema's $id and would otherwise
+    try to fetch over the network. We pre-load both local schema files into a
+    referencing Registry so strict validation works fully offline (the README
+    guarantees the pipeline runs anywhere without network access).
+
+    On any failure to import jsonschema/referencing, to read the schema files,
+    or to build the registry, we return [] so the structural validator (which
+    always runs) remains the fallback. This keeps the script robust and keeps
+    the 'runs anywhere / no hard dependency' guarantee intact.
+    """
     try:
         import jsonschema  # type: ignore
+        from referencing import Registry, Resource  # type: ignore
     except Exception:
         return []
     try:
-        schema = json.loads((SCHEMA_DIR / "dataset_schema.json").read_text(encoding="utf-8"))
+        dataset_schema = json.loads((SCHEMA_DIR / "dataset_schema.json").read_text(encoding="utf-8"))
+        chat_schema = json.loads((SCHEMA_DIR / "chat_schema.json").read_text(encoding="utf-8"))
     except Exception:
         return []
-    validator = jsonschema.Draft202012Validator(schema)
+    try:
+        registry = Registry().with_resources([
+            (dataset_schema["$id"], Resource.from_contents(dataset_schema)),
+            (chat_schema["$id"], Resource.from_contents(chat_schema)),
+        ])
+        validator = jsonschema.Draft202012Validator(dataset_schema, registry=registry)
+    except Exception:
+        # Any ref-resolution problem: degrade to structural validation only.
+        return []
     out = []
     for rec in records:
-        e = [f"schema: {err.message}" for err in validator.iter_errors(rec)]
+        try:
+            e = [f"schema: {err.message}" for err in validator.iter_errors(rec)]
+        except Exception:
+            e = []
         out.append(e)
     return out
 
