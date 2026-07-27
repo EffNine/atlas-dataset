@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "validator": "validate_architecture.py",
+  "contract_version": "1.0",
+  "timestamp": "2026-07-28T01:36:43.588991",
+  "files_checked": 40,
+  "total_violations": 0,
+  "known_violations": 4,
+  "result": "PASS",
+  "violations": [],
+  "summary": {
+    "forbidden_imports": 0,
+    "circular_dependencies": 0,
+    "duplicated_constants": 0,
+    "duplicated_license_functions": 0,
+    "duplicated_schema_definitions": 0,
+    "direct_path_construction": 0
+  }
+}
