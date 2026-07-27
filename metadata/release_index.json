@@ -1,0 +1,16 @@
+{
+  "releases": [
+    {
+      "version": "v0.1",
+      "release_type": "minor",
+      "created_at": "2026-07-27T12:26:44.909653+00:00",
+      "total_records": 263,
+      "chain_hash": "34e190d38030793a5b2455997051d0be57bd6fc987278229f7c11f435ab82b4b",
+      "content_hash": "fc711fe66b2bbb65bcc3fba7cccbc1836ddc3ee56079c7c1bee5800890a01d38",
+      "previous_hash": "",
+      "gates_passed": false,
+      "release_id": "34e190d38030793a"
+    }
+  ],
+  "genesis_hash": "34e190d38030793a5b2455997051d0be57bd6fc987278229f7c11f435ab82b4b"
+}

@@ -1,0 +1,13 @@
+{
+  "collections": [
+    {
+      "name": "v0.1-all",
+      "description": "Collection of all v0.1 packs",
+      "total_packs": 1,
+      "total_records": 42,
+      "generated": "2026-07-27T12:27:20.476974+00:00",
+      "collection_checksum": "1d58d379472b3ebe02abb4a048d5ac54724869ec2d12e06e273137814a3ab608"
+    }
+  ],
+  "generated": "2026-07-27T12:33:50.078878+00:00"
+}
