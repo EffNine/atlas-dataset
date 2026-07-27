@@ -1,0 +1,91 @@
+{
+  "schema": "review/operations/provenance_blocked_queue.json",
+  "version": "v0.2",
+  "generated": "2026-07-28T02:45:00+00:00",
+  "phase": "Phase 5E.1 — Governance Remediation: Provenance Blockers",
+  "description": "Records from the needs_revision cohort that are blocked on provenance/metadata resolution before content revision or approval can proceed. These feed into Phase 5E.2 (Provenance Resolution).",
+
+  "policy": {
+    "original_decisions_unchanged": true,
+    "curated_dataset_unchanged": true,
+    "release_remains_blocked": true,
+    "no_content_revision_before_provenance_cleared": true
+  },
+
+  "blocked_records": [
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "batch": "batch_002",
+      "category": "02_software_engineering",
+      "subcategory": "programming",
+      "current_state": "needs_revision",
+      "issue_type": "provenance_restricted",
+      "severity": "medium-high",
+      "license": "CC-BY-SA-4.0",
+      "source": "StackExchange Code",
+      "class": "B. Metadata/provenance repair",
+      "provenance_blocker": true,
+      "blocker_detail": "Content is correct and concise, but the CC-BY-SA-4.0 provenance path requires explicit attribution and share-alike tracking documentation before the record can be approved for training use.",
+      "required_action": "Add CC-BY-SA-4.0 attribution metadata to the record's lineage or source_registry.json. Include share-alike tracking documentation and upstream source URL.",
+      "downstream_blocker": "Content revision cannot proceed until provenance is cleared. After provenance resolution, a content depth expansion is also needed (the record was flagged for both provenance and depth).",
+      "decision_reason": "StackExchange Code content is correct and concise, but the CC-BY-SA-4.0 provenance path needs explicit attribution/share-alike tracking confirmation before approval.",
+      "reviewer_id": "reviewer_software_02",
+      "resolver": "unassigned",
+      "resolution_target_phase": "Phase 5E.2 — Provenance Resolution",
+      "escalation_path": "If attribution cannot be documented within 2 revision cycles, route to rejected per revision resolution policy."
+    },
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "batch": "batch_002",
+      "category": "05_hardware_engineering",
+      "subcategory": "firmware",
+      "current_state": "needs_revision",
+      "issue_type": "mixed: missing_depth + provenance",
+      "severity": "medium-high",
+      "license": "WikiChip-derived (requires_tracking)",
+      "source": "WikiChip",
+      "class": "B. Metadata/provenance repair",
+      "provenance_blocker": true,
+      "blocker_detail": "The firmware definition is accurate but too thin for training use. Additionally, it carries WikiChip-derived license wording that still needs human-review attribution metadata.",
+      "required_action": "Complete WikiChip attribution documentation in the record's lineage metadata. Confirm attribution wording has been reviewed and accepted.",
+      "downstream_blocker": "Content revision cannot proceed until provenance is cleared. After provenance resolution, a content depth expansion is also needed (ROM/EEPROM context, update-role detail, system-context examples).",
+      "decision_reason": "The firmware definition is accurate but too thin for training use: no ROM/EEPROM context, no update-role detail, no system-context examples. Also carries WikiChip-derived license wording that still needs human-review attribution metadata.",
+      "reviewer_id": "reviewer_hardware_02",
+      "resolver": "unassigned",
+      "resolution_target_phase": "Phase 5E.2 — Provenance Resolution",
+      "escalation_path": "If attribution cannot be documented within 2 revision cycles, route to rejected per revision resolution policy."
+    }
+  ],
+
+  "counts": {
+    "total_blocked": 2,
+    "by_class": {
+      "B_metadata_provenance_repair": 2
+    },
+    "by_category": {
+      "02_software_engineering": 1,
+      "05_hardware_engineering": 1
+    },
+    "by_batch": {
+      "batch_002": 2
+    }
+  },
+
+  "resolution_prerequisites": {
+    "phase_5E_2_provenance": [
+      "Resolve CC-BY-SA-4.0 attribution for s5_0029",
+      "Resolve WikiChip attribution for h3_0003"
+    ],
+    "content_revision_deferred": [
+      "s5_0029: expand programming explanation with rationale (post-provenance)",
+      "h3_0003: add ROM/EEPROM context, update-role detail, system-context examples (post-provenance)"
+    ]
+  },
+
+  "references": [
+    "review/revisions/v0.2/revision_queue.json",
+    "review/revisions/v0.2/resolutions/batch_001.jsonl",
+    "docs/v0.2_revision_resolution_plan.md",
+    "metadata/source_registry.json"
+  ]
+}

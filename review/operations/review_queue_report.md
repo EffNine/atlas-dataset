@@ -1,40 +1,84 @@
-# Review Queue Report — v0.2 Expansion
+# Review Queue Report — v0.2 Expansion (Phase 5E.1)
 
-Generated: 2026-07-27T13:45:01.854000+00:00
+**Generated:** 2026-07-28T02:45:00+00:00
+**Cohort:** phase4b_expansion (150 records — authoritative manifest)
 
-Total pending records: 150
+## Summary
 
-High-priority records: 8
+| Metric | Count |
+|--------|-------|
+| Total expansion records | 150 |
+| Reviewed (Batch 001 + 002) | 50 |
+| Approved | 38 |
+| Needs revision | 6 |
+| Rejected | 6 |
+| Pending (awaiting review) | 100 |
+| High-priority pending | 0 |
 
 ## Category Breakdown
 
-| Category | Assigned | High Priority | Reviewers |
+| Category | Total | Reviewed | Pending |
 |---|---|---|---|
-| 01_foundation | 15 | 3 | reviewer_foundation_01, reviewer_foundation_02 |
-| 02_software_engineering | 30 | 1 | reviewer_software_01, reviewer_software_02, reviewer_software_03, reviewer_software_04 |
-| 03_system_engineering | 22 | 4 | reviewer_system_01, reviewer_system_02, reviewer_system_03 |
-| 04_ai_machine_learning | 30 | 0 | reviewer_aiml_01, reviewer_aiml_02, reviewer_aiml_03, reviewer_aiml_04 |
-| 05_hardware_engineering | 12 | 0 | reviewer_hardware_01, reviewer_hardware_02 |
-| 06_science_engineering | 15 | 0 | reviewer_science_01, reviewer_science_02 |
-| 07_business_knowledge | 11 | 0 | reviewer_business_01, reviewer_business_02 |
-| 08_creative_knowledge | 8 | 0 | reviewer_creative_01, reviewer_creative_02 |
-| 09_personal_assistant | 7 | 0 | reviewer_pa_01, reviewer_pa_02 |
+| 01_foundation | 15 | 12 | 3 |
+| 02_software_engineering | 30 | 13 | 17 |
+| 03_system_engineering | 22 | 7 | 15 |
+| 04_ai_machine_learning | 30 | 3 | 27 |
+| 05_hardware_engineering | 12 | 5 | 7 |
+| 06_science_engineering | 15 | 3 | 12 |
+| 07_business_knowledge | 11 | 4 | 7 |
+| 08_creative_knowledge | 8 | 2 | 6 |
+| 09_personal_assistant | 7 | 1 | 6 |
 
-## Top High-Priority Records
+## Decision Distribution by Batch
 
-| record_id | category | confidence | quality_score |
-|---|---|---|---|
-| f2_01_foundation_general_reasoning_0002 | 01_foundation | 0.89 | 7 |
-| f5_01_foundation_general_reasoning_0012 | 01_foundation | 0.89 | 7 |
-| f6_01_foundation_general_reasoning_0006 | 01_foundation | 0.873 | 7 |
-| s5_02_software_engineering_programming_0013 | 02_software_engineering | 0.85 | 7 |
-| y1_03_system_engineering_networking_0008 | 03_system_engineering | 0.891 | 7 |
-| y3_03_system_engineering_networking_0003 | 03_system_engineering | 0.891 | 7 |
-| y4_03_system_engineering_networking_0018 | 03_system_engineering | 0.891 | 7 |
-| y6_03_system_engineering_networking_0013 | 03_system_engineering | 0.891 | 7 |
+### Batch 001
+| Decision | Count |
+|----------|-------|
+| approved | 18 |
+| needs_revision | 2 |
+| rejected | 5 |
+
+### Batch 002
+| Decision | Count |
+|----------|-------|
+| approved | 20 |
+| needs_revision | 4 |
+| rejected | 1 |
+
+## Revision Queue Status
+| State | Count |
+|-------|-------|
+| Content revised | 2 |
+| Awaiting human rewrite | 2 |
+| Provenance pending | 2 |
+| **Total needs_revision** | **6** |
+
+### Provenance-Blocked Records
+| Record ID | Issue |
+|-----------|-------|
+| `s5_02_software_engineering_programming_0029` | CC-BY-SA-4.0 attribution tracking required |
+| `h3_05_hardware_engineering_firmware_0003` | WikiChip attribution metadata required |
+
+## High-Priority Pending Records
+
+| Record ID | Category | Priority |
+|---|---|---|
+
+## Release Gate
+
+| Gate | Status |
+|------|--------|
+| Review gate (v0.2) | **BLOCKED** |
+| Pending records | 100 |
+| Needs revision records | 6 |
+| Rejected records | 6 |
+| Release condition | ALL 150 records reviewed AND approved |
 
 ## Notes
 
-- No approval decisions were generated.
-- All records are assigned but remain `assigned` until explicit human review.
-- Release remains blocked.
+- Authoritative manifest: `metadata/v0.2_review_manifest.json` (150 records).
+- Phantom IDs `f4_01_foundation_general_reasoning_0011` and `m3_04_ai_machine_learning_rag_0009` are excluded.
+- See `metadata/v0.2_review_manifest_reconciliation.json` for full mapping.
+- No approval decisions were auto-generated.
+- All 50 reviewed records have explicit human decisions in `review/decisions/v0.2/`.
+- Release remains BLOCKED and must not advance until all 150 records have final decisions.

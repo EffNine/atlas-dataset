@@ -1,0 +1,98 @@
+{
+  "schema": "metadata/v0.2_review_manifest_reconciliation.json",
+  "version": "v0.2",
+  "generated": "2026-07-28T02:45:00+00:00",
+  "phase": "Phase 5E.1 — Governance Remediation: Manifest Reconciliation",
+  "description": "Resolves the 150 vs 152 record discrepancy across v0.2 review manifests. Declares the authoritative source and documents phantom ID mappings. No decision files, curated datasets, or release metadata are modified.",
+
+  "authoritative_manifest": {
+    "path": "metadata/v0.2_review_manifest.json",
+    "total_records": 150,
+    "sha256": "02457ee9aa831f74a54bf5e8ce1af8176fca684cf11eb433ff31e3dae69e3560",
+    "declared_authoritative": true,
+    "reason": "Original manifest generated at review setup time with 150 records matching the phase4b_expansion cohort. This is the source of truth for release gating."
+  },
+
+  "legacy_manifests": [
+    {
+      "path": "metadata/v0.2_review_manifest_current.json",
+      "total_records": 152,
+      "sha256": "5289c700ce68019f3747f7db2a4390d397caf61b7b3ca912c7bf179d6e2ebfb2",
+      "classification": "legacy_investigation_artifact",
+      "status": "superseded",
+      "discrepancy": "Contains 2 phantom record IDs not present in the authoritative 150-record manifest",
+      "retention": "Preserved for audit trail. Referenced in provenance investigation at docs/v0.2_review_id_origin_investigation.md and docs/v0.2_batch_002_id_repair_report.md."
+    },
+    {
+      "path": "metadata/v0.2_review_manifest_corrupt.json",
+      "total_records": 152,
+      "sha256": "5289c700ce68019f3747f7db2a4390d397caf61b7b3ca912c7bf179d6e2ebfb2",
+      "classification": "legacy_investigation_artifact",
+      "status": "superseded",
+      "discrepancy": "Identical content to metadata/v0.2_review_manifest_current.json — appears to be a copy rather than a distinct investigation artifact",
+      "retention": "Preserved for audit trail."
+    }
+  ],
+
+  "phantom_ids": [
+    {
+      "phantom_id": "f4_01_foundation_general_reasoning_0011",
+      "canonical_id": "f4_01_foundation_instruction_following_0011",
+      "source": "review/decisions/v0.2/batch_002.jsonl",
+      "mapping_type": "subcategory_construction_error",
+      "root_cause": "Batch-input generator read subcategory from wrong metadata field — assigned 'general_reasoning' instead of 'instruction_following'",
+      "evidence": "Record f4_01_foundation_instruction_following_0011 exists in batch_002.jsonl (decision: approved). No record with the phantom ID f4_01_foundation_general_reasoning_0011 exists in any decision file or curated dataset.",
+      "investigation_reference": "docs/v0.2_review_id_origin_investigation.md, docs/v0.2_batch_002_id_repair_report.md"
+    },
+    {
+      "phantom_id": "m3_04_ai_machine_learning_rag_0009",
+      "canonical_id": "m3_04_ai_machine_learning_transformers_0009",
+      "source": "review/decisions/v0.2/batch_002.jsonl",
+      "mapping_type": "subcategory_construction_error",
+      "root_cause": "Batch-input generator assigned 'rag' subcategory instead of the correct 'transformers' subcategory",
+      "evidence": "Record m3_04_ai_machine_learning_transformers_0009 exists in batch_002.jsonl (decision: approved). No record with the phantom ID m3_04_ai_machine_learning_rag_0009 exists in any decision file or curated dataset.",
+      "investigation_reference": "docs/v0.2_review_id_origin_investigation.md, docs/v0.2_batch_002_id_repair_report.md"
+    }
+  ],
+
+  "record_count_reconciliation": {
+    "authoritative_manifest": 150,
+    "legacy_manifests": 152,
+    "phantom_extra": 2,
+    "effective_authoritative_count": 150,
+    "formula": "152 - 2 phantom = 150 authoritative",
+    "verification": "Every canonical record ID in the 150-record manifest exists in the curated dataset. The 2 phantom IDs do not correspond to any real record payload."
+  },
+
+  "decision_file_alignment": {
+    "batch_001_decision_ids_in_manifest": "25 of 25",
+    "batch_002_decision_ids_in_manifest": "23 of 25",
+    "batch_002_ids_not_in_manifest": [
+      "f4_01_foundation_instruction_following_0011",
+      "m3_04_ai_machine_learning_transformers_0009"
+    ],
+    "explanation": "The 2 decision IDs in batch_002 with correct subcategory values do not match the phantom IDs that were erroneously added to the 152-record manifests. The 150-record manifest also lacks these 2 IDs — meaning they were never added to the authoritative manifest at all. The manifest was generated before the batch-input generator created the phantom IDs, so the authoritative 150-record manifest never had these records.",
+    "action": "No action required. The 2 Batch 002 decision records with canonical IDs (f4_01_foundation_instruction_following_0011, m3_04_ai_machine_learning_transformers_0009) are valid decisions on existing manifest records. No manifest update or decision repair is needed for the reconciliation — the manifest discrepancy is purely an artifact of two legacy files that were generated with phantom IDs."
+  },
+
+  "release_gate_impact": {
+    "status": "BLOCKED",
+    "unchanged": true,
+    "note": "Manifest reconciliation does not alter release gate state. All 150 authoritative manifest records remain pending. Release remains BLOCKED."
+  },
+
+  "invariants": {
+    "original_manifest_preserved": true,
+    "legacy_manifests_preserved": true,
+    "decision_files_unchanged": true,
+    "curated_datasets_unchanged": true,
+    "release_gate_unchanged": true,
+    "no_auto_approval": true
+  },
+
+  "references": [
+    "docs/v0.2_review_id_origin_investigation.md",
+    "docs/v0.2_batch_002_id_repair_report.md",
+    "governance/v0.2_phase5E1_continuity_baseline.md"
+  ]
+}

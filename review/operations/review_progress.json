@@ -1,199 +1,199 @@
 {
-  "generated_at": "2026-07-27T13:45:01.854000+00:00",
+  "generated_at": "2026-07-28T02:45:00+00:00",
   "cohort": "phase4b_expansion",
   "schema_version": "1.0",
   "stats": {
     "total_assigned": 150,
-    "completed": 0,
-    "pending": 150,
-    "needs_revision": 0,
-    "rejected": 0,
-    "approved": 0
+    "completed": 50,
+    "pending": 100,
+    "needs_revision": 6,
+    "rejected": 6,
+    "approved": 38
   },
   "reviewer_workload": {
     "reviewer_foundation_01": {
-      "assigned": 8,
-      "completed": 0,
-      "pending": 8,
+      "assigned": 5,
+      "completed": 3,
+      "pending": 2,
+      "approved": 3,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_foundation_02": {
-      "assigned": 7,
-      "completed": 0,
-      "pending": 7,
+      "assigned": 10,
+      "completed": 9,
+      "pending": 1,
+      "approved": 6,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 3
     },
     "reviewer_software_01": {
-      "assigned": 8,
-      "completed": 0,
-      "pending": 8,
+      "assigned": 5,
+      "completed": 4,
+      "pending": 1,
+      "approved": 2,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 2
     },
     "reviewer_software_02": {
-      "assigned": 8,
-      "completed": 0,
-      "pending": 8,
-      "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "assigned": 16,
+      "completed": 9,
+      "pending": 7,
+      "approved": 7,
+      "needs_revision": 1,
+      "rejected": 1
     },
     "reviewer_software_03": {
-      "assigned": 7,
+      "assigned": 6,
       "completed": 0,
-      "pending": 7,
+      "pending": 6,
+      "approved": 0,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_software_04": {
-      "assigned": 7,
+      "assigned": 3,
       "completed": 0,
-      "pending": 7,
+      "pending": 3,
+      "approved": 0,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_system_01": {
       "assigned": 8,
-      "completed": 0,
-      "pending": 8,
+      "completed": 2,
+      "pending": 6,
+      "approved": 2,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_system_02": {
       "assigned": 7,
-      "completed": 0,
-      "pending": 7,
+      "completed": 1,
+      "pending": 6,
+      "approved": 1,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_system_03": {
       "assigned": 7,
-      "completed": 0,
-      "pending": 7,
+      "completed": 4,
+      "pending": 3,
+      "approved": 4,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_aiml_01": {
-      "assigned": 8,
+      "assigned": 6,
       "completed": 0,
-      "pending": 8,
+      "pending": 6,
+      "approved": 0,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_aiml_02": {
       "assigned": 8,
       "completed": 0,
       "pending": 8,
+      "approved": 0,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_aiml_03": {
-      "assigned": 7,
-      "completed": 0,
-      "pending": 7,
+      "assigned": 9,
+      "completed": 3,
+      "pending": 6,
+      "approved": 3,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_aiml_04": {
       "assigned": 7,
       "completed": 0,
       "pending": 7,
+      "approved": 0,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
-    },
-    "reviewer_hardware_01": {
-      "assigned": 6,
-      "completed": 0,
-      "pending": 6,
-      "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_hardware_02": {
-      "assigned": 6,
+      "assigned": 8,
+      "completed": 5,
+      "pending": 3,
+      "approved": 2,
+      "needs_revision": 3,
+      "rejected": 0
+    },
+    "reviewer_hardware_01": {
+      "assigned": 4,
       "completed": 0,
-      "pending": 6,
+      "pending": 4,
+      "approved": 0,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_science_01": {
       "assigned": 8,
-      "completed": 0,
-      "pending": 8,
+      "completed": 3,
+      "pending": 5,
+      "approved": 3,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_science_02": {
       "assigned": 7,
       "completed": 0,
       "pending": 7,
+      "approved": 0,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_business_01": {
-      "assigned": 6,
-      "completed": 0,
-      "pending": 6,
-      "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "assigned": 5,
+      "completed": 1,
+      "pending": 4,
+      "approved": 0,
+      "needs_revision": 1,
+      "rejected": 0
     },
     "reviewer_business_02": {
-      "assigned": 5,
-      "completed": 0,
-      "pending": 5,
-      "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "assigned": 6,
+      "completed": 3,
+      "pending": 3,
+      "approved": 2,
+      "needs_revision": 1,
+      "rejected": 0
     },
     "reviewer_creative_01": {
-      "assigned": 4,
-      "completed": 0,
-      "pending": 4,
+      "assigned": 5,
+      "completed": 2,
+      "pending": 3,
+      "approved": 2,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_creative_02": {
-      "assigned": 4,
+      "assigned": 3,
       "completed": 0,
-      "pending": 4,
+      "pending": 3,
+      "approved": 0,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_pa_01": {
       "assigned": 4,
-      "completed": 0,
-      "pending": 4,
+      "completed": 1,
+      "pending": 3,
+      "approved": 1,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     },
     "reviewer_pa_02": {
       "assigned": 3,
       "completed": 0,
       "pending": 3,
+      "approved": 0,
       "needs_revision": 0,
-      "rejected": 0,
-      "approved": 0
+      "rejected": 0
     }
   },
   "category_breakdown": {

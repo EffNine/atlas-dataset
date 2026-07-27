@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-27T13:45:01.854000+00:00",
+  "generated_at": "2026-07-28T02:45:00+00:00",
   "cohort": "phase4b_expansion",
   "schema_version": "1.0",
   "total_records": 150,
@@ -8,41 +8,41 @@
       "record_id": "f1_01_foundation_instruction_following_0001",
       "category": "01_foundation",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_foundation_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Domain-standard baseline fact; useful for model grounding."
     },
     {
       "record_id": "f2_01_foundation_general_reasoning_0002",
       "category": "01_foundation",
-      "priority": "high",
-      "review_status": "assigned",
+      "priority": "normal",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_foundation_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Clear, correct, specific, and referenced; safe for future model training."
     },
     {
       "record_id": "f3_01_foundation_instruction_following_0003",
       "category": "01_foundation",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_foundation_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_foundation_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. Apache-2.0 source; canonical bias-variance explanation with lasting relevance fo..."
     },
     {
       "record_id": "f4_01_foundation_general_reasoning_0004",
       "category": "01_foundation",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "rejected",
       "assigned_reviewer": "reviewer_foundation_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: rejected. Review-limited license provenance for commercial Atlas use; reject unless attrib..."
     },
     {
       "record_id": "f5_01_foundation_instruction_following_0005",
@@ -50,29 +50,29 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_foundation_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
     {
       "record_id": "f6_01_foundation_general_reasoning_0006",
       "category": "01_foundation",
-      "priority": "high",
-      "review_status": "assigned",
+      "priority": "normal",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_foundation_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Domain-standard baseline fact; useful for model grounding."
     },
     {
       "record_id": "f7_01_foundation_instruction_following_0007",
       "category": "01_foundation",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_foundation_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_foundation_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. MIT licensing label is present, but the record includes a PII-caution flag. Acce..."
     },
     {
       "record_id": "f1_01_foundation_general_reasoning_0008",
@@ -80,7 +80,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_foundation_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -90,7 +90,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_foundation_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -98,81 +98,81 @@
       "record_id": "f3_01_foundation_general_reasoning_0010",
       "category": "01_foundation",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "rejected",
       "assigned_reviewer": "reviewer_foundation_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: rejected. Review-limited license provenance for commercial Atlas use; reject unless attrib..."
     },
     {
       "record_id": "f4_01_foundation_instruction_following_0011",
       "category": "01_foundation",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_foundation_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_foundation_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. Apache-2.0 self-instruct record; Transformer-architecture statement is concise, ..."
     },
     {
       "record_id": "f5_01_foundation_general_reasoning_0012",
       "category": "01_foundation",
-      "priority": "high",
-      "review_status": "assigned",
+      "priority": "normal",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_foundation_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. High-quality canonical concept with low ambiguity and no hallucination risk."
     },
     {
       "record_id": "f6_01_foundation_instruction_following_0013",
       "category": "01_foundation",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_foundation_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Clear, correct, specific, and referenced; safe for future model training."
     },
     {
       "record_id": "f7_01_foundation_general_reasoning_0014",
       "category": "01_foundation",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "rejected",
       "assigned_reviewer": "reviewer_foundation_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: rejected. Review-limited license provenance for commercial Atlas use; reject unless attrib..."
     },
     {
       "record_id": "f1_01_foundation_instruction_following_0015",
       "category": "01_foundation",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_foundation_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Domain-standard baseline fact; useful for model grounding."
     },
     {
       "record_id": "s1_02_software_engineering_programming_0001",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_software_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. High-quality canonical concept with low ambiguity and no hallucination risk."
     },
     {
       "record_id": "s2_02_software_engineering_debugging_0002",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "rejected",
       "assigned_reviewer": "reviewer_software_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: rejected. Source bigcode/the-stack-v2 carries BigCode Open RAIL-M use-restricted terms. Un..."
     },
     {
       "record_id": "s3_02_software_engineering_software_architecture_0003",
@@ -180,7 +180,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -190,7 +190,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -200,7 +200,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -210,7 +210,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -220,7 +220,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -230,7 +230,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -238,11 +238,11 @@
       "record_id": "s1_02_software_engineering_programming_0009",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_software_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Clear, correct, specific, and referenced; safe for future model training."
     },
     {
       "record_id": "s2_02_software_engineering_debugging_0010",
@@ -250,7 +250,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -258,31 +258,31 @@
       "record_id": "s3_02_software_engineering_software_architecture_0011",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_software_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. BigCode Open RAIL-M record with correct circuit-breaker content. Accepted under ..."
     },
     {
       "record_id": "s4_02_software_engineering_algorithms_0012",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_software_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. Apache-2.0 source; concise but correct algorithmic definition suitable as a trai..."
     },
     {
       "record_id": "s5_02_software_engineering_programming_0013",
       "category": "02_software_engineering",
-      "priority": "high",
-      "review_status": "assigned",
+      "priority": "normal",
+      "review_status": "rejected",
       "assigned_reviewer": "reviewer_software_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: rejected. Review-limited license provenance for commercial Atlas use; reject unless attrib..."
     },
     {
       "record_id": "s6_02_software_engineering_debugging_0014",
@@ -290,7 +290,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -300,7 +300,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -308,21 +308,21 @@
       "record_id": "s8_02_software_engineering_algorithms_0016",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_software_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. Apache-2.0 (gated; verify) record with license documentation present. Accepted f..."
     },
     {
       "record_id": "s1_02_software_engineering_programming_0017",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_software_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. MIT-licensed SWE-bench record; concise and training-useful software-engineering ..."
     },
     {
       "record_id": "s2_02_software_engineering_debugging_0018",
@@ -330,7 +330,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -340,7 +340,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -350,7 +350,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -358,11 +358,11 @@
       "record_id": "s5_02_software_engineering_programming_0021",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "rejected",
       "assigned_reviewer": "reviewer_software_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: rejected. Review-limited license provenance for commercial Atlas use; reject unless attrib..."
     },
     {
       "record_id": "s6_02_software_engineering_debugging_0022",
@@ -370,7 +370,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -380,7 +380,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -388,21 +388,21 @@
       "record_id": "s8_02_software_engineering_algorithms_0024",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_software_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. Same cleared source family and license path as s8_...0016; canonical dynamic-pro..."
     },
     {
       "record_id": "s1_02_software_engineering_programming_0025",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_software_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. Cleared source family; accurate abstract-class-vs-interface comparison useful fo..."
     },
     {
       "record_id": "s2_02_software_engineering_debugging_0026",
@@ -410,7 +410,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -420,7 +420,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -428,21 +428,21 @@
       "record_id": "s4_02_software_engineering_algorithms_0028",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_software_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. Cleared Apache-2.0 source; quicksort explanation is canonical and training-usefu..."
     },
     {
       "record_id": "s5_02_software_engineering_programming_0029",
       "category": "02_software_engineering",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_software_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "needs_revision",
+      "assigned_reviewer": "reviewer_software_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: needs_revision. StackExchange Code content is correct and concise, but the CC-BY-SA-4.0 provenan..."
     },
     {
       "record_id": "s6_02_software_engineering_debugging_0030",
@@ -450,7 +450,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_software_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -460,7 +460,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -470,19 +470,19 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
     {
       "record_id": "y3_03_system_engineering_networking_0003",
       "category": "03_system_engineering",
-      "priority": "high",
-      "review_status": "assigned",
+      "priority": "normal",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_system_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Domain-standard baseline fact; useful for model grounding."
     },
     {
       "record_id": "y4_03_system_engineering_kubernetes_0004",
@@ -490,7 +490,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -500,7 +500,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -510,7 +510,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -520,19 +520,19 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
     {
       "record_id": "y1_03_system_engineering_networking_0008",
       "category": "03_system_engineering",
-      "priority": "high",
-      "review_status": "assigned",
+      "priority": "normal",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_system_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. High-quality canonical concept with low ambiguity and no hallucination risk."
     },
     {
       "record_id": "y2_03_system_engineering_kubernetes_0009",
@@ -540,7 +540,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -550,7 +550,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -560,7 +560,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -570,19 +570,19 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
     {
       "record_id": "y6_03_system_engineering_networking_0013",
       "category": "03_system_engineering",
-      "priority": "high",
-      "review_status": "assigned",
+      "priority": "normal",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_system_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. High-quality canonical concept with low ambiguity and no hallucination risk."
     },
     {
       "record_id": "y7_03_system_engineering_kubernetes_0014",
@@ -590,7 +590,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -598,21 +598,21 @@
       "record_id": "y1_03_system_engineering_devops_0015",
       "category": "03_system_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_system_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. High-quality canonical concept with low ambiguity and no hallucination risk."
     },
     {
       "record_id": "y2_03_system_engineering_linux_0016",
       "category": "03_system_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_system_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. CC-BY-4.0 Kubernetes documentation record; System V init runlevels explanation i..."
     },
     {
       "record_id": "y3_03_system_engineering_docker_0017",
@@ -620,19 +620,19 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
     {
       "record_id": "y4_03_system_engineering_networking_0018",
       "category": "03_system_engineering",
-      "priority": "high",
-      "review_status": "assigned",
+      "priority": "normal",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_system_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Domain-standard baseline fact; useful for model grounding."
     },
     {
       "record_id": "y5_03_system_engineering_kubernetes_0019",
@@ -640,7 +640,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -650,7 +650,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -658,11 +658,11 @@
       "record_id": "y7_03_system_engineering_linux_0021",
       "category": "03_system_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_system_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. High-quality canonical concept with low ambiguity and no hallucination risk."
     },
     {
       "record_id": "y1_03_system_engineering_docker_0022",
@@ -670,7 +670,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_system_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -680,7 +680,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -690,7 +690,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -700,7 +700,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -710,7 +710,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -718,11 +718,11 @@
       "record_id": "m5_04_ai_machine_learning_transformers_0005",
       "category": "04_ai_machine_learning",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_aiml_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_aiml_03",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. LMSYS chat record carries a custom/research-only usage note; the LoRA/QLoRA answ..."
     },
     {
       "record_id": "m6_04_ai_machine_learning_mlops_0006",
@@ -730,7 +730,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -738,11 +738,11 @@
       "record_id": "m1_04_ai_machine_learning_rag_0007",
       "category": "04_ai_machine_learning",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_aiml_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Domain-standard baseline fact; useful for model grounding."
     },
     {
       "record_id": "m2_04_ai_machine_learning_fine_tuning_0008",
@@ -750,7 +750,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -758,11 +758,11 @@
       "record_id": "m3_04_ai_machine_learning_transformers_0009",
       "category": "04_ai_machine_learning",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_aiml_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_aiml_03",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. ODC-BY source with stable lineage; self-attention statement is a canonical ML co..."
     },
     {
       "record_id": "m4_04_ai_machine_learning_mlops_0010",
@@ -770,7 +770,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -780,7 +780,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -790,7 +790,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -800,7 +800,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -810,7 +810,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -820,7 +820,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -830,7 +830,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -840,7 +840,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -850,7 +850,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -860,7 +860,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -870,7 +870,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -880,7 +880,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -890,7 +890,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -900,7 +900,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -910,7 +910,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -920,7 +920,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -930,7 +930,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -940,7 +940,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_03",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -950,7 +950,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_04",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -960,7 +960,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -970,7 +970,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_aiml_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -978,11 +978,11 @@
       "record_id": "h1_05_hardware_engineering_cpu_0001",
       "category": "05_hardware_engineering",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_hardware_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_hardware_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. CC-BY-SA-3.0 Wikipedia hardware source is cleared; RISC vs CISC distinction is c..."
     },
     {
       "record_id": "h2_05_hardware_engineering_gpu_0002",
@@ -990,7 +990,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_hardware_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -998,21 +998,21 @@
       "record_id": "h3_05_hardware_engineering_firmware_0003",
       "category": "05_hardware_engineering",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_hardware_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "needs_revision",
+      "assigned_reviewer": "reviewer_hardware_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: needs_revision. The firmware definition is accurate but too thin for training use: no ROM/EEPROM..."
     },
     {
       "record_id": "h4_05_hardware_engineering_embedded_systems_0004",
       "category": "05_hardware_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "needs_revision",
       "assigned_reviewer": "reviewer_hardware_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: needs_revision. CC-BY-SA-4.0 StackExchange Electronics source is acceptable, and the Bare-metal ..."
     },
     {
       "record_id": "h6_05_hardware_engineering_cpu_0005",
@@ -1020,7 +1020,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_hardware_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1030,7 +1030,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_hardware_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1040,7 +1040,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_hardware_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1050,7 +1050,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_hardware_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1060,7 +1060,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_hardware_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1068,11 +1068,11 @@
       "record_id": "h6_05_hardware_engineering_gpu_0010",
       "category": "05_hardware_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_hardware_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. Synthetic hardware record with documented CC-BY-4.0 provenance; GPU parallelism ..."
     },
     {
       "record_id": "h1_05_hardware_engineering_firmware_0011",
@@ -1080,7 +1080,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_hardware_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1088,11 +1088,11 @@
       "record_id": "h2_05_hardware_engineering_embedded_systems_0012",
       "category": "05_hardware_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "needs_revision",
       "assigned_reviewer": "reviewer_hardware_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: needs_revision. Concise and directionally correct, but missing the minimum rationale/caveats for..."
     },
     {
       "record_id": "c1_06_science_engineering_physics_0001",
@@ -1100,7 +1100,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1110,7 +1110,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1120,7 +1120,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1130,7 +1130,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1140,7 +1140,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1150,7 +1150,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1160,7 +1160,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1170,7 +1170,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1178,11 +1178,11 @@
       "record_id": "c2_06_science_engineering_biology_0009",
       "category": "06_science_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_science_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. MIT-licensed science record; photosynthesis explanation is accurate and useful f..."
     },
     {
       "record_id": "c3_06_science_engineering_math_0010",
@@ -1190,7 +1190,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1200,7 +1200,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1210,7 +1210,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1218,11 +1218,11 @@
       "record_id": "c6_06_science_engineering_physics_0013",
       "category": "06_science_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_science_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. AllenAI SciQ CC-BY-4.0 physics record; Schr\u00f6dinger-equation description is corre..."
     },
     {
       "record_id": "c7_06_science_engineering_chemistry_0014",
@@ -1230,7 +1230,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_science_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1238,31 +1238,31 @@
       "record_id": "c1_06_science_engineering_biology_0015",
       "category": "06_science_engineering",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_science_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Concise training-worthy fact with clean explanation and lasting relevance."
     },
     {
       "record_id": "b1_07_business_knowledge_finance_0001",
       "category": "07_business_knowledge",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "needs_revision",
       "assigned_reviewer": "reviewer_business_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: needs_revision. Clear, correct, specific, and referenced; safe for future model training."
     },
     {
       "record_id": "b2_07_business_knowledge_finance_0002",
       "category": "07_business_knowledge",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "needs_revision",
       "assigned_reviewer": "reviewer_business_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: needs_revision. CC-BY-SA-3.0 Wikipedia business source is license-cleared, but the compound-inte..."
     },
     {
       "record_id": "b3_07_business_knowledge_finance_0003",
@@ -1270,7 +1270,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_business_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1278,21 +1278,21 @@
       "record_id": "b4_07_business_knowledge_finance_0004",
       "category": "07_business_knowledge",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_business_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. Synthetic business record with CC-BY-4.0 provenance and explicit human-review no..."
     },
     {
       "record_id": "b1_07_business_knowledge_finance_0005",
       "category": "07_business_knowledge",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_business_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_business_02",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. MIT-licensed finance-alpaca record with a clear structural comparison; concise b..."
     },
     {
       "record_id": "b2_07_business_knowledge_finance_0006",
@@ -1300,7 +1300,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_business_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1310,7 +1310,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_business_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1320,7 +1320,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_business_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1330,7 +1330,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_business_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1340,7 +1340,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_business_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1350,7 +1350,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_business_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1360,7 +1360,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_creative_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1370,7 +1370,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_creative_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1380,7 +1380,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_creative_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1390,7 +1390,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_creative_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1400,7 +1400,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_creative_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1410,7 +1410,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_creative_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1418,31 +1418,31 @@
       "record_id": "r1_08_creative_knowledge_writing_0007",
       "category": "08_creative_knowledge",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_creative_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Domain-standard baseline fact; useful for model grounding. Review notes: Public ..."
     },
     {
       "record_id": "r2_08_creative_knowledge_art_0008",
       "category": "08_creative_knowledge",
       "priority": "normal",
-      "review_status": "assigned",
-      "assigned_reviewer": "reviewer_creative_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "review_status": "approved",
+      "assigned_reviewer": "reviewer_creative_01",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T15:05:00+00:00",
+      "notes": "Completed: approved. CC-BY-SA-3.0 Wikipedia creative-knowledge record; perspective explanation is acc..."
     },
     {
       "record_id": "g1_09_personal_assistant_personal_knowledge_0001",
       "category": "09_personal_assistant",
       "priority": "normal",
-      "review_status": "assigned",
+      "review_status": "approved",
       "assigned_reviewer": "reviewer_pa_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
-      "completed_timestamp": null,
-      "notes": "Awaiting human review completion."
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
+      "completed_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "notes": "Completed: approved. Concise training-worthy fact with clean explanation and lasting relevance."
     },
     {
       "record_id": "g1_09_personal_assistant_personal_knowledge_0002",
@@ -1450,7 +1450,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_pa_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1460,7 +1460,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_pa_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1470,7 +1470,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_pa_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1480,7 +1480,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_pa_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1490,7 +1490,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_pa_02",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     },
@@ -1500,7 +1500,7 @@
       "priority": "normal",
       "review_status": "assigned",
       "assigned_reviewer": "reviewer_pa_01",
-      "assigned_timestamp": "2026-07-27T13:45:01.854000+00:00",
+      "assigned_timestamp": "2026-07-28T02:45:00+00:00",
       "completed_timestamp": null,
       "notes": "Awaiting human review completion."
     }
