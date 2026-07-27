@@ -1,0 +1,108 @@
+{
+  "version": "0.1.0",
+  "description": "Atlas Dataset category taxonomy. The 'subcategories' lists are the recommended controlled vocabulary for each category's 'subcategory' field. New subcategories may be added but must be lowercase/hyphenated and reviewed.",
+  "categories": {
+    "01_foundation": {
+      "title": "Foundation Skills",
+      "description": "Core capabilities every general-purpose assistant should have regardless of domain.",
+      "subcategories": [
+        "general-reasoning",
+        "instruction-following",
+        "communication",
+        "problem-solving"
+      ]
+    },
+    "02_software_engineering": {
+      "title": "Software Engineering",
+      "description": "Writing, designing, debugging, and reviewing software.",
+      "subcategories": [
+        "programming",
+        "algorithms",
+        "software-architecture",
+        "debugging",
+        "code-review",
+        "open-source"
+      ]
+    },
+    "03_system_engineering": {
+      "title": "System Engineering",
+      "description": "Operating systems, networking, containers, and infrastructure.",
+      "subcategories": [
+        "linux",
+        "windows",
+        "networking",
+        "docker",
+        "kubernetes",
+        "virtualization",
+        "performance-tuning"
+      ]
+    },
+    "04_ai_machine_learning": {
+      "title": "AI & Machine Learning",
+      "description": "ML, DL, transformers, LLMs, agents, and MLOps.",
+      "subcategories": [
+        "machine-learning",
+        "deep-learning",
+        "transformers",
+        "llm",
+        "rag",
+        "ai-agents",
+        "mlops",
+        "prompt-engineering"
+      ]
+    },
+    "05_hardware_engineering": {
+      "title": "Hardware Engineering",
+      "description": "Compute hardware, embedded systems, and validation.",
+      "subcategories": [
+        "cpu",
+        "gpu",
+        "embedded-systems",
+        "firmware",
+        "bios",
+        "validation",
+        "benchmarking"
+      ]
+    },
+    "06_science_engineering": {
+      "title": "Science & Engineering",
+      "description": "Mathematics, physics, electronics, and engineering fundamentals.",
+      "subcategories": [
+        "mathematics",
+        "physics",
+        "electronics",
+        "engineering-concepts"
+      ]
+    },
+    "07_business_knowledge": {
+      "title": "Business Knowledge",
+      "description": "Finance, management, strategy, entrepreneurship.",
+      "subcategories": [
+        "finance",
+        "management",
+        "strategy",
+        "entrepreneurship"
+      ]
+    },
+    "08_creative_knowledge": {
+      "title": "Creative Knowledge",
+      "description": "Writing, storytelling, design, creativity.",
+      "subcategories": [
+        "writing",
+        "storytelling",
+        "design",
+        "creativity"
+      ]
+    },
+    "09_personal_assistant": {
+      "title": "Personal Assistant",
+      "description": "Planning, productivity, decision-making, workflows.",
+      "subcategories": [
+        "planning",
+        "productivity",
+        "decision-making",
+        "workflow-optimization"
+      ]
+    }
+  }
+}

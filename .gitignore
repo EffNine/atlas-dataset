@@ -1,0 +1,26 @@
+# Atlas Dataset - git ignore rules
+
+# Large raw artifacts must NOT be committed to git.
+# Track them via Git LFS or external storage instead.
+raw/external/*
+raw/generated/*
+raw/documentation/*
+raw/conversations/*
+raw/personal_knowledge/*
+!**/.gitkeep
+
+# Curated bulk data is generated; keep only manifests + samples in git.
+curated/v0.1/*.jsonl
+curated/v1.0/*.jsonl
+!**/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Local experiment outputs
+outputs/
+tmp/
+*.log

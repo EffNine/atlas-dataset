@@ -1,0 +1,72 @@
+{
+  "version": "0.1.0",
+  "description": "Declarative chat-template definitions consumed by scripts/convert_format.py. These describe how the canonical 'messages' array maps to each target format. Keeping them data-driven (not hardcoded in Python) means adding a future model format is a config edit, not a code change — core to the model-agnostic mandate.",
+  "defaults": {
+    "system_fallback": "You are Atlas, a precise and helpful AI assistant.",
+    "strip_empty_system": true
+  },
+  "formats": {
+    "qwen_chatml": {
+      "label": "Qwen ChatML",
+      "targets": ["Qwen2", "Qwen2.5", "Qwen3", "future Qwen"],
+      "style": "chatml",
+      "builder": "chatml",
+      "system_template": "<|im_start|>system\n{content}<|im_end|>\n",
+      "user_template": "<|im_start|>user\n{content}<|im_end|>\n",
+      "assistant_template": "<|im_start|>assistant\n{content}<|im_end|>\n",
+      "turn_separator": "",
+      "eos": "<|im_end|>",
+      "note": "Qwen3 supports optional thinking; this base template omits reasoning tags. Enable thinking via a flag if needed."
+    },
+    "llama_instruction": {
+      "label": "Llama 3 Instruction",
+      "targets": ["Llama-3", "Llama-3.1", "future Llama"],
+      "style": "chatml_bos",
+      "builder": "llama",
+      "header": "<|begin_of_text|>",
+      "system_template": "<|start_header_id|>system<|end_header_id|>\n\n{content}<|eot_id|>",
+      "user_template": "<|start_header_id|>user<|end_header_id|>\n\n{content}<|eot_id|>",
+      "assistant_template": "<|start_header_id|>assistant<|end_header_id|>\n\n{content}<|eot_id|>",
+      "turn_separator": "",
+      "eos": "<|eot_id|>"
+    },
+    "sharegpt": {
+      "label": "ShareGPT",
+      "targets": ["OpenChat", "many fine-tune stacks", "vLLM"],
+      "style": "json_conversation",
+      "builder": "sharegpt",
+      "conversation_key": "conversations",
+      "role_map": { "system": "system", "user": "human", "assistant": "gpt" },
+      "note": "Emits a list of {role, content} dicts inside a 'conversations' key; one record per line JSON."
+    },
+    "alpaca": {
+      "label": "Alpaca (instruction/input/output)",
+      "targets": ["Alpaca", "Stanford Alpaca", "llama.cpp datasets"],
+      "style": "instruction_triple",
+      "builder": "alpaca",
+      "note": "Flattens the first user turn into instruction (+ optional input) and the first assistant turn into output. Multi-turn is collapsed; unsupported turns are dropped with a warning."
+    },
+    "mistral_instruct": {
+      "label": "Mistral Instruct v0.2/v0.3",
+      "targets": ["Mistral-7B-Instruct", "Mixtral", "future Mistral"],
+      "style": "chatml_bos",
+      "builder": "llama",
+      "header": "",
+      "system_fold": true,
+      "user_template": "[INST] {content} [/INST]",
+      "assistant_template": "{content}</s>",
+      "turn_separator": "\n",
+      "eos": "</s>",
+      "note": "Mistral folds the system prompt into the first user turn: [INST] System: ...\\n\\nUser: ... [/INST]. Assistant turns end with </s>."
+    },
+    "gemma_instruct": {
+      "label": "Gemma 2/3 Instruct",
+      "targets": ["Gemma-2-9B-IT", "Gemma-2-2B-IT", "future Gemma"],
+      "style": "gemma_tags",
+      "builder": "gemma",
+      "user_template": "<start_of_turn>user\n{content}<end_of_turn>\n",
+      "assistant_template": "<start_of_turn>model\n{content}<end_of_turn>\n",
+      "note": "Gemma uses <start_of_turn>user/model ... <end_of_turn>. System prompt is prepended to the first user turn."
+    }
+  }
+}

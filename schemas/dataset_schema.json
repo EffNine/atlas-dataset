@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.dataset/schemas/dataset_schema.json",
+  "title": "Atlas Dataset Canonical Record",
+  "description": "Canonical, model-agnostic record format for the Atlas AI Dataset Foundation. Every curated example MUST validate against this schema. Conversion to model-specific templates happens downstream in processing/converters and never mutates this canonical form.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "category",
+    "subcategory",
+    "type",
+    "source",
+    "messages",
+    "tags",
+    "quality_score",
+    "verified",
+    "notes"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Globally unique, stable identifier. Recommended format: <category>_<subcategory>_<zero-padded-seq>. Must match pattern ^[a-z0-9_]+$.",
+      "pattern": "^[a-z0-9_-]+$",
+      "minLength": 3,
+      "maxLength": 128
+    },
+    "category": {
+      "type": "string",
+      "description": "Top-level taxonomy bucket. Must be one of the 9 Atlas categories defined in metadata/categories.json.",
+      "enum": [
+        "01_foundation",
+        "02_software_engineering",
+        "03_system_engineering",
+        "04_ai_machine_learning",
+        "05_hardware_engineering",
+        "06_science_engineering",
+        "07_business_knowledge",
+        "08_creative_knowledge",
+        "09_personal_assistant"
+      ]
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "Free-form but SHOULD align with the allowed subcategories listed for the parent category in metadata/categories.json.",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "type": {
+      "type": "string",
+      "description": "Structural shape of the example.",
+      "enum": ["instruction", "conversation", "qa", "reasoning"]
+    },
+    "source": {
+      "type": "object",
+      "description": "Provenance metadata. Never modify original sources; record them here.",
+      "additionalProperties": false,
+      "required": ["name", "license"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Human-readable source name (e.g. 'Qwen Technical Documentation', 'Internal Knowledge', 'Open Source Repo X')."
+        },
+        "url": {
+          "type": "string",
+          "description": "Canonical URL or file path for the origin. May be empty for fully internal content.",
+          "maxLength": 2048,
+          "default": ""
+        },
+        "license": {
+          "type": "string",
+          "description": "SPDX identifier or human-readable license. Use 'CC-BY-4.0' for internal author content, 'proprietary' for restricted, 'unknown' only during ingestion (must be resolved before curated/).",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "date": {
+          "type": "string",
+          "description": "ISO-8601 date the source/content was created or captured (YYYY-MM-DD).",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "default": ""
+        }
+      }
+    },
+    "messages": {
+      "type": "array",
+      "description": "Ordered conversation turns. Must contain at least one user turn and one assistant turn. See chat_schema.json for the item contract.",
+      "minItems": 2,
+      "items": { "$ref": "chat_schema.json#/$defs/message" },
+      "contains": { "$ref": "chat_schema.json#/$defs/user_message" },
+      "allOf": [
+        {
+          "description": "Must contain at least one assistant message.",
+          "contains": { "$ref": "chat_schema.json#/$defs/assistant_message" }
+        }
+      ]
+    },
+    "language": {
+      "type": "string",
+      "description": "ISO 639-1 language code (optionally with region, e.g. 'en', 'en-US', 'zh'). Default 'en'. Used for coverage auditing and multilingual expansion.",
+      "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+      "default": "en"
+    },
+    "difficulty": {
+      "type": "integer",
+      "description": "Optional 1-3 rating of task difficulty (1=easy, 2=medium, 3=hard). Aids curriculum/stratified sampling. Omit if not assessed.",
+      "minimum": 1,
+      "maximum": 3,
+      "default": 0
+    },
+    "tags": {
+      "type": "array",
+      "description": "Free-form keyword tags for retrieval and balancing. Lowercased, hyphenated recommended.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9_-]*$"
+      },
+      "uniqueItems": true,
+      "maxItems": 20
+    },
+    "quality_score": {
+      "type": "integer",
+      "description": "Integer quality rating 1-10 assigned by quality_score.py and/or human review. 0 = unrated (pre-review).",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "True only after a human reviewer approves the example for curated/."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Reviewer notes, caveats, or provenance remarks. Empty string if none.",
+      "maxLength": 2000,
+      "default": ""
+    }
+  }
+}

@@ -1,0 +1,3 @@
+# Keeps this directory in version control.
+# Place externally sourced raw data here. Each file must record its upstream
+# license in metadata/sources.json before any ingestion.

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.dataset/schemas/chat_schema.json",
+  "title": "Atlas Chat Turn",
+  "description": "Contract for a single message turn inside a dataset record's 'messages' array. Model-agnostic: role/content only. Templates (Qwen/Llama/ShareGPT/Alpaca) are applied at conversion time, not here.",
+  "$defs": {
+    "message": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "content"],
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["system", "user", "assistant", "tool"],
+          "description": "Speaker of the turn. 'tool' is reserved for future function-calling datasets."
+        },
+        "content": {
+          "type": "string",
+          "description": "Text content of the turn. Non-empty for system/user/assistant. Empty allowed only for placeholder tool turns.",
+          "minLength": 1,
+          "maxLength": 64000
+        }
+      }
+    },
+    "user_message": {
+      "allOf": [
+        { "$ref": "#/$defs/message" },
+        {
+          "properties": { "role": { "const": "user" } },
+          "required": ["role"]
+        }
+      ]
+    },
+    "assistant_message": {
+      "allOf": [
+        { "$ref": "#/$defs/message" },
+        {
+          "properties": { "role": { "const": "assistant" } },
+          "required": ["role"]
+        }
+      ]
+    },
+    "system_message": {
+      "allOf": [
+        { "$ref": "#/$defs/message" },
+        {
+          "properties": { "role": { "const": "system" } },
+          "required": ["role"]
+        }
+      ]
+    }
+  }
+}

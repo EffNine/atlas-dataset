@@ -1,0 +1,33 @@
+{
+  "version": "0.1.0",
+  "description": "Registry of upstream sources referenced by dataset records. Every raw file must be represented here before ingestion. 'license' MUST be an SPDX id, 'CC-BY-4.0' for internal author content, or 'proprietary' for restricted material.",
+  "sources": [
+    {
+      "id": "internal-personal",
+      "name": "Internal Personal Knowledge",
+      "url": "raw/personal_knowledge/",
+      "license": "CC-BY-4.0",
+      "date_added": "2026-07-27",
+      "trust_level": "high",
+      "notes": "Author-authored content. Default license for first-party data."
+    },
+    {
+      "id": "generated-synthetic",
+      "name": "Synthetic Generated Drafts",
+      "url": "raw/generated/",
+      "license": "CC-BY-4.0",
+      "date_added": "2026-07-27",
+      "trust_level": "medium",
+      "notes": "Model-generated drafts. MUST pass clean + human review before curated/."
+    },
+    {
+      "id": "example-seed",
+      "name": "Atlas Example Seed",
+      "url": "examples/sample_dataset.jsonl",
+      "license": "CC-BY-4.0",
+      "date_added": "2026-07-27",
+      "trust_level": "high",
+      "notes": "Hand-written canonical examples used to bootstrap the schema and pipeline."
+    }
+  ]
+}
