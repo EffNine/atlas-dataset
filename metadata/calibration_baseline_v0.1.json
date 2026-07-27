@@ -1,0 +1,126 @@
+{
+  "artifact": "atlas-calibration-baseline",
+  "baseline_version": "v0.1",
+  "framework_version": "0.1.0",
+  "dataset_version": "v0.1",
+  "timestamp": "2026-07-27T11:22:53.600832+00:00",
+  "source_calibration_report": "metadata/calibration_report.json",
+  "reviewed_record_count": 100,
+  "accept_threshold": 7,
+  "human_score_distribution": {
+    "6": 16,
+    "7": 82,
+    "8": 2
+  },
+  "ai_score_distribution": {
+    "7": 100
+  },
+  "correlation_metrics": {
+    "pearson_r": null,
+    "spearman_rho": null,
+    "exact_agree": 0.82,
+    "within1_agree": 1.0,
+    "auto_mean": 7.0,
+    "human_mean": 6.86,
+    "hallucination_rate": 0.0
+  },
+  "bias_metrics": {
+    "global_mean_bias": 0.14,
+    "global_mae": 0.18,
+    "global_rmse": 0.424,
+    "per_category_mean_bias": {
+      "01_foundation": -0.1,
+      "02_software_engineering": 0.05,
+      "03_system_engineering": 0.0,
+      "04_ai_machine_learning": 0.2,
+      "05_hardware_engineering": 0.125,
+      "06_science_engineering": 0.4,
+      "07_business_knowledge": 0.286,
+      "08_creative_knowledge": 0.4,
+      "09_personal_assistant": 0.2
+    },
+    "per_source_mean_bias": {
+      "b1": 0.286,
+      "c1": 0.5,
+      "c2": 0.333,
+      "c3": 0.333,
+      "c6": 0.5,
+      "f1": 0.0,
+      "f5": -0.333,
+      "f6": 0.167,
+      "h1": 0.0,
+      "h2": 0.25,
+      "m2": 0.1,
+      "m3": 0.3,
+      "r1": 0.4,
+      "s1": 0.2,
+      "s4": 0.0,
+      "s5": 0.0,
+      "s6": 0.0,
+      "y2": 0.0,
+      "y3": 0.0,
+      "y4": 0.0
+    },
+    "max_abs_category_bias": 0.4,
+    "max_abs_source_bias": 0.5
+  },
+  "confidence_metrics": {
+    "per_category_confidence": {
+      "01_foundation": 0.967,
+      "02_software_engineering": 0.994,
+      "03_system_engineering": 1.0,
+      "04_ai_machine_learning": 0.978,
+      "05_hardware_engineering": 0.882,
+      "06_science_engineering": 0.956,
+      "07_business_knowledge": 0.81,
+      "08_creative_knowledge": 0.676,
+      "09_personal_assistant": 0.691
+    },
+    "per_source_confidence": {
+      "b1": 0.81,
+      "c1": 0.422,
+      "c2": 0.527,
+      "c3": 0.527,
+      "c6": 0.422,
+      "f1": 0.746,
+      "f5": 0.527,
+      "f6": 0.76,
+      "h1": 0.632,
+      "h2": 0.615,
+      "m2": 0.989,
+      "m3": 0.967,
+      "r1": 0.676,
+      "s1": 0.691,
+      "s4": 0.707,
+      "s5": 0.707,
+      "s6": 0.707,
+      "y2": 0.707,
+      "y3": 0.707,
+      "y4": 0.707
+    },
+    "min_category_confidence": 0.676,
+    "min_source_confidence": 0.422,
+    "mandatory_human_review_strata": [
+      "c1",
+      "c2",
+      "c3",
+      "c6",
+      "f5"
+    ],
+    "n_mandatory_human_review_strata": 5
+  },
+  "approval_rate": 0.84,
+  "rejection_rate": 0.16,
+  "verdict_distribution": {
+    "approve": 84,
+    "needs_revision": 16
+  },
+  "readiness_verdict": "READY_FOR_CALIBRATED_AUTO_REVIEW",
+  "thresholds": {
+    "within1_target": 0.8,
+    "threshold_f1_target": 0.85,
+    "bias_flag": 1.0,
+    "stratum_conf_floor": 0.6
+  },
+  "note": "Frozen for future comparison. Do not edit by hand; regenerate only after a deliberate re-calibration decision."
+}

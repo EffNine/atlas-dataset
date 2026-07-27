@@ -1,0 +1,100 @@
+{
+  "artifact": "atlas-checksum-registry",
+  "registry_version": "v0.1",
+  "dataset_version": "v0.1",
+  "generated": "2026-07-27T11:22:53.604753+00:00",
+  "algorithm": "sha256",
+  "purpose": "Detect accidental modification of reviewed knowledge objects, the review file, schemas, and manifests.",
+  "files": [
+    {
+      "path": "curated/v0.1/pilot_candidates.jsonl",
+      "sha256": "baaf3113cf84a039655f6841176e88bf0e4fb5c468cbecd76752df2aec0e92ae",
+      "bytes": 151483,
+      "lines": 100
+    },
+    {
+      "path": "raw/pilot/seed.jsonl",
+      "sha256": "4e97dfdade8e567e9dd495fd11d87b00085a4ce2fe788f93140832c6567523df",
+      "bytes": 107232,
+      "lines": 100
+    },
+    {
+      "path": "review/quality_reviews.jsonl",
+      "sha256": "85fbaf1fdfce42a08dcfd04c51017290edd612f8fea39682e665a65c8bbd890d",
+      "bytes": 49619,
+      "lines": 100
+    },
+    {
+      "path": "schemas/quality_review_schema.json",
+      "sha256": "191744ea45a7bbfeb31e73fb41e5cfb82cede2b2f84ca47c4acf1e7df6a16d2a",
+      "bytes": 4031,
+      "lines": 111
+    },
+    {
+      "path": "schemas/knowledge_object_schema.json",
+      "sha256": "c3d771921c5af62fe3178de61e199b5d2d8603001b5735bbf09be8120059e65b",
+      "bytes": 6228,
+      "lines": 128
+    },
+    {
+      "path": "schemas/dataset_schema.json",
+      "sha256": "a6c154c6e20381aa9f85505f6be5997189599fa786f2fb07df67a6b5f2dbe79e",
+      "bytes": 5174,
+      "lines": 139
+    },
+    {
+      "path": "schemas/chat_schema.json",
+      "sha256": "9f5b854e5bb08a730648dd49af7ae0b48a11b2129a9bf192d75e36c44a1ae3ef",
+      "bytes": 1629,
+      "lines": 53
+    },
+    {
+      "path": "metadata/pilot_manifest.json",
+      "sha256": "733b0361a37cd00cb8061ac719839b4121ddaabc85b489051afa7f2ad2754418",
+      "bytes": 1164,
+      "lines": 42
+    },
+    {
+      "path": "metadata/acquisition_manifest_v0.1.json",
+      "sha256": "fdc0474964b1c322be8aa9c11fe90b668ffefab070be1b1486d06a8f24a859c5",
+      "bytes": 43442,
+      "lines": 1328
+    },
+    {
+      "path": "metadata/ingestion_plan_v0.1.json",
+      "sha256": "2290615f3d7cc75812b52e87ad586b5173e87830525465cbe9736f7a65be0c5f",
+      "bytes": 48326,
+      "lines": 1640
+    },
+    {
+      "path": "metadata/sources.json",
+      "sha256": "916d2880e40f5755b5b2d1da32859a426dba6cb1cd9325de8fd24957321692a4",
+      "bytes": 1214,
+      "lines": 33
+    },
+    {
+      "path": "metadata/source_registry.json",
+      "sha256": "247828bea69207a79c4b74947a80476642fa3f142130294ac15d83d89e6db1bd",
+      "bytes": 39447,
+      "lines": 1249
+    },
+    {
+      "path": "metadata/categories.json",
+      "sha256": "cb7b051707caab51680763ee8175c7c63068826180c313c8061904863bbdf42b",
+      "bytes": 3084,
+      "lines": 108
+    },
+    {
+      "path": "metadata/calibration_report.json",
+      "sha256": "a2b2692bb6252eb5a531ef7147a21837afa8a649732438800c02632d63ab3804",
+      "bytes": 21411,
+      "lines": 817
+    }
+  ],
+  "summary": {
+    "tracked": 14,
+    "present": 14,
+    "missing": 0,
+    "total_bytes": 483484
+  }
+}

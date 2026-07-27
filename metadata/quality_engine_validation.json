@@ -1,0 +1,78 @@
+{
+  "artifact": "quality-engine-validation",
+  "dataset_version": "v0.1",
+  "baseline_reference": "metadata/calibration_baseline_v0.1.json",
+  "engine": "Quality Evaluation Engine (scripts/quality_score.py)",
+  "reviewed_record_count": 100,
+  "frozen_baseline": {
+    "ai_score_distribution": {
+      "7": 100
+    },
+    "pearson_r": null,
+    "within1_agree": 1.0,
+    "threshold_f1": null,
+    "mean_bias": 0.14
+  },
+  "new_engine": {
+    "ai_score_distribution": {
+      "7": 32,
+      "8": 67,
+      "9": 1
+    },
+    "distinct_scores": 3,
+    "auto_mean": 7.69,
+    "human_mean": 6.86,
+    "pearson_r": 0.344,
+    "spearman_rho": 0.349,
+    "exact_agree": 0.23,
+    "within1_agree": 0.94,
+    "mae": 0.83,
+    "rmse": 0.975,
+    "mean_bias": 0.83,
+    "threshold_f1": 0.913,
+    "readiness_verdict": "READY_FOR_CALIBRATED_AUTO_REVIEW"
+  },
+  "criteria": [
+    {
+      "name": "variance: >= 3 distinct auto-scores",
+      "pass": true,
+      "detail": "distinct=3 dist={'7': 32, '8': 67, '9': 1}"
+    },
+    {
+      "name": "correlation: Pearson r defined (was None)",
+      "pass": true,
+      "detail": "pearson_r=0.34384042606031834"
+    },
+    {
+      "name": "correlation: Pearson r >= 0.30",
+      "pass": true,
+      "detail": "pearson_r=0.34384042606031834"
+    },
+    {
+      "name": "correlation: Spearman rho defined",
+      "pass": true,
+      "detail": "spearman_rho=0.34900903215981477"
+    },
+    {
+      "name": "error: MAE finite and < 2.0",
+      "pass": true,
+      "detail": "mae=0.83"
+    },
+    {
+      "name": "error: RMSE finite and < 2.5",
+      "pass": true,
+      "detail": "rmse=0.975"
+    },
+    {
+      "name": "agreement: mean_bias within +/-1 (no massive offset)",
+      "pass": true,
+      "detail": "mean_bias=0.83"
+    },
+    {
+      "name": "inputs unchanged: reviewed count == frozen",
+      "pass": true,
+      "detail": "matched=100 frozen=100"
+    }
+  ],
+  "passed": true
+}
