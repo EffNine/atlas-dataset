@@ -37,6 +37,8 @@ Subcommands:
   atlas release          Manage release lifecycle: create, list, verify, chain
   atlas collection       Manage Knowledge Collections (pack groupings)
   atlas query            Execute Atlas Query Language (AQL) queries against records
+  atlas training-readiness  Evaluate training readiness gate (READ-ONLY)
+  atlas training-readiness --verify  Verify readiness report integrity
   atlas release-check    Run release verification checks (gates, chain, signatures)
 
 Design guarantees (also asserted by self-test):
@@ -59,6 +61,10 @@ Usage:
   python scripts/atlas.py query --execute 'category:01_foundation quality>=7'
   python scripts/atlas.py query --validate 'license in (mit, apache-2.0)'
   python scripts/atlas.py release-check
+
+  # ---- Phase 5D Training Readiness Gate ----
+  python scripts/atlas.py training-readiness
+  python scripts/atlas.py training-readiness --verify
 """
 from __future__ import annotations
 
@@ -1415,6 +1421,238 @@ def cmd_release_check(argv) -> int:
     return 0
 
 
+def cmd_training_view(argv) -> int:
+    """List, generate (dry-run), or verify training views.
+
+    All operations are read-only. Generation is always dry-run —
+    no training view data is written to disk.
+    """
+    from training_view_engine import TrainingViewGenerator
+
+    ap = argparse.ArgumentParser(description="Atlas Training View Management.")
+    ap.add_argument("--list", action="store_true", help="list existing training views")
+    ap.add_argument("--generate", action="store_true",
+                    help="generate a training view (dry-run only)")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="alias for --generate (ensures dry-run semantics)")
+    ap.add_argument("--verify", action="store_true",
+                    help="verify a training view manifest")
+    ap.add_argument("--model", default="",
+                    help="target model (qwen, llama, deepseek, or empty for all)")
+    ap.add_argument("--quality", type=int, default=7,
+                    help="minimum quality threshold (0-10, default: 7)")
+    ap.add_argument("--recipe", default="", help="recipe ID for generation")
+    ap.add_argument("--source", default="v0.2",
+                    help="source curated release version (default: v0.2)")
+    args = ap.parse_args(argv)
+
+    _install_network_block()
+    engine = TrainingViewGenerator(ROOT, mode="dry-run")
+
+    # --list
+    if args.list or not (args.generate or args.verify):
+        views = engine.list_training_views()
+        if not views:
+            print("=" * 60)
+            print("ATLAS TRAINING VIEWS")
+            print("=" * 60)
+            print("No training views found. Use --generate --dry-run to simulate generation.")
+            return 0
+        print("=" * 70)
+        print("ATLAS TRAINING VIEWS")
+        print("=" * 70)
+        print(f"{'View ID':<40} {'Model':<10} {'Release':<10} {'Records':<10} {'Checksum':<18}")
+        print("-" * 70)
+        for v in views:
+            vid = v.get("training_view_id", "?")[:36]
+            mdl = v.get("model", "?")
+            rel = v.get("source_release", "?")
+            rec = str(v.get("source_records", "?"))
+            cks = v.get("checksum", "?")
+            print(f"{vid:<40} {mdl:<10} {rel:<10} {rec:<10} {cks:<18}")
+        print("=" * 70)
+        print(f"  {len(views)} training view(s) found.")
+        return 0
+
+    # --generate (dry-run only)
+    if args.generate:
+        print("=" * 60)
+        print("ATLAS TRAINING VIEW GENERATION (DRY-RUN)")
+        print("=" * 60)
+        print(f"  Source release:  {args.source}")
+        print(f"  Target model:    {args.model or 'all'}")
+        print(f"  Quality threshold: {args.quality}")
+        print(f"  Recipe:          {args.recipe or '(none)'}")
+        print()
+
+        result = engine.dry_run(
+            target_model=args.model,
+            quality_threshold=args.quality,
+            recipe_id=args.recipe,
+            source_release=args.source,
+        )
+
+        status = result.get("status", "error")
+        if status == "error":
+            print(f"  ❌ ERROR: {result.get('errors', ['unknown'])}")
+            return 1
+
+        if status == "blocked":
+            print(f"  ⛔ BLOCKED: {result.get('errors', ['unknown'])}")
+            print()
+            print(f"  Source records:     {result.get('total_source_records', 0)}")
+            print(f"  Approved records:   {result.get('approved_records', 0)}")
+            print(f"  Eligible records:   {result.get('eligible_records', 0)}")
+            print(f"  Reproducibility:    {result.get('reproducibility_hash', '?')[:20]}...")
+            print()
+            print("  STOP — No training view generation possible until blocks are resolved.")
+            return 1
+
+        # OK
+        print(f"  ✅ Status:          {status}")
+        print(f"  Source records:     {result.get('total_source_records', 0)}")
+        print(f"  Approved records:   {result.get('approved_records', 0)}")
+        print(f"  Eligible records:   {result.get('eligible_records', 0)}")
+        print(f"  Reproducibility:    {result.get('reproducibility_hash', '?')[:20]}...")
+        print()
+
+        # Filter report
+        fr = result.get("filter_report", {})
+        print("  Filter breakdown:")
+        print(f"    Quality below:     {fr.get('quality_below', 0)}")
+        print(f"    License denied:    {fr.get('license_denied', 0)}")
+        print(f"    Lifecycle invalid: {fr.get('lifecycle_invalid', 0)}")
+        print(f"    Eligibility miss:  {fr.get('eligibility_missing', 0)}")
+        print(f"    Pending review:    {fr.get('pending_review', 0)}")
+        print(f"    Rejected:          {fr.get('rejected', 0)}")
+        print(f"    Lineage incomplete: {fr.get('lineage_incomplete', 0)}")
+        print()
+
+        # Validation summary
+        vr = result.get("validation_results", {})
+        print("  Validation:")
+        print(f"    Total checked:     {vr.get('total_checked', 0)}")
+        print(f"    Valid:             {vr.get('valid', 0)}")
+        print(f"    Errors:            {vr.get('errors', 0)}")
+        if vr.get("details"):
+            for d in vr["details"][:5]:
+                print(f"    - {d}")
+        print()
+
+        # Manifest preview
+        man = result.get("manifest", {})
+        print("  Manifest preview:")
+        print(f"    View ID:          {man.get('training_view_id', '?')}")
+        print(f"    Source release:   {man.get('source_release', '?')}")
+        print(f"    Created:          {man.get('created_at', '?')[:19]}")
+        cks = man.get("checksum", {})
+        print(f"    Checksum (records): {cks.get('records', '?')[:20]}...")
+        print(f"    Checksum (manifest): {cks.get('manifest', '?')[:20]}...")
+        print()
+
+        if result.get("warnings"):
+            print("  Warnings:")
+            for w in result["warnings"]:
+                print(f"    ⚠ {w}")
+            print()
+
+        print(f"  {result.get('message', '')}")
+        return 0
+
+    # --verify (placeholder — needs a manifest path arg to be fully functional)
+    if args.verify:
+        print("[training-view] Verify mode requires a manifest file argument.")
+        print("[training-view] Use --list to inspect existing training view manifests.")
+        return 0
+
+    print("[training-view] Specify --list, --generate, or --verify")
+    return 2
+
+
+# --------------------------------------------------------------------------- #
+# Training Readiness — Phase 5D readiness assessment (READ-ONLY)
+# --------------------------------------------------------------------------- #
+
+def cmd_training_readiness(argv) -> int:
+    """Evaluate Training Readiness Gate — READ-ONLY assessment.
+
+    Checks review readiness, data quality, license compliance,
+    and evaluation infrastructure. Produces:
+      metadata/training_readiness_report.json
+    with verdict READY / CONDITIONAL / BLOCKED.
+
+    No dataset modification, no review changes, no release changes.
+    """
+    import training_readiness as tr
+    ap = argparse.ArgumentParser(
+        description="Evaluate training readiness gate (READ-ONLY).")
+    ap.add_argument("--verify", action="store_true",
+                    help="verify integrity of generated readiness report")
+    args = ap.parse_args(argv)
+
+    _install_network_block()
+
+    # Build the readiness report
+    report = tr.evaluate_readiness()
+
+    # Write report
+    _assert_write_safe(ROOT / "metadata")
+    (ROOT / "metadata").mkdir(parents=True, exist_ok=True)
+    report_path = ROOT / "metadata" / "training_readiness_report.json"
+    report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
+
+    # Print summary
+    verdict = report["verdict"]
+    print("=" * 64)
+    print("ATLAS TRAINING READINESS")
+    print("=" * 64)
+    print(f"  Verdict:          {verdict}")
+    print(f"  Total records:    {report['summary']['total_records']}")
+    print(f"  Approved:         {report['summary']['approved_records']}")
+    print(f"  Pending:          {report['summary']['pending_records']}")
+    print(f"  Quality mean:     {report['summary']['quality_mean']}")
+    print(f"  Missing lineage:  {report['summary']['missing_lineage']}")
+    print(f"  Missing prov:     {report['summary']['missing_provenance']}")
+    print(f"  Denied licenses:  {report['summary']['denied_licenses']}")
+    print(f"  Benchmarks:       {report['summary']['benchmark_count']}")
+    print()
+
+    for g in report["gates"]:
+        icon = "✅" if g["status"] == "READY" else (
+            "⚠️" if g["status"] == "CONDITIONAL" else "❌")
+        print(f"  {icon} {g['gate']}: {g['status']}")
+
+    if verdict == "BLOCKED":
+        print()
+        print("  ❌ BLOCKED — resolve gate failures before proceeding.")
+        print()
+        print("  STOP. Do not train models, generate training datasets,")
+        print("  or release v0.2. Wait for approval before Phase 5E.")
+    elif verdict == "CONDITIONAL":
+        print()
+        print("  ⚠️  CONDITIONAL — warnings exist; review before proceeding.")
+
+    print()
+    print(f"  Report -> metadata/training_readiness_report.json")
+    print(f"  Hash:   {report['report_hash'][:20]}...")
+    print("=" * 64)
+
+    # --verify: check integrity of the written report
+    if args.verify:
+        loaded = tr._load_json(report_path)
+        v = tr._verify_report(loaded)
+        print()
+        print("  VERIFICATION:")
+        if v["verified"]:
+            print("    ✅ Report integrity verified — no issues found")
+        else:
+            print("    ❌ Report issues found:")
+            for issue in v["issues"]:
+                print(f"       - {issue}")
+
+    return 0 if verdict in ("READY", "CONDITIONAL") else 1
+
+
 # --------------------------------------------------------------------------- #
 # Payload Resolver — canonical 6-priority record payload lookup (Phase 4B.5)
 # --------------------------------------------------------------------------- #
@@ -1454,6 +1692,224 @@ def cmd_checkpoint(argv) -> int:
     print(f"Current batch:   {cp.get('current_batch', 'none')}")
     print(f"Last updated:    {cp.get('updated_at', '?')}")
     return 0
+
+
+# --------------------------------------------------------------------------- #
+# Evaluate — evaluation infrastructure commands (Phase 5A)
+# --------------------------------------------------------------------------- #
+
+def cmd_evaluate(argv) -> int:
+    """Run evaluation infrastructure commands: list, describe, dry-run, run, report, verify.
+
+    All operations are read-only. No actual evaluation is executed
+    against curated data unless --run is used with --no-dry-run.
+    """
+    from evaluation_engine import EvaluationOrchestrator
+    from evaluation_engine.runner import EvaluationRunner
+
+    ap = argparse.ArgumentParser(description="Atlas Evaluation Infrastructure.")
+    ap.add_argument("--list", action="store_true", help="list all registered benchmarks")
+    ap.add_argument("--describe", help="describe a specific benchmark by ID")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="simulate evaluation (no data mutation, no network)")
+    ap.add_argument("--run", help="execute evaluation against a benchmark (e.g. atlas_quality_benchmark)")
+    ap.add_argument("--no-dry-run", action="store_true", dest="full_run",
+                    help="execute full evaluation (with actual metric computation)")
+    ap.add_argument("--report", help="show evaluation report by ID or 'list' to show all")
+    ap.add_argument("--verify", help="verify a completed evaluation artifact by ID")
+    args = ap.parse_args(argv)
+
+    _install_network_block()
+    engine = EvaluationOrchestrator(ROOT, network_block=True)
+
+    # --list
+    if args.list:
+        benchmarks = engine.list_benchmarks()
+        if not benchmarks:
+            print("[evaluate] No benchmarks registered")
+            return 0
+        print("=" * 70)
+        print("ATLAS EVALUATION BENCHMARKS")
+        print("=" * 70)
+        print(f"{'Benchmark ID':<32} {'Category':<12} {'Metric':<24} {'Status':<14}")
+        print("-" * 70)
+        for bm in benchmarks:
+            bid = bm.get("benchmark_id", "?")
+            cat = bm.get("category_group", bm.get("category", "?"))
+            met = bm.get("metric", "?")
+            st = bm.get("status", "?")
+            print(f"{bid:<32} {cat:<12} {met:<24} {st:<14}")
+        print("=" * 70)
+        return 0
+
+    # --describe
+    if args.describe:
+        desc = engine.describe_benchmark(args.describe)
+        print(desc)
+        return 0
+
+    # --dry-run (legacy mode)
+    if args.dry_run and not args.run:
+        print("[evaluate] Running dry-run evaluation...")
+        result = engine.dry_run()
+        print("=" * 60)
+        print("ATLAS EVALUATION DRY-RUN")
+        print("=" * 60)
+        print(f"  Status:                 {result.get('status', '?')}")
+        print(f"  Benchmarks available:   {result.get('benchmarks_available', 0)}")
+        print(f"  Metrics available:      {result.get('metrics_available', 0)}")
+        print(f"  Reproducibility hash:   {result.get('reproducibility_hash', '?')[:20]}...")
+        print()
+        print(f"  Benchmarks:")
+        for bm in result.get("benchmarks", []):
+            print(f"    - {bm.get('benchmark_id', '?')} ({bm.get('metric', '?')})")
+        print()
+        print(f"  Metrics:")
+        for m in result.get("metrics", []):
+            status = m.get("status", "?")
+            print(f"    [{status}] {m.get('metric_id', '?')}")
+        print()
+        print(f"  {result.get('message', '')}")
+        return 0
+
+    # --run <benchmark_id>
+    if args.run:
+        runner = EvaluationRunner(ROOT)
+        benchmark_id = args.run
+        mode = "full" if args.full_run else "dry-run"
+
+        print(f"[evaluate] Running '{benchmark_id}' evaluation (mode: {mode})...")
+        result = runner.run(benchmark_id, mode=mode)
+
+        # Write report
+        report_path = runner.write_report(result)
+        print(f"[evaluate] Report written: {report_path.relative_to(ROOT)}")
+
+        print("=" * 60)
+        print(f"ATLAS EVALUATION RUN: {benchmark_id}")
+        print("=" * 60)
+        print(f"  Evaluation ID:      {result.evaluation_id}")
+        print(f"  Benchmark ID:       {result.benchmark_id}")
+        print(f"  Mode:               {result.mode}")
+        print(f"  Dataset Version:    {result.dataset_version}")
+        print(f"  Records Evaluated:  {result.records_evaluated}")
+        print(f"  Timestamp:          {result.timestamp}")
+        print(f"  Reproducibility:    {result.reproducibility_hash[:20]}...")
+        print()
+        print(f"  Metrics ({len(result.metrics)}):")
+        for m in result.metrics:
+            status = m.get("status", "?")
+            value = m.get("value", "?")
+            mid = m.get("metric_id", "?")
+            if isinstance(value, dict):
+                value_str = json.dumps(value, separators=(",", ":"))[:60]
+            elif value is None:
+                value_str = "—"
+            else:
+                value_str = str(value)[:60]
+            print(f"    [{status}] {mid}: {value_str}")
+        print()
+        if result.failures:
+            print(f"  Failures ({len(result.failures)}):")
+            for f in result.failures:
+                print(f"    - {f.get('message', str(f))}")
+            print()
+        if result.recommendations:
+            print(f"  Recommendations:")
+            for r in result.recommendations:
+                print(f"    - {r}")
+        print()
+        print(f"[evaluate] Run complete. Report: {report_path}")
+        return 0
+
+    # --report
+    if args.report:
+        runner = EvaluationRunner(ROOT)
+        if args.report == "list":
+            reports = runner.list_reports()
+            if not reports:
+                print("[evaluate] No reports found.")
+                return 0
+            print("=" * 60)
+            print("ATLAS EVALUATION REPORTS")
+            print("=" * 60)
+            print(f"{'Evaluation ID':<36} {'Benchmark':<28} {'Records':<8} {'Mode':<10}")
+            print("-" * 60)
+            for rpt in reports:
+                eid = rpt.get("evaluation_id", "?")[:32]
+                bid = rpt.get("benchmark_id", "?")[:24]
+                rec = str(rpt.get("records_evaluated", "?"))
+                mod = rpt.get("mode", "?")
+                print(f"  {eid:<34} {bid:<26} {rec:<8} {mod:<10}")
+            print("=" * 60)
+            print(f"  {len(reports)} report(s) found.")
+            return 0
+        else:
+            # Show specific report
+            path = runner.get_report_path(args.report)
+            if path is None:
+                print(f"[evaluate] Report not found: {args.report}")
+                return 1
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as e:
+                print(f"[evaluate] Error reading report: {e}")
+                return 1
+
+            print("=" * 60)
+            print(f"EVALUATION REPORT: {data.get('evaluation_id', '?')}")
+            print("=" * 60)
+            print(f"  Benchmark ID:       {data.get('benchmark_id', '?')}")
+            print(f"  Mode:               {data.get('mode', '?')}")
+            print(f"  Dataset Version:    {data.get('dataset_version', '?')}")
+            print(f"  Records Evaluated:  {data.get('records_evaluated', 0)}")
+            print(f"  Timestamp:          {data.get('timestamp', '?')}")
+            print(f"  Reproducibility:    {data.get('reproducibility_hash', '?')[:20]}...")
+            print()
+            print("  Metrics:")
+            for m in data.get("metrics", []):
+                status = m.get("status", "?")
+                value = m.get("value", "?")
+                mid = m.get("metric_id", "?")
+                detail = m.get("detail", m.get("message", ""))[:80]
+                print(f"    [{status}] {mid}: {value}")
+                if detail:
+                    print(f"            {detail}")
+            print()
+            if data.get("failures"):
+                print(f"  Failures: {len(data['failures'])}")
+            if data.get("recommendations"):
+                print(f"  Recommendations: {len(data['recommendations'])}")
+            return 0
+
+    # --verify
+    if args.verify:
+        runner = EvaluationRunner(ROOT)
+        result = runner.verify_artifact(args.verify)
+        print("=" * 60)
+        print("ATLAS EVALUATION ARTIFACT VERIFICATION")
+        print("=" * 60)
+        print(f"  Evaluation ID:  {result.get('evaluation_id', '?')}")
+        print(f"  Exists:         {result.get('exists', False)}")
+        print(f"  Valid:          {result.get('valid', False)}")
+        if result.get("hash_match") is not None:
+            print(f"  Hash Match:     {result.get('hash_match')}")
+            print(f"  Expected Hash:  {result.get('hash_expected', '?')}")
+            print(f"  Actual Hash:    {result.get('hash_actual', '?')}")
+        if result.get("errors"):
+            print(f"  Errors:")
+            for e in result["errors"]:
+                print(f"    - {e}")
+        print()
+        if result.get("valid"):
+            print("  VERDICT: PASS — artifact integrity verified")
+            return 0
+        else:
+            print("  VERDICT: FAIL — artifact verification failed")
+            return 1
+
+    print("[evaluate] Specify --list, --describe <id>, --dry-run, --run <benchmark>, --report <id>, or --verify <id>")
+    return 2
 
 
 def main(argv=None) -> int:
@@ -1509,6 +1965,18 @@ def main(argv=None) -> int:
     p_ckpt = sub.add_parser("checkpoint", help="show checkpoint status")
     p_ckpt.add_argument("--status", action="store_true", help="show checkpoint summary")
 
+    # ---- Phase 5A/B Evaluation Infrastructure ----
+    p_eval = sub.add_parser("evaluate", help="evaluation infrastructure and execution")
+    p_eval.add_argument("--list", action="store_true", help="list all registered benchmarks")
+    p_eval.add_argument("--describe", help="describe a specific benchmark by ID")
+    p_eval.add_argument("--dry-run", action="store_true",
+                        help="simulate evaluation (no data mutation, no network)")
+    p_eval.add_argument("--run", help="execute evaluation against a benchmark (e.g. atlas_quality_benchmark)")
+    p_eval.add_argument("--no-dry-run", action="store_true", dest="full_run",
+                        help="execute full evaluation (with actual metric computation)")
+    p_eval.add_argument("--report", help="show evaluation report by ID or 'list' to show all")
+    p_eval.add_argument("--verify", help="verify a completed evaluation artifact by ID")
+
     # ---- Phase 4A.5 Release Engineering commands ----
     p_release = sub.add_parser("release", help="manage release lifecycle")
     p_release.add_argument("--create", help="create a new release (e.g. v0.2)")
@@ -1540,11 +2008,37 @@ def main(argv=None) -> int:
 
     p_rc = sub.add_parser("release-check", help="Phase 4A.5 release verification checks")
 
+    # ---- Phase 5C Training View Preparation ----
+    p_tv = sub.add_parser("training-view",
+                          help="list, generate (dry-run), or verify training views")
+    p_tv.add_argument("--list", action="store_true",
+                      help="list existing training views")
+    p_tv.add_argument("--generate", action="store_true",
+                      help="generate a training view (dry-run only)")
+    p_tv.add_argument("--dry-run", action="store_true",
+                      help="alias for --generate (ensures dry-run semantics)")
+    p_tv.add_argument("--verify", action="store_true",
+                      help="verify a training view manifest")
+    p_tv.add_argument("--model", default="",
+                      help="target model (qwen, llama, deepseek, or empty for all)")
+    p_tv.add_argument("--quality", type=int, default=7,
+                      help="minimum quality threshold (0-10, default: 7)")
+    p_tv.add_argument("--recipe", default="",
+                      help="recipe ID for generation")
+    p_tv.add_argument("--source", default="v0.2",
+                      help="source curated release version (default: v0.2)")
+
     # ---- Phase 4B.5 Canonical Payload Resolver ----
     p_payload = sub.add_parser("payload",
                                help="resolve a record payload through canonical priority search")
     p_payload.add_argument("--resolve", help="record ID to resolve")
     p_payload.add_argument("--explain", help="record ID to explain (full lookup trace)")
+
+    # ---- Phase 5D Training Readiness Gate ----
+    p_tr = sub.add_parser("training-readiness",
+                          help="evaluate training readiness gate (READ-ONLY)")
+    p_tr.add_argument("--verify", action="store_true",
+                      help="verify integrity of readiness report")
 
     args = ap.parse_args(argv)
     # Args after the program name + subcommand name are for the subcommand.
@@ -1575,6 +2069,10 @@ def main(argv=None) -> int:
     if args.cmd == "checkpoint":
         return cmd_checkpoint(rest)
 
+    # ---- Phase 5A Evaluation Infrastructure ----
+    if args.cmd == "evaluate":
+        return cmd_evaluate(rest)
+
     # ---- Phase 4A.5 Release Engineering commands ----
     if args.cmd == "release":
         return cmd_release(rest)
@@ -1585,9 +2083,17 @@ def main(argv=None) -> int:
     if args.cmd == "release-check":
         return cmd_release_check(rest)
 
+    # ---- Phase 5C Training View Preparation ----
+    if args.cmd == "training-view":
+        return cmd_training_view(rest)
+
     # ---- Phase 4B.5 Canonical Payload Resolver ----
     if args.cmd == "payload":
         return cmd_payload(rest)
+
+    # ---- Phase 5D Training Readiness Gate ----
+    if args.cmd == "training-readiness":
+        return cmd_training_readiness(rest)
 
     return 2
 

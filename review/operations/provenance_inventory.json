@@ -1,0 +1,196 @@
+{
+  "schema": "review/operations/provenance_inventory.json",
+  "version": "v0.2",
+  "phase": "Phase 5E.2 — Provenance Resolution: Step 1",
+  "generated": "2026-07-28T22:00:00+00:00",
+  "description": "Complete provenance-state audit of all records currently classified as provenance-blocked in the needs_revision cohort.",
+
+  "policy": {
+    "original_decisions_unchanged": true,
+    "curated_dataset_unchanged": true,
+    "release_remains_blocked": true,
+    "no_content_revision_before_provenance_cleared": true
+  },
+
+  "records_audited": 2,
+
+  "records": [
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "source_id": "s5",
+      "batch": "batch_002",
+      "category": "02_software_engineering",
+      "subcategory": "programming",
+      "current_state": "needs_revision",
+      "issue_type": "provenance_restricted",
+      "severity": "medium-high",
+
+      "source_registry_entry": {
+        "id": "s5",
+        "name": "StackExchange Code (Stack Overflow / Unix & Linux)",
+        "source": "Stack Exchange",
+        "url": "https://archive.org/details/stackexchange",
+        "tier": "Tier 3",
+        "status": "review",
+        "license": "CC-BY-SA-4.0 (attribution + share-alike)",
+        "notes": "Strong Tier-3 community source for SW + systems. Attribute per post; filter low-score; strip PII."
+      },
+
+      "license": {
+        "declared": "CC-BY-SA-4.0",
+        "canonical_check": {
+          "is_denied_license": false,
+          "is_share_alike": true,
+          "requires_attribution": true
+        },
+        "classification": "ATTRIBUTION_REQUIRED",
+        "commercial_safe": true
+      },
+
+      "attribution_status": {
+        "has_attribution_text": false,
+        "has_source_reference": false,
+        "has_source_url": false,
+        "has_cc_obligations_documented": false,
+        "has_share_alike_tracking": false,
+        "status": "INCOMPLETE",
+        "missing_evidence": [
+          "attribution_text",
+          "original_source_url",
+          "share-alike_tracking_documentation",
+          "CC-BY-SA-4.0 obligation_metadata"
+        ]
+      },
+
+      "lineage": {
+        "has_source_id": true,
+        "has_parent_lineage": false,
+        "has_acquisition_origin": false,
+        "has_ingestion_trace": false,
+        "has_checksum": false,
+        "completeness": "MISSING",
+        "missing": [
+          "parent_lineage",
+          "acquisition_origin",
+          "ingestion_trace",
+          "checksum"
+        ]
+      },
+
+      "review_state": {
+        "decision": "needs_revision",
+        "reviewer_id": "reviewer_software_02",
+        "license_status": "requires_tracking",
+        "provenance_status": "accepted_pending_documentation",
+        "downstream_blocker": "Content revision cannot proceed until provenance is cleared. After provenance resolution, a content depth expansion is also needed."
+      },
+
+      "missing_evidence": [
+        "attribution_text",
+        "original_source_url",
+        "share-alike_tracking_documentation",
+        "CC-BY-SA-4.0 obligation metadata",
+        "lineage_parent_records",
+        "acquisition_checksum"
+      ],
+
+      "downstream_blocker": "content_revision",
+      "resolution_target_phase": "Phase 5E.2 — Provenance Resolution",
+      "escalation_path": "If attribution cannot be documented within 2 revision cycles, route to rejected per revision resolution policy.",
+      "resolver": "human (governance)"
+    },
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "source_id": "h3",
+      "batch": "batch_002",
+      "category": "05_hardware_engineering",
+      "subcategory": "firmware",
+      "current_state": "needs_revision",
+      "issue_type": "mixed: missing_depth + provenance",
+      "severity": "medium-high",
+
+      "source_registry_entry": {
+        "id": "h3",
+        "name": "WikiChip / SemiWiki-style semiconductor wikis",
+        "source": "WikiChip / SemiWiki",
+        "url": "https://en.wikichip.org/",
+        "tier": "Tier 2",
+        "status": "review",
+        "license": "CC-BY-SA-4.0 (verify)",
+        "notes": "Reference for cpu/gpu microarchitecture. Verify license; convert+attribute."
+      },
+
+      "license": {
+        "declared": "CC-BY-SA-4.0 (verify)",
+        "canonical_check": {
+          "is_denied_license": false,
+          "is_share_alike": true,
+          "requires_attribution": true
+        },
+        "classification": "ATTRIBUTION_REQUIRED",
+        "commercial_safe": true
+      },
+
+      "attribution_status": {
+        "has_attribution_text": false,
+        "has_source_reference": false,
+        "has_source_url": false,
+        "has_cc_obligations_documented": false,
+        "has_share_alike_tracking": false,
+        "status": "INCOMPLETE",
+        "missing_evidence": [
+          "attribution_text",
+          "original_source_url",
+          "license_verification_confirmation",
+          "share-alike_tracking_documentation",
+          "CC-BY-SA-4.0 obligation_metadata"
+        ]
+      },
+
+      "lineage": {
+        "has_source_id": true,
+        "has_parent_lineage": false,
+        "has_acquisition_origin": false,
+        "has_ingestion_trace": false,
+        "has_checksum": false,
+        "completeness": "MISSING",
+        "missing": [
+          "parent_lineage",
+          "acquisition_origin",
+          "ingestion_trace",
+          "checksum"
+        ]
+      },
+
+      "review_state": {
+        "decision": "needs_revision",
+        "reviewer_id": "reviewer_hardware_02",
+        "license_status": "requires_tracking",
+        "provenance_status": "accepted_pending_documentation",
+        "downstream_blocker": "Content revision cannot proceed until provenance is cleared. After provenance resolution, a content depth expansion is also needed (ROM/EEPROM context, update-role detail, system-context examples)."
+      },
+
+      "missing_evidence": [
+        "attribution_text",
+        "original_source_url",
+        "license_verification_confirmation",
+        "share-alike_tracking_documentation",
+        "CC-BY-SA-4.0 obligation metadata",
+        "lineage_parent_records",
+        "acquisition_checksum"
+      ],
+
+      "downstream_blocker": "content_revision",
+      "resolution_target_phase": "Phase 5E.2 — Provenance Resolution",
+      "escalation_path": "If attribution cannot be documented within 2 revision cycles, route to rejected per revision resolution policy.",
+      "resolver": "human (governance)"
+    }
+  ],
+
+  "summary": {
+    "total_provenance_blocked": 2,
+    "records_with_missing_attribution": 2,
+    "records_with_missing_lineage": 2,
+    "records_requiring_human_investigation": 2
+  }
+}

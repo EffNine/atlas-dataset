@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "updated": "2026-07-28",
+  "description": "Atlas Benchmark Registry — catalogs all supported evaluation benchmarks. Internal benchmarks are defined by Atlas; external benchmarks are registered as placeholders for future integration. No benchmark data is downloaded or stored.",
+  "registry": {
+    "internal": {
+      "atlas_quality_benchmark": {
+        "benchmark_id": "atlas_quality_benchmark",
+        "category": "internal",
+        "purpose": "Measure knowledge object factual correctness, completeness, and reasoning quality against curated Atlas data.",
+        "metric": "quality_score_agreement",
+        "split": "internal",
+        "license": "Apache-2.0",
+        "status": "draft"
+      },
+      "provenance_benchmark": {
+        "benchmark_id": "provenance_benchmark",
+        "category": "internal",
+        "purpose": "Verify source attribution integrity and provenance chain completeness across knowledge objects.",
+        "metric": "provenance_accuracy",
+        "split": "internal",
+        "license": "Apache-2.0",
+        "status": "draft"
+      },
+      "review_agreement_benchmark": {
+        "benchmark_id": "review_agreement_benchmark",
+        "category": "internal",
+        "purpose": "Measure inter-reviewer agreement and score consistency using Cohen's Kappa and related statistics.",
+        "metric": "cohens_kappa",
+        "split": "internal",
+        "license": "Apache-2.0",
+        "status": "draft"
+      }
+    },
+    "external": {
+      "mmlu": {
+        "benchmark_id": "mmlu",
+        "category": "external",
+        "purpose": "Massive Multitask Language Understanding — measure model knowledge across 57 academic subjects.",
+        "metric": "accuracy",
+        "split": "test",
+        "license": "MIT",
+        "status": "placeholder"
+      },
+      "gsm8k": {
+        "benchmark_id": "gsm8k",
+        "category": "external",
+        "purpose": "Grade School Math 8K — measure arithmetic reasoning ability via chain-of-thought.",
+        "metric": "exact_match",
+        "split": "test",
+        "license": "MIT",
+        "status": "placeholder"
+      },
+      "humaneval": {
+        "benchmark_id": "humaneval",
+        "category": "external",
+        "purpose": "HumanEval — measure functional code generation correctness via pass@k.",
+        "metric": "pass@k",
+        "split": "test",
+        "license": "MIT",
+        "status": "placeholder"
+      },
+      "arc": {
+        "benchmark_id": "arc",
+        "category": "external",
+        "purpose": "AI2 Reasoning Challenge — measure grade-school science reasoning ability.",
+        "metric": "accuracy",
+        "split": "test",
+        "license": "CC-BY-SA-4.0",
+        "status": "placeholder"
+      }
+    }
+  }
+}

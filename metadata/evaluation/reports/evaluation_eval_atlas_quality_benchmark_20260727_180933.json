@@ -1,0 +1,130 @@
+{
+  "evaluation_id": "eval_atlas_quality_benchmark_20260727_180933",
+  "benchmark_id": "atlas_quality_benchmark",
+  "mode": "full",
+  "dataset_version": "v0.2",
+  "records_evaluated": 400,
+  "metrics": [
+    {
+      "metric_id": "quality_score_agreement",
+      "value": 1.0,
+      "status": "computed",
+      "message": "Quality score agreement (threshold >= 7): 400/400 = 100.00%",
+      "threshold": 7,
+      "above_threshold": 400,
+      "total_valid": 400
+    },
+    {
+      "metric_id": "provenance_accuracy",
+      "value": 1.0,
+      "status": "computed",
+      "message": "Provenance accuracy: 400/400 = 100.00% records with complete source attribution",
+      "complete_count": 400,
+      "total": 400
+    },
+    {
+      "metric_id": "schema_pass_rate",
+      "value": 1.0,
+      "status": "computed",
+      "message": "Schema pass rate: 400/400 = 100.00%",
+      "passed": 400,
+      "total": 400
+    },
+    {
+      "metric_id": "content_safety_rate",
+      "value": 1.0,
+      "status": "computed",
+      "message": "Content safety rate: 400/400 = 100.00%",
+      "safe": 400,
+      "total": 400
+    },
+    {
+      "metric_id": "determinism_score",
+      "value": 1.0,
+      "status": "not_implemented",
+      "message": "Determinism evaluation requires running the same evaluation twice."
+    },
+    {
+      "metric_id": "reproducibility_hash",
+      "value": "1c664f895f9779fceb95d568603b3fad3bf392da13f5a08faf71982a72834c9d",
+      "status": "computed",
+      "message": "Reproducibility hash: 1c664f895f9779fc..."
+    },
+    {
+      "metric_id": "quality_mean_score",
+      "name": "Quality Mean Score",
+      "value": 7.56,
+      "status": "computed",
+      "detail": "Mean quality_score across 400 records: 7.56"
+    },
+    {
+      "metric_id": "quality_score_distribution",
+      "name": "Quality Score Distribution",
+      "value": {
+        "7": 276,
+        "8": 24,
+        "9": 100
+      },
+      "status": "computed",
+      "detail": "Distribution across 3 distinct scores"
+    },
+    {
+      "metric_id": "quality_category_average",
+      "name": "Quality Category Average",
+      "value": {
+        "01_foundation": 7.5,
+        "02_software_engineering": 7.5,
+        "03_system_engineering": 7.54,
+        "04_ai_machine_learning": 7.6,
+        "05_hardware_engineering": 7.81,
+        "06_science_engineering": 7.6,
+        "07_business_knowledge": 7.48,
+        "08_creative_knowledge": 7.48,
+        "09_personal_assistant": 7.53
+      },
+      "status": "computed",
+      "detail": "Averages across 9 categories"
+    },
+    {
+      "metric_id": "review_agreement_rate",
+      "name": "Review Agreement Rate",
+      "value": 0.02,
+      "status": "computed",
+      "detail": "Agreement (within 1 point): 2/100 = 2.00%"
+    },
+    {
+      "metric_id": "review_disagreement_count",
+      "name": "Review Disagreement Count",
+      "value": 98,
+      "status": "computed",
+      "detail": "Disagreements (>1 point): 98/100"
+    },
+    {
+      "metric_id": "review_approval_prediction_accuracy",
+      "name": "Review Approval Prediction Accuracy",
+      "value": 1.0,
+      "status": "computed",
+      "detail": "Approvals correctly predicted: 84/84 = 100.00%"
+    },
+    {
+      "metric_id": "provenance_valid_source_rate",
+      "name": "Valid Source Rate",
+      "value": 1.0,
+      "status": "computed",
+      "detail": "Records with source_attribution: 400/400 = 100.00%"
+    },
+    {
+      "metric_id": "provenance_license_pass_rate",
+      "name": "License Pass Rate",
+      "value": 1.0,
+      "status": "computed",
+      "detail": "Records with passing license: 400/400 = 100.00%"
+    }
+  ],
+  "failures": [],
+  "recommendations": [
+    "All metrics computed successfully. No issues detected."
+  ],
+  "timestamp": "2026-07-27T18:09:33.511734+00:00",
+  "reproducibility_hash": "0bbb7bc83716d757cec592d2aa99a39676a6a056eb6d25bcbc2461a702f1015c"
+}

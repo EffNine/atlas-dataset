@@ -1,0 +1,120 @@
+{
+  "evaluation_id": "eval_provenance_benchmark_20260727_180933",
+  "benchmark_id": "provenance_benchmark",
+  "mode": "dry-run",
+  "dataset_version": "v0.2",
+  "records_evaluated": 400,
+  "metrics": [
+    {
+      "metric_id": "quality_score_agreement",
+      "name": "Quality Score Agreement",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "provenance_accuracy",
+      "name": "Provenance Accuracy",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "schema_pass_rate",
+      "name": "Schema Pass Rate",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "content_safety_rate",
+      "name": "Content Safety Rate",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "determinism_score",
+      "name": "Determinism Score",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "reproducibility_hash",
+      "name": "Reproducibility Hash",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "quality_mean_score",
+      "name": "Quality Mean Score",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "quality_score_distribution",
+      "name": "Quality Score Distribution",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "quality_category_average",
+      "name": "Quality Category Average",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "review_agreement_rate",
+      "name": "Review Agreement Rate",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "review_disagreement_count",
+      "name": "Review Disagreement Count",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "review_approval_prediction_accuracy",
+      "name": "Review Approval Prediction Accuracy",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "provenance_valid_source_rate",
+      "name": "Valid Source Rate",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "provenance_license_pass_rate",
+      "name": "License Pass Rate",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    },
+    {
+      "metric_id": "hallucination_risk_score",
+      "name": "Hallucination Risk Score",
+      "value": null,
+      "status": "dry-run",
+      "message": "Dry-run — not executed for benchmark 'provenance_benchmark'."
+    }
+  ],
+  "failures": [],
+  "recommendations": [
+    "Dry-run mode — no actual evaluation executed."
+  ],
+  "timestamp": "2026-07-27T18:09:33.515205+00:00",
+  "reproducibility_hash": "c42c9a91c73b1845acdff354eb1661f24e08dbc18b461142d3e4f55fcce77b2b"
+}

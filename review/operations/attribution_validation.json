@@ -1,0 +1,150 @@
+{
+  "schema": "review/operations/attribution_validation.json",
+  "version": "v0.2",
+  "phase": "Phase 5E.2 — Provenance Resolution: Step 3",
+  "generated": "2026-07-28T22:00:00+00:00",
+  "description": "Attribution completeness validation for all provenance-blocked records. Validates CC-BY-SA-4.0 attribution and ShareAlike obligations.",
+
+  "policy": {
+    "original_decisions_unchanged": true,
+    "no_attribution_written": true,
+    "validation_only": true,
+    "cc_obligation_reference": "docs/source_policy.md — ADR-002: Commercial-Safe Licensing"
+  },
+
+  "attribution_requirements": {
+    "CC_BY_SA_4_0": [
+      "attribution_text — must credit original author/work",
+      "source_url — link to original upstream source",
+      "license_identifier — must state CC-BY-SA-4.0",
+      "share_alike_notice — must indicate downstream must use same license",
+      "changes_marked — if content was modified, must note changes"
+    ],
+    "WIKICHIP_DERIVED": [
+      "attribution_text — credit WikiChip as source",
+      "source_url — link to original WikiChip article",
+      "license_identifier — confirmed CC-BY-SA-4.0",
+      "share_alike_notice — must indicate downstream share-alike",
+      "verification_note — '(verify)' appendix needs human confirmation"
+    ]
+  },
+
+  "validation_results": [
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "source_id": "s5",
+      "source_name": "StackExchange Code",
+      "license": "CC-BY-SA-4.0",
+
+      "checks": {
+        "has_attribution_text": {
+          "status": false,
+          "detail": "No attribution text exists in the record's source_attribution block or lineage metadata."
+        },
+        "has_source_reference": {
+          "status": false,
+          "detail": "No original source reference (StackExchange post URL/ID) is stored."
+        },
+        "has_source_url": {
+          "status": false,
+          "detail": "No upstream source URL is present in the record."
+        },
+        "has_license_identifier": {
+          "status": true,
+          "detail": "License is identified as CC-BY-SA-4.0 in the decision record and provenance block."
+        },
+        "has_share_alike_notice": {
+          "status": false,
+          "detail": "No share-alike tracking documentation exists."
+        },
+        "has_changes_marked": {
+          "status": false,
+          "detail": "No modifications note exists (content selected from StackExchange but changes not documented)."
+        }
+      },
+
+      "required_obligations": {
+        "cc_by_sa_attribution": true,
+        "cc_by_sa_share_alike": true,
+        "cc_by_sa_changes_indication": true
+      },
+
+      "status": "INCOMPLETE",
+      "reason": "Missing attribution text, source URL, share-alike tracking, and changes documentation. License is identified but no compliance metadata exists.",
+      "required_action": "Add CC-BY-SA-4.0 attribution metadata to the record's source_attribution block: attribution_text crediting the StackExchange author, upstream post URL, share-alike notice, and indication of any content modifications.",
+      "human_steps": [
+        "1. Identify the exact StackExchange post used as source (author, post URL, date)",
+        "2. Construct attribution text: 'This content is based on [Post Title] by [Author] on Stack Exchange (https://...), licensed under CC-BY-SA-4.0.'",
+        "3. Add share-alike notice: 'Distributed under the same license (CC-BY-SA-4.0).'",
+        "4. Note any content modifications if the original was adapted",
+        "5. Write to source_attribution block in the record's lineage metadata"
+      ]
+    },
+
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "source_id": "h3",
+      "source_name": "WikiChip",
+      "license": "CC-BY-SA-4.0 (verify)",
+
+      "checks": {
+        "has_attribution_text": {
+          "status": false,
+          "detail": "No attribution text exists documenting WikiChip as the source."
+        },
+        "has_source_reference": {
+          "status": false,
+          "detail": "No reference to the original WikiChip article is stored."
+        },
+        "has_source_url": {
+          "status": false,
+          "detail": "No upstream WikiChip URL is present in the record."
+        },
+        "has_license_identifier": {
+          "status": true,
+          "detail": "License is noted as 'WikiChip-derived (requires_tracking)' and 'CC-BY-SA-4.0 (verify)' in different contexts."
+        },
+        "has_share_alike_notice": {
+          "status": false,
+          "detail": "No share-alike tracking documentation exists."
+        },
+        "has_changes_marked": {
+          "status": false,
+          "detail": "No modifications note exists."
+        },
+        "license_verified": {
+          "status": false,
+          "detail": "CC-BY-SA-4.0 status has '(verify)' appendix indicating license confirmation is still pending human review."
+        }
+      },
+
+      "required_obligations": {
+        "cc_by_sa_attribution": true,
+        "cc_by_sa_share_alike": true,
+        "cc_by_sa_changes_indication": true,
+        "license_verification_human_review": true
+      },
+
+      "status": "INCOMPLETE",
+      "reason": "Missing attribution text, source URL, license verification confirmation, share-alike tracking, and changes documentation. License is flagged as requiring verification.",
+      "required_action": "1) Confirm WikiChip content is licensed under CC-BY-SA-4.0 (resolve the '(verify)' appendix). 2) Add attribution metadata: attribution_text crediting WikiChip, upstream article URL, share-alike notice, and modifications note.",
+      "human_steps": [
+        "1. Verify the specific WikiChip page used as source carries a CC-BY-SA-4.0 license (check footer or page metadata at https://en.wikichip.org/)",
+        "2. Remove or confirm the '(verify)' appendix after human verification",
+        "3. Construct attribution text: 'This content is derived from [Article Title] on WikiChip (https://en.wikichip.org/...), licensed under CC-BY-SA-4.0.'",
+        "4. Add share-alike notice: 'Distributed under the same license (CC-BY-SA-4.0).'",
+        "5. Note any content modifications if the original was adapted",
+        "6. Write to source_attribution block in the record's lineage metadata"
+      ]
+    }
+  ],
+
+  "summary": {
+    "total_checked": 2,
+    "COMPLETE": 0,
+    "INCOMPLETE": 2,
+    "BLOCKED": 0,
+    "records_needing_human_attribution": 2,
+    "records_needing_license_verification": 1
+  }
+}

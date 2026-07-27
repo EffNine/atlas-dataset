@@ -1,0 +1,129 @@
+{
+  "schema": "review/operations/lineage_validation.json",
+  "version": "v0.2",
+  "phase": "Phase 5E.2 — Provenance Resolution: Step 4",
+  "generated": "2026-07-28T22:00:00+00:00",
+  "description": "Lineage completeness validation for all provenance-blocked records. Validates source_id, parent lineage, acquisition origin, ingestion trace, and checksum availability. Validation only — no repair performed.",
+
+  "policy": {
+    "original_decisions_unchanged": true,
+    "no_lineage_repair": true,
+    "validation_only": true
+  },
+
+  "lineage_model": {
+    "required_fields": [
+      "source_id — links to source_registry.json entry",
+      "parent_lineage — trace to upstream raw source or parent dataset",
+      "acquisition_origin — how/when the content was acquired",
+      "ingestion_trace — processing pipeline steps applied",
+      "checksum — content integrity fingerprint"
+    ]
+  },
+
+  "validation_results": [
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "source_id": "s5",
+      "source_registry_entry_exists": true,
+      "source_registry_status": "review",
+
+      "checks": {
+        "source_id_linked": {
+          "status": true,
+          "detail": "Source ID s5 is present in source_registry.json (StackExchange Code).",
+          "registry_entry_id": "s5",
+          "registry_entry_name": "StackExchange Code (Stack Overflow / Unix & Linux)"
+        },
+        "parent_lineage": {
+          "status": false,
+          "detail": "No parent lineage recorded. The record does not trace back to a specific StackExchange post ID or dump file.",
+          "required_for_compliance": "CC-BY-SA-4.0 requires attribution per post, which requires knowing the specific post."
+        },
+        "acquisition_origin": {
+          "status": false,
+          "detail": "No acquisition origin recorded. Not possible to determine how or when the content was extracted from StackExchange.",
+          "required_for_compliance": "Need acquisition timestamp to confirm CC-BY-SA-4.0 version applicability."
+        },
+        "ingestion_trace": {
+          "status": false,
+          "detail": "No processing pipeline steps recorded. The transformations applied to the StackExchange source are unknown.",
+          "required_for_compliance": "CC-BY-SA-4.0 requires indicating if content was modified/adapted."
+        },
+        "checksum_availability": {
+          "status": false,
+          "detail": "No content checksum is available for this record in engine_checksums.json or similar.",
+          "required_for_compliance": "Checksum needed for content integrity verification across revision cycles."
+        }
+      },
+
+      "completeness": {
+        "fields_present": 1,
+        "fields_required": 5,
+        "ratio": 0.2,
+        "classification": "MISSING",
+        "reason": "Only source_id linkage is established. All other lineage trace fields (parent, acquisition, ingestion, checksum) are absent."
+      }
+    },
+
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "source_id": "h3",
+      "source_registry_entry_exists": true,
+      "source_registry_status": "review",
+
+      "checks": {
+        "source_id_linked": {
+          "status": true,
+          "detail": "Source ID h3 is present in source_registry.json (WikiChip).",
+          "registry_entry_id": "h3",
+          "registry_entry_name": "WikiChip / SemiWiki-style semiconductor wikis"
+        },
+        "parent_lineage": {
+          "status": false,
+          "detail": "No parent lineage recorded. Cannot trace to specific WikiChip article.",
+          "required_for_compliance": "Attribution requires knowing the specific article URL and title."
+        },
+        "acquisition_origin": {
+          "status": false,
+          "detail": "No acquisition origin recorded.",
+          "required_for_compliance": "Need to confirm when content was acquired to verify license version."
+        },
+        "ingestion_trace": {
+          "status": false,
+          "detail": "No processing pipeline steps recorded.",
+          "required_for_compliance": "Must document if content was modified."
+        },
+        "checksum_availability": {
+          "status": false,
+          "detail": "No content checksum available.",
+          "required_for_compliance": "Checksum needed for content integrity."
+        }
+      },
+
+      "completeness": {
+        "fields_present": 1,
+        "fields_required": 5,
+        "ratio": 0.2,
+        "classification": "MISSING",
+        "reason": "Only source_id linkage is established. All other lineage trace fields are absent. License also carries '(verify)' appendix needing human confirmation."
+      }
+    }
+  ],
+
+  "summary": {
+    "total_validated": 2,
+    "COMPLETE": 0,
+    "PARTIAL": 0,
+    "MISSING": 2,
+    "avg_completeness_ratio": 0.2,
+    "common_gaps": [
+      "parent_lineage — no upstream record/URL trace",
+      "acquisition_origin — no acquisition timestamp or method",
+      "ingestion_trace — no pipeline steps documented",
+      "checksum — no content fingerprint"
+    ],
+    "source_registry_linkage": "Both records have valid source_id links to source_registry.json",
+    "source_registry_status_note": "Both source entries (s5, h3) have status='review' — they have NOT been formally accepted. This is a separate upstream blocker."
+  }
+}

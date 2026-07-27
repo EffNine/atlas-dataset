@@ -1,0 +1,85 @@
+{
+  "schema": "review/operations/provenance_resolution_status.json",
+  "version": "v0.2",
+  "phase": "Phase 5E.2 — Provenance Resolution: Step 5",
+  "generated": "2026-07-28T22:00:00+00:00",
+  "description": "Canonical machine-readable provenance resolution status. Records whether each provenance-blocked record can proceed to content revision or requires human investigation.",
+
+  "resolved_automatically": [],
+  "requires_human_investigation": [
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "source_id": "s5",
+      "license": "CC-BY-SA-4.0",
+      "blocker_type": "missing_attribution_and_lineage",
+      "human_actions_required": [
+        "Add attribution_text to source_attribution block — credit StackExchange author/post",
+        "Add upstream source URL (specific StackExchange post)",
+        "Add share-alike tracking notice",
+        "Document content modifications if adapted",
+        "Add parent lineage trace (specific post ID or dump reference)",
+        "Record acquisition origin and ingestion trace"
+      ],
+      "can_proceed_to_content_revision": false,
+      "precondition": "Attribution text and source URL must be recorded before content revision can begin."
+    },
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "source_id": "h3",
+      "license": "CC-BY-SA-4.0 (verify)",
+      "blocker_type": "missing_attribution_and_lineage_and_license_verification",
+      "human_actions_required": [
+        "Verify WikiChip CC-BY-SA-4.0 license (resolve '(verify)' appendix)",
+        "Add attribution_text crediting WikiChip",
+        "Add upstream source URL (specific WikiChip article URL)",
+        "Add share-alike tracking notice",
+        "Document content modifications if adapted",
+        "Add parent lineage trace (specific article reference)",
+        "Record acquisition origin and ingestion trace"
+      ],
+      "can_proceed_to_content_revision": false,
+      "precondition": "License verification must be completed (resolve '(verify)' appendix). Attribution text and source URL must be recorded before content revision."
+    }
+  ],
+
+  "blocked": [
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "blocked_reason": "attribution_incomplete",
+      "blocked_detail": "CC-BY-SA-4.0 attribution text, source URL, share-alike tracking, and lineage all missing.",
+      "blocked_by": "governance_policy",
+      "unblocks_when": "attribution_text + source_url + share_alike_notice recorded in record lineage"
+    },
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "blocked_reason": "attribution_incomplete_and_license_unverified",
+      "blocked_detail": "WikiChip license still has '(verify)' appendix. Attribution text, source URL, share-alike tracking, and lineage all missing.",
+      "blocked_by": "governance_policy",
+      "unblocks_when": "license verified + attribution_text + source_url + share_alike_notice recorded in record lineage"
+    }
+  ],
+
+  "summary": {
+    "resolved_count": 0,
+    "investigation_count": 2,
+    "blocked_count": 2,
+    "total_audited": 2,
+    "provenance_resolution_prerequisites": {
+      "s5_0029": "attribution documentation (text + URL + share-alike)",
+      "h3_0003": "license verification + attribution documentation (text + URL + share-alike)"
+    },
+    "governance_status": {
+      "release": "BLOCKED",
+      "training": "BLOCKED",
+      "content_revision": "BLOCKED until provenance resolved"
+    }
+  },
+
+  "references": [
+    "review/operations/provenance_inventory.json",
+    "review/operations/license_resolution.json",
+    "review/operations/attribution_validation.json",
+    "review/operations/lineage_validation.json",
+    "review/operations/provenance_blocked_queue.json"
+  ]
+}

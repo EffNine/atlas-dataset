@@ -1,0 +1,98 @@
+{
+  "schema": "review/operations/license_resolution.json",
+  "version": "v0.2",
+  "phase": "Phase 5E.2 — Provenance Resolution: Step 2",
+  "generated": "2026-07-28T22:00:00+00:00",
+  "description": "Canonical license verification for all provenance-blocked records, using only atlas_constants license utilities.",
+
+  "policy": {
+    "original_decisions_unchanged": true,
+    "only_canonical_utilities_used": true,
+    "utilities_sourced_from": "scripts/atlas_constants.py"
+  },
+
+  "canonical_license_utilities": {
+    "is_denied_license": "Returns True for NC/ND/proprietary/all-rights-reserved/unknown. CC-BY-SA and RAIL variants are NOT denied.",
+    "is_share_alike": "Returns True for CC-BY-SA variants.",
+    "requires_attribution": "Returns True for all CC variants except CC0, plus Apache-2.0/BSD/MIT/ODC-BY, plus any license containing 'attribution'."
+  },
+
+  "verification_runtime": "Verified via atlas_constants imported at runtime — confirmed outputs below.",
+
+  "verification_results": [
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "source_id": "s5",
+      "declared_license": "CC-BY-SA-4.0",
+      "license_normalized": "cc-by-sa-4.0",
+
+      "canonical_checks": {
+        "is_denied_license('CC-BY-SA-4.0')": {
+          "calls": "atlas_constants.is_denied_license('CC-BY-SA-4.0')",
+          "result": false,
+          "explanation": "CC-BY-SA-4.0 is NOT in the denied set (NC/ND/proprietary/all-rights-reserved/unknown). Share-alike imposes tracking obligations but does not block commercial use."
+        },
+        "is_share_alike('CC-BY-SA-4.0')": {
+          "calls": "atlas_constants.is_share_alike('CC-BY-SA-4.0')",
+          "result": true,
+          "explanation": "CC-BY-SA-4.0 contains 'cc-by-sa' pattern, confirming share-alike requirement."
+        },
+        "requires_attribution('CC-BY-SA-4.0')": {
+          "calls": "atlas_constants.requires_attribution('CC-BY-SA-4.0')",
+          "result": true,
+          "explanation": "CC-BY-SA-4.0 matches 'cc-by-sa-' pattern in attribution_required list."
+        }
+      },
+
+      "classification": "ATTRIBUTION_REQUIRED",
+      "commercial_safe": true,
+      "can_proceed": true,
+      "notes": "License is commercially safe. Attribution and share-alike tracking documentation must be added before content revision proceeds."
+    },
+
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "source_id": "h3",
+      "declared_license": "CC-BY-SA-4.0 (verify)",
+      "license_normalized": "cc-by-sa-4.0 (verify)",
+
+      "canonical_checks": {
+        "is_denied_license('CC-BY-SA-4.0 (verify)')": {
+          "calls": "atlas_constants.is_denied_license('CC-BY-SA-4.0 (verify)')",
+          "result": false,
+          "explanation": "Despite the '(verify)' appendix, the core license string contains 'cc-by-sa' not any denied pattern. Commercially safe."
+        },
+        "is_share_alike('CC-BY-SA-4.0 (verify)')": {
+          "calls": "atlas_constants.is_share_alike('CC-BY-SA-4.0 (verify)')",
+          "result": true,
+          "explanation": "'cc-by-sa' substring detected — share-alike obligation confirmed."
+        },
+        "requires_attribution('CC-BY-SA-4.0 (verify)')": {
+          "calls": "atlas_constants.requires_attribution('CC-BY-SA-4.0 (verify)')",
+          "result": true,
+          "explanation": "'cc-by-sa-' pattern detected in attribution_required list."
+        }
+      },
+
+      "classification": "ATTRIBUTION_REQUIRED",
+      "commercial_safe": true,
+      "can_proceed": true,
+      "notes": "License is commercially safe despite the '(verify)' annotation. Attribution and share-alike tracking documentation required. The '(verify)' appendix should be resolved (confirmed or removed) by human action."
+    }
+  ],
+
+  "classification_summary": {
+    "APPROVED_LICENSE": 0,
+    "ATTRIBUTION_REQUIRED": 2,
+    "UNKNOWN_LICENSE": 0,
+    "DENIED_LICENSE": 0,
+    "total": 2
+  },
+
+  "provenance_blocker_license_verdict": {
+    "neither_license_is_denied": true,
+    "both_require_attribution": true,
+    "both_require_share_alike_tracking": true,
+    "attribution_documentation_can_resolve": true
+  }
+}

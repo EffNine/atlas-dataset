@@ -65,6 +65,18 @@ LAYER_MAP: dict[str, int] = {
     "acquisition_engine.release": 3,
     "acquisition_engine.versioning": 3,
     "acquisition_engine": 3,
+    # Layer 3 — Evaluation Engine (Phase 5A)
+    "evaluation_engine": 3,
+    "evaluation_engine.engine": 3,
+    "evaluation_engine.metrics": 3,
+    "evaluation_engine.registry": 3,
+    "evaluation_engine.report": 3,
+    # Layer 3 — Training View Engine (Phase 5C)
+    "training_view_engine": 3,
+    "training_view_engine.generator": 3,
+    "training_view_engine.filter": 3,
+    "training_view_engine.manifest": 3,
+    "training_view_engine.validator": 3,
     "payload_resolver": 3,
     # Layer 4 — CLI & Tooling
     "atlas": 4,
@@ -79,6 +91,9 @@ LAYER_MAP: dict[str, int] = {
     "pilot_seed": 4,
     "progressive_expansion": 4,
     "progressive_expansion_v2": 4,
+    # Layer 4 — Training Readiness & Release Simulation (Phase 5D)
+    "training_readiness": 4,
+    "release_decision_simulator": 4,
 }
 
 # Layer 1 modules — may only import stdlib

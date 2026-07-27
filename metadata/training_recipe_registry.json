@@ -1,0 +1,127 @@
+{
+  "schema": "metadata/training_recipe_registry.json",
+  "schema_version": "1.0",
+  "description": "Canonical registry of declarative training recipes for Atlas Dataset Foundation. Each recipe defines the filter policy, quality thresholds, and validation requirements for generating reproducible training views.",
+  "updated": "2026-07-28",
+  "registry": {
+    "recipe_sft_v0.2": {
+      "recipe_id": "recipe_sft_v0.2",
+      "purpose": "SFT-ready training view from approved v0.2 release records. Filters to quality >= 7, approved verification only, valid licenses.",
+      "dataset_version": "v0.2",
+      "quality_threshold": 7,
+      "filter_policy": {
+        "verification_required": "approved",
+        "lifecycle_states": ["approved", "released"],
+        "license_filter": "denied_and_unknown_excluded",
+        "minimum_lineage_completeness": "all_fields",
+        "eligibility_required": true
+      },
+      "tokenization_policy": {
+        "max_sequence_length": 8192,
+        "truncation_strategy": "tail",
+        "add_special_tokens": true,
+        "tokenizer_model": "inherit_from_target"
+      },
+      "validation_policy": {
+        "require_determinism": true,
+        "check_checksums": true,
+        "validate_per_record": true,
+        "verify_manifest_schema": true
+      },
+      "supported_models": ["qwen", "llama", "deepseek"],
+      "min_atlas_version": "1.0.0",
+      "sampling_strategy": "none",
+      "max_records": null
+    },
+    "recipe_sft_v0.2_qwen": {
+      "recipe_id": "recipe_sft_v0.2_qwen",
+      "purpose": "SFT training view for Qwen3-8B from v0.2 approved records, quality >= 7. Qwen-only eligibility filter.",
+      "dataset_version": "v0.2",
+      "quality_threshold": 7,
+      "filter_policy": {
+        "verification_required": "approved",
+        "lifecycle_states": ["approved", "released"],
+        "license_filter": "denied_and_unknown_excluded",
+        "minimum_lineage_completeness": "all_fields",
+        "eligibility_required": true,
+        "target_model": "qwen"
+      },
+      "tokenization_policy": {
+        "max_sequence_length": 8192,
+        "truncation_strategy": "tail",
+        "add_special_tokens": true,
+        "tokenizer_model": "Qwen/Qwen3-8B"
+      },
+      "validation_policy": {
+        "require_determinism": true,
+        "check_checksums": true,
+        "validate_per_record": true,
+        "verify_manifest_schema": true
+      },
+      "supported_models": ["qwen"],
+      "min_atlas_version": "1.0.0",
+      "sampling_strategy": "none",
+      "max_records": null
+    },
+    "recipe_sft_v0.2_llama": {
+      "recipe_id": "recipe_sft_v0.2_llama",
+      "purpose": "SFT training view for Llama 3 from v0.2 approved records, quality >= 7. Llama-only eligibility filter.",
+      "dataset_version": "v0.2",
+      "quality_threshold": 7,
+      "filter_policy": {
+        "verification_required": "approved",
+        "lifecycle_states": ["approved", "released"],
+        "license_filter": "denied_and_unknown_excluded",
+        "minimum_lineage_completeness": "all_fields",
+        "eligibility_required": true,
+        "target_model": "llama"
+      },
+      "tokenization_policy": {
+        "max_sequence_length": 8192,
+        "truncation_strategy": "tail",
+        "add_special_tokens": true,
+        "tokenizer_model": "meta-llama/Meta-Llama-3-8B"
+      },
+      "validation_policy": {
+        "require_determinism": true,
+        "check_checksums": true,
+        "validate_per_record": true,
+        "verify_manifest_schema": true
+      },
+      "supported_models": ["llama"],
+      "min_atlas_version": "1.0.0",
+      "sampling_strategy": "none",
+      "max_records": null
+    },
+    "recipe_sft_v0.2_deepseek": {
+      "recipe_id": "recipe_sft_v0.2_deepseek",
+      "purpose": "SFT training view for DeepSeek from v0.2 approved records, quality >= 7. DeepSeek-only eligibility filter.",
+      "dataset_version": "v0.2",
+      "quality_threshold": 7,
+      "filter_policy": {
+        "verification_required": "approved",
+        "lifecycle_states": ["approved", "released"],
+        "license_filter": "denied_and_unknown_excluded",
+        "minimum_lineage_completeness": "all_fields",
+        "eligibility_required": true,
+        "target_model": "deepseek"
+      },
+      "tokenization_policy": {
+        "max_sequence_length": 8192,
+        "truncation_strategy": "tail",
+        "add_special_tokens": true,
+        "tokenizer_model": "deepseek-ai/deepseek-llm-7b-chat"
+      },
+      "validation_policy": {
+        "require_determinism": true,
+        "check_checksums": true,
+        "validate_per_record": true,
+        "verify_manifest_schema": true
+      },
+      "supported_models": ["deepseek"],
+      "min_atlas_version": "1.0.0",
+      "sampling_strategy": "none",
+      "max_records": null
+    }
+  }
+}
