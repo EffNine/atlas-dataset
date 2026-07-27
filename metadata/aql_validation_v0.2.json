@@ -2,34 +2,34 @@
   "results": {
     "category_coverage": {
       "status": "PASS",
-      "detail": "True"
+      "categories": 9
     },
     "quality_filtering": {
       "status": "PASS",
-      "detail": "250/250 >= 7"
+      "min": 7
     },
     "license_filtering": {
       "status": "PASS",
-      "detail": "0 denied found"
+      "denied": 0
     },
     "schema_validity": {
       "status": "PASS",
-      "detail": "0 issues"
+      "issues": 0
     },
     "lineage_tracking": {
-      "status": "FAIL",
-      "detail": "100 issues"
+      "status": "PASS",
+      "source_id_count": 250
     },
     "rejected_sources": {
       "status": "PASS",
-      "detail": "0 records"
+      "records": 0
     },
     "collection_membership": {
-      "status": "CHECKED",
-      "detail": "250 records tracked"
+      "status": "PASS",
+      "records": 250
     }
   },
-  "overall_pass": false,
+  "overall_pass": true,
   "total_records": 250,
-  "checked_at": "2026-07-27T13:13:18.165344+00:00"
+  "checked_at": "2026-07-27T13:16:51.767874+00:00"
 }
