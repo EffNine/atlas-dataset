@@ -38,7 +38,7 @@ Usage:
 
   # write machine-readable + markdown reports
   python scripts/calibrate_quality.py \
-      --reviews review_queue/quality_reviews.jsonl \
+      --reviews review/quality_reviews.jsonl \
       --candidates curated/v0.1/pilot_candidates.jsonl \
       --report-out metadata/calibration_report.json \
       --md-out docs/quality_calibration_report.md
