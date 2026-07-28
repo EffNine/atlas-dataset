@@ -57,10 +57,24 @@ from automation.pipeline_orchestrator import (
 
 
 def _make_temp_root() -> Path:
-    """Create a temporary directory that looks like an atlas-dataset root."""
+    """Create a temporary atlas root with scripts copied (needed for production agents)."""
     tmp = Path(tempfile.mkdtemp())
     (tmp / "metadata").mkdir(parents=True, exist_ok=True)
+    # Copy scripts so production agents (quality, validation) resolve imports
     (tmp / "scripts").mkdir(exist_ok=True)
+    src = Path(__file__).resolve().parent.parent / "scripts"
+    for item in src.iterdir():
+        if item.is_file() and item.suffix == ".py" and not item.name.startswith("_"):
+            (tmp / "scripts" / item.name).write_text(
+                item.read_text(encoding="utf-8"), encoding="utf-8"
+            )
+    auto_dst = tmp / "scripts" / "automation"
+    auto_dst.mkdir(exist_ok=True)
+    for item in (src / "automation").iterdir():
+        if item.is_file() and item.suffix == ".py":
+            (auto_dst / item.name).write_text(
+                item.read_text(encoding="utf-8"), encoding="utf-8"
+            )
     return tmp
 
 
@@ -498,17 +512,30 @@ def test_orchestrator_blocks_release_without_approval():
     """Pipeline orchestrator blocks release when no human approval exists."""
     tmp = _make_temp_root()
     (tmp / "curated" / "v0.1").mkdir(parents=True, exist_ok=True)
-    # Create a minimal dataset so agents don't skip
     pilot = tmp / "curated" / "v0.1" / "pilot_candidates.jsonl"
+    # Use a record that passes quality evaluation (>= 7)
     rec = {
         "id": "test_001",
         "category": "01_foundation",
+        "subcategory": "instruction-following",
         "type": "instruction",
         "source": {"name": "test", "license": "MIT"},
-        "messages": [{"role": "user", "content": "hi"}, {"role": "assistant", "content": "hello"}],
-        "quality_score": 9,
+        "messages": [
+            {"role": "user", "content": "Explain the concept of encapsulation in object-oriented programming."},
+            {"role": "assistant", "content": (
+                "Encapsulation is a fundamental OOP principle that bundles data and methods "
+                "into a single class unit, restricting direct access to internal state. "
+                "For example, a BankAccount class uses private _balance and public "
+                "deposit()/withdraw() methods to enforce validation rules. "
+                "This provides information hiding, maintainability, and security benefits."
+            )},
+        ],
         "verified": False,
-        "verification_status": "pending",
+        "quality_score": 9,
+        "tags": ["oop"],
+        "difficulty": 1,
+        "language": "en",
+        "notes": "test record",
     }
     pilot.write_text(json.dumps(rec) + "\n", encoding="utf-8")
 
@@ -533,12 +560,25 @@ def test_orchestrator_release_with_approval():
     rec = {
         "id": "test_001",
         "category": "01_foundation",
+        "subcategory": "instruction-following",
         "type": "instruction",
         "source": {"name": "test", "license": "MIT"},
-        "messages": [{"role": "user", "content": "hi"}, {"role": "assistant", "content": "hello"}],
-        "quality_score": 9,
+        "messages": [
+            {"role": "user", "content": "Explain the concept of encapsulation in object-oriented programming."},
+            {"role": "assistant", "content": (
+                "Encapsulation is a fundamental OOP principle that bundles data and methods "
+                "into a single class unit, restricting direct access to internal state. "
+                "For example, a BankAccount class uses private _balance and public "
+                "deposit()/withdraw() methods to enforce validation rules. "
+                "This provides information hiding, maintainability, and security benefits."
+            )},
+        ],
         "verified": False,
-        "verification_status": "pending",
+        "quality_score": 9,
+        "tags": ["oop"],
+        "difficulty": 1,
+        "language": "en",
+        "notes": "test record",
     }
     pilot.write_text(json.dumps(rec) + "\n", encoding="utf-8")
 
@@ -570,12 +610,25 @@ def test_approval_denied_blocks_release():
     rec = {
         "id": "test_001",
         "category": "01_foundation",
+        "subcategory": "instruction-following",
         "type": "instruction",
         "source": {"name": "test", "license": "MIT"},
-        "messages": [{"role": "user", "content": "hi"}, {"role": "assistant", "content": "hello"}],
-        "quality_score": 9,
+        "messages": [
+            {"role": "user", "content": "Explain the concept of encapsulation in object-oriented programming."},
+            {"role": "assistant", "content": (
+                "Encapsulation is a fundamental OOP principle that bundles data and methods "
+                "into a single class unit, restricting direct access to internal state. "
+                "For example, a BankAccount class uses private _balance and public "
+                "deposit()/withdraw() methods to enforce validation rules. "
+                "This provides information hiding, maintainability, and security benefits."
+            )},
+        ],
         "verified": False,
-        "verification_status": "pending",
+        "quality_score": 9,
+        "tags": ["oop"],
+        "difficulty": 1,
+        "language": "en",
+        "notes": "test record",
     }
     pilot.write_text(json.dumps(rec) + "\n", encoding="utf-8")
 
@@ -693,3 +746,783 @@ def test_valid_transitions_counts():
     assert len(VALID_TRANSITIONS) == 6, (
         f"Expected 6 transitions, got {len(VALID_TRANSITIONS)}"
     )
+
+
+# ===================================================================
+# Validation Agent (v1.1 Production)
+# ===================================================================
+
+
+def _make_validation_env() -> tuple[Path, Path]:
+    """Create a temp atlas root with a small curated dataset.
+
+    Returns (root, dataset_path).
+    """
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata").mkdir()
+    (tmp / "curated" / "v0.1").mkdir(parents=True)
+    (tmp / "scripts").mkdir()
+    # Symlink or copy scripts so imports resolve
+    import importlib.util
+    src = Path(__file__).resolve().parent.parent / "scripts"
+    for item in src.iterdir():
+        if item.is_file() and item.suffix == ".py" and not item.name.startswith("_"):
+            (tmp / "scripts" / item.name).write_text(
+                item.read_text(encoding="utf-8"), encoding="utf-8"
+            )
+    return tmp, tmp / "curated" / "v0.1" / "pilot_candidates.jsonl"
+
+
+def _write_dataset(path: Path, records: list[dict]) -> None:
+    """Write records as JSONL to path."""
+    path.write_text(
+        "\n".join(json.dumps(r) for r in records) + "\n",
+        encoding="utf-8",
+    )
+
+
+_VALID_RECORD = {
+    "id": "01_foundation_instruction_0001",
+    "category": "01_foundation",
+    "subcategory": "instruction-following",
+    "type": "instruction",
+    "source": {"name": "test", "license": "MIT", "date": "2026-01-01"},
+    "messages": [
+        {"role": "user", "content": "What is Python?"},
+        {"role": "assistant", "content": "Python is a programming language."},
+    ],
+    "language": "en",
+    "difficulty": 1,
+    "tags": ["python"],
+    "quality_score": 9,
+    "verified": True,
+    "notes": "Test record",
+}
+
+
+# ── Basic validation ──────────────────────────────────────────────────────
+
+
+def test_validation_agent_accepts_valid_record():
+    """A structurally valid record passes all checks."""
+    tmp, dspath = _make_validation_env()
+    _write_dataset(dspath, [_VALID_RECORD])
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp)
+        result = agent.execute()
+        assert result.passed, f"Expected PASS, got FAIL: {result.summary}"
+        assert result.data["stats"]["valid"] == 1
+        assert result.data["stats"]["with_errors"] == 0
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_validation_agent_rejects_bad_id():
+    """Invalid record IDs are caught by structural errors."""
+    tmp, dspath = _make_validation_env()
+    rec = dict(_VALID_RECORD, id="BAD ID WITH SPACES")
+    _write_dataset(dspath, [rec])
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp)
+        result = agent.execute()
+        assert not result.passed
+        assert result.data["stats"]["with_errors"] == 1
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_validation_agent_rejects_missing_fields():
+    """Records missing required fields are flagged."""
+    tmp, dspath = _make_validation_env()
+    rec = {"id": "test_001"}  # Bare minimum — missing most fields
+    _write_dataset(dspath, [rec])
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp)
+        result = agent.execute()
+        assert not result.passed
+        assert result.data["stats"]["with_errors"] >= 1
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── License gate ──────────────────────────────────────────────────────────
+
+
+def test_validation_agent_rejects_denied_license():
+    """Records with denied licenses (NC/proprietary) are caught."""
+    tmp, dspath = _make_validation_env()
+    rec = dict(_VALID_RECORD)
+    rec["source"] = {"name": "bad", "license": "CC-BY-NC-4.0"}
+    _write_dataset(dspath, [rec])
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp)
+        result = agent.execute()
+        assert not result.passed
+        any_denied = any("Denied license" in err for r in result.data["records"] for err in r["errors"])
+        assert any_denied, "Expected 'Denied license' error"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_validation_agent_allows_safe_licenses():
+    """Records with safe licenses (MIT, Apache, CC-BY) pass the gate."""
+    tmp, dspath = _make_validation_env()
+    rec = dict(_VALID_RECORD, id="test_safe_lic")
+    rec["source"] = {"name": "src", "license": "CC-BY-4.0"}
+    _write_dataset(dspath, [rec])
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp)
+        result = agent.execute()
+        # Single record — should pass
+        assert result.passed
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Duplicates ────────────────────────────────────────────────────────────
+
+
+def test_validation_agent_detects_duplicate_ids():
+    """Duplicate record IDs are detected."""
+    tmp, dspath = _make_validation_env()
+    rec1 = dict(_VALID_RECORD, id="dup_001")
+    rec2 = dict(_VALID_RECORD, id="dup_001",
+                messages=[{"role": "user", "content": "other"}, {"role": "assistant", "content": "stuff"}])
+    _write_dataset(dspath, [rec1, rec2])
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp)
+        result = agent.execute()
+        assert not result.passed
+        assert "dup_001" in result.data.get("duplicate_ids", [])
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_validation_agent_detects_duplicate_content():
+    """Records with identical message content are flagged."""
+    tmp, dspath = _make_validation_env()
+    rec1 = dict(_VALID_RECORD, id="cnt_001")
+    rec2 = dict(_VALID_RECORD, id="cnt_002")
+    _write_dataset(dspath, [rec1, rec2])
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp)
+        result = agent.execute()
+        assert not result.passed
+        assert result.data["stats"]["with_errors"] >= 1
+        any_dup = any("Duplicate content" in err for r in result.data["records"] for err in r["errors"])
+        assert any_dup, "Expected 'Duplicate content' error"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── JSON parse errors ─────────────────────────────────────────────────────
+
+
+def test_validation_agent_reports_parse_errors():
+    """Lines that aren't valid JSON are reported as parse errors."""
+    tmp, dspath = _make_validation_env()
+    dspath.write_text(
+        json.dumps(_VALID_RECORD) + "\n"
+        + "not valid json\n"
+        + json.dumps(dict(_VALID_RECORD, id="test_002")) + "\n",
+        encoding="utf-8",
+    )
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp)
+        result = agent.execute()
+        assert not result.passed
+        assert len(result.data["parse_errors"]) == 1
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Strict curated gate ───────────────────────────────────────────────────
+
+
+def test_validation_agent_strict_gate():
+    """With strict=True, records below threshold fail."""
+    tmp, dspath = _make_validation_env()
+    rec = dict(_VALID_RECORD, quality_score=3, verified=False)
+    _write_dataset(dspath, [rec])
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp,
+            config={"strict": True, "min_quality": 7})
+        result = agent.execute()
+        assert not result.passed
+        # Should have at least "Record not verified" and "quality_score 3 < 7"
+        score_caught = any("quality_score" in err for r in result.data["records"] for err in r["errors"])
+        verified_caught = any("not verified" in err for r in result.data["records"] for err in r["errors"])
+        assert score_caught, "Strict gate should catch low quality_score"
+        assert verified_caught, "Strict gate should catch unverified records"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_validation_agent_strict_gate_passes():
+    """With strict=True, high-quality verified records pass."""
+    tmp, dspath = _make_validation_env()
+    rec = dict(_VALID_RECORD, quality_score=9, verified=True)
+    _write_dataset(dspath, [rec])
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp,
+            config={"strict": True})
+        result = agent.execute()
+        assert result.passed
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Schema type detection ─────────────────────────────────────────────────
+
+
+def test_validation_agent_auto_detects_ko_schema():
+    """schema_type='auto' detects knowledge_object records."""
+    tmp, dspath = _make_validation_env()
+    ko_rec = dict(_VALID_RECORD, id="ko_test_001",
+                  knowledge_type="fact",
+                  source_attribution={"source_id": "s1", "name": "n", "url": "", "license": "MIT", "attribution_text": "a"},
+                  canonical_answer="test",
+                  license="MIT",
+                  lineage={"source": "s", "transformations": [], "knowledge_object": "id",
+                           "curated_dataset": "v0.1", "training_view": "qwen", "future_model": "m"},
+                  training_view_eligibility={"qwen": True, "llama": True, "deepseek": True},
+                  verification_status="pending",
+                  metadata={"test": True})
+    _write_dataset(dspath, [ko_rec])
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp,
+            config={"schema_type": "auto"})
+        result = agent.execute()
+        assert result.data["schema_type"] == "knowledge_object"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_validation_agent_auto_detects_base_schema():
+    """schema_type='auto' detects base-schema records."""
+    tmp, dspath = _make_validation_env()
+    _write_dataset(dspath, [_VALID_RECORD])
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp,
+            config={"schema_type": "auto"})
+        result = agent.execute()
+        assert result.data["schema_type"] == "base"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Pipeline integration ──────────────────────────────────────────────────
+
+
+def test_orchestrator_passes_through_validation():
+    """Orchestrator advances through validation with a valid dataset."""
+    tmp, dspath = _make_validation_env()
+    valid_rec = dict(_VALID_RECORD, id="vtest_001",
+                     messages=[{"role": "user", "content": "Explain encapsulation in OOP."},
+                               {"role": "assistant", "content": (
+                                   "Encapsulation bundles data and methods into a class unit, "
+                                   "restricting direct access to internal state. A BankAccount "
+                                   "class uses private fields with public deposit/withdraw "
+                                   "methods that enforce validation rules like non-negative "
+                                   "balances. This provides information hiding and maintainability."
+                               )}])
+    _write_dataset(dspath, [valid_rec])
+    try:
+        orch = __import__("automation.pipeline_orchestrator", fromlist=["PipelineOrchestrator"]).PipelineOrchestrator(
+            "test-val-pass", tmp)
+        result = orch.run_to_approval()
+        # Should reach WAITING_HUMAN_APPROVAL (validation passed)
+        assert result.current_state == "WAITING_HUMAN_APPROVAL", f"Got {result.current_state}: {result.summary}"
+        assert "validation" in result.agent_results
+        assert result.agent_results["validation"].passed
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_orchestrator_blocks_on_validation_failure():
+    """Orchestrator blocks pipeline when validation fails."""
+    tmp, dspath = _make_validation_env()
+    bad_rec = {
+        "id": "bad",
+        "category": "invalid",
+        "subcategory": "none",
+        "type": "unknown",
+        "source": {"name": "t", "license": "MIT"},
+        "messages": [{"role": "user", "content": "Explain encapsulation in OOP."},
+                      {"role": "assistant", "content": (
+                          "Encapsulation bundles data and methods into a class unit, "
+                          "restricting direct access to internal state. A BankAccount "
+                          "class uses private fields with public deposit/withdraw "
+                          "methods that enforce validation rules like non-negative "
+                          "balances. This provides information hiding and maintainability."
+                      )}],
+        "quality_score": 9,
+        "verified": False,
+        "tags": [],
+        "difficulty": 1,
+        "language": "en",
+        "notes": "bad record",
+    }  # category "invalid" causes structural errors
+    _write_dataset(dspath, [bad_rec])
+    try:
+        orch = __import__("automation.pipeline_orchestrator", fromlist=["PipelineOrchestrator"]).PipelineOrchestrator(
+            "test-val-block", tmp)
+        result = orch.run_to_approval()
+        # Should NOT reach WAITING_HUMAN_APPROVAL — blocked at VALIDATION
+        assert result.current_state != "WAITING_HUMAN_APPROVAL"
+        assert "validation" in result.agent_results
+        assert not result.agent_results["validation"].passed
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Error summary ─────────────────────────────────────────────────────────
+
+
+def test_validation_agent_error_summary():
+    """Error summary aggregates patterns across records."""
+    tmp, dspath = _make_validation_env()
+    recs = [
+        {"id": "bad_001"},  # Missing fields -> category, type, etc.
+        {"id": "bad_002"},  # Same pattern
+        dict(_VALID_RECORD, id="good_001"),
+    ]
+    _write_dataset(dspath, recs)
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp)
+        result = agent.execute()
+        summary = result.data["error_summary"]
+        assert summary["total_records"] == 3
+        assert summary["unique_error_patterns"] > 0
+        # "category invalid" should appear twice
+        assert any("category" in k for k in summary["error_patterns"])
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── No-op: no dataset found ───────────────────────────────────────────────
+
+
+def test_validation_agent_skips_when_no_dataset():
+    """Agent returns SKIPPED when no dataset file exists."""
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata").mkdir()
+    (tmp / "curated" / "v0.1").mkdir(parents=True)
+    (tmp / "scripts").mkdir()
+    try:
+        agent = __import__("automation.validation_agent", fromlist=["ValidationAgent"]).ValidationAgent(tmp)
+        result = agent.execute()
+        assert result.status.value == "skipped"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ===================================================================
+# Quality Agent (v1.2 Production)
+# ===================================================================
+
+
+def _quality_env() -> tuple[Path, Path]:
+    """Create temp atlas root with scripts copied for quality engine."""
+    tmp = Path(tempfile.mkdtemp())
+    for d in ("metadata", "curated/v0.1", "tmp", "scripts"):
+        (tmp / d).mkdir(parents=True, exist_ok=True)
+    src = Path(__file__).resolve().parent.parent / "scripts"
+    for item in src.iterdir():
+        if item.is_file() and item.suffix == ".py" and not item.name.startswith("_"):
+            (tmp / "scripts" / item.name).write_text(
+                item.read_text(encoding="utf-8"), encoding="utf-8"
+            )
+    auto_dst = tmp / "scripts" / "automation"
+    auto_dst.mkdir(exist_ok=True)
+    for item in (src / "automation").iterdir():
+        if item.is_file() and item.suffix == ".py":
+            (auto_dst / item.name).write_text(
+                item.read_text(encoding="utf-8"), encoding="utf-8"
+            )
+    return tmp, tmp / "curated" / "v0.1" / "pilot_candidates.jsonl"
+
+
+def _write_jsonl(path: Path, records: list[dict]) -> None:
+    path.write_text(
+        "\n".join(json.dumps(r) for r in records) + "\n", encoding="utf-8"
+    )
+
+
+# A complete record that should score well on all 7 dimensions
+_HIGH_QUALITY_RECORD = {
+    "id": "01_foundation_reasoning_0001",
+    "category": "01_foundation",
+    "subcategory": "reasoning",
+    "type": "instruction",
+    "source": {"name": "test", "license": "MIT"},
+    "messages": [
+        {
+            "role": "user",
+            "content": "Explain the concept of encapsulation in object-oriented programming.",
+        },
+        {
+            "role": "assistant",
+            "content": (
+                "Encapsulation is a fundamental principle of object-oriented programming "
+                "that bundles data (attributes) and methods (functions) that operate on "
+                "that data into a single unit called a class. It restricts direct access "
+                "to an object's internal state, exposing only what is necessary through "
+                "controlled public interfaces.\n\n"
+                "For example, a BankAccount class might have a private _balance field that "
+                "can only be modified through deposit() and withdraw() methods, which "
+                "enforce validation rules like preventing negative balances.\n\n"
+                "```python\n"
+                "class BankAccount:\n"
+                "    def __init__(self):\n"
+                "        self._balance = 0\n"
+                "    def deposit(self, amount):\n"
+                "        if amount > 0:\n"
+                "            self._balance += amount\n"
+                "    def get_balance(self):\n"
+                "        return self._balance\n"
+                "```\n\n"
+                "The key benefits of encapsulation include: reduced complexity through "
+                "information hiding, increased maintainability by decoupling interface "
+                "from implementation, and improved security by preventing unauthorized "
+                "access to internal state."
+            ),
+        },
+    ],
+    "language": "en",
+    "difficulty": 2,
+    "tags": ["oop", "encapsulation", "python"],
+    "quality_score": 9,
+    "verified": True,
+    "notes": "Quality test record — high quality.",
+}
+
+# A record that should score poorly (short, boilerplate, no substance)
+_LOW_QUALITY_RECORD = {
+    "id": "99_generic_trash_9999",
+    "category": "01_foundation",
+    "subcategory": "instruction-following",
+    "type": "instruction",
+    "source": {"name": "test", "license": "MIT"},
+    "messages": [
+        {"role": "user", "content": "What is AI?"},
+        {"role": "assistant", "content": "Sure, here is a definition of AI."},
+    ],
+    "language": "en",
+    "difficulty": 0,
+    "tags": [],
+    "quality_score": 3,
+    "verified": False,
+    "notes": "Quality test record — low quality.",
+}
+
+
+# ── Basic evaluation ──────────────────────────────────────────────────────
+
+
+def test_quality_agent_scores_high_quality_record():
+    """A well-structured, example-rich record scores >= 7."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_HIGH_QUALITY_RECORD])
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        assert result.passed, f"Expected PASS, got FAIL: {result.summary}"
+        agg = result.data["aggregate"]
+        assert agg["mean_score"] >= 7, f"Mean score {agg['mean_score']} < 7"
+        assert agg["total_below_threshold"] == 0
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_quality_agent_scores_low_quality_record():
+    """A short, boilerplate record scores < 7 and may fail the pipeline."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_LOW_QUALITY_RECORD])
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        agg = result.data["aggregate"]
+        assert agg["mean_score"] < 7, (
+            f"Expected low score, got {agg['mean_score']}"
+        )
+        # With the low record, pipeline-level threshold check may or may not
+        # fail depending on mean vs threshold; check the score itself.
+        assert agg["min_score_observed"] < 7
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_quality_agent_fails_when_below_threshold():
+    """Pipeline FAILS when mean quality_score < min_score."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_LOW_QUALITY_RECORD])
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(
+            tmp, config={"min_score": 7}
+        )
+        result = agent.execute()
+        assert not result.passed, "Expected FAIL for low score"
+        assert any("mean quality score" in e.lower() for e in result.errors), (
+            f"Expected mean-score error, got {result.errors}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_quality_agent_returns_per_record_dimensions():
+    """Per-record results include dimension breakdown and rationale."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_HIGH_QUALITY_RECORD])
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        records = result.data["records"]
+        assert len(records) == 1
+        rec = records[0]
+        assert "dimensions" in rec
+        assert len(rec["dimensions"]) == 7  # accuracy, completeness, etc.
+        assert "flags" in rec
+        assert "confidence" in rec
+        assert "rationale" in rec
+        assert len(rec["rationale"]) == 7
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Dimension evaluation ──────────────────────────────────────────────────
+
+
+def test_quality_agent_dimension_names():
+    """The 7 expected dimension names are all present."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_HIGH_QUALITY_RECORD])
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        dims = result.data.get("dimension_averages", {})
+        expected = {
+            "accuracy", "completeness", "technical_correctness",
+            "clarity", "usefulness", "originality", "relevance",
+        }
+        assert set(dims.keys()) == expected, (
+            f"Expected {expected}, got {set(dims.keys())}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_quality_agent_technical_dimension_detects_code():
+    """Records with code blocks score higher on technical_correctness."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_HIGH_QUALITY_RECORD])  # has code fence
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        dims = result.data["dimension_averages"]
+        assert dims.get("technical_correctness", 0) >= 0.7, (
+            f"Expected high technical_correctness, got {dims.get('technical_correctness')}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_quality_agent_originality_detects_boilerplate():
+    """Boilerplate openers lower the originality dimension."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_LOW_QUALITY_RECORD])  # starts with "Sure, here is..."
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        dims = result.data["dimension_averages"]
+        # originality should be low (< 0.7) due to boilerplate
+        assert dims.get("originality", 1.0) < 0.7, (
+            f"Expected low originality for boilerplate, got {dims.get('originality')}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Issue flags ───────────────────────────────────────────────────────────
+
+
+def test_quality_agent_detects_boilerplate_flag():
+    """Records with boilerplate openers get flagged."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_LOW_QUALITY_RECORD])
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        flags = result.data.get("issue_flags", {})
+        assert "boilerplate_opener" in flags, (
+            f"Expected boilerplate_opener flag, got {flags}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_quality_agent_detects_very_short_flag():
+    """Very short answers get flagged."""
+    tmp, dspath = _quality_env()
+    rec = dict(_LOW_QUALITY_RECORD, id="shorty",
+               messages=[{"role": "user", "content": "hi"},
+                         {"role": "assistant", "content": "ok."}])
+    _write_jsonl(dspath, [rec])
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        flags = result.data.get("issue_flags", {})
+        assert "very_short_answer" in flags
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Aggregate statistics ──────────────────────────────────────────────────
+
+
+def test_quality_agent_aggregate_stats():
+    """Aggregate statistics are computed correctly across multiple records."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_HIGH_QUALITY_RECORD, _LOW_QUALITY_RECORD])
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        agg = result.data["aggregate"]
+        assert agg["total_below_threshold"] >= 1
+        assert agg["min_score_observed"] < agg["max_score_observed"]
+        assert agg["mean_score"] > 0
+        # Score distribution should have 2 entries
+        assert len(agg["score_distribution"]) >= 2, (
+            f"Expected >=2 distinct scores, got {agg['score_distribution']}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_quality_agent_output_shape():
+    """Agent output data dict has the expected top-level keys."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_HIGH_QUALITY_RECORD])
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        assert "checked_path" in result.data
+        assert "total_records" in result.data
+        assert "aggregate" in result.data
+        assert "dimension_averages" in result.data
+        assert "issue_flags" in result.data
+        assert "records" in result.data
+        assert "threshold" in result.data
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Parse errors ──────────────────────────────────────────────────────────
+
+
+def test_quality_agent_reports_parse_errors():
+    """Malformed JSON lines are reported, not silently dropped."""
+    tmp, dspath = _quality_env()
+    dspath.write_text(
+        json.dumps(_HIGH_QUALITY_RECORD) + "\n"
+        + "not valid json\n"
+        + json.dumps(dict(_HIGH_QUALITY_RECORD, id="test_002")) + "\n",
+        encoding="utf-8",
+    )
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        assert len(result.data.get("parse_errors", [])) == 1
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Pipeline integration ──────────────────────────────────────────────────
+
+
+def test_orchestrator_passes_through_quality():
+    """Orchestrator advances through quality evaluation with high-quality data."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_HIGH_QUALITY_RECORD])
+    try:
+        orch = __import__("automation.pipeline_orchestrator", fromlist=["PipelineOrchestrator"]).PipelineOrchestrator(
+            "test-qual-pass", tmp
+        )
+        result = orch.run_to_approval()
+        assert "quality" in result.agent_results, (
+            f"Quality agent not in results: {list(result.agent_results.keys())}"
+        )
+        quality_result = result.agent_results["quality"]
+        assert quality_result.passed, f"Quality agent failed: {quality_result.summary}"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_orchestrator_blocks_on_quality_failure():
+    """Orchestrator blocks the pipeline when quality is below threshold."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_LOW_QUALITY_RECORD])
+    try:
+        orch = __import__("automation.pipeline_orchestrator", fromlist=["PipelineOrchestrator"]).PipelineOrchestrator(
+            "test-qual-block", tmp
+        )
+        result = orch.run_to_approval()
+        assert "quality" in result.agent_results
+        quality_result = result.agent_results["quality"]
+        assert not quality_result.passed, (
+            f"Quality should fail for low-quality data, got: {quality_result.summary}"
+        )
+        # Pipeline should not reach WAITING_HUMAN_APPROVAL
+        assert result.current_state != "WAITING_HUMAN_APPROVAL", (
+            f"Pipeline should not advance past quality failure, got {result.current_state}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── No-op: no dataset found ───────────────────────────────────────────────
+
+
+def test_quality_agent_skips_when_no_dataset():
+    """Agent returns SKIPPED when no dataset file exists."""
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata").mkdir()
+    (tmp / "curated" / "v0.1").mkdir(parents=True)
+    (tmp / "scripts").mkdir()
+    try:
+        agent = __import__("automation.quality_agent", fromlist=["QualityAgent"]).QualityAgent(tmp)
+        result = agent.execute()
+        assert result.status.value == "skipped"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
