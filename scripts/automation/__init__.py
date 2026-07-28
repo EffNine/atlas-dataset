@@ -59,6 +59,7 @@ from .provenance_agent import ProvenanceAgent
 from .quality_agent import QualityAgent
 from .revision_agent import RevisionAgent
 from .validation_agent import ValidationAgent
+from .release_manager import ReleaseManager
 
 __all__ = [
     "PipelineState",
@@ -80,4 +81,5 @@ __all__ = [
     "QualityAgent",
     "RevisionAgent",
     "ValidationAgent",
+    "ReleaseManager",
 ]

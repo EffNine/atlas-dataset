@@ -39,6 +39,8 @@ class PipelineState(str, Enum):
     CONTENT_REVISION = "CONTENT_REVISION"
     VALIDATION = "VALIDATION"
     WAITING_HUMAN_APPROVAL = "WAITING_HUMAN_APPROVAL"
+    READY_FOR_RELEASE = "READY_FOR_RELEASE"
+    RELEASE_REJECTED = "RELEASE_REJECTED"
     RELEASED = "RELEASED"
 
     def __str__(self) -> str:
@@ -56,6 +58,8 @@ STATE_ORDER: list[PipelineState] = [
     PipelineState.CONTENT_REVISION,
     PipelineState.VALIDATION,
     PipelineState.WAITING_HUMAN_APPROVAL,
+    PipelineState.READY_FOR_RELEASE,
+    PipelineState.RELEASE_REJECTED,
     PipelineState.RELEASED,
 ]
 
@@ -69,7 +73,9 @@ VALID_TRANSITIONS: frozenset[tuple[PipelineState, PipelineState]] = frozenset({
     (PipelineState.PROVENANCE_CHECK, PipelineState.CONTENT_REVISION),
     (PipelineState.CONTENT_REVISION, PipelineState.VALIDATION),
     (PipelineState.VALIDATION, PipelineState.WAITING_HUMAN_APPROVAL),
-    (PipelineState.WAITING_HUMAN_APPROVAL, PipelineState.RELEASED),
+    (PipelineState.WAITING_HUMAN_APPROVAL, PipelineState.READY_FOR_RELEASE),
+    (PipelineState.WAITING_HUMAN_APPROVAL, PipelineState.RELEASE_REJECTED),
+    (PipelineState.READY_FOR_RELEASE, PipelineState.RELEASED),
 })
 
 
@@ -211,18 +217,6 @@ class StateMachine:
             )
             return False
 
-        # Special rule: only RELEASED can be the target from WAITING_HUMAN_APPROVAL
-        if (
-            self._current_state == PipelineState.WAITING_HUMAN_APPROVAL
-            and target != PipelineState.RELEASED
-        ):
-            self._error = (
-                f"From {PipelineState.WAITING_HUMAN_APPROVAL.value}, "
-                f"only {PipelineState.RELEASED.value} is allowed. "
-                f"Cannot transition to {target.value}."
-            )
-            return False
-
         # Record the transition
         now = datetime.now(timezone.utc).isoformat()
         t = StateTransition(
@@ -262,11 +256,16 @@ class StateMachine:
 
     def is_terminal(self) -> bool:
         """Check if the pipeline has reached a terminal state."""
-        return self._current_state == PipelineState.RELEASED
+        return self._current_state in (
+            PipelineState.RELEASED,
+            PipelineState.RELEASE_REJECTED,
+        )
 
     def is_blocked(self) -> bool:
         """Check if the pipeline is blocked waiting for human approval."""
-        return self._current_state == PipelineState.WAITING_HUMAN_APPROVAL
+        return self._current_state in (
+            PipelineState.WAITING_HUMAN_APPROVAL,
+        )
 
     def reset(self, to_state: PipelineState = PipelineState.INGESTED) -> None:
         """Reset the state machine to a given state (for error recovery).

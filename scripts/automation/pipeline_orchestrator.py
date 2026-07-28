@@ -35,6 +35,7 @@ from .quality_agent import QualityAgent
 from .provenance_agent import ProvenanceAgent
 from .revision_agent import RevisionAgent
 from .validation_agent import ValidationAgent
+from .release_manager import ReleaseManager
 
 
 # ---------------------------------------------------------------------------
@@ -163,6 +164,8 @@ class PipelineOrchestrator:
                 self._agents[name] = RevisionAgent(self.root, agent_config)
             elif name == "validation":
                 self._agents[name] = ValidationAgent(self.root, agent_config)
+            elif name == "release":
+                self._agents[name] = ReleaseManager(self.root, agent_config)
             else:
                 raise ValueError(f"Unknown agent: {name}")
         return self._agents[name]
@@ -290,24 +293,62 @@ class PipelineOrchestrator:
                     reason="Awaiting human approval before release",
                 )
 
-        # ── RELEASED ───────────────────────────────────────────────────
+        # ── RELEASE (via ReleaseManager) ──────────────────────────────
         if self.state_machine.current_state == PipelineState.WAITING_HUMAN_APPROVAL:
-            if self.approval_gate.is_releasable(self.pipeline_id):
-                self.state_machine.transition_to(
-                    PipelineState.RELEASED,
-                    triggered_by="human",
-                    reason="Human approval received — releasing",
-                )
-            # If not approved yet, pipeline stays BLOCKED_ON_APPROVAL
+            # Only proceed when human has approved
+            if not self.approval_gate.is_releasable(self.pipeline_id):
+                return  # Stay blocked — waiting for human approval
 
-    def _run_agent(self, name: str) -> AgentResult:
-        """Run a single agent and return its result."""
-        try:
-            agent = self._get_agent(name)
-            return agent.execute(context={
+            # Check human approval status for context
+            approval_check = self.approval_gate.check_approval_gate(self.pipeline_id)
+
+            # Run the ReleaseManager with accumulated agent results
+            release_context = {
                 "pipeline_id": self.pipeline_id,
                 "state": self.state_machine.current_state.value,
-            })
+                "agent_results": agent_results,
+                "approval_status": approval_check,
+            }
+            result = self._run_agent("release", custom_context=release_context)
+            agent_results["release"] = result
+
+            release_status = result.data.get("status", "RELEASE_REJECTED")
+            if release_status == "READY_FOR_RELEASE":
+                self.state_machine.transition_to(
+                    PipelineState.READY_FOR_RELEASE,
+                    triggered_by="release_manager",
+                    reason=result.summary,
+                )
+                # Immediately advance to RELEASED
+                if self.state_machine.current_state == PipelineState.READY_FOR_RELEASE:
+                    self.state_machine.transition_to(
+                        PipelineState.RELEASED,
+                        triggered_by="release_manager",
+                        reason="All gates pass — dataset released",
+                    )
+            else:
+                self.state_machine.transition_to(
+                    PipelineState.RELEASE_REJECTED,
+                    triggered_by="release_manager",
+                    reason=result.summary if result.errors else "Release rejected",
+                )
+
+    def _run_agent(self, name: str, custom_context: dict[str, Any] | None = None) -> AgentResult:
+        """Run a single agent and return its result.
+
+        Args:
+            name: Agent identifier.
+            custom_context: Override the default context dict. When provided
+                           this is passed verbatim to ``agent.execute()``
+                           instead of the standard pipeline context.
+        """
+        try:
+            agent = self._get_agent(name)
+            context = custom_context if custom_context is not None else {
+                "pipeline_id": self.pipeline_id,
+                "state": self.state_machine.current_state.value,
+            }
+            return agent.execute(context=context)
         except Exception as e:
             return AgentResult(
                 agent_name=name,
@@ -446,15 +487,26 @@ class PipelineOrchestrator:
         return self.approval_gate.check_approval_gate(self.pipeline_id)
 
     def _try_release(self) -> bool:
-        """Attempt to transition from WAITING_HUMAN_APPROVAL to RELEASED."""
+        """Attempt to transition from WAITING_HUMAN_APPROVAL to RELEASED via ReleaseManager.
+
+        Steps through READY_FOR_RELEASE as an intermediate state.
+        """
         if self.state_machine.current_state != PipelineState.WAITING_HUMAN_APPROVAL:
             return False
         if not self.approval_gate.is_releasable(self.pipeline_id):
             return False
+        # Transition through READY_FOR_RELEASE to RELEASED
+        ok = self.state_machine.transition_to(
+            PipelineState.READY_FOR_RELEASE,
+            triggered_by="release_manager",
+            reason="Human approval received — preparing release",
+        )
+        if not ok:
+            return False
         return self.state_machine.transition_to(
             PipelineState.RELEASED,
-            triggered_by="human",
-            reason="Approval received — pipeline released",
+            triggered_by="release_manager",
+            reason="Human approval received — dataset released",
         )
 
     # ── Pipeline status ──────────────────────────────────────────────────

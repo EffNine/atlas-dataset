@@ -79,7 +79,7 @@ def _make_temp_root() -> Path:
 
 
 def _full_transition_sequence(sm: StateMachine) -> list[tuple[PipelineState, bool]]:
-    """Run all valid transitions and return (target, success) pairs."""
+    """Run all valid forward transitions and return (target, success) pairs."""
     results = []
     for target in [
         PipelineState.QUALITY_CHECK,
@@ -87,6 +87,7 @@ def _full_transition_sequence(sm: StateMachine) -> list[tuple[PipelineState, boo
         PipelineState.CONTENT_REVISION,
         PipelineState.VALIDATION,
         PipelineState.WAITING_HUMAN_APPROVAL,
+        PipelineState.READY_FOR_RELEASE,
         PipelineState.RELEASED,
     ]:
         ok = sm.transition_to(target, triggered_by="test")
@@ -125,14 +126,20 @@ def test_valid_transition_leaves_no_error():
 
 
 def test_transition_from_states_are_mutually_exclusive():
-    """Each state transitions to exactly one specific next state."""
-    for from_state in STATE_ORDER[:-1]:  # All except RELEASED
-        targets = [
-            t[1] for t in VALID_TRANSITIONS if t[0] == from_state
-        ]
-        assert len(targets) == 1, (
-            f"{from_state} should have exactly 1 valid target, got {targets}"
-        )
+    """Each state except WAITING_HUMAN_APPROVAL has exactly 1 valid target.
+    WAITING_HUMAN_APPROVAL has 2 targets (READY_FOR_RELEASE, RELEASE_REJECTED)."""
+    for from_state in STATE_ORDER:
+        if from_state in (PipelineState.RELEASED, PipelineState.RELEASE_REJECTED):
+            continue  # terminal — no targets
+        targets = [t[1] for t in VALID_TRANSITIONS if t[0] == from_state]
+        if from_state == PipelineState.WAITING_HUMAN_APPROVAL:
+            assert len(targets) == 2, (
+                f"{from_state} should have 2 valid targets, got {targets}"
+            )
+        else:
+            assert len(targets) == 1, (
+                f"{from_state} should have exactly 1 valid target, got {targets}"
+            )
 
 
 def test_released_is_terminal():
@@ -231,17 +238,22 @@ def test_can_transition_to_rejects_non_enum():
 
 
 def test_only_released_from_waiting():
-    """From WAITING_HUMAN_APPROVAL, only RELEASED is allowed."""
+    """From WAITING_HUMAN_APPROVAL, valid targets are READY_FOR_RELEASE and RELEASE_REJECTED."""
     sm = StateMachine("test-pipeline", _make_temp_root())
     sm.transition_to(PipelineState.QUALITY_CHECK)
     sm.transition_to(PipelineState.PROVENANCE_CHECK)
     sm.transition_to(PipelineState.CONTENT_REVISION)
     sm.transition_to(PipelineState.VALIDATION)
     sm.transition_to(PipelineState.WAITING_HUMAN_APPROVAL)
-    # Try to go somewhere else
+    # Try to go somewhere invalid (backward)
     ok = sm.transition_to(PipelineState.INGESTED)
     assert not ok
-    assert sm.error is not None  # Generic invalid transition error
+    assert sm.error is not None
+    # Valid transitions from WAITING_HUMAN_APPROVAL
+    assert sm.can_transition_to(PipelineState.READY_FOR_RELEASE)
+    assert sm.can_transition_to(PipelineState.RELEASE_REJECTED)
+    # RELEASED is NOT directly reachable — must go through READY_FOR_RELEASE
+    assert not sm.can_transition_to(PipelineState.RELEASED)
 
 
 # ===================================================================
@@ -285,8 +297,8 @@ def test_is_blocked_only_in_waiting():
     assert sm.is_blocked()
 
 
-def test_is_terminal_only_in_released():
-    """is_terminal is True only in RELEASED."""
+def test_is_terminal_only_in_released_or_rejected():
+    """is_terminal is True only in RELEASED or RELEASE_REJECTED."""
     sm = StateMachine("test-pipeline", _make_temp_root())
     assert not sm.is_terminal()
     sm.transition_to(PipelineState.QUALITY_CHECK)
@@ -294,6 +306,15 @@ def test_is_terminal_only_in_released():
     _full_transition_sequence(sm)
     assert sm.current_state == PipelineState.RELEASED
     assert sm.is_terminal()
+    # RELEASE_REJECTED is also terminal
+    sm2 = StateMachine("test-rejected", _make_temp_root())
+    sm2.transition_to(PipelineState.QUALITY_CHECK)
+    sm2.transition_to(PipelineState.PROVENANCE_CHECK)
+    sm2.transition_to(PipelineState.CONTENT_REVISION)
+    sm2.transition_to(PipelineState.VALIDATION)
+    sm2.transition_to(PipelineState.WAITING_HUMAN_APPROVAL)
+    sm2.transition_to(PipelineState.RELEASE_REJECTED)
+    assert sm2.is_terminal()
 
 
 # ===================================================================
@@ -500,12 +521,10 @@ def test_approval_mandatory_before_released():
     sm.transition_to(PipelineState.CONTENT_REVISION)
     sm.transition_to(PipelineState.VALIDATION)
     sm.transition_to(PipelineState.WAITING_HUMAN_APPROVAL)
-    # The state machine allows the FSM transition
-    assert sm.can_transition_to(PipelineState.RELEASED)
-    # But the ORCHESTRATOR gate blocks it
-    gate = __import__("automation.approval_gate", fromlist=["ApprovalGate"]).ApprovalGate(tmp)
-    assert gate.is_releasable("test-mandatory") is False
-    assert sm.can_transition_to(PipelineState.RELEASED)
+    # The state machine allows READY_FOR_RELEASE and RELEASE_REJECTED from WAITING
+    # RELEASED is NOT directly reachable — must go through READY_FOR_RELEASE first
+    assert sm.can_transition_to(PipelineState.READY_FOR_RELEASE)
+    assert not sm.can_transition_to(PipelineState.RELEASED)
 
 
 def test_orchestrator_blocks_release_without_approval():
@@ -731,7 +750,10 @@ def test_orchestrator_request_approval():
 
 def test_all_states_in_valid_transitions():
     """Every non-terminal state appears as a source in VALID_TRANSITIONS."""
-    for state in STATE_ORDER[:-1]:  # Exclude RELEASED
+    terminal_states = {PipelineState.RELEASED, PipelineState.RELEASE_REJECTED}
+    for state in STATE_ORDER:
+        if state in terminal_states:
+            continue
         sources = {t[0] for t in VALID_TRANSITIONS}
         assert state in sources, f"{state} missing from VALID_TRANSITIONS"
 
@@ -742,9 +764,9 @@ def test_state_order_is_complete():
 
 
 def test_valid_transitions_counts():
-    """There are exactly 6 valid transitions (6 edges for 7 nodes)."""
-    assert len(VALID_TRANSITIONS) == 6, (
-        f"Expected 6 transitions, got {len(VALID_TRANSITIONS)}"
+    """There are exactly 8 valid transitions (8 edges for 9 nodes)."""
+    assert len(VALID_TRANSITIONS) == 8, (
+        f"Expected 8 transitions, got {len(VALID_TRANSITIONS)}"
     )
 
 
@@ -1941,6 +1963,379 @@ def test_revision_agent_immutable_dirs_protected():
         assert rel.startswith("metadata/"), (
             f"Output path outside metadata/: {rel}"
         )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ===================================================================
+# Release Manager (v1.4)
+# ===================================================================
+
+
+def test_release_manager_all_gates_pass():
+    """All gates pass → release succeeds."""
+    agent_results = {
+        "quality": {"status": "passed", "summary": "Quality OK"},
+        "provenance": {"status": "passed", "summary": "Provenance OK"},
+        "revision": {"status": "passed", "summary": "Revision OK"},
+        "validation": {"status": "passed", "summary": "Validation OK"},
+    }
+    approval_status = {"approved": True, "decision": "approved",
+                       "decided_by": "reviewer_alice", "comments": "LGTM"}
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata").mkdir(parents=True, exist_ok=True)
+    try:
+        agent = __import__("automation.release_manager", fromlist=["ReleaseManager"]).ReleaseManager(tmp)
+        result = agent.execute(context={
+            "pipeline_id": "test-release-pass",
+            "agent_results": agent_results,
+            "approval_status": approval_status,
+        })
+        assert result.passed
+        assert result.data["status"] == "READY_FOR_RELEASE"
+        assert result.data["gates"]["quality"] == "PASS"
+        assert result.data["gates"]["human_approval"] == "APPROVED"
+        assert len(result.data["failed_gates"]) == 0
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_release_manager_validation_failure_blocks():
+    """Validation failure → release blocked."""
+    agent_results = {
+        "quality": {"status": "passed", "summary": "OK"},
+        "provenance": {"status": "passed", "summary": "OK"},
+        "revision": {"status": "passed", "summary": "OK"},
+        "validation": {"status": "failed", "summary": "FAILED", "errors": ["bad record"]},
+    }
+    approval_status = {"approved": True, "decision": "approved"}
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata").mkdir(parents=True, exist_ok=True)
+    try:
+        agent = __import__("automation.release_manager", fromlist=["ReleaseManager"]).ReleaseManager(tmp)
+        result = agent.execute(context={
+            "pipeline_id": "test-release-val-fail",
+            "agent_results": agent_results,
+            "approval_status": approval_status,
+        })
+        assert not result.passed
+        assert result.data["status"] == "RELEASE_REJECTED"
+        assert "validation" in result.data["failed_gates"]
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_release_manager_missing_approval_blocks():
+    """Missing human approval → release blocked."""
+    agent_results = {
+        "quality": {"status": "passed"},
+        "provenance": {"status": "passed"},
+        "revision": {"status": "passed"},
+        "validation": {"status": "passed"},
+    }
+    approval_status = {"approved": False, "decision": "pending"}
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata").mkdir(parents=True, exist_ok=True)
+    try:
+        agent = __import__("automation.release_manager", fromlist=["ReleaseManager"]).ReleaseManager(tmp)
+        result = agent.execute(context={
+            "pipeline_id": "test-release-no-approval",
+            "agent_results": agent_results,
+            "approval_status": approval_status,
+        })
+        assert not result.passed
+        assert result.data["status"] == "RELEASE_REJECTED"
+        assert "human_approval" in result.data["failed_gates"]
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_release_manager_human_rejection():
+    """Human rejection → release rejected with appropriate next_action."""
+    agent_results = {
+        "quality": {"status": "passed"},
+        "provenance": {"status": "passed"},
+        "revision": {"status": "passed"},
+        "validation": {"status": "passed"},
+    }
+    approval_status = {"approved": False, "decision": "denied",
+                       "decided_by": "reviewer_bob", "comments": "Not ready"}
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata").mkdir(parents=True, exist_ok=True)
+    try:
+        agent = __import__("automation.release_manager", fromlist=["ReleaseManager"]).ReleaseManager(tmp)
+        result = agent.execute(context={
+            "pipeline_id": "test-release-denied",
+            "agent_results": agent_results,
+            "approval_status": approval_status,
+        })
+        assert not result.passed
+        assert result.data["status"] == "RELEASE_REJECTED"
+        assert result.data["next_action"] == "RETURN_TO_REVISION_QUEUE"
+        assert "human_approval" in result.data["failed_gates"]
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_release_manager_provenance_failure():
+    """Provenance failure → release blocked."""
+    agent_results = {
+        "quality": {"status": "passed"},
+        "provenance": {"status": "failed", "summary": "Unresolved records"},
+        "revision": {"status": "passed"},
+        "validation": {"status": "passed"},
+    }
+    approval_status = {"approved": True, "decision": "approved"}
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata").mkdir(parents=True, exist_ok=True)
+    try:
+        agent = __import__("automation.release_manager", fromlist=["ReleaseManager"]).ReleaseManager(tmp)
+        result = agent.execute(context={
+            "pipeline_id": "test-release-prov-fail",
+            "agent_results": agent_results,
+            "approval_status": approval_status,
+        })
+        assert not result.passed
+        assert "provenance" in result.data["failed_gates"]
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_release_manager_manifest_generation():
+    """Release manifest is written to disk with correct metadata."""
+    agent_results = {
+        "quality": {"status": "passed"},
+        "provenance": {"status": "passed"},
+        "revision": {"status": "passed"},
+        "validation": {"status": "passed"},
+    }
+    approval_status = {"approved": True, "decision": "approved"}
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata" / "releases").mkdir(parents=True, exist_ok=True)
+    try:
+        agent = __import__("automation.release_manager", fromlist=["ReleaseManager"]).ReleaseManager(tmp)
+        result = agent.execute(context={
+            "pipeline_id": "test-release-manifest",
+            "agent_results": agent_results,
+            "approval_status": approval_status,
+        })
+        manifest_path = Path(result.data["manifest_path"])
+        assert manifest_path.exists(), f"Manifest not found: {manifest_path}"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        assert manifest["release_id"] == "test-release-manifest"
+        assert manifest["status"] == "READY_FOR_RELEASE"
+        assert manifest["gates"]["human_approval"] == "APPROVED"
+        assert "checksum" in manifest
+        assert "manifest_checksum" in manifest
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_release_manager_report_generation():
+    """Release report is written to disk with agent summaries."""
+    agent_results = {
+        "quality": {"status": "passed", "summary": "All good"},
+        "validation": {"status": "failed", "summary": "Bad record", "errors": ["err1"]},
+    }
+    approval_status = {"approved": True, "decision": "approved"}
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata" / "releases").mkdir(parents=True, exist_ok=True)
+    try:
+        agent = __import__("automation.release_manager", fromlist=["ReleaseManager"]).ReleaseManager(tmp)
+        result = agent.execute(context={
+            "pipeline_id": "test-release-report",
+            "agent_results": agent_results,
+            "approval_status": approval_status,
+        })
+        report_path = Path(result.data["report_path"])
+        assert report_path.exists(), f"Report not found: {report_path}"
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        assert report["release_id"] == "test-release-report"
+        assert "agent_summaries" in report
+        assert "quality" in report["agent_summaries"]
+        assert "approval_details" in report
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_release_manager_checksum_generation():
+    """Checksum is deterministic and present in output."""
+    agent_results = {
+        "quality": {"status": "passed"},
+        "provenance": {"status": "passed"},
+        "revision": {"status": "passed"},
+        "validation": {"status": "passed"},
+    }
+    approval_status = {"approved": True, "decision": "approved"}
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata").mkdir(parents=True, exist_ok=True)
+    try:
+        agent = __import__("automation.release_manager", fromlist=["ReleaseManager"]).ReleaseManager(tmp)
+        result1 = agent.execute(context={
+            "pipeline_id": "test-release-checksum",
+            "agent_results": agent_results,
+            "approval_status": approval_status,
+        })
+        result2 = agent.execute(context={
+            "pipeline_id": "test-release-checksum",
+            "agent_results": agent_results,
+            "approval_status": approval_status,
+        })
+        assert result1.data["checksum"] == result2.data["checksum"], (
+            "Checksums should be deterministic"
+        )
+        assert len(result1.data["checksum"]) == 64  # SHA-256 hex
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_release_manager_persistence_recovery():
+    """Manifest survives disk load and contains all expected fields."""
+    agent_results = {
+        "quality": {"status": "passed"},
+        "provenance": {"status": "passed"},
+        "revision": {"status": "passed"},
+        "validation": {"status": "passed"},
+    }
+    approval_status = {"approved": True, "decision": "approved"}
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata" / "releases").mkdir(parents=True, exist_ok=True)
+    try:
+        agent = __import__("automation.release_manager", fromlist=["ReleaseManager"]).ReleaseManager(tmp)
+        agent.execute(context={
+            "pipeline_id": "test-release-recover",
+            "agent_results": agent_results,
+            "approval_status": approval_status,
+        })
+        # Load from disk
+        manifest_path = tmp / "metadata" / "releases" / "test-release-recover_manifest.json"
+        assert manifest_path.exists()
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        assert manifest["release_id"] == "test-release-recover"
+        assert manifest["status"] == "READY_FOR_RELEASE"
+        assert manifest["gates"]["validation"] == "PASS"
+        assert manifest["gates"]["human_approval"] == "APPROVED"
+        assert manifest["generated_by"] == "release_manager.py"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_release_manager_state_machine_integration():
+    """State machine integration — READY_FOR_RELEASE → RELEASED."""
+    sm = __import__("automation.state_machine", fromlist=["StateMachine", "PipelineState"]).StateMachine
+    ps = __import__("automation.state_machine", fromlist=["PipelineState"]).PipelineState
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata").mkdir(parents=True, exist_ok=True)
+    try:
+        machine = sm("test-sm-release", tmp)
+        machine.transition_to(ps.QUALITY_CHECK)
+        machine.transition_to(ps.PROVENANCE_CHECK)
+        machine.transition_to(ps.CONTENT_REVISION)
+        machine.transition_to(ps.VALIDATION)
+        machine.transition_to(ps.WAITING_HUMAN_APPROVAL)
+        machine.transition_to(ps.READY_FOR_RELEASE)
+        machine.transition_to(ps.RELEASED)
+        assert machine.is_terminal()
+        assert machine.current_state == ps.RELEASED
+        assert len(machine.transitions) == 7
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_release_manager_immutable_dir_protection():
+    """Release artifacts go to metadata/releases/, never curated/."""
+    agent_results = {
+        "quality": {"status": "passed"},
+        "provenance": {"status": "passed"},
+        "revision": {"status": "passed"},
+        "validation": {"status": "passed"},
+    }
+    approval_status = {"approved": True, "decision": "approved"}
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata" / "releases").mkdir(parents=True, exist_ok=True)
+    try:
+        agent = __import__("automation.release_manager", fromlist=["ReleaseManager"]).ReleaseManager(tmp)
+        result = agent.execute(context={
+            "pipeline_id": "test-release-protect",
+            "agent_results": agent_results,
+            "approval_status": approval_status,
+        })
+        for key in ("manifest_path", "report_path"):
+            p = Path(result.data[key])
+            rel = str(p.resolve().relative_to(tmp.resolve()))
+            assert rel.startswith("metadata/"), (
+                f"{key} outside metadata/: {rel}"
+            )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Pipeline integration ──────────────────────────────────────────────────
+
+
+def test_orchestrator_full_release_flow():
+    """Orchestrator completes full release flow with approval."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_HIGH_QUALITY_RECORD])
+    try:
+        orch = __import__("automation.pipeline_orchestrator", fromlist=["PipelineOrchestrator"]).PipelineOrchestrator(
+            "test-full-release", tmp
+        )
+        # Run to approval
+        r1 = orch.run_to_approval()
+        assert r1.current_state == "WAITING_HUMAN_APPROVAL", (
+            f"Expected WAITING_HUMAN_APPROVAL, got {r1.current_state}"
+        )
+        # Grant approval
+        orch.approve_release(
+            decided_by="reviewer_alice",
+            role=__import__("automation.approval_gate", fromlist=["ApproverRole"]).ApproverRole.REVIEWER,
+            comments="All good",
+        )
+        # Full pipeline should complete
+        r2 = orch.run_full_pipeline()
+        assert r2.status == __import__("automation.pipeline_orchestrator", fromlist=["PipelineStatus"]).PipelineStatus.COMPLETED, (
+            f"Expected COMPLETED, got {r2.status}: {r2.errors}"
+        )
+        assert orch.state_machine.is_terminal()
+        # Release manager should be in results
+        assert "release" in r2.agent_results or orch.state_machine.current_state == __import__(
+            "automation.state_machine", fromlist=["PipelineState"]
+        ).PipelineState.RELEASED
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_orchestrator_release_rejected_without_approval():
+    """Orchestrator stays blocked when no human approval exists (ReleaseManager not called)."""
+    tmp, dspath = _quality_env()
+    _write_jsonl(dspath, [_HIGH_QUALITY_RECORD])
+    try:
+        orch = __import__("automation.pipeline_orchestrator", fromlist=["PipelineOrchestrator"]).PipelineOrchestrator(
+            "test-no-approval-v2", tmp
+        )
+        r1 = orch.run_to_approval()
+        # Without approval, pipeline stays at WAITING_HUMAN_APPROVAL
+        assert r1.current_state == "WAITING_HUMAN_APPROVAL", (
+            f"Expected WAITING_HUMAN_APPROVAL, got {r1.current_state}"
+        )
+        assert r1.status == __import__("automation.pipeline_orchestrator", fromlist=["PipelineStatus"]).PipelineStatus.BLOCKED_ON_APPROVAL
+        # Run full — still blocked (no approval given)
+        r2 = orch.run_full_pipeline()
+        assert r2.status == __import__("automation.pipeline_orchestrator", fromlist=["PipelineStatus"]).PipelineStatus.BLOCKED_ON_APPROVAL
     finally:
         import shutil
         shutil.rmtree(tmp, ignore_errors=True)
