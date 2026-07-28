@@ -1,0 +1,137 @@
+{
+  "artifact": "v0.2_metadata_consistency",
+  "phase": "Phase 5E.2.5 \u2014 Governance Metadata Synchronization",
+  "generated_at": "2026-07-27T23:24:18.266165+00:00",
+  "description": "Cross-reference consistency matrix for all metadata artifacts generated during Phases 4A\u20135E.2.",
+  "baseline_verification": {
+    "immutable_files": {
+      "review/decisions/v0.2/batch_001.jsonl": "PASS",
+      "review/decisions/v0.2/batch_002.jsonl": "PASS",
+      "curated/v0.2/data/phase4b_expansion.jsonl": "PASS",
+      "curated/v0.2/data/v0.2_full.jsonl": "PASS",
+      "metadata/v0.2_review_manifest.json": "PASS",
+      "metadata/v0.2_review_manifest_current.json": "PASS",
+      "metadata/v0.2_review_manifest_corrupt.json": "PASS",
+      "metadata/v0.2_review_gate_status.json": "PASS",
+      "metadata/v0.2_review_gate_report.json": "PASS",
+      "review/revisions/v0.2/revision_queue.json": "PASS",
+      "review/revisions/v0.2/resolutions/batch_001.jsonl": "PASS"
+    },
+    "regenerated_files_5e1": {
+      "review/operations/review_assignments.json": "CHANGED_SINCE_5E1",
+      "review/operations/review_progress.json": "CHANGED_SINCE_5E1",
+      "review/operations/review_queue_report.md": "CHANGED_SINCE_5E1"
+    }
+  },
+  "cross_reference_checks": [
+    {
+      "check": "manifest_pending_vs_expansion_total",
+      "expected": 150,
+      "actual": 150,
+      "status": "PASS",
+      "note": "Manifest still shows all 150 pending (correct \u2014 manifest is authoritative source of truth and unchanged)"
+    },
+    {
+      "check": "total_reviewed_records",
+      "expected": 50,
+      "actual": 50,
+      "status": "PASS"
+    },
+    {
+      "check": "approved_count",
+      "expected": 38,
+      "actual": 38,
+      "status": "PASS"
+    },
+    {
+      "check": "needs_revision_count",
+      "expected": 6,
+      "actual": 6,
+      "status": "PASS"
+    },
+    {
+      "check": "rejected_count",
+      "expected": 6,
+      "actual": 6,
+      "status": "PASS"
+    },
+    {
+      "check": "review_progress_total",
+      "expected": 150,
+      "actual": 150,
+      "status": "PASS"
+    },
+    {
+      "check": "review_progress_approved_vs_decisions",
+      "expected": 38,
+      "actual": 38,
+      "status": "PASS",
+      "note": "38 approved in decisions = 38 in review_progress"
+    },
+    {
+      "check": "review_progress_completed_vs_decisions",
+      "expected": 50,
+      "actual": 50,
+      "status": "PASS"
+    },
+    {
+      "check": "review_progress_pending",
+      "expected": 100,
+      "actual": 100,
+      "status": "PASS"
+    },
+    {
+      "check": "gate_status_still_blocked",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "check": "training_readiness_verdict",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "check": "training_review_dimension",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "check": "release_candidate_status",
+      "expected": "candidate",
+      "actual": "candidate",
+      "status": "PASS"
+    },
+    {
+      "check": "release_candidate_total_records",
+      "expected": 252,
+      "actual": 252,
+      "status": "PASS"
+    }
+  ],
+  "all_checks_pass": true,
+  "decision_summary": {
+    "batch_001": {
+      "approved": 18,
+      "needs_revision": 2,
+      "rejected": 5,
+      "total": 25
+    },
+    "batch_002": {
+      "approved": 20,
+      "needs_revision": 4,
+      "rejected": 1,
+      "total": 25
+    },
+    "combined": {
+      "approved": 38,
+      "needs_revision": 6,
+      "rejected": 6,
+      "total": 50
+    }
+  },
+  "drift_detected": [],
+  "actions_taken": "Read-only verification. No metadata was modified."
+}

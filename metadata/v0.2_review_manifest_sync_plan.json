@@ -1,0 +1,83 @@
+{
+  "artifact": "v0.2_review_manifest_sync_plan",
+  "phase": "Phase 5E.2.5 \u2014 Governance Metadata Synchronization",
+  "generated_at": "2026-07-27T23:24:18.268454+00:00",
+  "policy": "DO NOT AUTOMATICALLY MODIFY metadata/v0.2_review_manifest.json. This is a recommendation only.",
+  "current_state": {
+    "manifest_path": "metadata/v0.2_review_manifest.json",
+    "total_records": 150,
+    "all_pending": true,
+    "review_status_distribution": {
+      "pending": 150,
+      "approved": 0,
+      "needs_revision": 0,
+      "rejected": 0
+    },
+    "source_of_truth": true,
+    "not_updated_for_decisions": true
+  },
+  "desired_state": {
+    "review_status_distribution": {
+      "pending": 100,
+      "approved": 38,
+      "needs_revision": 6,
+      "rejected": 6
+    },
+    "total_records": 150,
+    "all_reviewed_records_have_status": true
+  },
+  "migration_strategy": {
+    "type": "batch_field_update",
+    "steps": [
+      "1. Read each record in manifest and find its decision in batch files by matching record_id",
+      "2. Update review_status = decision (approved/needs_revision/rejected) for matched records",
+      "3. Set review_timestamp from decision timestamp",
+      "4. Set reviewer_id from decision reviewer_id",
+      "5. Leave unmatched records (100) as pending",
+      "6. Leave 2 batch-002 phantom-mapped records (f4_0011, m3_0009) as pending (they exist in manifest with canonical IDs)",
+      "7. Recompute manifest.counts from updated records",
+      "8. Update generated_at timestamp",
+      "9. Add manifest_sync_applied flag with reference to this sync plan"
+    ],
+    "affected_records": 50,
+    "unchanged_records": 100,
+    "cohort": "phase4b_expansion"
+  },
+  "risks": [
+    {
+      "risk": "Manifest modification breaks SHA-256 chain",
+      "severity": "high",
+      "mitigation": "Retain original manifest as immutable audit trail. Create new manifest version (v0.2_synced) instead of in-place update."
+    },
+    {
+      "risk": "Decision-manifest ID mismatch",
+      "severity": "medium",
+      "mitigation": "Batch-002 phantom IDs already reconciled via canonical ID mapping. All 50 decision IDs match manifest record IDs."
+    },
+    {
+      "risk": "Release gate premature unblocking",
+      "severity": "critical",
+      "mitigation": "Review gate should remain BLOCKED. Verify pending_count > 0 after sync."
+    }
+  ],
+  "rollback": {
+    "strategy": "Restore original metadata/v0.2_review_manifest.json from backup",
+    "backup_location": "metadata/v0.2_review_manifest.json.bak (to be created before migration)",
+    "hash_verification": "Compare against Phase 5E.1 baseline hash 02457ee9..."
+  },
+  "recommendation": {
+    "action": "DEFER",
+    "rationale": "Manifest synchronization is not required for Phase 5E.3 (Content Revision). The review_progress and review_assignments in review/operations/ already reflect actual state for operational tracking. The manifest remains the authoritative release-gate source of truth and its pending state correctly blocks release. Synchronize the manifest only when release gate verification requires accurate per-record status \u2014 i.e., before Phase 5E.5 (Release Gate Finalization).",
+    "defer_until": "Phase 5E.5 \u2014 Release Gate Finalization",
+    "alternative": "Create a synchronized copy (v0.2_review_manifest_synced.json) that tracks decisions without modifying the original."
+  },
+  "references": [
+    "metadata/v0.2_review_manifest.json",
+    "metadata/v0.2_review_manifest_reconciliation.json",
+    "review/decisions/v0.2/batch_001.jsonl",
+    "review/decisions/v0.2/batch_002.jsonl",
+    "review/operations/review_progress.json",
+    "review/operations/review_assignments.json",
+    "governance/v0.2_phase5E1_report.md"
+  ]
+}

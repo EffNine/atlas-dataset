@@ -1,0 +1,16 @@
+{
+  "record_id": "b2_07_business_knowledge_finance_0002",
+  "original_issue": "Record is license-cleared but too thin for training usefulness. The authoritative review path identifies a factual-depth deficit in the compound-interest explanation — it omits nominal vs real rate sensitivity, compounding-frequency effect, and horizon dependency.",
+  "issue_class": "content_depth",
+  "proposed_fix": "Expand compound-interest explanation with nominal vs real rate distinction, compounding-frequency effects, and horizon dependency alongside the existing formula.",
+  "updated_content": "Earns interest on principal plus accumulated interest, growing exponentially over time according to A = P(1 + r/n)^(nt). The effective growth depends on whether the nominal rate accounts for inflation (real vs nominal return), how frequently interest compounds (daily, monthly, annually — higher frequency yields greater effective annual rate), and the investment horizon — exponential growth makes horizon the dominant factor, dwarfing rate differences over decades.",
+  "revision_notes": "Expansion preserves the original factual core (compound interest = exponential growth). Adds three dimensions: (1) nominal vs real rate distinction — inflation-adjusted returns; (2) compounding-frequency effects — daily vs annual compounding impact; (3) horizon dependency — exponential growth over time. Includes the standard compound interest formula A = P(1 + r/n)^(nt) for clarity. Reviewed and approved by human operator.",
+  "resolver_id": "human_approved/hermes_assisted_draft",
+  "timestamp": "2026-07-28T00:00:00Z",
+  "status": "re_evaluation_complete",
+  "provenance_blocker": false,
+  "provenance_notes": null,
+  "second_reviewer_id": "reviewer_business_01",
+  "second_reviewer_decision": "approved",
+  "second_reviewer_reason": "Compound-interest expansion adds formula A=P(1+r/n)^(nt) for precision, real vs nominal rate distinction (inflation-adjusted returns), compounding-frequency effects (daily vs annual), and horizon dependency as the dominant factor. Original core preserved. No factual errors. Training-useful depth achieved."
+}

@@ -1,0 +1,16 @@
+{
+  "record_id": "h2_05_hardware_engineering_embedded_systems_0012",
+  "original_issue": "The original reply is factually concise, but it is too brief for training usefulness because it omits operational consequences such as why a product team would choose one runtime model over the other, what scheduler semantics implies for determinism, and real-time constraints that affect task deadlines and worst-case latency.",
+  "issue_class": "content_depth",
+  "proposed_fix": "Expand thin comparison rationale with use-case implications, scheduler semantics, and real-time constraint caveats for bare-metal vs RTOS.",
+  "updated_content": "Bare-metal: single loop, no OS scheduler; suitable when the workload is stable, latency-sensitive, and tightly bounded, because the developer owns task ordering and there is no scheduler-induced jitter. RTOS: preemptive multitasking with scheduling guarantees; better when systems must multiplex tasks with bounded worst-case latency, priority inheritance, and deadline-aware dispatch, but scheduler behavior introduces determinism trade-offs the original answer did not explain.",
+  "revision_notes": "Expansion preserves the original factual core (bare-metal vs RTOS distinction). Adds three dimensions: (1) use-case implications — when each approach is appropriate; (2) scheduler semantics — developer-owned ordering vs preemptive scheduling; (3) real-time constraints — bounded latency vs determinism trade-offs. Original revision performed by Phase 4B.5.8 automated resolver. Awaiting second human review.",
+  "resolver_id": "phase4b58_automated_resolver",
+  "timestamp": "2026-07-28T00:00:00Z",
+  "status": "re_evaluation_complete",
+  "provenance_blocker": false,
+  "provenance_notes": null,
+  "second_reviewer_id": "reviewer_system_01",
+  "second_reviewer_decision": "approved",
+  "second_reviewer_reason": "Expanded content preserves the original bare-metal-vs-RTOS core while adding three dimensions missing from the original: use-case implications (when each approach is appropriate), scheduler semantics (developer-owned ordering vs preemptive scheduling), and real-time constraints (bounded latency vs scheduler-induced jitter). No factual errors introduced. Training-useful depth achieved."
+}

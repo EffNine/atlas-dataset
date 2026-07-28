@@ -1,0 +1,85 @@
+{
+  "schema": "review/operations/provenance_blocker_status_update.json",
+  "version": "v0.2",
+  "phase": "Phase 5E.4 — Provenance Closure Update",
+  "generated": "2026-07-28",
+  "description": "Provenance blocker status update reflecting WikiChip external dependency block. Preserves all prior provenance metadata. Supersedes prior status for h3_0003 only on the external-dependency dimension.",
+
+  "verification_attempt": {
+    "target": "https://en.wikichip.org/",
+    "timestamp": "2026-07-28",
+    "method": "HTTPS GET via curl (connect timeout: 5s, max time: 10s)",
+    "http_status": "000",
+    "outcome": "unreachable",
+    "verifier": "hermes_agent (automated); confirmed by human operator",
+    "concurrent_control": {
+      "target": "https://archive.org/details/stackexchange",
+      "status": 200,
+      "outcome": "reachable"
+    },
+    "note": "WikiChip site is currently unavailable. License verification cannot proceed. No fabricated license evidence created."
+  },
+
+  "records": [
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "source_id": "s5",
+      "bloomer_type": "provenance_blocker",
+      "status": "blocked_missing_attribution_and_lineage",
+      "source_registry_status": "review",
+      "source_reachable": true,
+      "depends_on_wikichip": false,
+      "can_proceed_independently": true,
+      "next_action": "Identify specific StackExchange post URL; complete attribution text"
+    },
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "source_id": "h3",
+      "bloomer_type": "external_dependency_blocked",
+      "status": "blocked_external_dependency",
+      "source_registry_status": "review",
+      "source_reachable": false,
+      "depends_on_wikichip": true,
+      "last_verification_attempt": "2026-07-28",
+      "last_verification_result": "unreachable",
+      "can_proceed_independently": false,
+      "items_blocked": 1,
+      "items_available": 9,
+      "blocked_item": "license_verification — requires WikiChip site access",
+      "available_items": [
+        "write_attribution_text_template",
+        "add_share_alike_notice",
+        "document_modifications",
+        "record_parent_lineage_placeholder",
+        "record_acquisition_origin",
+        "record_checksum",
+        "prepare_revision_record_skeleton",
+        "independent_of_s5_0029",
+        "can_proceed_in_parallel"
+      ],
+      "next_action": "Retry WikiChip access; when available, verify CC-BY-SA-4.0 license and resolve (verify) appendix"
+    }
+  ],
+
+  "summary": {
+    "total_records": 2,
+    "still_provenance_blocked": 1,
+    "external_dependency_blocked": 1,
+    "can_proceed_independently": 1,
+    "fully_blocked": 0,
+    "release_gate": "BLOCKED",
+    "training_gate": "BLOCKED",
+    "no_fabricated_evidence": true,
+    "all_prior_metadata_preserved": true,
+    "immutable_files_unchanged": true
+  },
+
+  "retry_readiness": {
+    "prerequisites": [
+      "WikiChip site reachable",
+      "Human operator available for verification"
+    ],
+    "estimated_effort": "5 minutes (license verify + attribution finalize)",
+    "escalation_policy": "If WikiChip remains unavailable for 2 revision cycles, route to governance for classification decision per revision resolution policy"
+  }
+}

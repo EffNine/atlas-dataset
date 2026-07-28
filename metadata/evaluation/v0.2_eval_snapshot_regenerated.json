@@ -1,0 +1,34 @@
+{
+  "artifact": "atlas-evaluation-snapshot",
+  "purpose": "Read-only evaluation reference snapshot for Phase 5B evaluation execution. References existing curated records without copying or modifying them.",
+  "read_only": true,
+  "dataset_version": "v0.2",
+  "source_release": "v0.2",
+  "generated_at": "2026-07-28T01:00:00+00:00",
+  "record_count": 250,
+  "source_file": "curated/v0.2/data/v0.2_full.jsonl",
+  "checksum_algorithm": "SHA-256",
+  "checksum": "d9a1abed104599fc0db6d4c97a27ee87c2ed6b7182d18a78903fcfb82714be12",
+  "category_distribution": {
+    "01_foundation": 25,
+    "02_software_engineering": 50,
+    "03_system_engineering": 37,
+    "04_ai_machine_learning": 50,
+    "05_hardware_engineering": 20,
+    "06_science_engineering": 25,
+    "07_business_knowledge": 18,
+    "08_creative_knowledge": 13,
+    "09_personal_assistant": 12
+  },
+  "quality_distribution": {
+    "7": 138,
+    "8": 12,
+    "9": 100
+  },
+  "note": "This snapshot references curated/v0.2/data/v0.2_full.jsonl only. No records are copied or modified. The checksum verifies the source file is unchanged since snapshot creation.",
+  "regenerated_at": "2026-07-27T23:24:18.267947+00:00",
+  "regeneration_note": "Phase 5E.2.5 \u2014 Evaluation snapshot regenerated for synchronization. No records rescored.",
+  "current_checksum": "d9a1abed104599fc0db6d4c97a27ee87c2ed6b7182d18a78903fcfb82714be12",
+  "checksum_unchanged": true,
+  "phase5e25_note": "Re-derived from current on-disk curated data. No scoring or evaluation executed."
+}

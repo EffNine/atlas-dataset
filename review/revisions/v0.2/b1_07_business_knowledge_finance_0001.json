@@ -1,0 +1,16 @@
+{
+  "record_id": "b1_07_business_knowledge_finance_0001",
+  "original_issue": "The original finance concept is correct, but it is too thin for training usefulness because it lacks the operational reasoning behind the formula: how expected return, expected inflation, risk premium, and planning horizon change the practical interpretation of present value and discount rate choice.",
+  "issue_class": "content_depth",
+  "proposed_fix": "Expand time-value-of-money rationale to include investment return, rate/inflation sensitivity, and horizon dependency alongside the existing formula.",
+  "updated_content": "Money today is worth more than the same nominal amount in the future because it can be invested to earn a return; retaining liquidity also avoids forced future consumption at unfavorable prices. Present value therefore depends not only on the formula PV = FV/(1+r)^n, but also on the expected real return after inflation, the chosen discount rate, and the planning horizon over which cash flows are compared.",
+  "revision_notes": "Expansion preserves the original factual core (time value of money = investment return rationale). Adds three dimensions: (1) investment return rationale — why money today is worth more; (2) rate/inflation sensitivity — real vs nominal discount rate; (3) horizon dependency — planning horizon impact on present value. Original revision performed by Phase 4B.5.8 automated resolver. Awaiting second human review.",
+  "resolver_id": "phase4b58_automated_resolver",
+  "timestamp": "2026-07-28T00:00:00Z",
+  "status": "re_evaluation_complete",
+  "provenance_blocker": false,
+  "provenance_notes": null,
+  "second_reviewer_id": "reviewer_business_02",
+  "second_reviewer_decision": "approved",
+  "second_reviewer_reason": "Expanded time-value-of-money explanation preserves original PV formula while adding practical operational reasoning: why money today is worth more (investment return + liquidity), real vs nominal discount rate sensitivity, and planning horizon dependency. No financial inaccuracies introduced. Training-useful depth achieved."
+}

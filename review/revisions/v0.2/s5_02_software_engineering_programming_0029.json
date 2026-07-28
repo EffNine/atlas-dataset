@@ -1,0 +1,95 @@
+{
+  "record_id": "s5_02_software_engineering_programming_0029",
+  "original_issue": "StackExchange Code content is correct and concise, but the CC-BY-SA-4.0 provenance path needs explicit attribution/share-alike tracking confirmation before approval.",
+  "issue_class": "mixed",
+  "provenance_blocker": true,
+  "provenance_notes": {
+    "license_verified": {
+      "status": "confirmed",
+      "license": "CC-BY-SA-4.0",
+      "canonical_checks": {
+        "is_denied_license": false,
+        "is_share_alike": true,
+        "requires_attribution": true
+      },
+      "commercial_safe": true,
+      "classification": "ATTRIBUTION_REQUIRED",
+      "verified_by": "atlas_constants canonical utilities (Phase 5E.2)",
+      "evidence_ref": "review/operations/license_resolution.json"
+    },
+    "attribution_completed": {
+      "status": "partial",
+      "obligations_met": 2,
+      "obligations_required": 5,
+      "details": {
+        "attribution_text": {
+          "status": "needs_human",
+          "current": "Source: StackExchange Code (Stack Overflow / Unix & Linux) (https://archive.org/details/stackexchange)",
+          "required": "Post-specific attribution crediting author and specific post URL — human must identify exact StackExchange post"
+        },
+        "source_url": {
+          "status": "needs_human",
+          "current": "https://archive.org/details/stackexchange (general dump URL)",
+          "required": "Specific StackExchange post URL — human must identify"
+        },
+        "license_identifier": {
+          "status": "complete",
+          "value": "CC-BY-SA-4.0 (attribution + share-alike)"
+        },
+        "share_alike_notice": {
+          "status": "ready",
+          "template": "Distributed under the same license (CC-BY-SA-4.0).",
+          "note": "Standard CC-BY-SA-4.0 requirement — can be recorded immediately"
+        },
+        "modifications_noted": {
+          "status": "ready",
+          "template": "[DESCRIBE MODIFICATIONS or state 'Used verbatim from the original post']",
+          "note": "If no modifications known, state: 'Content was taken from the Stack Exchange data dump pipeline — modifications status unknown.'"
+        }
+      }
+    },
+    "lineage_completed": {
+      "status": "partial",
+      "fields_present": 2,
+      "fields_required": 5,
+      "details": {
+        "source_id": {
+          "status": "complete",
+          "value": "s5 (StackExchange Code)"
+        },
+        "parent_lineage": {
+          "status": "needs_human",
+          "current": null,
+          "required": "Specific StackExchange post URL or data dump file reference — human must identify"
+        },
+        "acquisition_origin": {
+          "status": "needs_human",
+          "current": null,
+          "required": "Acquisition method and date — e.g., 'Stack Exchange data dump dated 2024-01-15' or 'Scraped from stackoverflow.com on 2024-06-01'"
+        },
+        "ingestion_trace": {
+          "status": "complete",
+          "value": "Transformations: phase4b:acquisition, phase4b:license_gate, phase4b:normalization, phase4b:canonical_ko, phase4b:quality_v2, phase4b:confidence, phase4b:human_review, phase4b:approved"
+        },
+        "checksum": {
+          "status": "complete",
+          "value": "8990ac9b099ef09a950d99f3645127f0fd3bb131708cb707fd82048f10deb46b",
+          "method": "SHA-256 of full record JSON (sort_keys=True) from curated/v0.2/data/phase4b_expansion.jsonl"
+        }
+      }
+    },
+    "source_registry_status": {
+      "status": "review",
+      "recommended_action": "Update to 'accepted' after StackExchange post identification completed"
+    }
+  },
+  "proposed_fix": "Complete CC-BY-SA-4.0 attribution documentation: identify specific StackExchange post, write attribution text, add share-alike notice, record lineage metadata.",
+  "updated_content": null,
+  "revision_notes": "Phase 5E.4 provenance closure completed for s5_0029. License confirmed commercially safe (CC-BY-SA-4.0). Content checksum recorded. Two of five CC-BY-SA obligations met. Two of five lineage fields present. The remaining items (specific post URL, author, title, acquisition origin) require human identification — cannot be auto-resolved from available repository evidence. No source URLs, author names, or post titles have been fabricated.",
+  "resolver_id": "phase5E4_provenance_closure",
+  "timestamp": "2026-07-28",
+  "status": "provenance_pending",
+  "second_reviewer_id": null,
+  "second_reviewer_decision": null,
+  "second_reviewer_reason": null
+}

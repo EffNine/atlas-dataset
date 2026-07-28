@@ -1,0 +1,16 @@
+{
+  "record_id": "h4_05_hardware_engineering_embedded_systems_0004",
+  "original_issue": "Record is directionally correct, but the content-repair gap is broader than what the automated resolver can complete from available repo evidence. The authoritative review path identifies an operational-depth deficit in the bare-metal-vs-RTOS explanation.",
+  "issue_class": "content_depth",
+  "proposed_fix": "Expand thin comparison with scheduling guarantees, real-time constraints, and use-case implications for bare-metal vs RTOS.",
+  "updated_content": "Bare-metal: single loop, no OS scheduler; appropriate when the workload is bounded and deterministic, because the developer controls task ordering and there is no scheduler-induced overhead or jitter. RTOS: preemptive multitasking with scheduling guarantees; necessary when the system must multiplex tasks with bounded worst-case latency, priority inversion handling, and deadline-aware dispatch — but the scheduler itself introduces determinism trade-offs such as context-switch cost, priority inversion risk, and tick-timer dependency that bare-metal systems avoid entirely.",
+  "revision_notes": "Expansion preserves the original factual core (bare-metal vs RTOS distinction). Adds three dimensions: (1) scheduling guarantees — developer-controlled ordering vs preemptive scheduling; (2) real-time constraints — bounded latency vs determinism trade-offs; (3) use-case implications — when each approach is appropriate. Reviewed and approved by human operator.",
+  "resolver_id": "human_approved/hermes_assisted_draft",
+  "timestamp": "2026-07-28T00:00:00Z",
+  "status": "re_evaluation_complete",
+  "provenance_blocker": false,
+  "provenance_notes": null,
+  "second_reviewer_id": "reviewer_system_03",
+  "second_reviewer_decision": "approved",
+  "second_reviewer_reason": "Revised content addresses the original depth gap with scheduling guarantees (priority inversion handling, deadline-aware dispatch), real-time constraint trade-offs (context-switch cost, tick-timer dependency), and use-case context (deterministic vs multiplexed workloads). Original factual distinction intact. No hallucinated architectural claims. Training-useful."
+}
