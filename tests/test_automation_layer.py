@@ -1526,3 +1526,421 @@ def test_quality_agent_skips_when_no_dataset():
     finally:
         import shutil
         shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ===================================================================
+# Revision Agent (v1.3 Production)
+# ===================================================================
+
+
+def _revision_env() -> tuple[Path, Path]:
+    """Create temp atlas root with scripts copied for revision agent."""
+    tmp = Path(tempfile.mkdtemp())
+    for d in ("metadata", "curated/v0.1", "tmp", "scripts"):
+        (tmp / d).mkdir(parents=True, exist_ok=True)
+    src = Path(__file__).resolve().parent.parent / "scripts"
+    for item in src.iterdir():
+        if item.is_file() and item.suffix == ".py" and not item.name.startswith("_"):
+            (tmp / "scripts" / item.name).write_text(
+                item.read_text(encoding="utf-8"), encoding="utf-8"
+            )
+    auto_dst = tmp / "scripts" / "automation"
+    auto_dst.mkdir(exist_ok=True)
+    for item in (src / "automation").iterdir():
+        if item.is_file() and item.suffix == ".py":
+            (auto_dst / item.name).write_text(
+                item.read_text(encoding="utf-8"), encoding="utf-8"
+            )
+    return tmp, tmp / "curated" / "v0.1" / "pilot_candidates.jsonl"
+
+
+def _write_revision_jsonl(path: Path, records: list[dict]) -> None:
+    path.write_text(
+        "\n".join(json.dumps(r) for r in records) + "\n", encoding="utf-8"
+    )
+
+
+# A complete, well-written record that should pass without revisions
+_REVISION_HIGH_QUALITY = {
+    "id": "01_foundation_reasoning_0001", "category": "01_foundation",
+    "subcategory": "reasoning", "type": "instruction",
+    "source": {"name": "t", "license": "MIT"},
+    "messages": [
+        {"role": "user", "content": "Explain encapsulation in OOP."},
+        {"role": "assistant", "content": (
+            "Encapsulation is a fundamental OOP principle that bundles data and methods "
+            "into a single class unit. A BankAccount class uses private _balance and "
+            "public deposit()/withdraw() methods. Benefits include information hiding, "
+            "maintainability, and security.\n\n"
+            "```python\nclass BankAccount:\n    def __init__(self):\n        self._balance = 0\n    def deposit(self, amount):\n        if amount > 0:\n            self._balance += amount\n    def get_balance(self):\n        return self._balance\n```"
+        )},
+    ],
+    "language": "en", "difficulty": 2, "tags": ["oop"],
+    "quality_score": 9, "verified": True, "notes": "high quality",
+}
+
+# A low-quality record that should trigger multiple revision proposals
+_REVISION_LOW_QUALITY = {
+    "id": "99_generic_trash_9999", "category": "01_foundation",
+    "subcategory": "inst", "type": "instruction",
+    "source": {"name": "t", "license": "MIT"},
+    "messages": [
+        {"role": "user", "content": "What is AI?"},
+        {"role": "assistant", "content": "Sure, here is a definition of AI."},
+    ],
+    "language": "en", "difficulty": 0, "tags": [],
+    "quality_score": 3, "verified": False, "notes": "low quality",
+}
+
+# A record that's technically valid but very short — should trigger completeness proposals
+_REVISION_SHORT = {
+    "id": "short_record_001", "category": "01_foundation",
+    "subcategory": "reasoning", "type": "instruction",
+    "source": {"name": "t", "license": "MIT"},
+    "messages": [
+        {"role": "user", "content": "What is a stack?"},
+        {"role": "assistant", "content": "A stack is a LIFO data structure."},
+    ],
+    "language": "en", "difficulty": 1, "tags": [],
+    "quality_score": 5, "verified": False, "notes": "short",
+}
+
+
+# ── Basic revision: high quality ──────────────────────────────────────────
+
+
+def test_revision_agent_high_quality_passes():
+    """A high-quality record generates no revision proposals (generate_all=False)."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_HIGH_QUALITY])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(
+            tmp, config={"generate_all": False})
+        result = agent.execute()
+        assert result.passed
+        assert result.data["aggregate"]["proposal_count"] == 0
+        assert result.data["aggregate"]["passed_count"] == 1
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_revision_agent_high_quality_has_pass_status():
+    """High-quality records (generate_all=False) have status PASS."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_HIGH_QUALITY])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(
+            tmp, config={"generate_all": False})
+        result = agent.execute()
+        rec = result.data["records"][0]
+        assert rec["status"] == "PASS"
+        assert rec["requires_human_review"] is False
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Basic revision: low quality ───────────────────────────────────────────
+
+
+def test_revision_agent_low_quality_generates_proposals():
+    """A low-quality record generates at least one revision proposal."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_LOW_QUALITY])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute()
+        assert result.data["aggregate"]["proposal_count"] == 1
+        rec = result.data["records"][0]
+        assert rec["status"] == "PROPOSAL_CREATED"
+        assert len(rec["revision_proposals"]) >= 1
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_revision_agent_low_quality_has_issues():
+    """Low-quality records have issues_detected populated."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_LOW_QUALITY])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute()
+        rec = result.data["records"][0]
+        assert len(rec["issues_detected"]) >= 1
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Revision categories ───────────────────────────────────────────────────
+
+
+def test_revision_agent_completeness_proposal():
+    """Short records trigger completeness-area proposals."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_SHORT])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute()
+        proposals = result.data["records"][0]["revision_proposals"]
+        completeness = [p for p in proposals if p["area"] == "completeness"]
+        assert len(completeness) >= 1, (
+            f"Expected completeness proposal, got areas: {[p['area'] for p in proposals]}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_revision_agent_technical_depth_proposal():
+    """Records without technical terms trigger technical_depth proposals."""
+    tmp, dspath = _revision_env()
+    # A record with very short non-technical answer
+    rec = dict(_REVISION_SHORT, id="no_tech",
+               messages=[{"role":"user","content":"hi"},{"role":"assistant","content":"ok."}])
+    _write_revision_jsonl(dspath, [rec])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute()
+        proposals = result.data["records"][0]["revision_proposals"]
+        tech = [p for p in proposals if p["area"] == "technical_depth"]
+        assert len(tech) >= 1
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_revision_agent_clarity_proposal():
+    """Boilerplate openers trigger clarity-area proposals."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_LOW_QUALITY])  # "Sure, here is..."
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute()
+        proposals = result.data["records"][0]["revision_proposals"]
+        clarity = [p for p in proposals if p["area"] == "clarity"]
+        # The boilerplate_opener flag should produce a clarity proposal
+        assert len(clarity) >= 1, (
+            f"Expected clarity proposal, got: {[p['area'] for p in proposals]}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Multiple issues → multiple proposals ──────────────────────────────────
+
+
+def test_revision_agent_multiple_issues_multiple_proposals():
+    """A record with multiple issues generates proposals across categories."""
+    tmp, dspath = _revision_env()
+    # Use a record that will fail on multiple dimensions
+    rec = {
+        "id": "multi_issue", "category": "01_foundation",
+        "subcategory": "inst", "type": "instruction",
+        "source": {"name": "t", "license": "MIT"},
+        "messages": [
+            {"role": "user", "content": "hi"},
+            {"role": "assistant", "content": "SURE HERE IS AN ANSWER IN ALLCAPS"},
+        ],
+        "language": "en", "difficulty": 0, "tags": [],
+        "quality_score": 1, "verified": False, "notes": "bad",
+    }
+    _write_revision_jsonl(dspath, [rec])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute()
+        proposals = result.data["records"][0]["revision_proposals"]
+        areas = {p["area"] for p in proposals}
+        assert len(proposals) >= 2, f"Expected >=2 proposals, got {len(proposals)}"
+        # Should have proposals in at least 2 different categories
+        assert len(areas) >= 2, f"Expected >=2 areas, got {areas}"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Proposal schema ───────────────────────────────────────────────────────
+
+
+def test_revision_agent_proposal_schema():
+    """Each revision proposal has area, problem, and suggestion."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_LOW_QUALITY])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute()
+        rec = result.data["records"][0]
+        for p in rec["revision_proposals"]:
+            assert "area" in p, f"Missing 'area' in proposal: {p}"
+            assert "problem" in p, f"Missing 'problem' in proposal: {p}"
+            assert "suggestion" in p, f"Missing 'suggestion' in proposal: {p}"
+            assert p["area"] in (
+                "completeness", "technical_depth", "clarity", "usefulness"
+            ), f"Invalid area: {p['area']}"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_revision_agent_output_schema():
+    """RecordRevision output has the expected top-level keys."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_LOW_QUALITY])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute()
+        rec = result.data["records"][0]
+        for key in ("record_id", "status", "quality_score", "issues_detected",
+                     "revision_proposals", "confidence", "requires_human_review"):
+            assert key in rec, f"Missing key '{key}' in record output: {list(rec.keys())}"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Missing quality data handling ─────────────────────────────────────────
+
+
+def test_revision_agent_empty_dataset():
+    """Agent handles empty datasets gracefully."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute()
+        assert result.status.value == "skipped"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_revision_agent_no_dataset():
+    """Agent returns SKIPPED when no dataset exists."""
+    tmp = Path(tempfile.mkdtemp())
+    (tmp / "metadata").mkdir()
+    (tmp / "curated" / "v0.1").mkdir(parents=True)
+    (tmp / "scripts").mkdir()
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute()
+        assert result.status.value == "skipped"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Persistence output ────────────────────────────────────────────────────
+
+
+def test_revision_agent_writes_proposals_to_disk():
+    """Revision proposals are written to metadata/pipeline_revisions/."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_LOW_QUALITY])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute(context={"pipeline_id": "test-revision-persist"})
+        proposals_path = Path(result.data["proposals_path"])
+        assert proposals_path.exists(), f"File not found: {proposals_path}"
+        data = json.loads(proposals_path.read_text(encoding="utf-8"))
+        assert data["pipeline_id"] == "test-revision-persist"
+        assert len(data["records"]) == 1
+        assert data["records"][0]["status"] == "PROPOSAL_CREATED"
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_revision_agent_proposals_in_metadata_dir():
+    """Proposals file is written under metadata/, never curated/."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_LOW_QUALITY])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute(context={"pipeline_id": "test-revision-path"})
+        proposals_path = Path(result.data["proposals_path"])
+        assert proposals_path.exists(), f"File not found: {proposals_path}"
+        # Resolve both paths to handle /private/var -> /var symlink
+        tmp_resolved = tmp.resolve()
+        rel = proposals_path.resolve().relative_to(tmp_resolved)
+        assert rel.parts[0] == "metadata", (
+            f"Proposals path outside metadata/: {rel}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Pipeline integration ──────────────────────────────────────────────────
+
+
+def test_orchestrator_passes_through_revision():
+    """Orchestrator advances through revision with high-quality data."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_HIGH_QUALITY])
+    try:
+        orch = __import__("automation.pipeline_orchestrator", fromlist=["PipelineOrchestrator"]).PipelineOrchestrator(
+            "test-rev-pass", tmp
+        )
+        result = orch.run_to_approval()
+        assert "revision" in result.agent_results
+        rev_result = result.agent_results["revision"]
+        assert rev_result.passed, f"Revision agent failed: {rev_result.summary}"
+        # Should reach WAITING_HUMAN_APPROVAL (revision is advisory, doesn't block)
+        assert result.current_state == "WAITING_HUMAN_APPROVAL", (
+            f"Pipeline should reach approval, got {result.current_state}: {result.summary}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_orchestrator_advances_with_low_quality_revision():
+    """Orchestrator advances even when revision proposes changes."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_LOW_QUALITY])
+    try:
+        # Lower the quality threshold so the pipeline reaches the revision stage
+        orch = __import__("automation.pipeline_orchestrator", fromlist=["PipelineOrchestrator"]).PipelineOrchestrator(
+            "test-rev-low", tmp,
+            config={"agents": {"quality": {"min_score": 5}}}
+        )
+        result = orch.run_to_approval()
+        assert "revision" in result.agent_results, (
+            f"Revision agent not in results: {list(result.agent_results.keys())} "
+            f"(state={result.current_state})"
+        )
+        rev_result = result.agent_results["revision"]
+        # Revision passes even with proposals (it's advisory)
+        assert rev_result.passed, f"Revision should pass even with proposals: {rev_result.summary}"
+        assert rev_result.data["aggregate"]["proposal_count"] >= 1
+        # Pipeline still advances through to approval
+        assert result.current_state == "WAITING_HUMAN_APPROVAL", (
+            f"Pipeline should reach approval despite proposals, got {result.current_state}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── Immutable directory protection ────────────────────────────────────────
+
+
+def test_revision_agent_immutable_dirs_protected():
+    """Revision agent never writes to curated/, review_queue/, training_views/, raw/."""
+    tmp, dspath = _revision_env()
+    _write_revision_jsonl(dspath, [_REVISION_LOW_QUALITY])
+    try:
+        agent = __import__("automation.revision_agent", fromlist=["RevisionAgent"]).RevisionAgent(tmp)
+        result = agent.execute()
+        proposals_path = Path(result.data["proposals_path"])
+        tmp_resolved = tmp.resolve()
+        rel = str(proposals_path.resolve().relative_to(tmp_resolved))
+        assert rel.startswith("metadata/"), (
+            f"Output path outside metadata/: {rel}"
+        )
+    finally:
+        import shutil
+        shutil.rmtree(tmp, ignore_errors=True)
