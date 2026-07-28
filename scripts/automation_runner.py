@@ -65,6 +65,7 @@ from automation.state_machine import _STATE_INDEX, PipelineState, StateMachine
 from automation.approval_gate import ApprovalGate, ApproverRole
 from automation.base_agent import AgentStatus
 from automation.pipeline_orchestrator import PipelineOrchestrator, PipelineResult, PipelineStatus
+from automation.failure_recovery import retry_failed_agent, resume_pipeline, RetryManager
 from atlas_paths import discover_root
 
 
@@ -677,6 +678,78 @@ def _error_result(message: str) -> dict[str, Any]:
     }
 
 
+def cmd_retry(args: argparse.Namespace) -> dict[str, Any]:
+    """Retry a failed agent in a pipeline.
+
+    Only re-runs the specific agent that failed.
+    On success, continues the rest of the pipeline.
+    On failure, stays FAILED with an updated retry record.
+    """
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {}
+    if args.config:
+        try:
+            config = json.loads(args.config)
+        except json.JSONDecodeError as e:
+            return _error_result(f"Invalid --config JSON: {e}")
+
+    result = retry_failed_agent(
+        pipeline_id=args.pipeline_id,
+        root=root,
+        config=config,
+    )
+
+    return {
+        "command": "retry",
+        "pipeline_id": args.pipeline_id,
+        **result,
+    }
+
+
+def cmd_resume(args: argparse.Namespace) -> dict[str, Any]:
+    """Resume a failed pipeline by clearing failure and continuing.
+
+    Transitions back to the pre-failure state and runs the full pipeline.
+    """
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {}
+    if args.config:
+        try:
+            config = json.loads(args.config)
+        except json.JSONDecodeError as e:
+            return _error_result(f"Invalid --config JSON: {e}")
+
+    result = resume_pipeline(
+        pipeline_id=args.pipeline_id,
+        root=root,
+        config=config,
+    )
+
+    return {
+        "command": "resume",
+        "pipeline_id": args.pipeline_id,
+        **result,
+    }
+
+
+def cmd_retry_history(args: argparse.Namespace) -> dict[str, Any]:
+    """Show retry history for a pipeline."""
+    root = Path(args.root) if args.root else _get_root()
+    mgr = RetryManager(args.pipeline_id, root)
+    history = mgr.load_history()
+
+    return {
+        "command": "retry-history",
+        "pipeline_id": args.pipeline_id,
+        "retry_count": len(history),
+        "retry_history": history,
+        "message": (
+            f"Pipeline '{args.pipeline_id}' has {len(history)} retry "
+            f"record(s)."
+        ),
+    }
+
+
 # ═══════════════════════════════════════════════════════════════════════
 # CLI argument parser
 # ═══════════════════════════════════════════════════════════════════════
@@ -714,6 +787,15 @@ def build_parser() -> argparse.ArgumentParser:
 
               # Rescind a previous approval
               %(prog)s rescind --pipeline-id release-v0.3
+
+              # Retry a failed agent
+              %(prog)s retry --pipeline-id release-v0.3
+
+              # Resume a failed pipeline
+              %(prog)s resume --pipeline-id release-v0.3
+
+              # Show retry history
+              %(prog)s retry-history --pipeline-id release-v0.3
         """),
     )
 
@@ -811,6 +893,37 @@ def build_parser() -> argparse.ArgumentParser:
     )
     rescind_parser.add_argument("--pipeline-id", required=True)
     rescind_parser.set_defaults(func=cmd_rescind)
+
+    # ── retry ───────────────────────────────────────────────────────
+    retry_parser = subparsers.add_parser(
+        "retry",
+        help="Retry a failed agent in a pipeline.",
+    )
+    retry_parser.add_argument("--pipeline-id", required=True,
+                              help="Pipeline identifier to retry.")
+    retry_parser.add_argument("--config",
+                              help="JSON config string for the pipeline.")
+    retry_parser.set_defaults(func=cmd_retry)
+
+    # ── resume ──────────────────────────────────────────────────────
+    resume_parser = subparsers.add_parser(
+        "resume",
+        help="Resume a failed pipeline by clearing failure and continuing.",
+    )
+    resume_parser.add_argument("--pipeline-id", required=True,
+                               help="Pipeline identifier to resume.")
+    resume_parser.add_argument("--config",
+                               help="JSON config string for the pipeline.")
+    resume_parser.set_defaults(func=cmd_resume)
+
+    # ── retry-history ───────────────────────────────────────────────
+    rh_parser = subparsers.add_parser(
+        "retry-history",
+        help="Show retry history for a pipeline.",
+    )
+    rh_parser.add_argument("--pipeline-id", required=True,
+                           help="Pipeline identifier to query.")
+    rh_parser.set_defaults(func=cmd_retry_history)
 
     return parser
 

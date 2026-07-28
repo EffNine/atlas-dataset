@@ -86,6 +86,10 @@ VALID_TRANSITIONS: frozenset[tuple[PipelineState, PipelineState]] = frozenset({
     (PipelineState.READY_FOR_RELEASE, PipelineState.RELEASED),
     (PipelineState.READY_FOR_RELEASE, PipelineState.FAILED),
     (PipelineState.FAILED, PipelineState.INGESTED),
+    (PipelineState.FAILED, PipelineState.QUALITY_CHECK),
+    (PipelineState.FAILED, PipelineState.PROVENANCE_CHECK),
+    (PipelineState.FAILED, PipelineState.CONTENT_REVISION),
+    (PipelineState.FAILED, PipelineState.VALIDATION),
 })
 
 

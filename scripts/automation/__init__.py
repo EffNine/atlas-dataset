@@ -60,6 +60,7 @@ from .quality_agent import QualityAgent
 from .revision_agent import RevisionAgent
 from .validation_agent import ValidationAgent
 from .release_manager import ReleaseManager
+from .failure_recovery import RetryManager, retry_failed_agent, resume_pipeline
 
 __all__ = [
     "PipelineState",
@@ -82,4 +83,7 @@ __all__ = [
     "RevisionAgent",
     "ValidationAgent",
     "ReleaseManager",
+    "RetryManager",
+    "retry_failed_agent",
+    "resume_pipeline",
 ]

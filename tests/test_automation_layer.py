@@ -129,7 +129,7 @@ def test_transition_from_states_are_mutually_exclusive():
     """Each non-terminal state now has FAILED as an additional valid target.
     Forward transitions remain mutually exclusive.
     WAITING_HUMAN_APPROVAL has 3 targets (READY_FOR_RELEASE, RELEASE_REJECTED, FAILED).
-    FAILED has 1 target (INGESTED)."""
+    FAILED has 5 targets (INGESTED, QUALITY_CHECK, PROVENANCE_CHECK, CONTENT_REVISION, VALIDATION)."""
     for from_state in STATE_ORDER:
         if from_state in (PipelineState.RELEASED, PipelineState.RELEASE_REJECTED):
             continue  # terminal — no targets
@@ -140,10 +140,14 @@ def test_transition_from_states_are_mutually_exclusive():
             )
             assert PipelineState.FAILED in targets
         elif from_state == PipelineState.FAILED:
-            assert len(targets) == 1, (
-                f"FAILED should have exactly 1 valid target, got {targets}"
+            assert len(targets) == 5, (
+                f"FAILED should have exactly 5 valid targets, got {targets}"
             )
-            assert targets[0] == PipelineState.INGESTED
+            assert PipelineState.INGESTED in targets
+            assert PipelineState.QUALITY_CHECK in targets
+            assert PipelineState.PROVENANCE_CHECK in targets
+            assert PipelineState.CONTENT_REVISION in targets
+            assert PipelineState.VALIDATION in targets
         else:
             # Each non-terminal, non-WAITING, non-FAILED state has 2 targets:
             # its natural forward progression + FAILED
@@ -892,10 +896,10 @@ def test_state_order_is_complete():
 
 
 def test_valid_transitions_counts():
-    """There are 16 valid transitions: 8 forward, 7 state→FAILED, 1 FAILED→INGESTED."""
+    """There are 20 valid transitions: 8 forward, 7 state→FAILED, 5 FAILED→X."""
     forward = 8  # original forward-only transitions
     to_failed = 7  # each non-terminal, non-FAILED state → FAILED
-    from_failed = 1  # FAILED → INGESTED
+    from_failed = 5  # FAILED → INGESTED, QUALITY_CHECK, PROVENANCE_CHECK, CONTENT_REVISION, VALIDATION
     expected = forward + to_failed + from_failed
     assert len(VALID_TRANSITIONS) == expected, (
         f"Expected {expected} transitions ({forward} forward + {to_failed} to FAILED + "
