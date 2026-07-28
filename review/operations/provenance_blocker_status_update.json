@@ -4,7 +4,6 @@
   "phase": "Phase 5E.4 — Provenance Closure Update",
   "generated": "2026-07-28",
   "description": "Provenance blocker status update reflecting WikiChip external dependency block. Preserves all prior provenance metadata. Supersedes prior status for h3_0003 only on the external-dependency dimension.",
-
   "verification_attempt": {
     "target": "https://en.wikichip.org/",
     "timestamp": "2026-07-28",
@@ -19,18 +18,29 @@
     },
     "note": "WikiChip site is currently unavailable. License verification cannot proceed. No fabricated license evidence created."
   },
-
   "records": [
     {
       "record_id": "s5_02_software_engineering_programming_0029",
       "source_id": "s5",
-      "bloomer_type": "provenance_blocker",
-      "status": "blocked_missing_attribution_and_lineage",
-      "source_registry_status": "review",
+      "bloomer_type": "provenance_blocker_resolved",
+      "status": "resolved",
+      "source_registry_status": "accepted",
       "source_reachable": true,
       "depends_on_wikichip": false,
       "can_proceed_independently": true,
-      "next_action": "Identify specific StackExchange post URL; complete attribution text"
+      "next_action": "Content depth expansion — no longer provenance-blocked",
+      "resolved_data": {
+        "answer_url": "https://stackoverflow.com/a/5970545",
+        "answer_author": "Heisenbug",
+        "question_url": "https://stackoverflow.com/questions/5970383/difference-between-tcp-and-udp",
+        "license": "CC-BY-SA-3.0",
+        "attribution_text": "This content is derived from the answer by Heisenbug to \"Difference between TCP and UDP?\" on Stack Exchange (https://stackoverflow.com/questions/5970383/difference-between-tcp-and-udp), licensed under CC-BY-SA-3.0.",
+        "share_alike_notice": "Distributed under the same license (CC-BY-SA-3.0).",
+        "modifications": "Adapted from the original answer — content was condensed for training use.",
+        "checksum": "680616b3e4a35efa1794dcd04b3d1bbc14f88a87e59486a1dcb293079f22d140",
+        "resolved_by": "provenance_resolver (automated + human metadata)",
+        "resolved_date": "2026-07-28"
+      }
     },
     {
       "record_id": "h3_05_hardware_engineering_firmware_0003",
@@ -60,20 +70,19 @@
       "next_action": "Retry WikiChip access; when available, verify CC-BY-SA-4.0 license and resolve (verify) appendix"
     }
   ],
-
   "summary": {
     "total_records": 2,
-    "still_provenance_blocked": 1,
+    "still_provenance_blocked": 0,
     "external_dependency_blocked": 1,
-    "can_proceed_independently": 1,
+    "can_proceed_independently": 0,
     "fully_blocked": 0,
     "release_gate": "BLOCKED",
     "training_gate": "BLOCKED",
     "no_fabricated_evidence": true,
     "all_prior_metadata_preserved": true,
-    "immutable_files_unchanged": true
+    "immutable_files_unchanged": true,
+    "resolved": 1
   },
-
   "retry_readiness": {
     "prerequisites": [
       "WikiChip site reachable",

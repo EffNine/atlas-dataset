@@ -1,0 +1,18 @@
+{
+  "version": "0.1.0",
+  "phase": "phase-5E4-provenance-resolution",
+  "generated": "2026-07-28",
+  "description": "Human-resolved provenance metadata for Phase 5E.4 StackExchange records. Each entry provides the specific post details (question URL, answer URL, author) that automated heuristics cannot determine. Populated by human reviewers after web-search verification. Records without an entry still require human investigation.",
+  "resolutions": {
+    "s5_02_software_engineering_programming_0029": {
+      "question_url": "https://stackoverflow.com/questions/5970383/difference-between-tcp-and-udp",
+      "answer_url": "https://stackoverflow.com/a/5970545",
+      "answer_author": "Heisenbug",
+      "license": "CC-BY-SA-3.0",
+      "title": "Difference between TCP and UDP?",
+      "resolved_by": "human",
+      "resolved_date": "2026-07-28",
+      "notes": "Identified via Stack Exchange data dump search. Answer by Heisenbug on Stack Overflow matches canonical answer content. License is CC-BY-SA-3.0 (predates 4.0 migration on Stack Exchange)."
+    }
+  }
+}

@@ -4,25 +4,27 @@
   "phase": "Phase 5E.2 — Provenance Resolution: Step 5",
   "generated": "2026-07-28T22:00:00+00:00",
   "description": "Canonical machine-readable provenance resolution status. Records whether each provenance-blocked record can proceed to content revision or requires human investigation.",
-
-  "resolved_automatically": [],
-  "requires_human_investigation": [
+  "resolved_automatically": [
     {
       "record_id": "s5_02_software_engineering_programming_0029",
       "source_id": "s5",
-      "license": "CC-BY-SA-4.0",
-      "blocker_type": "missing_attribution_and_lineage",
-      "human_actions_required": [
-        "Add attribution_text to source_attribution block — credit StackExchange author/post",
-        "Add upstream source URL (specific StackExchange post)",
-        "Add share-alike tracking notice",
-        "Document content modifications if adapted",
-        "Add parent lineage trace (specific post ID or dump reference)",
-        "Record acquisition origin and ingestion trace"
-      ],
-      "can_proceed_to_content_revision": false,
-      "precondition": "Attribution text and source URL must be recorded before content revision can begin."
-    },
+      "license": "CC-BY-SA-3.0",
+      "resolved_by": "provenance_resolver (automated)",
+      "resolved_date": "2026-07-28",
+      "modifications_classification": "condensed",
+      "attribution_text": "This content is derived from the answer by Heisenbug to \"Difference between TCP and UDP?\" on Stack Exchange (https://stackoverflow.com/questions/5970383/difference-between-tcp-and-udp), licensed under CC-BY-SA-3.0.",
+      "share_alike_notice": "Distributed under the same license (CC-BY-SA-3.0).",
+      "source_url": "https://stackoverflow.com/questions/5970383/difference-between-tcp-and-udp",
+      "answer_url": "https://stackoverflow.com/a/5970545",
+      "lineage_parent_url": "https://stackoverflow.com/questions/5970383/difference-between-tcp-and-udp",
+      "acquisition_origin": "Acquisition method: Stack Exchange data dump pipeline (Phase 4B). Specific post identified via human review on 2026-07-28.",
+      "checksum": "680616b3e4a35efa1794dcd04b3d1bbc14f88a87e59486a1dcb293079f22d140",
+      "human_actions_required": [],
+      "can_proceed_to_content_revision": true,
+      "precondition": "All provenance metadata resolved. Ready for content revision (depth expansion)."
+    }
+  ],
+  "requires_human_investigation": [
     {
       "record_id": "h3_05_hardware_engineering_firmware_0003",
       "source_id": "h3",
@@ -41,15 +43,7 @@
       "precondition": "License verification must be completed (resolve '(verify)' appendix). Attribution text and source URL must be recorded before content revision."
     }
   ],
-
   "blocked": [
-    {
-      "record_id": "s5_02_software_engineering_programming_0029",
-      "blocked_reason": "attribution_incomplete",
-      "blocked_detail": "CC-BY-SA-4.0 attribution text, source URL, share-alike tracking, and lineage all missing.",
-      "blocked_by": "governance_policy",
-      "unblocks_when": "attribution_text + source_url + share_alike_notice recorded in record lineage"
-    },
     {
       "record_id": "h3_05_hardware_engineering_firmware_0003",
       "blocked_reason": "attribution_incomplete_and_license_unverified",
@@ -58,14 +52,13 @@
       "unblocks_when": "license verified + attribution_text + source_url + share_alike_notice recorded in record lineage"
     }
   ],
-
   "summary": {
-    "resolved_count": 0,
-    "investigation_count": 2,
-    "blocked_count": 2,
+    "resolved_count": 1,
+    "investigation_count": 1,
+    "blocked_count": 1,
     "total_audited": 2,
     "provenance_resolution_prerequisites": {
-      "s5_0029": "attribution documentation (text + URL + share-alike)",
+      "s5_0029": "resolved — CC-BY-SA-3.0 attribution documented",
       "h3_0003": "license verification + attribution documentation (text + URL + share-alike)"
     },
     "governance_status": {
@@ -74,7 +67,6 @@
       "content_revision": "BLOCKED until provenance resolved"
     }
   },
-
   "references": [
     "review/operations/provenance_inventory.json",
     "review/operations/license_resolution.json",
