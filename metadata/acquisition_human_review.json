@@ -1,0 +1,298 @@
+{
+  "review_pack_version": "1.0.0",
+  "generated_at": "2026-07-29T00:00:00Z",
+  "generated_from": {
+    "source_registry": "metadata/source_registry.json",
+    "acquisition_manifest": "metadata/acquisition_manifest_v0.1.json"
+  },
+  "summary": {
+    "total_items": 23,
+    "by_decision_type": {
+      "license_approval": 8,
+      "source_mapping": 5,
+      "registry_missing_entry": 4,
+      "policy_rejection": 3,
+      "synthetic_data_approval": 1,
+      "access_gating": 2
+    },
+    "by_possible_action": {
+      "APPROVE": 11,
+      "DEFER": 8,
+      "REJECT": 4
+    }
+  },
+  "decision_groups": {
+    "license_approval": [
+      {
+        "packet_id": "B02-s2",
+        "source_name": "bigcode/the-stack-v2",
+        "current_status": "review",
+        "risk": "RAIL-M use restrictions; 3TB scale; requires strict per-file license filtering; use-clause compliance required.",
+        "recommended_decision": "Approve a small filtered subset comprising only permissively-licensed files. Document RAIL-M behavioral obligations in the ingestion runbook.",
+        "possible_action": "APPROVE",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B02-s3",
+        "source_name": "bigcode/starcoderdata",
+        "current_status": "review",
+        "risk": "RAIL-M use restrictions; 6.4TB scale; same subsetting and documentation obligations as the-stack-v2.",
+        "recommended_decision": "Approve a small filtered subset with per-file license whitelist. Reject bulk dump.",
+        "possible_action": "APPROVE",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B02-s5",
+        "source_name": "StackExchange Code (Stack Overflow / Unix & Linux)",
+        "current_status": "review",
+        "risk": "CC-BY-SA-4.0 attribution and share-alike obligations; PII exposure from user posts; requires score filtering and XML parsing hygiene.",
+        "recommended_decision": "Approve under CC-BY-SA-4.0 with per-record attribution, score>=5 filter, and PII stripping.",
+        "possible_action": "APPROVE",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B02-s7",
+        "source_name": "WizardLMTeam/WizardCoder",
+        "current_status": "review",
+        "risk": "License unverifiable because canonical repository returned 404 at discovery time. Provenance block.",
+        "recommended_decision": "Defer until a verified canonical source and confirmed permissive license are provided.",
+        "possible_action": "DEFER",
+        "blocking_reason": "License unverifiable because canonical repository returned 404 at discovery time. Provenance block.",
+        "approval_prerequisites": [
+          "Provide verified canonical source location",
+          "Confirm permissive license"
+        ]
+      },
+      {
+        "packet_id": "B03-y5",
+        "source_name": "StackExchange Systems (ServerFault, Unix.SE, Super User, Network Engineering)",
+        "current_status": "review",
+        "risk": "CC-BY-SA-4.0 attribution/share-alike; community Q&A quality variance; PII handling required.",
+        "recommended_decision": "Approve with attribution per record, share-alike tracking, score>=5 filter, and PII strip.",
+        "possible_action": "APPROVE",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B04-m4",
+        "source_name": "EleutherAI/the_pile",
+        "current_status": "review",
+        "risk": "Mixed per-subset licenses; restricted subsets could leak into training data if subsetting is imperfect.",
+        "recommended_decision": "Approve only permissive components (e.g., arXiv, PubMed, FreeLaw) with per-record license tagging and an explicit exclusion list for restricted subsets.",
+        "possible_action": "APPROVE",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B04-m5",
+        "source_name": "lmsys/lmsys-chat-1m",
+        "current_status": "review",
+        "risk": "Custom / research-only license; commercial-safe status unresolved; potential ToS violation if used beyond research.",
+        "recommended_decision": "Reject for commercial-safe ingestion unless explicit legal clearance is obtained.",
+        "possible_action": "REJECT",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B06-h3",
+        "source_name": "WikiChip / SemiWiki-style semiconductor wikis",
+        "current_status": "review",
+        "risk": "License marked 'verify'; CC-BY-SA-4.0 terms may differ from assumed baseline.",
+        "recommended_decision": "Defer until license is re-verified on access and CC-BY-SA-4.0 terms are confirmed.",
+        "possible_action": "DEFER",
+        "blocking_reason": "License marked 'verify'; CC-BY-SA-4.0 terms may differ from assumed baseline.",
+        "approval_prerequisites": [
+          "Re-verify license on access",
+          "Confirm CC-BY-SA-4.0 terms",
+          "Document attribution obligations"
+        ]
+      }
+    ],
+    "source_mapping": [
+      {
+        "packet_id": "B02-f3",
+        "source_name": "LDJnr/Capybara",
+        "current_status": "review",
+        "risk": "ShareGPT upstream provenance risk; not bulk-safe without sampling guard.",
+        "recommended_decision": "Approve as a small sampled seed under synthetic cap with provenance documentation.",
+        "possible_action": "APPROVE",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B02-f4",
+        "source_name": "yizhongw/self-instruct",
+        "current_status": "review",
+        "risk": "Synthetic upstream; bulk use would exceed synthetic cap.",
+        "recommended_decision": "Approve as a template/method reference and small seed only; do not bulk import.",
+        "possible_action": "APPROVE",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B02-f7",
+        "source_name": "Anthropic/hh-rlhf",
+        "current_status": "review",
+        "risk": "PII exposure; helpfulness/safety signal requires anonymization before ingestion.",
+        "recommended_decision": "Approve with mandatory anonymization, sampling limits, and exclusion of raw PII.",
+        "possible_action": "APPROVE",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B03-y6",
+        "source_name": "Red Hat Enterprise Linux / Fedora Documentation",
+        "current_status": "accepted",
+        "risk": "Registry-accepted but missing from manifest batches; ingestion plan unassigned.",
+        "recommended_decision": "Approve manifest inclusion under CC-BY-SA-4.0 with doc version pinning.",
+        "possible_action": "APPROVE",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B03-y7",
+        "source_name": "Wikimedia (sysadmin / networking articles)",
+        "current_status": "review",
+        "risk": "Registry-review status and missing manifest entry; attribution obligations apply.",
+        "recommended_decision": "Approve manifest inclusion with per-article attribution and share-alike tracking.",
+        "possible_action": "APPROVE",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      }
+    ],
+    "registry_missing_entry": [
+      {
+        "packet_id": "B07-b2",
+        "source_name": "Wikipedia business / economics / strategy",
+        "current_status": "unregistered",
+        "risk": "No registry entry exists; provenance and license metadata are undefined.",
+        "recommended_decision": "Defer until registry entry is created and license/attribution metadata are defined.",
+        "possible_action": "DEFER",
+        "blocking_reason": "No registry entry exists; provenance and license metadata are undefined.",
+        "approval_prerequisites": [
+          "Create registry entry for Wikipedia business/economics/strategy articles",
+          "Confirm license as CC-BY-SA-3.0",
+          "Define attribution requirements"
+        ]
+      },
+      {
+        "packet_id": "B07-b4",
+        "source_name": "Atlas synthetic-from-cases (business)",
+        "current_status": "unregistered",
+        "risk": "Synthetic policy source lacks registry record; cap enforcement and lineage tracking cannot be validated.",
+        "recommended_decision": "Defer until registry registration is complete and synthetic cap/human review prerequisites are validated.",
+        "possible_action": "DEFER",
+        "blocking_reason": "Synthetic policy source lacks registry record; cap enforcement and lineage tracking cannot be validated.",
+        "approval_prerequisites": [
+          "Create registry entry for synthetic policy source",
+          "Validate synthetic cap for business category",
+          "Complete mandatory human review workflow setup"
+        ]
+      },
+      {
+        "packet_id": "B08-r3",
+        "source_name": "Atlas synthetic-from-style (creative)",
+        "current_status": "unregistered",
+        "risk": "Synthetic policy source lacks registry record; cap enforcement and lineage tracking cannot be validated.",
+        "recommended_decision": "Defer until registry registration is complete and synthetic cap/human review prerequisites are validated.",
+        "possible_action": "DEFER",
+        "blocking_reason": "Synthetic policy source lacks registry record; cap enforcement and lineage tracking cannot be validated.",
+        "approval_prerequisites": [
+          "Create registry entry for synthetic policy source",
+          "Validate synthetic cap for creative category",
+          "Complete mandatory human review workflow setup"
+        ]
+      },
+      {
+        "packet_id": "B09-g1",
+        "source_name": "Atlas synthetic-from-licensed (personal assistant)",
+        "current_status": "unregistered",
+        "risk": "Synthetic policy source lacks registry record; cap enforcement and lineage tracking cannot be validated.",
+        "recommended_decision": "Defer until registry registration is complete and synthetic cap/human review prerequisites are validated.",
+        "possible_action": "DEFER",
+        "blocking_reason": "Synthetic policy source lacks registry record; cap enforcement and lineage tracking cannot be validated.",
+        "approval_prerequisites": [
+          "Create registry entry for synthetic policy source",
+          "Validate synthetic cap for personal assistant category",
+          "Complete mandatory human review workflow setup"
+        ]
+      }
+    ],
+    "policy_rejection": [
+      {
+        "packet_id": "B02-f8",
+        "source_name": "stanfordnlp/lima",
+        "current_status": "rejected",
+        "risk": "CC-BY-NC-4.0 non-commercial license incompatible with commercial-safe policy.",
+        "recommended_decision": "Reject permanently unless Atlas policy changes to research-only.",
+        "possible_action": "REJECT",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B03-y8",
+        "source_name": "Cisco / vendor proprietary networking docs",
+        "current_status": "rejected",
+        "risk": "Proprietary / all-rights-reserved; no ingestion rights.",
+        "recommended_decision": "Reject; retain only as out-of-band human reference.",
+        "possible_action": "REJECT",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      },
+      {
+        "packet_id": "B06-h5",
+        "source_name": "Manufacturer datasheets / app notes",
+        "current_status": "rejected",
+        "risk": "Proprietary / all-rights-reserved; no ingestion rights.",
+        "recommended_decision": "Reject; retain only as out-of-band human reference.",
+        "possible_action": "REJECT",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      }
+    ],
+    "synthetic_data_approval": [
+      {
+        "packet_id": "B06-h6",
+        "source_name": "Atlas synthetic-from-docs (hardware)",
+        "current_status": "review",
+        "risk": "Synthetic data may exceed category cap if not gated; quality depends on upstream licensed docs.",
+        "recommended_decision": "Approve only if hardware category synthetic share stays <=15% of category total (<=12 examples) and every record undergoes mandatory human review before curation.",
+        "possible_action": "APPROVE",
+        "blocking_reason": "",
+        "approval_prerequisites": []
+      }
+    ],
+    "access_gating": [
+      {
+        "packet_id": "B02-s8",
+        "source_name": "nampdn-ai/tinycoder",
+        "current_status": "review",
+        "risk": "HuggingFace gated download; access not currently available; license unverifiable until accepted.",
+        "recommended_decision": "Defer until HF access terms are accepted, license is confirmed permissive, and any synthetic-cap constraints are satisfied.",
+        "possible_action": "DEFER",
+        "blocking_reason": "HuggingFace gated download; access not currently available; license unverifiable until accepted.",
+        "approval_prerequisites": [
+          "Accept HuggingFace access terms",
+          "Confirm permissive license"
+        ]
+      },
+      {
+        "packet_id": "B05-c4",
+        "source_name": "Ai-MO/OpenMathInstruct-2",
+        "current_status": "review",
+        "risk": "HuggingFace gated download; also needs explicit synthetic-cap slot approval.",
+        "recommended_decision": "Defer until un-gated, license confirmed, and synthetic-cap slot is allocated.",
+        "possible_action": "DEFER",
+        "blocking_reason": "HuggingFace gated download; also needs explicit synthetic-cap slot approval.",
+        "approval_prerequisites": [
+          "Accept HuggingFace access terms",
+          "Confirm license",
+          "Allocate synthetic-cap slot"
+        ]
+      }
+    ]
+  }
+}
