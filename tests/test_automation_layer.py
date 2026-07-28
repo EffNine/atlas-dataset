@@ -126,20 +126,31 @@ def test_valid_transition_leaves_no_error():
 
 
 def test_transition_from_states_are_mutually_exclusive():
-    """Each state except WAITING_HUMAN_APPROVAL has exactly 1 valid target.
-    WAITING_HUMAN_APPROVAL has 2 targets (READY_FOR_RELEASE, RELEASE_REJECTED)."""
+    """Each non-terminal state now has FAILED as an additional valid target.
+    Forward transitions remain mutually exclusive.
+    WAITING_HUMAN_APPROVAL has 3 targets (READY_FOR_RELEASE, RELEASE_REJECTED, FAILED).
+    FAILED has 1 target (INGESTED)."""
     for from_state in STATE_ORDER:
         if from_state in (PipelineState.RELEASED, PipelineState.RELEASE_REJECTED):
             continue  # terminal — no targets
         targets = [t[1] for t in VALID_TRANSITIONS if t[0] == from_state]
         if from_state == PipelineState.WAITING_HUMAN_APPROVAL:
-            assert len(targets) == 2, (
-                f"{from_state} should have 2 valid targets, got {targets}"
+            assert len(targets) == 3, (
+                f"{from_state} should have 3 valid targets, got {targets}"
             )
-        else:
+            assert PipelineState.FAILED in targets
+        elif from_state == PipelineState.FAILED:
             assert len(targets) == 1, (
-                f"{from_state} should have exactly 1 valid target, got {targets}"
+                f"FAILED should have exactly 1 valid target, got {targets}"
             )
+            assert targets[0] == PipelineState.INGESTED
+        else:
+            # Each non-terminal, non-WAITING, non-FAILED state has 2 targets:
+            # its natural forward progression + FAILED
+            assert len(targets) == 2, (
+                f"{from_state} should have 2 valid targets (forward + FAILED), got {targets}"
+            )
+            assert PipelineState.FAILED in targets
 
 
 def test_released_is_terminal():
@@ -238,7 +249,8 @@ def test_can_transition_to_rejects_non_enum():
 
 
 def test_only_released_from_waiting():
-    """From WAITING_HUMAN_APPROVAL, valid targets are READY_FOR_RELEASE and RELEASE_REJECTED."""
+    """From WAITING_HUMAN_APPROVAL, valid targets are READY_FOR_RELEASE,
+    RELEASE_REJECTED, and FAILED."""
     sm = StateMachine("test-pipeline", _make_temp_root())
     sm.transition_to(PipelineState.QUALITY_CHECK)
     sm.transition_to(PipelineState.PROVENANCE_CHECK)
@@ -252,6 +264,7 @@ def test_only_released_from_waiting():
     # Valid transitions from WAITING_HUMAN_APPROVAL
     assert sm.can_transition_to(PipelineState.READY_FOR_RELEASE)
     assert sm.can_transition_to(PipelineState.RELEASE_REJECTED)
+    assert sm.can_transition_to(PipelineState.FAILED)
     # RELEASED is NOT directly reachable — must go through READY_FOR_RELEASE
     assert not sm.can_transition_to(PipelineState.RELEASED)
 
@@ -379,6 +392,121 @@ def test_state_summary():
     assert summary["is_blocked_on_human_approval"] is False
     assert summary["has_error"] is False
     assert summary["total_transitions"] == 0
+    assert summary["has_failure"] is False
+    assert summary["failure_info"] is None
+
+
+# ===================================================================
+# State Machine: Failure Persistence
+# ===================================================================
+
+
+def test_failure_info_none_by_default():
+    """Pipeline with no failures has no failure info."""
+    sm = StateMachine("test-fail-default", _make_temp_root())
+    assert sm.failure_info is None
+    assert not sm.has_failed()
+    sm.load()
+    assert sm.failure_info is None
+    assert not sm.has_failed()
+
+
+def test_set_failure_persists_info():
+    """set_failure() records all required fields."""
+    sm = StateMachine("test-fail-set", _make_temp_root())
+    sm.set_failure(
+        agent_name="quality",
+        reason="Quality score below threshold",
+        next_action="RETRY_QUALITY",
+    )
+    assert sm.has_failed()
+    fi = sm.failure_info
+    assert fi is not None
+    assert fi["agent_name"] == "quality"
+    assert fi["reason"] == "Quality score below threshold"
+    assert fi["next_action"] == "RETRY_QUALITY"
+    assert "timestamp" in fi
+
+
+def test_failure_persistence_survives_load():
+    """Failure info is persisted and survives a state machine reload."""
+    import tempfile
+    tmp = Path(tempfile.mkdtemp(prefix="atlas-test-fail-"))
+    (tmp / "metadata").mkdir(parents=True, exist_ok=True)
+
+    sm1 = StateMachine("test-persist-fail", tmp)
+    sm1.set_failure(agent_name="validation", reason="Schema validation failed",
+                    next_action="RETRY_VALIDATION")
+
+    sm2 = StateMachine("test-persist-fail", tmp)
+    loaded = sm2.load()
+    assert loaded
+    assert sm2.has_failed()
+    fi = sm2.failure_info
+    assert fi is not None
+    assert fi["agent_name"] == "validation"
+    assert fi["reason"] == "Schema validation failed"
+    assert fi["next_action"] == "RETRY_VALIDATION"
+
+    import shutil
+    shutil.rmtree(str(tmp), ignore_errors=True)
+
+
+def test_clear_failure_removes_info():
+    """clear_failure() removes failure info."""
+    sm = StateMachine("test-fail-clear", _make_temp_root())
+    sm.set_failure(agent_name="quality", reason="Test failure")
+    assert sm.has_failed()
+    sm.clear_failure()
+    assert not sm.has_failed()
+    assert sm.failure_info is None
+
+
+def test_reset_clears_failure():
+    """reset() clears failure info."""
+    sm = StateMachine("test-fail-reset", _make_temp_root())
+    sm.set_failure(agent_name="quality", reason="Test failure")
+    assert sm.has_failed()
+    sm.reset()
+    assert not sm.has_failed()
+    assert sm.current_state == PipelineState.INGESTED
+
+
+def test_transition_to_failed_state():
+    """Can transition to FAILED from any forward state."""
+    sm = StateMachine("test-to-failed", _make_temp_root())
+    ok = sm.transition_to(PipelineState.FAILED)
+    assert ok
+    assert sm.current_state == PipelineState.FAILED
+
+
+def test_failed_state_retry_to_ingested():
+    """Can reset from FAILED back to INGESTED."""
+    sm = StateMachine("test-failed-retry", _make_temp_root())
+    sm.transition_to(PipelineState.FAILED)
+    assert sm.current_state == PipelineState.FAILED
+    ok = sm.transition_to(PipelineState.INGESTED)
+    assert ok
+    assert sm.current_state == PipelineState.INGESTED
+
+
+def test_failed_not_terminal():
+    """FAILED is NOT a terminal state — a reset is possible."""
+    sm = StateMachine("test-failed-term", _make_temp_root())
+    sm.transition_to(PipelineState.FAILED)
+    assert not sm.is_terminal()
+    assert not sm.is_blocked()
+
+
+def test_summary_includes_failure():
+    """summary() includes failure info when present."""
+    sm = StateMachine("test-summary-fail", _make_temp_root())
+    sm.set_failure(agent_name="provenance", reason="Unresolved provenance records",
+                   next_action="REVIEW_PROVENANCE_RECORDS")
+    summary = sm.summary()
+    assert summary["has_failure"] is True
+    assert summary["failure_info"] is not None
+    assert summary["failure_info"]["agent_name"] == "provenance"
 
 
 # ===================================================================
@@ -764,9 +892,14 @@ def test_state_order_is_complete():
 
 
 def test_valid_transitions_counts():
-    """There are exactly 8 valid transitions (8 edges for 9 nodes)."""
-    assert len(VALID_TRANSITIONS) == 8, (
-        f"Expected 8 transitions, got {len(VALID_TRANSITIONS)}"
+    """There are 16 valid transitions: 8 forward, 7 state→FAILED, 1 FAILED→INGESTED."""
+    forward = 8  # original forward-only transitions
+    to_failed = 7  # each non-terminal, non-FAILED state → FAILED
+    from_failed = 1  # FAILED → INGESTED
+    expected = forward + to_failed + from_failed
+    assert len(VALID_TRANSITIONS) == expected, (
+        f"Expected {expected} transitions ({forward} forward + {to_failed} to FAILED + "
+        f"{from_failed} from FAILED), got {len(VALID_TRANSITIONS)}"
     )
 
 

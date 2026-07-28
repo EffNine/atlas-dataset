@@ -196,6 +196,8 @@ class PipelineOrchestrator:
             status = PipelineStatus.COMPLETED
         elif self.state_machine.is_blocked():
             status = PipelineStatus.BLOCKED_ON_APPROVAL
+        elif self.state_machine.has_failed():
+            status = PipelineStatus.FAILED
         elif errors:
             status = PipelineStatus.FAILED
         else:
@@ -232,6 +234,14 @@ class PipelineOrchestrator:
                     triggered_by="quality_agent",
                     reason=result.summary,
                 )
+            else:
+                self._fail_pipeline(
+                    agent_name="quality",
+                    result=result,
+                    next_action="RETRY_QUALITY",
+                    errors=errors,
+                )
+                return
 
         # ── PROVENANCE_CHECK ───────────────────────────────────────────
         if self.state_machine.current_state == PipelineState.QUALITY_CHECK:
@@ -239,6 +249,12 @@ class PipelineOrchestrator:
             agent_results["provenance"] = result
             # Provenance can pass even with unresolved records (advisory)
             if result.status in (AgentStatus.PASSED, AgentStatus.FAILED):
+                if result.failed:
+                    self.state_machine.set_failure(
+                        agent_name="provenance",
+                        reason=result.summary,
+                        next_action="REVIEW_PROVENANCE_RECORDS",
+                    )
                 self.state_machine.transition_to(
                     PipelineState.PROVENANCE_CHECK,
                     triggered_by="provenance_agent",
@@ -256,7 +272,12 @@ class PipelineOrchestrator:
                     reason=result.summary,
                 )
             else:
-                # Records need revision — still advance (revision is informational)
+                # Records need revision — advisory failure
+                self.state_machine.set_failure(
+                    agent_name="revision",
+                    reason=result.summary,
+                    next_action="RESOLVE_REVISIONS",
+                )
                 self.state_machine.transition_to(
                     PipelineState.CONTENT_REVISION,
                     triggered_by="revision_agent",
@@ -275,7 +296,13 @@ class PipelineOrchestrator:
                 )
             else:
                 errors.append(f"Validation failed: {result.summary}")
-                return  # Block pipeline — validation is critical
+                self._fail_pipeline(
+                    agent_name="validation",
+                    result=result,
+                    next_action="RETRY_VALIDATION",
+                    errors=errors,
+                )
+                return
 
         # ── WAITING_HUMAN_APPROVAL ─────────────────────────────────────
         if self.state_machine.current_state == PipelineState.VALIDATION:
@@ -356,6 +383,38 @@ class PipelineOrchestrator:
                 summary=f"Agent crashed: {e}",
                 errors=[str(e)],
             )
+
+    def _fail_pipeline(
+        self,
+        agent_name: str,
+        result: AgentResult,
+        next_action: str = "",
+        errors: list[str] | None = None,
+    ) -> None:
+        """Record failure details, transition to FAILED, and append errors.
+
+        Args:
+            agent_name: The agent that failed.
+            result: The AgentResult from the failed agent.
+            next_action: Recommended recovery action.
+            errors: Optional error list to append to.
+        """
+        self.state_machine.set_failure(
+            agent_name=agent_name,
+            reason=result.summary,
+            next_action=next_action,
+        )
+        self.state_machine.transition_to(
+            PipelineState.FAILED,
+            triggered_by=agent_name,
+            reason=result.summary,
+        )
+        if errors is not None:
+            agent_errs = result.errors or []
+            for err in agent_errs:
+                errors.append(f"[{agent_name}] {err}")
+            if not agent_errs:
+                errors.append(f"[{agent_name}] {result.summary}")
 
     # ── Step-by-step pipeline (for manual control) ────────────────────────
 

@@ -39,6 +39,7 @@ class PipelineState(str, Enum):
     CONTENT_REVISION = "CONTENT_REVISION"
     VALIDATION = "VALIDATION"
     WAITING_HUMAN_APPROVAL = "WAITING_HUMAN_APPROVAL"
+    FAILED = "FAILED"
     READY_FOR_RELEASE = "READY_FOR_RELEASE"
     RELEASE_REJECTED = "RELEASE_REJECTED"
     RELEASED = "RELEASED"
@@ -60,6 +61,7 @@ STATE_ORDER: list[PipelineState] = [
     PipelineState.WAITING_HUMAN_APPROVAL,
     PipelineState.READY_FOR_RELEASE,
     PipelineState.RELEASE_REJECTED,
+    PipelineState.FAILED,
     PipelineState.RELEASED,
 ]
 
@@ -69,13 +71,21 @@ _STATE_INDEX = {s: i for i, s in enumerate(STATE_ORDER)}
 # Valid transitions: (from_state, to_state) pairs
 VALID_TRANSITIONS: frozenset[tuple[PipelineState, PipelineState]] = frozenset({
     (PipelineState.INGESTED, PipelineState.QUALITY_CHECK),
+    (PipelineState.INGESTED, PipelineState.FAILED),
     (PipelineState.QUALITY_CHECK, PipelineState.PROVENANCE_CHECK),
+    (PipelineState.QUALITY_CHECK, PipelineState.FAILED),
     (PipelineState.PROVENANCE_CHECK, PipelineState.CONTENT_REVISION),
+    (PipelineState.PROVENANCE_CHECK, PipelineState.FAILED),
     (PipelineState.CONTENT_REVISION, PipelineState.VALIDATION),
+    (PipelineState.CONTENT_REVISION, PipelineState.FAILED),
     (PipelineState.VALIDATION, PipelineState.WAITING_HUMAN_APPROVAL),
+    (PipelineState.VALIDATION, PipelineState.FAILED),
     (PipelineState.WAITING_HUMAN_APPROVAL, PipelineState.READY_FOR_RELEASE),
     (PipelineState.WAITING_HUMAN_APPROVAL, PipelineState.RELEASE_REJECTED),
+    (PipelineState.WAITING_HUMAN_APPROVAL, PipelineState.FAILED),
     (PipelineState.READY_FOR_RELEASE, PipelineState.RELEASED),
+    (PipelineState.READY_FOR_RELEASE, PipelineState.FAILED),
+    (PipelineState.FAILED, PipelineState.INGESTED),
 })
 
 
@@ -159,6 +169,7 @@ class StateMachine:
         self._current_state = initial_state
         self._transitions: list[StateTransition] = []
         self._error: str | None = None
+        self._failure_info: dict[str, Any] | None = None
 
     # ── Properties ──────────────────────────────────────────────────────
 
@@ -177,6 +188,41 @@ class StateMachine:
     @property
     def transition_history(self) -> list[dict[str, Any]]:
         return [t.to_dict() for t in self._transitions]
+
+    @property
+    def failure_info(self) -> dict[str, Any] | None:
+        """Get persisted failure details, or None if no failure occurred."""
+        return self._failure_info
+
+    def has_failed(self) -> bool:
+        """Check if the pipeline has a recorded failure."""
+        return self._failure_info is not None
+
+    def set_failure(
+        self,
+        agent_name: str,
+        reason: str,
+        next_action: str = "",
+    ) -> None:
+        """Record failure details for the pipeline and persist immediately.
+
+        Args:
+            agent_name: The agent that failed (e.g. ``"quality"``).
+            reason: Human-readable failure description.
+            next_action: Recommended recovery action
+                         (e.g. ``"RETRY_QUALITY"``, ``"RESET_PIPELINE"``).
+        """
+        self._failure_info = {
+            "agent_name": agent_name,
+            "reason": reason,
+            "next_action": next_action,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        }
+        self._persist()
+
+    def clear_failure(self) -> None:
+        """Clear any recorded failure information."""
+        self._failure_info = None
 
     # ── Core API ─────────────────────────────────────────────────────────
 
@@ -276,6 +322,7 @@ class StateMachine:
         self._current_state = to_state
         self._transitions = []
         self._error = None
+        self._failure_info = None
         self._persist()
 
     # ── Persistence ──────────────────────────────────────────────────────
@@ -312,12 +359,15 @@ class StateMachine:
     # ── Serialization ────────────────────────────────────────────────────
 
     def _serialize(self) -> dict[str, Any]:
-        return {
+        data: dict[str, Any] = {
             "pipeline_id": self.pipeline_id,
             "current_state": self._current_state.value,
             "transitions": [t.to_dict() for t in self._transitions],
             "last_updated": datetime.now(timezone.utc).isoformat(),
         }
+        if self._failure_info is not None:
+            data["failure_info"] = self._failure_info
+        return data
 
     def _deserialize(self, data: dict[str, Any]) -> None:
         self.pipeline_id = data["pipeline_id"]
@@ -325,6 +375,7 @@ class StateMachine:
         self._transitions = [
             StateTransition.from_dict(t) for t in data.get("transitions", [])
         ]
+        self._failure_info = data.get("failure_info")
 
     # ── Helpers ──────────────────────────────────────────────────────────
 
@@ -337,7 +388,7 @@ class StateMachine:
 
     def summary(self) -> dict[str, Any]:
         """Return a human-readable summary of the current pipeline state."""
-        return {
+        result: dict[str, Any] = {
             "pipeline_id": self.pipeline_id,
             "current_state": self._current_state.value,
             "total_transitions": len(self._transitions),
@@ -345,7 +396,10 @@ class StateMachine:
             "is_blocked_on_human_approval": self.is_blocked(),
             "has_error": self._error is not None,
             "error": self._error,
+            "has_failure": self.has_failed(),
+            "failure_info": self._failure_info,
             "last_transition": (
                 self._transitions[-1].to_dict() if self._transitions else None
             ),
         }
+        return result
