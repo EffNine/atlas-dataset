@@ -1,0 +1,11 @@
+{
+  "packet_id": "s1",
+  "source_id": "s1",
+  "source": "source/s1",
+  "timestamp": "2026-07-28T17:11:30.282763+00:00",
+  "checksum": "0473ecd16ebc1b6ff332746b2ac83588409d02fcc595515b9da7057696f8e9c1",
+  "status": "acquired",
+  "registry_status": "accepted",
+  "manifest_license": "MIT",
+  "batch_id": "B01"
+}
