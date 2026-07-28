@@ -50,3 +50,4 @@ metadata/pipeline_approvals.json
 metadata/pipeline_revisions/
 metadata/pipeline_retries/
 metadata/releases/
+metadata/acquisition_logs/

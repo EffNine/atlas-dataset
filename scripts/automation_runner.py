@@ -66,6 +66,7 @@ from automation.approval_gate import ApprovalGate, ApproverRole
 from automation.base_agent import AgentStatus
 from automation.pipeline_orchestrator import PipelineOrchestrator, PipelineResult, PipelineStatus
 from automation.failure_recovery import retry_failed_agent, resume_pipeline, RetryManager
+from automation.acquisition_agent import AcquisitionAgent
 from atlas_paths import discover_root
 
 
@@ -750,6 +751,28 @@ def cmd_retry_history(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
+def cmd_acquire(args: argparse.Namespace) -> dict[str, Any]:
+    """Run AcquisitionAgent v1 for the Atlas acquisition workflow."""
+    root = Path(args.root) if args.root else _get_root()
+    agent = AcquisitionAgent(root, config={"mode": args.mode})
+
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {
+            "command": "acquire",
+            "mode": args.mode,
+            "error": True,
+            "message": f"AcquisitionAgent failed: {exc}",
+        }
+
+    payload = result.to_dict()
+    payload["command"] = "acquire"
+    payload["mode"] = args.mode
+    payload["message"] = result.summary
+    return payload
+
+
 # ═══════════════════════════════════════════════════════════════════════
 # CLI argument parser
 # ═══════════════════════════════════════════════════════════════════════
@@ -915,6 +938,15 @@ def build_parser() -> argparse.ArgumentParser:
     resume_parser.add_argument("--config",
                                help="JSON config string for the pipeline.")
     resume_parser.set_defaults(func=cmd_resume)
+
+    # ── acquire ───────────────────────────────────────────────────────
+    acquire_parser = subparsers.add_parser(
+        "acquire",
+        help="Run AcquisitionAgent v1 with dry-run or acquire mode.",
+    )
+    acquire_parser.add_argument("--mode", default="dry-run", choices=["dry-run", "acquire"],
+                                help="Acquisition mode.")
+    acquire_parser.set_defaults(func=cmd_acquire)
 
     # ── retry-history ───────────────────────────────────────────────
     rh_parser = subparsers.add_parser(
