@@ -73,6 +73,8 @@ from publish_agent import PublishAgent
 from transform import run_transform
 from view_builder import build_views
 from release_builder import build_release
+from e2e_pipeline import E2EPipeline
+from incremental import IncrementalState
 from atlas_paths import discover_root
 
 
@@ -960,6 +962,59 @@ def cmd_publish(args: argparse.Namespace) -> dict[str, Any]:
     return payload
 
 
+def cmd_e2e(args: argparse.Namespace) -> dict[str, Any]:
+    """Run the full end-to-end Atlas pipeline (v2.0)."""
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {
+        "version": args.version,
+        "dry_run": args.dry_run,
+        "force": args.force,
+        "max_workers": args.max_workers,
+        "allow_staging": not args.production,
+        "use_registry": args.use_registry,
+        "skip_download": args.skip_download,
+        "skip_etl": args.skip_etl,
+        "skip_transform": args.skip_transform,
+        "skip_views": args.skip_views,
+    }
+    if args.source_id:
+        config["source_ids"] = list(args.source_id)
+    if args.models:
+        config["models"] = [m.strip() for m in args.models.split(",") if m.strip()]
+    if args.limit is not None:
+        config["limit"] = args.limit
+
+    agent = E2EPipeline(root, config=config)
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {"command": "e2e", "error": True, "message": f"E2EPipeline failed: {exc}"}
+
+    payload = result.to_dict()
+    payload["command"] = "e2e"
+    payload["message"] = result.summary
+    if result.status.value == "failed":
+        payload["error"] = True
+    return payload
+
+
+def cmd_incremental_status(args: argparse.Namespace) -> dict[str, Any]:
+    """Show incremental pipeline state (which sources are done per stage)."""
+    root = Path(args.root) if args.root else _get_root()
+    state = IncrementalState(root)
+    report = state.status_report()
+    lines = []
+    for sid, stages in sorted(report["sources"].items()):
+        done = [s for s, v in stages.items() if v]
+        pending = [s for s, v in stages.items() if not v]
+        lines.append(f"  {sid}: done={done} pending={pending}")
+    return {
+        "command": "incremental-status",
+        "report": report,
+        "message": "\n".join(lines) or "  (no incremental state recorded yet)",
+    }
+
+
 # ═══════════════════════════════════════════════════════════════════════
 # CLI argument parser
 # ═══════════════════════════════════════════════════════════════════════
@@ -1278,6 +1333,40 @@ def build_parser() -> argparse.ArgumentParser:
     pub_parser.add_argument("--skip-views", action="store_true")
     pub_parser.set_defaults(func=cmd_publish)
 
+    # ── e2e (v2.0) ───────────────────────────────────────────────────
+    e2e_parser = subparsers.add_parser(
+        "e2e",
+        help="Run full end-to-end pipeline: download→etl→transform→views→release (v2.0).",
+    )
+    e2e_parser.add_argument("--version", required=True,
+                            help="Release version id (e.g. v0.3-gsm8k).")
+    e2e_parser.add_argument("--source-id", action="append", default=[],
+                            help="Source id(s) to process (repeatable).")
+    e2e_parser.add_argument("--models", default="qwen,llama,deepseek")
+    e2e_parser.add_argument("--limit", type=int, default=None)
+    e2e_parser.add_argument("--max-workers", type=int, default=4,
+                            help="Parallel thread pool size (default 4).")
+    e2e_parser.add_argument("--dry-run", action="store_true",
+                            help="Plan all stages without network/disk writes.")
+    e2e_parser.add_argument("--force", action="store_true",
+                            help="Re-run all stages ignoring incremental state.")
+    e2e_parser.add_argument("--production", action="store_true",
+                            help="Require approved curated records.")
+    e2e_parser.add_argument("--use-registry", action="store_true", default=True,
+                            help="Fall back to registry when no acquisition logs (default on).")
+    e2e_parser.add_argument("--skip-download", action="store_true")
+    e2e_parser.add_argument("--skip-etl", action="store_true")
+    e2e_parser.add_argument("--skip-transform", action="store_true")
+    e2e_parser.add_argument("--skip-views", action="store_true")
+    e2e_parser.set_defaults(func=cmd_e2e)
+
+    # ── incremental-status ───────────────────────────────────────────
+    inc_parser = subparsers.add_parser(
+        "incremental-status",
+        help="Show which sources are done per pipeline stage (v1.9).",
+    )
+    inc_parser.set_defaults(func=cmd_incremental_status)
+
     # ── retry-history ───────────────────────────────────────────────
     rh_parser = subparsers.add_parser(
         "retry-history",
@@ -1419,6 +1508,18 @@ def _render_text(result: dict[str, Any]) -> None:
         if data.get("release"):
             print(f"\n  Release: {data['release'].get('summary')}")
             print(f"  Bundle: {data['release'].get('bundle_dir')}")
+
+    elif result.get("command") == "e2e":
+        data = result.get("data") or {}
+        print(f"\n  Mode: {'dry-run' if data.get('dry_run') else 'live'}")
+        print(f"  Sources: {data.get('source_ids')}")
+        print(f"  Stages: {data.get('stages_run')}")
+        print(f"  Records: {data.get('record_count')}  Elapsed: {data.get('elapsed_s')}s")
+        if data.get("bundle_dir"):
+            print(f"  Bundle: {data['bundle_dir']}")
+
+    elif result.get("command") == "incremental-status":
+        print(f"\n{result.get('message')}")
 
 
 if __name__ == "__main__":

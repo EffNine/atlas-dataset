@@ -45,8 +45,11 @@ atlas-dataset/
 │   ├── downloader/           # v1.6 source adapters + content-addressable cache (raw/.cache/)
 │   ├── etl/                  # v1.7 extract → normalize → clean (metadata/etl/)
 │   ├── transform/            # v1.8 training-type transformers
+│   ├── parallel/             # v1.9 thread-pool worker
+│   ├── incremental/          # v1.9 per-source stage state
 │   ├── view_builder/         # v1.8 model-family training views
 │   ├── release_builder/      # v1.8 release bundles
+│   ├── e2e_pipeline.py       # v2.0 single atlas pipeline e2e command
 │   └── automation_runner.py  # CLI entry point for the automation pipeline
 ```
 
@@ -246,9 +249,10 @@ Every release includes: **changelog, statistics, added/removed data, frozen mani
 - ✅ Automation Layer v1.0 released (pipeline orchestrator, state machine, approval gate, 5 agents, CLI, failure recovery)
 - ✅ AcquisitionAgent v1 + Downloader/Cache v1.6 (`raw/.cache/`, source adapters)
 - ✅ ETL v1.7 Extract → Normalize → Clean (`metadata/etl/`, gsm8k vertical slice)
-- ✅ v1.8 Transform + Training Views + Release Builder (`metadata/views/`, `metadata/release_bundles/`)
-- ⏸ Model training paused
-- 🔜 v1.9 Performance + Scale (see `docs/roadmap/atlas_e2e_roadmap.md`)
+- ✅ v1.8 Transform + Training Views + Release Builder
+- ✅ v1.9 Parallel workers + Incremental state (`parallel/`, `incremental/`)
+- ✅ v2.0 Single `atlas pipeline e2e` command (`e2e_pipeline.py`)
+- ⏸ Model training paused — unblock by completing human review of staged records
 
 ## License
 
