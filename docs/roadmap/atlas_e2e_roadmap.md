@@ -484,7 +484,7 @@ Automates the final step: packaging a dataset for distribution.
 | Version | Focus | Key Deliverables | Risks | Dependencies |
 |---|---|---|---|---|
 | v1.6 ✅ | **Downloader + Cache** | Source adapters (HF, GitHub, docs, SE, arXiv); Cache Manager with resume + checksums; retry logic | Source API rate limits; large downloads (arXiv bulk data); GitHub auth complexity | AcquisitionAgent v1 (complete) |
-| v1.7 | **Extract + Normalize + Clean** | Extractors for all formats; Normalizer → Canonical Schema; Cleaning pipeline (dedup, PII, malformed removal, license injection, language validation) | PII false positives; format edge cases (malformed XML/HTML); near-duplicate algorithm tuning | v1.6 (cache populated) |
+| v1.7 ✅ | **Extract + Normalize + Clean** | Extractors for all formats; Normalizer → Canonical Schema; Cleaning pipeline (dedup, PII, malformed removal, license injection, language validation) | PII false positives; format edge cases (malformed XML/HTML); near-duplicate algorithm tuning | v1.6 (cache populated) |
 | v1.8 | **Transform + Training Views + Release** | Transformation layer (5 record types); Training View Builder production integration; Release Builder (bundles, manifests, Hub publish) | Transformation quality for poorly-structured sources; view generation performance at scale | v1.7 (clean records available) |
 | v1.9 | **Performance + Scale** | Parallel processing (multi-worker extraction/normalization/cleaning); streaming pipeline; incremental updates (delta processing); memory optimization for large datasets | Thread safety in cleaners; incremental detection complexity; correctness verification | v1.8 (baseline pipeline) |
 | v2.0 | **Full Automation** | End-to-end pipeline: source → download → cache → extract → normalize → clean → transform → quality → provenance → revision → validation → approval → release. Single command: `atlas pipeline e2e` | Integration complexity; error propagation across all stages; human approval UX | v1.9 (performance baseline) |
@@ -523,21 +523,23 @@ Automates the final step: packaging a dataset for distribution.
 
 **Goal:** Convert raw downloaded data into clean, normalized Atlas Canonical Schema records.
 
+**Status:** ✅ Implemented (gsm8k-first) — see `docs/etl_v1_7.md`
+
 **Deliverables:**
 
-- [ ] **Extractor interface** — `extract(raw_path) -> list[RawRecord]`
-- [ ] **HF Dataset Extractor** — load HuggingFace datasets → JSONL records
-- [ ] **JSON/JSONL Extractor** — standard JSON parse with schema mapping
-- [ ] **XML Extractor** — XML → structured record conversion
-- [ ] **Markdown Extractor** — MD AST → section-aware records
-- [ ] **HTML Extractor** — content extraction via readability/heuristics
-- [ ] **Dataset Normalizer** — Canonical Schema converter with field mapping
-- [ ] **Duplicate Remover** — content-hash dedup (SHA-256)
-- [ ] **Near-Duplicate Detector** — MinHash/LSH for semantic dedup
-- [ ] **PII Filter** — regex-based PII detection and redaction/masking
-- [ ] **Malformed Conversation Remover** — structural validation
-- [ ] **License Metadata Injector** — per-record license normalization
-- [ ] **Language Validator** — language detection and filtering
+- [x] **Extractor interface** — `extract(raw_path) -> list[RawRecord]`
+- [x] **HF Dataset Extractor** — Parquet via optional pyarrow (covers HF hub shards)
+- [x] **JSON/JSONL Extractor** — standard JSON parse with schema mapping
+- [ ] **XML Extractor** — deferred (StackExchange dumps); HTML/MD cover docs path
+- [x] **Markdown Extractor** — heading-aware section records
+- [x] **HTML Extractor** — stdlib HTMLParser text extraction
+- [x] **Dataset Normalizer** — Canonical Schema converter with field mapping + Atlas promotion
+- [x] **Duplicate Remover** — content-hash dedup (SHA-256)
+- [ ] **Near-Duplicate Detector** — deferred to scale pass (exact dedup first)
+- [x] **PII Filter** — regex-based PII detection and redaction/masking
+- [x] **Malformed Conversation Remover** — structural validation
+- [x] **License Metadata Injector** — per-record license normalization
+- [ ] **Language Validator** — deferred (length + malformed gates cover smoke path)
 
 **Risks:**
 
