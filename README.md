@@ -42,6 +42,7 @@ atlas-dataset/
 ├── configs/                  # training + formatting templates
 ├── scripts/                  # clean / validate / convert / quality_score / automation
 │   ├── automation/           # Pipeline agents, state machine, approval gate, failure recovery
+│   ├── downloader/           # v1.6 source adapters + content-addressable cache (raw/.cache/)
 │   └── automation_runner.py  # CLI entry point for the automation pipeline
 ```
 
@@ -194,6 +195,8 @@ See the full [release notes](docs/releases/atlas-automation-v1.0.md) and
 - `docs/ingestion_runbook.md` — operational procedure for bulk filling v0.1
 - `docs/automation_layer_v1.md` — automation pipeline architecture
 - `docs/releases/atlas-automation-v1.0.md` — v1.0 release notes
+- `docs/downloader_v1_6.md` — Downloader + Cache Manager (v1.6)
+- `docs/roadmap/atlas_e2e_roadmap.md` — long-term E2E architecture plan
 
 ## Canonical Record Format (extended)
 
@@ -235,8 +238,9 @@ Every release includes: **changelog, statistics, added/removed data, frozen mani
 
 - ✅ Project scaffold (folders, schemas, docs, scripts, seed examples)
 - ✅ Automation Layer v1.0 released (pipeline orchestrator, state machine, approval gate, 5 agents, CLI, failure recovery)
+- ✅ AcquisitionAgent v1 + Downloader/Cache v1.6 (`raw/.cache/`, source adapters)
 - ⏸ Model training paused
-- 🔜 Bulk data ingestion — **awaiting approval** (see roadmap)
+- 🔜 v1.7 Extract + Normalize + Clean (see `docs/roadmap/atlas_e2e_roadmap.md`)
 
 ## License
 

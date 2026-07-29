@@ -1,0 +1,2 @@
+# Keeps the content-addressable download cache directory in version control.
+# Cached objects, partials, and the SQLite index are gitignored.

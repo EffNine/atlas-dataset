@@ -483,7 +483,7 @@ Automates the final step: packaging a dataset for distribution.
 
 | Version | Focus | Key Deliverables | Risks | Dependencies |
 |---|---|---|---|---|
-| v1.6 | **Downloader + Cache** | Source adapters (HF, GitHub, docs, SE, arXiv); Cache Manager with resume + checksums; retry logic | Source API rate limits; large downloads (arXiv bulk data); GitHub auth complexity | AcquisitionAgent v1 (complete) |
+| v1.6 ✅ | **Downloader + Cache** | Source adapters (HF, GitHub, docs, SE, arXiv); Cache Manager with resume + checksums; retry logic | Source API rate limits; large downloads (arXiv bulk data); GitHub auth complexity | AcquisitionAgent v1 (complete) |
 | v1.7 | **Extract + Normalize + Clean** | Extractors for all formats; Normalizer → Canonical Schema; Cleaning pipeline (dedup, PII, malformed removal, license injection, language validation) | PII false positives; format edge cases (malformed XML/HTML); near-duplicate algorithm tuning | v1.6 (cache populated) |
 | v1.8 | **Transform + Training Views + Release** | Transformation layer (5 record types); Training View Builder production integration; Release Builder (bundles, manifests, Hub publish) | Transformation quality for poorly-structured sources; view generation performance at scale | v1.7 (clean records available) |
 | v1.9 | **Performance + Scale** | Parallel processing (multi-worker extraction/normalization/cleaning); streaming pipeline; incremental updates (delta processing); memory optimization for large datasets | Thread safety in cleaners; incremental detection complexity; correctness verification | v1.8 (baseline pipeline) |
@@ -493,19 +493,21 @@ Automates the final step: packaging a dataset for distribution.
 
 **Goal:** Enable Atlas to actually download data from external sources, not just record the intent.
 
+**Status:** ✅ Implemented — see `docs/downloader_v1_6.md`
+
 **Deliverables:**
 
-- [ ] **Source Adapter interface** — abstract `SourceAdapter` with `download()` method
-- [ ] **HuggingFaceAdapter** — download datasets via `datasets` library or direct file fetch
-- [ ] **GitHubAdapter** — download repos (tarball) or specific files via GitHub API
-- [ ] **DocumentationAdapter** — fetch and cache web documentation pages
-- [ ] **StackExchangeAdapter** — download StackExchange data dumps (XML → cache)
-- [ ] **arXivAdapter** — download papers via arXiv API or bulk mirror
-- [ ] **Cache Manager** — content-addressable cache with resume support
-- [ ] **Checksum verification** — SHA-256 verification of all downloaded files
-- [ ] **Retry strategy** — exponential backoff with configurable max retries
-- [ ] **Cache index** — SQLite-based index for O(1) cache lookups
-- [ ] **Integration test** — download a known small dataset end-to-end
+- [x] **Source Adapter interface** — abstract `SourceAdapter` with `download()` method
+- [x] **HuggingFaceAdapter** — Hub HTTP API + `/resolve/main/` file fetch (stdlib; no `datasets` dep)
+- [x] **GitHubAdapter** — public repo tarballs via `codeload.github.com`
+- [x] **DocumentationAdapter** — fetch and cache web documentation pages
+- [x] **StackExchangeAdapter** — dump URL / Archive.org listing cache
+- [x] **arXivAdapter** — PDF + Atom abstract via export API
+- [x] **Cache Manager** — content-addressable cache with resume support (`raw/.cache/`)
+- [x] **Checksum verification** — SHA-256 verification of all downloaded files
+- [x] **Retry strategy** — exponential backoff with configurable max retries
+- [x] **Cache index** — SQLite-based index for O(1) cache lookups
+- [x] **Integration test** — local HTTP fixture + DownloadAgent end-to-end (`tests/test_downloader_v1_6.py`)
 
 **Risks:**
 
