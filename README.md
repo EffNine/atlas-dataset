@@ -44,6 +44,9 @@ atlas-dataset/
 │   ├── automation/           # Pipeline agents, state machine, approval gate, failure recovery
 │   ├── downloader/           # v1.6 source adapters + content-addressable cache (raw/.cache/)
 │   ├── etl/                  # v1.7 extract → normalize → clean (metadata/etl/)
+│   ├── transform/            # v1.8 training-type transformers
+│   ├── view_builder/         # v1.8 model-family training views
+│   ├── release_builder/      # v1.8 release bundles
 │   └── automation_runner.py  # CLI entry point for the automation pipeline
 ```
 
@@ -198,6 +201,7 @@ See the full [release notes](docs/releases/atlas-automation-v1.0.md) and
 - `docs/releases/atlas-automation-v1.0.md` — v1.0 release notes
 - `docs/downloader_v1_6.md` — Downloader + Cache Manager (v1.6)
 - `docs/etl_v1_7.md` — Extract → Normalize → Clean (v1.7)
+- `docs/v1_8_transform_views_release.md` — Transform + Views + Release Builder (v1.8)
 - `docs/roadmap/atlas_e2e_roadmap.md` — long-term E2E architecture plan
 
 ## Canonical Record Format (extended)
@@ -242,8 +246,9 @@ Every release includes: **changelog, statistics, added/removed data, frozen mani
 - ✅ Automation Layer v1.0 released (pipeline orchestrator, state machine, approval gate, 5 agents, CLI, failure recovery)
 - ✅ AcquisitionAgent v1 + Downloader/Cache v1.6 (`raw/.cache/`, source adapters)
 - ✅ ETL v1.7 Extract → Normalize → Clean (`metadata/etl/`, gsm8k vertical slice)
+- ✅ v1.8 Transform + Training Views + Release Builder (`metadata/views/`, `metadata/release_bundles/`)
 - ⏸ Model training paused
-- 🔜 v1.8 Transform + Training Views + Release Builder (see `docs/roadmap/atlas_e2e_roadmap.md`)
+- 🔜 v1.9 Performance + Scale (see `docs/roadmap/atlas_e2e_roadmap.md`)
 
 ## License
 
