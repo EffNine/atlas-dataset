@@ -68,6 +68,7 @@ from automation.pipeline_orchestrator import PipelineOrchestrator, PipelineResul
 from automation.failure_recovery import retry_failed_agent, resume_pipeline, RetryManager
 from automation.acquisition_agent import AcquisitionAgent
 from downloader import DownloadAgent, CacheManager
+from etl import ExtractAgent
 from atlas_paths import discover_root
 
 
@@ -828,6 +829,35 @@ def cmd_cache_stats(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
+def cmd_etl(args: argparse.Namespace) -> dict[str, Any]:
+    """Run Extract → Normalize → Clean (ETL v1.7) on cached downloads."""
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {
+        "promote_atlas": not args.no_promote,
+    }
+    if args.source_id:
+        config["source_ids"] = list(args.source_id)
+    if args.limit is not None:
+        config["limit"] = args.limit
+
+    agent = ExtractAgent(root, config=config)
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {
+            "command": "etl",
+            "error": True,
+            "message": f"ExtractAgent failed: {exc}",
+        }
+
+    payload = result.to_dict()
+    payload["command"] = "etl"
+    payload["message"] = result.summary
+    if result.failed:
+        payload["error"] = True
+    return payload
+
+
 # ═══════════════════════════════════════════════════════════════════════
 # CLI argument parser
 # ═══════════════════════════════════════════════════════════════════════
@@ -1062,6 +1092,30 @@ def build_parser() -> argparse.ArgumentParser:
     )
     cache_parser.set_defaults(func=cmd_cache_stats)
 
+    # ── etl (v1.7) ───────────────────────────────────────────────────
+    etl_parser = subparsers.add_parser(
+        "etl",
+        help="Extract → Normalize → Clean cached downloads (ETL v1.7).",
+    )
+    etl_parser.add_argument(
+        "--source-id",
+        action="append",
+        default=[],
+        help="Source id(s) to process (repeatable). Defaults to all download logs.",
+    )
+    etl_parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Max records to extract per source (useful for smoke tests).",
+    )
+    etl_parser.add_argument(
+        "--no-promote",
+        action="store_true",
+        help="Skip promotion to atlas_staging.jsonl.",
+    )
+    etl_parser.set_defaults(func=cmd_etl)
+
     # ── retry-history ───────────────────────────────────────────────
     rh_parser = subparsers.add_parser(
         "retry-history",
@@ -1165,6 +1219,19 @@ def _render_text(result: dict[str, Any]) -> None:
                 status = ar.get("status", "?")
                 summary = ar.get("summary", "")
                 print(f"    [{status.upper():8s}] {name}: {summary}")
+
+    elif result.get("command") == "etl":
+        totals = (result.get("data") or {}).get("totals") or {}
+        sources = (result.get("data") or {}).get("sources") or []
+        print(f"\n  Totals: extracted={totals.get('extracted', 0)} "
+              f"cleaned={totals.get('cleaned', 0)} "
+              f"atlas_staging={totals.get('atlas_records', 0)} "
+              f"dropped={totals.get('dropped', 0)}")
+        for src in sources:
+            print(f"    [{src.get('status', '?'):7s}] {src.get('source_id')}: "
+                  f"{src.get('summary', '')}")
+            if src.get("output_dir"):
+                print(f"             → {src['output_dir']}")
 
 
 if __name__ == "__main__":

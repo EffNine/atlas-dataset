@@ -54,3 +54,4 @@ metadata/pipeline_retries/
 metadata/releases/
 metadata/acquisition_logs/
 metadata/download_logs/
+metadata/etl/
