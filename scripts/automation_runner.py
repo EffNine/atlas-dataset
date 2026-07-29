@@ -69,6 +69,10 @@ from automation.failure_recovery import retry_failed_agent, resume_pipeline, Ret
 from automation.acquisition_agent import AcquisitionAgent
 from downloader import DownloadAgent, CacheManager
 from etl import ExtractAgent
+from publish_agent import PublishAgent
+from transform import run_transform
+from view_builder import build_views
+from release_builder import build_release
 from atlas_paths import discover_root
 
 
@@ -858,6 +862,104 @@ def cmd_etl(args: argparse.Namespace) -> dict[str, Any]:
     return payload
 
 
+def cmd_transform(args: argparse.Namespace) -> dict[str, Any]:
+    """Run Transform layer v1.8 on ETL cleaned/staging records."""
+    root = Path(args.root) if args.root else _get_root()
+    source_ids = list(args.source_id) if args.source_id else []
+    if not source_ids:
+        etl_root = root / "metadata" / "etl"
+        source_ids = sorted(p.name for p in etl_root.iterdir() if p.is_dir()) if etl_root.exists() else []
+    if not source_ids:
+        return {"command": "transform", "error": True, "message": "No source ids / ETL outputs found."}
+
+    reports = []
+    for sid in source_ids:
+        reports.append(run_transform(root, sid, limit=args.limit, prefer=args.prefer))
+    failed = [r for r in reports if r.get("status") == "failed"]
+    return {
+        "command": "transform",
+        "reports": reports,
+        "message": (
+            f"Transform complete for {len(reports)} source(s); "
+            f"{len(failed)} failure(s)"
+        ),
+        "error": bool(failed) and len(failed) == len(reports),
+    }
+
+
+def cmd_views(args: argparse.Namespace) -> dict[str, Any]:
+    """Build model-family training views (v1.8)."""
+    root = Path(args.root) if args.root else _get_root()
+    models = [m.strip() for m in (args.models or "qwen,llama,deepseek").split(",") if m.strip()]
+    result = build_views(
+        root,
+        version=args.version,
+        models=models,
+        source_ids=list(args.source_id) if args.source_id else None,
+        curated_version=args.curated_version,
+        allow_staging=not args.production,
+        quality_threshold=args.quality_threshold,
+        eval_ratio=args.eval_ratio,
+        limit=args.limit,
+    )
+    payload = result.to_dict()
+    payload["command"] = "views"
+    payload["message"] = result.summary
+    if result.status in {"failed", "blocked"}:
+        payload["error"] = True
+    return payload
+
+
+def cmd_release_build(args: argparse.Namespace) -> dict[str, Any]:
+    """Package a release bundle (v1.8 Release Builder)."""
+    root = Path(args.root) if args.root else _get_root()
+    result = build_release(
+        root,
+        version=args.version,
+        source_ids=list(args.source_id) if args.source_id else None,
+        view_version=args.view_version or args.version,
+        allow_staging=not args.production,
+        hub_publish=args.hub_publish,
+    )
+    payload = result.to_dict()
+    payload["command"] = "release-build"
+    payload["message"] = result.summary
+    if result.status in {"failed", "blocked"}:
+        payload["error"] = True
+    return payload
+
+
+def cmd_publish(args: argparse.Namespace) -> dict[str, Any]:
+    """Orchestrate Transform → Views → Release Bundle."""
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {
+        "version": args.version,
+        "allow_staging": not args.production,
+        "hub_publish": args.hub_publish,
+        "skip_transform": args.skip_transform,
+        "skip_views": args.skip_views,
+    }
+    if args.source_id:
+        config["source_ids"] = list(args.source_id)
+    if args.models:
+        config["models"] = [m.strip() for m in args.models.split(",") if m.strip()]
+    if args.limit is not None:
+        config["limit"] = args.limit
+
+    agent = PublishAgent(root, config=config)
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {"command": "publish", "error": True, "message": f"PublishAgent failed: {exc}"}
+
+    payload = result.to_dict()
+    payload["command"] = "publish"
+    payload["message"] = result.summary
+    if result.failed or result.status.value == "blocked":
+        payload["error"] = True
+    return payload
+
+
 # ═══════════════════════════════════════════════════════════════════════
 # CLI argument parser
 # ═══════════════════════════════════════════════════════════════════════
@@ -1116,6 +1218,66 @@ def build_parser() -> argparse.ArgumentParser:
     )
     etl_parser.set_defaults(func=cmd_etl)
 
+    # ── transform (v1.8) ─────────────────────────────────────────────
+    transform_parser = subparsers.add_parser(
+        "transform",
+        help="Transform cleaned ETL records into 5 training types (v1.8).",
+    )
+    transform_parser.add_argument("--source-id", action="append", default=[])
+    transform_parser.add_argument("--limit", type=int, default=None)
+    transform_parser.add_argument(
+        "--prefer",
+        choices=["cleaned", "atlas_staging", "normalized"],
+        default="cleaned",
+        help="Which ETL artifact to transform (default: cleaned).",
+    )
+    transform_parser.set_defaults(func=cmd_transform)
+
+    # ── views (v1.8) ─────────────────────────────────────────────────
+    views_parser = subparsers.add_parser(
+        "views",
+        help="Build model-family training views (v1.8).",
+    )
+    views_parser.add_argument("--version", required=True, help="View package version id.")
+    views_parser.add_argument("--source-id", action="append", default=[])
+    views_parser.add_argument("--models", default="qwen,llama,deepseek")
+    views_parser.add_argument("--curated-version", default=None,
+                              help="Load from curated/<version> instead of ETL staging.")
+    views_parser.add_argument("--production", action="store_true",
+                              help="Require approved curated records (no staging).")
+    views_parser.add_argument("--quality-threshold", type=int, default=7)
+    views_parser.add_argument("--eval-ratio", type=float, default=0.1)
+    views_parser.add_argument("--limit", type=int, default=None)
+    views_parser.set_defaults(func=cmd_views)
+
+    # ── release-build (v1.8) ─────────────────────────────────────────
+    rb_parser = subparsers.add_parser(
+        "release-build",
+        help="Package a release bundle under metadata/release_bundles/ (v1.8).",
+    )
+    rb_parser.add_argument("--version", required=True)
+    rb_parser.add_argument("--source-id", action="append", default=[])
+    rb_parser.add_argument("--view-version", default=None)
+    rb_parser.add_argument("--production", action="store_true")
+    rb_parser.add_argument("--hub-publish", action="store_true",
+                           help="Request HF Hub publish (stub — not configured).")
+    rb_parser.set_defaults(func=cmd_release_build)
+
+    # ── publish (v1.8 orchestrator) ──────────────────────────────────
+    pub_parser = subparsers.add_parser(
+        "publish",
+        help="Run Transform → Views → Release Bundle (PublishAgent v1.8).",
+    )
+    pub_parser.add_argument("--version", required=True)
+    pub_parser.add_argument("--source-id", action="append", default=[])
+    pub_parser.add_argument("--models", default="qwen,llama,deepseek")
+    pub_parser.add_argument("--limit", type=int, default=None)
+    pub_parser.add_argument("--production", action="store_true")
+    pub_parser.add_argument("--hub-publish", action="store_true")
+    pub_parser.add_argument("--skip-transform", action="store_true")
+    pub_parser.add_argument("--skip-views", action="store_true")
+    pub_parser.set_defaults(func=cmd_publish)
+
     # ── retry-history ───────────────────────────────────────────────
     rh_parser = subparsers.add_parser(
         "retry-history",
@@ -1232,6 +1394,31 @@ def _render_text(result: dict[str, Any]) -> None:
                   f"{src.get('summary', '')}")
             if src.get("output_dir"):
                 print(f"             → {src['output_dir']}")
+
+    elif result.get("command") == "transform":
+        for rep in result.get("reports") or []:
+            print(f"    [{rep.get('status', '?'):7s}] {rep.get('source_id')}: "
+                  f"{rep.get('summary', '')}")
+            if rep.get("type_counts"):
+                print(f"             types={rep['type_counts']}")
+
+    elif result.get("command") == "views":
+        print(f"\n  Mode: {result.get('mode')}  records={result.get('record_count')}  "
+              f"eval={result.get('eval_count')}")
+        for model, meta in (result.get("views") or {}).items():
+            print(f"    {model}: {meta.get('records')} → {meta.get('path')}")
+        if result.get("output_dir"):
+            print(f"  Output: {result['output_dir']}")
+
+    elif result.get("command") == "release-build":
+        print(f"\n  Bundle: {result.get('bundle_dir')}")
+        print(f"  Records: {result.get('record_count')}  files={len(result.get('files') or [])}")
+
+    elif result.get("command") == "publish":
+        data = result.get("data") or {}
+        if data.get("release"):
+            print(f"\n  Release: {data['release'].get('summary')}")
+            print(f"  Bundle: {data['release'].get('bundle_dir')}")
 
 
 if __name__ == "__main__":
