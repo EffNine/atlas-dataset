@@ -32,10 +32,10 @@ tmp/
 review_queue/quality_reviews.example.jsonl
 # - the worksheet is deterministically regenerable from candidates
 review_queue/calibration_sample.jsonl
-# review/quality_reviews.jsonl exceeds GitHub 100 MB limit — regenerable from
-# review_queue/approved.jsonl + review_queue/rejected.jsonl + review_queue/pending.jsonl
+# Large regenerable review files (>100MB, exceeds GitHub limit)
 review/quality_reviews.jsonl
-# Keep tracked: metadata/calibration_report.json (real analysis output), and
+review_queue/approved.jsonl
+# Keep tracked: metadata/calibration_report.json, review_queue/rejected.jsonl,
 # review_queue/pending.jsonl (pilot review queue per ADR-007).
 
 # Acquisition Engine ephemeral artifacts (regenerated on each run)
