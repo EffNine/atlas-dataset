@@ -14,13 +14,13 @@
     {
       "version": "v0.2",
       "release_type": "minor",
-      "created_at": "2026-07-27T13:13:41.044150+00:00",
-      "total_records": 263,
-      "chain_hash": "d5baa33e6f6a5c73dda672c669d25f021b1eb3748d26f91673a258f7a82ba4ba",
-      "content_hash": "dbb7491a1730de81e42c25006626335400ee500592345775202ab653e2b81842",
+      "created_at": "2026-07-29T13:05:30.551847+00:00",
+      "total_records": 250,
+      "chain_hash": "2931c7c425406194227ede3cc3bfbadf532b0cc9d66a0a60595f9c6217717513",
+      "content_hash": "60b99369685f3cf402ec5a651864da5800d96ea9298d139904cc50ef0c58af0f",
       "previous_hash": "34e190d38030793a5b2455997051d0be57bd6fc987278229f7c11f435ab82b4b",
-      "gates_passed": false,
-      "release_id": "d5baa33e6f6a5c73"
+      "gates_passed": true,
+      "release_id": "2931c7c425406194"
     }
   ],
   "genesis_hash": "34e190d38030793a5b2455997051d0be57bd6fc987278229f7c11f435ab82b4b"
