@@ -1,0 +1,888 @@
+{
+  "generated_at": "2026-07-28T17:05:13.897609+00:00",
+  "decision_files": [
+    "review/decisions/v0.2/batch_001.jsonl",
+    "review/decisions/v0.2/batch_002.jsonl"
+  ],
+  "normalization_note": "Decisions normalized from search/decisions JSONL into APPROVE/DEFER/REJECT/PENDING for acquisition.",
+  "summary": {
+    "total_records": 50,
+    "by_decision": {
+      "APPROVE": 38,
+      "DEFER": 6,
+      "REJECT": 6,
+      "PENDING": 0
+    },
+    "total_packets": 36,
+    "packet_decisions": {
+      "APPROVE": 30,
+      "DEFER": 4,
+      "REJECT": 2,
+      "PENDING": 0
+    }
+  },
+  "packets": {
+    "f1": {
+      "packet_id": "f1",
+      "decision": "APPROVE",
+      "approved_count": 2,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 2,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "s1": {
+      "packet_id": "s1",
+      "decision": "APPROVE",
+      "approved_count": 4,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 4,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "y1": {
+      "packet_id": "y1",
+      "decision": "APPROVE",
+      "approved_count": 2,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 2,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "m1": {
+      "packet_id": "m1",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "h2": {
+      "packet_id": "h2",
+      "decision": "DEFER",
+      "approved_count": 0,
+      "deferred_count": 1,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "c1": {
+      "packet_id": "c1",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "b1": {
+      "packet_id": "b1",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 1,
+      "rejected_count": 0,
+      "reviewed_count": 2,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "r1": {
+      "packet_id": "r1",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "g1": {
+      "packet_id": "g1",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "s5": {
+      "packet_id": "s5",
+      "decision": "REJECT",
+      "approved_count": 0,
+      "deferred_count": 1,
+      "rejected_count": 2,
+      "reviewed_count": 3,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "f6": {
+      "packet_id": "f6",
+      "decision": "APPROVE",
+      "approved_count": 2,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 2,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "f2": {
+      "packet_id": "f2",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "f5": {
+      "packet_id": "f5",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "y3": {
+      "packet_id": "y3",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "y4": {
+      "packet_id": "y4",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "y6": {
+      "packet_id": "y6",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "f3": {
+      "packet_id": "f3",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 1,
+      "reviewed_count": 2,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "y7": {
+      "packet_id": "y7",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T14:38:25.978757+00:00"
+    },
+    "f4": {
+      "packet_id": "f4",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 1,
+      "reviewed_count": 2,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "f7": {
+      "packet_id": "f7",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 1,
+      "reviewed_count": 2,
+      "first_timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "s4": {
+      "packet_id": "s4",
+      "decision": "APPROVE",
+      "approved_count": 2,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 2,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "s8": {
+      "packet_id": "s8",
+      "decision": "APPROVE",
+      "approved_count": 2,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 2,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "s3": {
+      "packet_id": "s3",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "s2": {
+      "packet_id": "s2",
+      "decision": "REJECT",
+      "approved_count": 0,
+      "deferred_count": 0,
+      "rejected_count": 1,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "h1": {
+      "packet_id": "h1",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "h6": {
+      "packet_id": "h6",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "h4": {
+      "packet_id": "h4",
+      "decision": "DEFER",
+      "approved_count": 0,
+      "deferred_count": 1,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "h3": {
+      "packet_id": "h3",
+      "decision": "DEFER",
+      "approved_count": 0,
+      "deferred_count": 1,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "b4": {
+      "packet_id": "b4",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "b2": {
+      "packet_id": "b2",
+      "decision": "DEFER",
+      "approved_count": 0,
+      "deferred_count": 1,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "m3": {
+      "packet_id": "m3",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "m5": {
+      "packet_id": "m5",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "c2": {
+      "packet_id": "c2",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "c6": {
+      "packet_id": "c6",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "y2": {
+      "packet_id": "y2",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    },
+    "r2": {
+      "packet_id": "r2",
+      "decision": "APPROVE",
+      "approved_count": 1,
+      "deferred_count": 0,
+      "rejected_count": 0,
+      "reviewed_count": 1,
+      "first_timestamp": "2026-07-27T15:05:00+00:00",
+      "last_timestamp": "2026-07-27T15:05:00+00:00"
+    }
+  },
+  "records": [
+    {
+      "record_id": "f1_01_foundation_instruction_following_0015",
+      "packet_id": "f1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_foundation_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 1,
+      "reason": "Domain-standard baseline fact; useful for model grounding."
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0009",
+      "packet_id": "s1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_software_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 2,
+      "reason": "Clear, correct, specific, and referenced; safe for future model training."
+    },
+    {
+      "record_id": "y1_03_system_engineering_devops_0015",
+      "packet_id": "y1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_system_03",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 3,
+      "reason": "High-quality canonical concept with low ambiguity and no hallucination risk."
+    },
+    {
+      "record_id": "m1_04_ai_machine_learning_rag_0007",
+      "packet_id": "m1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_aiml_03",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 4,
+      "reason": "Domain-standard baseline fact; useful for model grounding."
+    },
+    {
+      "record_id": "h2_05_hardware_engineering_embedded_systems_0012",
+      "packet_id": "h2",
+      "decision": "DEFER",
+      "reviewer_id": "reviewer_hardware_02",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 5,
+      "reason": "Concise and directionally correct, but missing the minimum rationale/caveats for training use."
+    },
+    {
+      "record_id": "c1_06_science_engineering_biology_0015",
+      "packet_id": "c1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_science_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 6,
+      "reason": "Concise training-worthy fact with clean explanation and lasting relevance."
+    },
+    {
+      "record_id": "b1_07_business_knowledge_finance_0001",
+      "packet_id": "b1",
+      "decision": "DEFER",
+      "reviewer_id": "reviewer_business_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 7,
+      "reason": "Clear, correct, specific, and referenced; safe for future model training."
+    },
+    {
+      "record_id": "r1_08_creative_knowledge_writing_0007",
+      "packet_id": "r1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_creative_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 8,
+      "reason": "Domain-standard baseline fact; useful for model grounding. Review notes: Public Domain source remains cleaner than license-conditional records; retain attribution metadata if moved to approved queue."
+    },
+    {
+      "record_id": "g1_09_personal_assistant_personal_knowledge_0001",
+      "packet_id": "g1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_pa_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 9,
+      "reason": "Concise training-worthy fact with clean explanation and lasting relevance."
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0013",
+      "packet_id": "s5",
+      "decision": "REJECT",
+      "reviewer_id": "reviewer_software_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 10,
+      "reason": "Review-limited license provenance for commercial Atlas use; reject unless attribution/use-clause approval is granted."
+    },
+    {
+      "record_id": "f6_01_foundation_general_reasoning_0006",
+      "packet_id": "f6",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_foundation_02",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 11,
+      "reason": "Domain-standard baseline fact; useful for model grounding."
+    },
+    {
+      "record_id": "f2_01_foundation_general_reasoning_0002",
+      "packet_id": "f2",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_foundation_02",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 12,
+      "reason": "Clear, correct, specific, and referenced; safe for future model training."
+    },
+    {
+      "record_id": "f5_01_foundation_general_reasoning_0012",
+      "packet_id": "f5",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_foundation_02",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 13,
+      "reason": "High-quality canonical concept with low ambiguity and no hallucination risk."
+    },
+    {
+      "record_id": "y1_03_system_engineering_networking_0008",
+      "packet_id": "y1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_system_02",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 14,
+      "reason": "High-quality canonical concept with low ambiguity and no hallucination risk."
+    },
+    {
+      "record_id": "y3_03_system_engineering_networking_0003",
+      "packet_id": "y3",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_system_03",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 15,
+      "reason": "Domain-standard baseline fact; useful for model grounding."
+    },
+    {
+      "record_id": "y4_03_system_engineering_networking_0018",
+      "packet_id": "y4",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_system_03",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 16,
+      "reason": "Domain-standard baseline fact; useful for model grounding."
+    },
+    {
+      "record_id": "y6_03_system_engineering_networking_0013",
+      "packet_id": "y6",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_system_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 17,
+      "reason": "High-quality canonical concept with low ambiguity and no hallucination risk."
+    },
+    {
+      "record_id": "f3_01_foundation_general_reasoning_0010",
+      "packet_id": "f3",
+      "decision": "REJECT",
+      "reviewer_id": "reviewer_foundation_02",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 18,
+      "reason": "Review-limited license provenance for commercial Atlas use; reject unless attribution/use-clause approval is granted."
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0001",
+      "packet_id": "s1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_software_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 19,
+      "reason": "High-quality canonical concept with low ambiguity and no hallucination risk."
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0021",
+      "packet_id": "s5",
+      "decision": "REJECT",
+      "reviewer_id": "reviewer_software_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 20,
+      "reason": "Review-limited license provenance for commercial Atlas use; reject unless attribution/use-clause approval is granted."
+    },
+    {
+      "record_id": "y7_03_system_engineering_linux_0021",
+      "packet_id": "y7",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_system_03",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 21,
+      "reason": "High-quality canonical concept with low ambiguity and no hallucination risk."
+    },
+    {
+      "record_id": "f1_01_foundation_instruction_following_0001",
+      "packet_id": "f1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_foundation_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 22,
+      "reason": "Domain-standard baseline fact; useful for model grounding."
+    },
+    {
+      "record_id": "f6_01_foundation_instruction_following_0013",
+      "packet_id": "f6",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_foundation_01",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 23,
+      "reason": "Clear, correct, specific, and referenced; safe for future model training."
+    },
+    {
+      "record_id": "f4_01_foundation_general_reasoning_0004",
+      "packet_id": "f4",
+      "decision": "REJECT",
+      "reviewer_id": "reviewer_foundation_02",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 24,
+      "reason": "Review-limited license provenance for commercial Atlas use; reject unless attribution/use-clause approval is granted."
+    },
+    {
+      "record_id": "f7_01_foundation_general_reasoning_0014",
+      "packet_id": "f7",
+      "decision": "REJECT",
+      "reviewer_id": "reviewer_foundation_02",
+      "timestamp": "2026-07-27T14:38:25.978757+00:00",
+      "source_file": "review/decisions/v0.2/batch_001.jsonl",
+      "line": 25,
+      "reason": "Review-limited license provenance for commercial Atlas use; reject unless attribution/use-clause approval is granted."
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0017",
+      "packet_id": "s1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_software_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 1,
+      "reason": "MIT-licensed SWE-bench record; concise and training-useful software-engineering knowledge with cleared provenance."
+    },
+    {
+      "record_id": "s1_02_software_engineering_programming_0025",
+      "packet_id": "s1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_software_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 2,
+      "reason": "Cleared source family; accurate abstract-class-vs-interface comparison useful for programming training."
+    },
+    {
+      "record_id": "s4_02_software_engineering_algorithms_0012",
+      "packet_id": "s4",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_software_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 3,
+      "reason": "Apache-2.0 source; concise but correct algorithmic definition suitable as a training anchor."
+    },
+    {
+      "record_id": "s4_02_software_engineering_algorithms_0028",
+      "packet_id": "s4",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_software_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 4,
+      "reason": "Cleared Apache-2.0 source; quicksort explanation is canonical and training-useful."
+    },
+    {
+      "record_id": "s8_02_software_engineering_algorithms_0016",
+      "packet_id": "s8",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_software_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 5,
+      "reason": "Apache-2.0 (gated; verify) record with license documentation present. Accepted for review with provenance tracking; final release inclusion requires upstream verification confirmation."
+    },
+    {
+      "record_id": "s8_02_software_engineering_algorithms_0024",
+      "packet_id": "s8",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_software_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 6,
+      "reason": "Same cleared source family and license path as s8_...0016; canonical dynamic-programming explanation with valid provenance."
+    },
+    {
+      "record_id": "s3_02_software_engineering_software_architecture_0011",
+      "packet_id": "s3",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_software_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 7,
+      "reason": "BigCode Open RAIL-M record with correct circuit-breaker content. Accepted under the hardened checklist because Open RAIL-M is conditionally permissible; attribution and use-clause metadata must be retained before final release inclusion."
+    },
+    {
+      "record_id": "s5_02_software_engineering_programming_0029",
+      "packet_id": "s5",
+      "decision": "DEFER",
+      "reviewer_id": "reviewer_software_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 8,
+      "reason": "StackExchange Code content is correct and concise, but the CC-BY-SA-4.0 provenance path needs explicit attribution/share-alike tracking confirmation before approval. Sending to needs_revision so upstream documentation can clear the record."
+    },
+    {
+      "record_id": "s2_02_software_engineering_debugging_0002",
+      "packet_id": "s2",
+      "decision": "REJECT",
+      "reviewer_id": "reviewer_software_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 9,
+      "reason": "Source bigcode/the-stack-v2 carries BigCode Open RAIL-M use-restricted terms. Under hardened provenance gating this is a blocked source path for commercial Atlas use; content correctness is irrelevant because the license itself is not cleared."
+    },
+    {
+      "record_id": "h1_05_hardware_engineering_cpu_0001",
+      "packet_id": "h1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_hardware_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 10,
+      "reason": "CC-BY-SA-3.0 Wikipedia hardware source is cleared; RISC vs CISC distinction is canonical and training-useful despite brevity."
+    },
+    {
+      "record_id": "h6_05_hardware_engineering_gpu_0010",
+      "packet_id": "h6",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_hardware_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 11,
+      "reason": "Synthetic hardware record with documented CC-BY-4.0 provenance; GPU parallelism explanation is concise but complete enough for training."
+    },
+    {
+      "record_id": "h4_05_hardware_engineering_embedded_systems_0004",
+      "packet_id": "h4",
+      "decision": "DEFER",
+      "reviewer_id": "reviewer_hardware_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 12,
+      "reason": "CC-BY-SA-4.0 StackExchange Electronics source is acceptable, and the Bare-metal vs RTOS answer is directionally correct. Under the updated hardware rubric it needs explicit operational context: use-case implications, scheduling guarantees, or real-time constraint caveats."
+    },
+    {
+      "record_id": "h3_05_hardware_engineering_firmware_0003",
+      "packet_id": "h3",
+      "decision": "DEFER",
+      "reviewer_id": "reviewer_hardware_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 13,
+      "reason": "The firmware definition is accurate but too thin for training use: no ROM/EEPROM context, no update-role detail, no system-context examples. Also carries WikiChip-derived license wording that still needs human-review attribution metadata."
+    },
+    {
+      "record_id": "b1_07_business_knowledge_finance_0005",
+      "packet_id": "b1",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_business_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 14,
+      "reason": "MIT-licensed finance-alpaca record with a clear structural comparison; concise but complete enough for business training."
+    },
+    {
+      "record_id": "b4_07_business_knowledge_finance_0004",
+      "packet_id": "b4",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_business_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 15,
+      "reason": "Synthetic business record with CC-BY-4.0 provenance and explicit human-review note; EBITDA definition includes operational rationale and is approved."
+    },
+    {
+      "record_id": "b2_07_business_knowledge_finance_0002",
+      "packet_id": "b2",
+      "decision": "DEFER",
+      "reviewer_id": "reviewer_business_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 16,
+      "reason": "CC-BY-SA-3.0 Wikipedia business source is license-cleared, but the compound-interest explanation omits the practical consequence that makes it training-useful: nominal vs real rate sensitivity, compounding-frequency effect, or horizon dependency. Needs substantive depth."
+    },
+    {
+      "record_id": "f3_01_foundation_instruction_following_0003",
+      "packet_id": "f3",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_foundation_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 17,
+      "reason": "Apache-2.0 source; canonical bias-variance explanation with lasting relevance for instruction-following tasks."
+    },
+    {
+      "record_id": "f4_01_foundation_instruction_following_0011",
+      "packet_id": "f4",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_foundation_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 18,
+      "reason": "Apache-2.0 self-instruct record; Transformer-architecture statement is concise, correct, and useful as a concept anchor."
+    },
+    {
+      "record_id": "f7_01_foundation_instruction_following_0007",
+      "packet_id": "f7",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_foundation_02",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 19,
+      "reason": "MIT licensing label is present, but the record includes a PII-caution flag. Accepted here because the content is standard and lineage traceable, with the explicit caveat that PII-policy review should be retained before training release."
+    },
+    {
+      "record_id": "m3_04_ai_machine_learning_transformers_0009",
+      "packet_id": "m3",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_aiml_03",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 20,
+      "reason": "ODC-BY source with stable lineage; self-attention statement is a canonical ML concept useful across training views."
+    },
+    {
+      "record_id": "m5_04_ai_machine_learning_transformers_0005",
+      "packet_id": "m5",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_aiml_03",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 21,
+      "reason": "LMSYS chat record carries a custom/research-only usage note; the LoRA/QLoRA answer is accurate and useful. Accepted conditionally because the concept is canonical and lineage is preserved, with the understanding that final release must retain the usage-note documentation."
+    },
+    {
+      "record_id": "c2_06_science_engineering_biology_0009",
+      "packet_id": "c2",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_science_01",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 22,
+      "reason": "MIT-licensed science record; photosynthesis explanation is accurate and useful for science training."
+    },
+    {
+      "record_id": "c6_06_science_engineering_physics_0013",
+      "packet_id": "c6",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_science_01",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 23,
+      "reason": "AllenAI SciQ CC-BY-4.0 physics record; Schr\u00f6dinger-equation description is correct, clear, and broadly reusable."
+    },
+    {
+      "record_id": "y2_03_system_engineering_linux_0016",
+      "packet_id": "y2",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_system_01",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 24,
+      "reason": "CC-BY-4.0 Kubernetes documentation record; System V init runlevels explanation is accurate and useful for system-engineering training."
+    },
+    {
+      "record_id": "r2_08_creative_knowledge_art_0008",
+      "packet_id": "r2",
+      "decision": "APPROVE",
+      "reviewer_id": "reviewer_creative_01",
+      "timestamp": "2026-07-27T15:05:00+00:00",
+      "source_file": "review/decisions/v0.2/batch_002.jsonl",
+      "line": 25,
+      "reason": "CC-BY-SA-3.0 Wikipedia creative-knowledge record; perspective explanation is accurate and useful as a baseline comparison item."
+    }
+  ]
+}

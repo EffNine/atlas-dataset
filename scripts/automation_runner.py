@@ -66,6 +66,9 @@ from automation.approval_gate import ApprovalGate, ApproverRole
 from automation.base_agent import AgentStatus
 from automation.pipeline_orchestrator import PipelineOrchestrator, PipelineResult, PipelineStatus
 from automation.failure_recovery import retry_failed_agent, resume_pipeline, RetryManager
+from automation.acquisition_agent import AcquisitionAgent
+from downloader import DownloadAgent, CacheManager
+from etl import ExtractAgent
 from atlas_paths import discover_root
 
 
@@ -750,6 +753,111 @@ def cmd_retry_history(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
+def cmd_acquire(args: argparse.Namespace) -> dict[str, Any]:
+    """Run AcquisitionAgent v1 for the Atlas acquisition workflow."""
+    root = Path(args.root) if args.root else _get_root()
+    agent = AcquisitionAgent(root, config={"mode": args.mode})
+
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {
+            "command": "acquire",
+            "mode": args.mode,
+            "error": True,
+            "message": f"AcquisitionAgent failed: {exc}",
+        }
+
+    payload = result.to_dict()
+    payload["command"] = "acquire"
+    payload["mode"] = args.mode
+    payload["message"] = result.summary
+    return payload
+
+
+def cmd_download(args: argparse.Namespace) -> dict[str, Any]:
+    """Run DownloadAgent v1.6 — fetch acquired sources into raw/.cache/."""
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {
+        "mode": args.mode,
+        "max_retries": args.max_retries,
+        "timeout": args.timeout,
+    }
+    if args.source_id:
+        config["source_ids"] = list(args.source_id)
+    if args.use_registry:
+        config["use_registry"] = True
+    if args.max_files is not None:
+        config["max_files"] = args.max_files
+    if args.force:
+        config["force"] = True
+
+    agent = DownloadAgent(root, config=config)
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {
+            "command": "download",
+            "mode": args.mode,
+            "error": True,
+            "message": f"DownloadAgent failed: {exc}",
+        }
+
+    payload = result.to_dict()
+    payload["command"] = "download"
+    payload["mode"] = args.mode
+    payload["message"] = result.summary
+    if result.failed:
+        payload["error"] = True
+    return payload
+
+
+def cmd_cache_stats(args: argparse.Namespace) -> dict[str, Any]:
+    """Show content-addressable cache statistics."""
+    root = Path(args.root) if args.root else _get_root()
+    cache = CacheManager(root)
+    stats = cache.stats()
+    entries = [e.to_dict() for e in cache.list_entries()]
+    return {
+        "command": "cache-stats",
+        "stats": stats,
+        "entries": entries if args.list_entries else [],
+        "message": (
+            f"Cache at {stats['cache_dir']}: {stats['entries']} entries, "
+            f"{stats['total_bytes']} bytes"
+        ),
+    }
+
+
+def cmd_etl(args: argparse.Namespace) -> dict[str, Any]:
+    """Run Extract → Normalize → Clean (ETL v1.7) on cached downloads."""
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {
+        "promote_atlas": not args.no_promote,
+    }
+    if args.source_id:
+        config["source_ids"] = list(args.source_id)
+    if args.limit is not None:
+        config["limit"] = args.limit
+
+    agent = ExtractAgent(root, config=config)
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {
+            "command": "etl",
+            "error": True,
+            "message": f"ExtractAgent failed: {exc}",
+        }
+
+    payload = result.to_dict()
+    payload["command"] = "etl"
+    payload["message"] = result.summary
+    if result.failed:
+        payload["error"] = True
+    return payload
+
+
 # ═══════════════════════════════════════════════════════════════════════
 # CLI argument parser
 # ═══════════════════════════════════════════════════════════════════════
@@ -916,6 +1024,98 @@ def build_parser() -> argparse.ArgumentParser:
                                help="JSON config string for the pipeline.")
     resume_parser.set_defaults(func=cmd_resume)
 
+    # ── acquire ───────────────────────────────────────────────────────
+    acquire_parser = subparsers.add_parser(
+        "acquire",
+        help="Run AcquisitionAgent v1 with dry-run or acquire mode.",
+    )
+    acquire_parser.add_argument("--mode", default="dry-run", choices=["dry-run", "acquire"],
+                                help="Acquisition mode.")
+    acquire_parser.set_defaults(func=cmd_acquire)
+
+    # ── download (v1.6) ──────────────────────────────────────────────
+    download_parser = subparsers.add_parser(
+        "download",
+        help="Download acquired sources into raw/.cache/ (Downloader v1.6).",
+    )
+    download_parser.add_argument(
+        "--mode",
+        default="dry-run",
+        choices=["dry-run", "download"],
+        help="Download mode (default: dry-run).",
+    )
+    download_parser.add_argument(
+        "--source-id",
+        action="append",
+        default=[],
+        help="Limit to one or more source ids (repeatable).",
+    )
+    download_parser.add_argument(
+        "--use-registry",
+        action="store_true",
+        help="Fall back to accepted/review registry sources when no acquisition logs exist.",
+    )
+    download_parser.add_argument(
+        "--max-files",
+        type=int,
+        default=None,
+        help="Max files per HuggingFace dataset (default adapter: 3).",
+    )
+    download_parser.add_argument(
+        "--max-retries",
+        type=int,
+        default=3,
+        help="Network retry budget (default: 3).",
+    )
+    download_parser.add_argument(
+        "--timeout",
+        type=float,
+        default=60.0,
+        help="Per-request timeout seconds (default: 60).",
+    )
+    download_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Re-download even when a cache entry already exists.",
+    )
+    download_parser.set_defaults(func=cmd_download)
+
+    # ── cache-stats ──────────────────────────────────────────────────
+    cache_parser = subparsers.add_parser(
+        "cache-stats",
+        help="Show raw/.cache/ statistics and optional entry listing.",
+    )
+    cache_parser.add_argument(
+        "--list-entries",
+        action="store_true",
+        help="Include per-source cache entries in the output.",
+    )
+    cache_parser.set_defaults(func=cmd_cache_stats)
+
+    # ── etl (v1.7) ───────────────────────────────────────────────────
+    etl_parser = subparsers.add_parser(
+        "etl",
+        help="Extract → Normalize → Clean cached downloads (ETL v1.7).",
+    )
+    etl_parser.add_argument(
+        "--source-id",
+        action="append",
+        default=[],
+        help="Source id(s) to process (repeatable). Defaults to all download logs.",
+    )
+    etl_parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Max records to extract per source (useful for smoke tests).",
+    )
+    etl_parser.add_argument(
+        "--no-promote",
+        action="store_true",
+        help="Skip promotion to atlas_staging.jsonl.",
+    )
+    etl_parser.set_defaults(func=cmd_etl)
+
     # ── retry-history ───────────────────────────────────────────────
     rh_parser = subparsers.add_parser(
         "retry-history",
@@ -1019,6 +1219,19 @@ def _render_text(result: dict[str, Any]) -> None:
                 status = ar.get("status", "?")
                 summary = ar.get("summary", "")
                 print(f"    [{status.upper():8s}] {name}: {summary}")
+
+    elif result.get("command") == "etl":
+        totals = (result.get("data") or {}).get("totals") or {}
+        sources = (result.get("data") or {}).get("sources") or []
+        print(f"\n  Totals: extracted={totals.get('extracted', 0)} "
+              f"cleaned={totals.get('cleaned', 0)} "
+              f"atlas_staging={totals.get('atlas_records', 0)} "
+              f"dropped={totals.get('dropped', 0)}")
+        for src in sources:
+            print(f"    [{src.get('status', '?'):7s}] {src.get('source_id')}: "
+                  f"{src.get('summary', '')}")
+            if src.get("output_dir"):
+                print(f"             → {src['output_dir']}")
 
 
 if __name__ == "__main__":

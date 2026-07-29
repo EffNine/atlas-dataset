@@ -7,6 +7,8 @@ raw/generated/*
 raw/documentation/*
 raw/conversations/*
 raw/personal_knowledge/*
+raw/.cache/**
+!raw/.cache/.gitkeep
 !**/.gitkeep
 
 # Curated bulk data is generated; keep only manifests + samples in git.
@@ -50,3 +52,6 @@ metadata/pipeline_approvals.json
 metadata/pipeline_revisions/
 metadata/pipeline_retries/
 metadata/releases/
+metadata/acquisition_logs/
+metadata/download_logs/
+metadata/etl/
