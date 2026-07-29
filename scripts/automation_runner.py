@@ -67,6 +67,7 @@ from automation.base_agent import AgentStatus
 from automation.pipeline_orchestrator import PipelineOrchestrator, PipelineResult, PipelineStatus
 from automation.failure_recovery import retry_failed_agent, resume_pipeline, RetryManager
 from automation.acquisition_agent import AcquisitionAgent
+from downloader import DownloadAgent, CacheManager
 from atlas_paths import discover_root
 
 
@@ -773,6 +774,60 @@ def cmd_acquire(args: argparse.Namespace) -> dict[str, Any]:
     return payload
 
 
+def cmd_download(args: argparse.Namespace) -> dict[str, Any]:
+    """Run DownloadAgent v1.6 — fetch acquired sources into raw/.cache/."""
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {
+        "mode": args.mode,
+        "max_retries": args.max_retries,
+        "timeout": args.timeout,
+    }
+    if args.source_id:
+        config["source_ids"] = list(args.source_id)
+    if args.use_registry:
+        config["use_registry"] = True
+    if args.max_files is not None:
+        config["max_files"] = args.max_files
+    if args.force:
+        config["force"] = True
+
+    agent = DownloadAgent(root, config=config)
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {
+            "command": "download",
+            "mode": args.mode,
+            "error": True,
+            "message": f"DownloadAgent failed: {exc}",
+        }
+
+    payload = result.to_dict()
+    payload["command"] = "download"
+    payload["mode"] = args.mode
+    payload["message"] = result.summary
+    if result.failed:
+        payload["error"] = True
+    return payload
+
+
+def cmd_cache_stats(args: argparse.Namespace) -> dict[str, Any]:
+    """Show content-addressable cache statistics."""
+    root = Path(args.root) if args.root else _get_root()
+    cache = CacheManager(root)
+    stats = cache.stats()
+    entries = [e.to_dict() for e in cache.list_entries()]
+    return {
+        "command": "cache-stats",
+        "stats": stats,
+        "entries": entries if args.list_entries else [],
+        "message": (
+            f"Cache at {stats['cache_dir']}: {stats['entries']} entries, "
+            f"{stats['total_bytes']} bytes"
+        ),
+    }
+
+
 # ═══════════════════════════════════════════════════════════════════════
 # CLI argument parser
 # ═══════════════════════════════════════════════════════════════════════
@@ -947,6 +1002,65 @@ def build_parser() -> argparse.ArgumentParser:
     acquire_parser.add_argument("--mode", default="dry-run", choices=["dry-run", "acquire"],
                                 help="Acquisition mode.")
     acquire_parser.set_defaults(func=cmd_acquire)
+
+    # ── download (v1.6) ──────────────────────────────────────────────
+    download_parser = subparsers.add_parser(
+        "download",
+        help="Download acquired sources into raw/.cache/ (Downloader v1.6).",
+    )
+    download_parser.add_argument(
+        "--mode",
+        default="dry-run",
+        choices=["dry-run", "download"],
+        help="Download mode (default: dry-run).",
+    )
+    download_parser.add_argument(
+        "--source-id",
+        action="append",
+        default=[],
+        help="Limit to one or more source ids (repeatable).",
+    )
+    download_parser.add_argument(
+        "--use-registry",
+        action="store_true",
+        help="Fall back to accepted/review registry sources when no acquisition logs exist.",
+    )
+    download_parser.add_argument(
+        "--max-files",
+        type=int,
+        default=None,
+        help="Max files per HuggingFace dataset (default adapter: 3).",
+    )
+    download_parser.add_argument(
+        "--max-retries",
+        type=int,
+        default=3,
+        help="Network retry budget (default: 3).",
+    )
+    download_parser.add_argument(
+        "--timeout",
+        type=float,
+        default=60.0,
+        help="Per-request timeout seconds (default: 60).",
+    )
+    download_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Re-download even when a cache entry already exists.",
+    )
+    download_parser.set_defaults(func=cmd_download)
+
+    # ── cache-stats ──────────────────────────────────────────────────
+    cache_parser = subparsers.add_parser(
+        "cache-stats",
+        help="Show raw/.cache/ statistics and optional entry listing.",
+    )
+    cache_parser.add_argument(
+        "--list-entries",
+        action="store_true",
+        help="Include per-source cache entries in the output.",
+    )
+    cache_parser.set_defaults(func=cmd_cache_stats)
 
     # ── retry-history ───────────────────────────────────────────────
     rh_parser = subparsers.add_parser(
