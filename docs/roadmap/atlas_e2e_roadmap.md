@@ -485,7 +485,7 @@ Automates the final step: packaging a dataset for distribution.
 |---|---|---|---|---|
 | v1.6 ✅ | **Downloader + Cache** | Source adapters (HF, GitHub, docs, SE, arXiv); Cache Manager with resume + checksums; retry logic | Source API rate limits; large downloads (arXiv bulk data); GitHub auth complexity | AcquisitionAgent v1 (complete) |
 | v1.7 ✅ | **Extract + Normalize + Clean** | Extractors for all formats; Normalizer → Canonical Schema; Cleaning pipeline (dedup, PII, malformed removal, license injection, language validation) | PII false positives; format edge cases (malformed XML/HTML); near-duplicate algorithm tuning | v1.6 (cache populated) |
-| v1.8 | **Transform + Training Views + Release** | Transformation layer (5 record types); Training View Builder production integration; Release Builder (bundles, manifests, Hub publish) | Transformation quality for poorly-structured sources; view generation performance at scale | v1.7 (clean records available) |
+| v1.8 ✅ | **Transform + Training Views + Release** | Transformation layer (5 record types); Training View Builder production integration; Release Builder (bundles, manifests, Hub publish) | Transformation quality for poorly-structured sources; view generation performance at scale | v1.7 (clean records available) |
 | v1.9 | **Performance + Scale** | Parallel processing (multi-worker extraction/normalization/cleaning); streaming pipeline; incremental updates (delta processing); memory optimization for large datasets | Thread safety in cleaners; incremental detection complexity; correctness verification | v1.8 (baseline pipeline) |
 | v2.0 | **Full Automation** | End-to-end pipeline: source → download → cache → extract → normalize → clean → transform → quality → provenance → revision → validation → approval → release. Single command: `atlas pipeline e2e` | Integration complexity; error propagation across all stages; human approval UX | v1.9 (performance baseline) |
 
@@ -555,24 +555,26 @@ Automates the final step: packaging a dataset for distribution.
 
 **Goal:** Transform cleaned records into training-ready formats and produce release bundles.
 
+**Status:** ✅ Implemented — see `docs/v1_8_transform_views_release.md`
+
 **Deliverables:**
 
-- [ ] **Documentation → Instruction transformer**
-- [ ] **QA → QA Pair transformer**
-- [ ] **Conversation → Conversation transformer**
-- [ ] **Reasoning → Reasoning transformer**
-- [ ] **Knowledge → Knowledge Object transformer**
-- [ ] **Training View Builder** (production integration with existing `training_view_engine/`)
-  - Review queue views
-  - Curated snapshot views
-  - Model-family-specific training views (Qwen, Llama, DeepSeek)
-  - Evaluation set generation
-- [ ] **Release Builder**
-  - Release bundle packaging
-  - File-level checksum manifest
-  - Dataset card generation
-  - HuggingFace Hub publish (optional)
-  - Release notes generator
+- [x] **Documentation → Instruction transformer**
+- [x] **QA → QA Pair transformer**
+- [x] **Conversation → Conversation transformer**
+- [x] **Reasoning → Reasoning transformer**
+- [x] **Knowledge → Knowledge Object transformer**
+- [x] **Training View Builder** (integrates `convert_format` templates; staging + production modes)
+  - [ ] Review queue views (deferred — review_queue remains human-owned)
+  - [x] Curated snapshot views (via `--curated-version` / canonical snapshot)
+  - [x] Model-family-specific training views (Qwen, Llama, DeepSeek)
+  - [x] Evaluation set generation (deterministic holdout)
+- [x] **Release Builder**
+  - [x] Release bundle packaging (`metadata/release_bundles/`)
+  - [x] File-level checksum manifest
+  - [x] Dataset card generation
+  - [x] HuggingFace Hub publish (optional stub — not configured)
+  - [x] Release notes generator
 
 **Risks:**
 
