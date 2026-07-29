@@ -7,6 +7,8 @@ raw/generated/*
 raw/documentation/*
 raw/conversations/*
 raw/personal_knowledge/*
+raw/.cache/**
+!raw/.cache/.gitkeep
 !**/.gitkeep
 
 # Curated bulk data is generated; keep only manifests + samples in git.
@@ -43,3 +45,17 @@ knowledge_packs/*
 curated/**/data/*
 metadata/engine_checksums.json
 docs/diff_*.md
+
+# Automation Layer pipeline artifacts (runtime state, not source)
+metadata/pipeline_state/
+metadata/pipeline_approvals.json
+metadata/pipeline_revisions/
+metadata/pipeline_retries/
+metadata/releases/
+metadata/acquisition_logs/
+metadata/download_logs/
+metadata/etl/
+metadata/views/
+metadata/release_bundles/
+metadata/e2e_reports/
+metadata/pipeline_incremental.json

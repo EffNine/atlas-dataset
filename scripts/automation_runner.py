@@ -65,6 +65,16 @@ from automation.state_machine import _STATE_INDEX, PipelineState, StateMachine
 from automation.approval_gate import ApprovalGate, ApproverRole
 from automation.base_agent import AgentStatus
 from automation.pipeline_orchestrator import PipelineOrchestrator, PipelineResult, PipelineStatus
+from automation.failure_recovery import retry_failed_agent, resume_pipeline, RetryManager
+from automation.acquisition_agent import AcquisitionAgent
+from downloader import DownloadAgent, CacheManager
+from etl import ExtractAgent
+from publish_agent import PublishAgent
+from transform import run_transform
+from view_builder import build_views
+from release_builder import build_release
+from e2e_pipeline import E2EPipeline
+from incremental import IncrementalState
 from atlas_paths import discover_root
 
 
@@ -677,6 +687,334 @@ def _error_result(message: str) -> dict[str, Any]:
     }
 
 
+def cmd_retry(args: argparse.Namespace) -> dict[str, Any]:
+    """Retry a failed agent in a pipeline.
+
+    Only re-runs the specific agent that failed.
+    On success, continues the rest of the pipeline.
+    On failure, stays FAILED with an updated retry record.
+    """
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {}
+    if args.config:
+        try:
+            config = json.loads(args.config)
+        except json.JSONDecodeError as e:
+            return _error_result(f"Invalid --config JSON: {e}")
+
+    result = retry_failed_agent(
+        pipeline_id=args.pipeline_id,
+        root=root,
+        config=config,
+    )
+
+    return {
+        "command": "retry",
+        "pipeline_id": args.pipeline_id,
+        **result,
+    }
+
+
+def cmd_resume(args: argparse.Namespace) -> dict[str, Any]:
+    """Resume a failed pipeline by clearing failure and continuing.
+
+    Transitions back to the pre-failure state and runs the full pipeline.
+    """
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {}
+    if args.config:
+        try:
+            config = json.loads(args.config)
+        except json.JSONDecodeError as e:
+            return _error_result(f"Invalid --config JSON: {e}")
+
+    result = resume_pipeline(
+        pipeline_id=args.pipeline_id,
+        root=root,
+        config=config,
+    )
+
+    return {
+        "command": "resume",
+        "pipeline_id": args.pipeline_id,
+        **result,
+    }
+
+
+def cmd_retry_history(args: argparse.Namespace) -> dict[str, Any]:
+    """Show retry history for a pipeline."""
+    root = Path(args.root) if args.root else _get_root()
+    mgr = RetryManager(args.pipeline_id, root)
+    history = mgr.load_history()
+
+    return {
+        "command": "retry-history",
+        "pipeline_id": args.pipeline_id,
+        "retry_count": len(history),
+        "retry_history": history,
+        "message": (
+            f"Pipeline '{args.pipeline_id}' has {len(history)} retry "
+            f"record(s)."
+        ),
+    }
+
+
+def cmd_acquire(args: argparse.Namespace) -> dict[str, Any]:
+    """Run AcquisitionAgent v1 for the Atlas acquisition workflow."""
+    root = Path(args.root) if args.root else _get_root()
+    agent = AcquisitionAgent(root, config={"mode": args.mode})
+
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {
+            "command": "acquire",
+            "mode": args.mode,
+            "error": True,
+            "message": f"AcquisitionAgent failed: {exc}",
+        }
+
+    payload = result.to_dict()
+    payload["command"] = "acquire"
+    payload["mode"] = args.mode
+    payload["message"] = result.summary
+    return payload
+
+
+def cmd_download(args: argparse.Namespace) -> dict[str, Any]:
+    """Run DownloadAgent v1.6 — fetch acquired sources into raw/.cache/."""
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {
+        "mode": args.mode,
+        "max_retries": args.max_retries,
+        "timeout": args.timeout,
+    }
+    if args.source_id:
+        config["source_ids"] = list(args.source_id)
+    if args.use_registry:
+        config["use_registry"] = True
+    if args.max_files is not None:
+        config["max_files"] = args.max_files
+    if args.force:
+        config["force"] = True
+
+    agent = DownloadAgent(root, config=config)
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {
+            "command": "download",
+            "mode": args.mode,
+            "error": True,
+            "message": f"DownloadAgent failed: {exc}",
+        }
+
+    payload = result.to_dict()
+    payload["command"] = "download"
+    payload["mode"] = args.mode
+    payload["message"] = result.summary
+    if result.failed:
+        payload["error"] = True
+    return payload
+
+
+def cmd_cache_stats(args: argparse.Namespace) -> dict[str, Any]:
+    """Show content-addressable cache statistics."""
+    root = Path(args.root) if args.root else _get_root()
+    cache = CacheManager(root)
+    stats = cache.stats()
+    entries = [e.to_dict() for e in cache.list_entries()]
+    return {
+        "command": "cache-stats",
+        "stats": stats,
+        "entries": entries if args.list_entries else [],
+        "message": (
+            f"Cache at {stats['cache_dir']}: {stats['entries']} entries, "
+            f"{stats['total_bytes']} bytes"
+        ),
+    }
+
+
+def cmd_etl(args: argparse.Namespace) -> dict[str, Any]:
+    """Run Extract → Normalize → Clean (ETL v1.7) on cached downloads."""
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {
+        "promote_atlas": not args.no_promote,
+    }
+    if args.source_id:
+        config["source_ids"] = list(args.source_id)
+    if args.limit is not None:
+        config["limit"] = args.limit
+
+    agent = ExtractAgent(root, config=config)
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {
+            "command": "etl",
+            "error": True,
+            "message": f"ExtractAgent failed: {exc}",
+        }
+
+    payload = result.to_dict()
+    payload["command"] = "etl"
+    payload["message"] = result.summary
+    if result.failed:
+        payload["error"] = True
+    return payload
+
+
+def cmd_transform(args: argparse.Namespace) -> dict[str, Any]:
+    """Run Transform layer v1.8 on ETL cleaned/staging records."""
+    root = Path(args.root) if args.root else _get_root()
+    source_ids = list(args.source_id) if args.source_id else []
+    if not source_ids:
+        etl_root = root / "metadata" / "etl"
+        source_ids = sorted(p.name for p in etl_root.iterdir() if p.is_dir()) if etl_root.exists() else []
+    if not source_ids:
+        return {"command": "transform", "error": True, "message": "No source ids / ETL outputs found."}
+
+    reports = []
+    for sid in source_ids:
+        reports.append(run_transform(root, sid, limit=args.limit, prefer=args.prefer))
+    failed = [r for r in reports if r.get("status") == "failed"]
+    return {
+        "command": "transform",
+        "reports": reports,
+        "message": (
+            f"Transform complete for {len(reports)} source(s); "
+            f"{len(failed)} failure(s)"
+        ),
+        "error": bool(failed) and len(failed) == len(reports),
+    }
+
+
+def cmd_views(args: argparse.Namespace) -> dict[str, Any]:
+    """Build model-family training views (v1.8)."""
+    root = Path(args.root) if args.root else _get_root()
+    models = [m.strip() for m in (args.models or "qwen,llama,deepseek").split(",") if m.strip()]
+    result = build_views(
+        root,
+        version=args.version,
+        models=models,
+        source_ids=list(args.source_id) if args.source_id else None,
+        curated_version=args.curated_version,
+        allow_staging=not args.production,
+        quality_threshold=args.quality_threshold,
+        eval_ratio=args.eval_ratio,
+        limit=args.limit,
+    )
+    payload = result.to_dict()
+    payload["command"] = "views"
+    payload["message"] = result.summary
+    if result.status in {"failed", "blocked"}:
+        payload["error"] = True
+    return payload
+
+
+def cmd_release_build(args: argparse.Namespace) -> dict[str, Any]:
+    """Package a release bundle (v1.8 Release Builder)."""
+    root = Path(args.root) if args.root else _get_root()
+    result = build_release(
+        root,
+        version=args.version,
+        source_ids=list(args.source_id) if args.source_id else None,
+        view_version=args.view_version or args.version,
+        allow_staging=not args.production,
+        hub_publish=args.hub_publish,
+    )
+    payload = result.to_dict()
+    payload["command"] = "release-build"
+    payload["message"] = result.summary
+    if result.status in {"failed", "blocked"}:
+        payload["error"] = True
+    return payload
+
+
+def cmd_publish(args: argparse.Namespace) -> dict[str, Any]:
+    """Orchestrate Transform → Views → Release Bundle."""
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {
+        "version": args.version,
+        "allow_staging": not args.production,
+        "hub_publish": args.hub_publish,
+        "skip_transform": args.skip_transform,
+        "skip_views": args.skip_views,
+    }
+    if args.source_id:
+        config["source_ids"] = list(args.source_id)
+    if args.models:
+        config["models"] = [m.strip() for m in args.models.split(",") if m.strip()]
+    if args.limit is not None:
+        config["limit"] = args.limit
+
+    agent = PublishAgent(root, config=config)
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {"command": "publish", "error": True, "message": f"PublishAgent failed: {exc}"}
+
+    payload = result.to_dict()
+    payload["command"] = "publish"
+    payload["message"] = result.summary
+    if result.failed or result.status.value == "blocked":
+        payload["error"] = True
+    return payload
+
+
+def cmd_e2e(args: argparse.Namespace) -> dict[str, Any]:
+    """Run the full end-to-end Atlas pipeline (v2.0)."""
+    root = Path(args.root) if args.root else _get_root()
+    config: dict[str, Any] = {
+        "version": args.version,
+        "dry_run": args.dry_run,
+        "force": args.force,
+        "max_workers": args.max_workers,
+        "allow_staging": not args.production,
+        "use_registry": args.use_registry,
+        "skip_download": args.skip_download,
+        "skip_etl": args.skip_etl,
+        "skip_transform": args.skip_transform,
+        "skip_views": args.skip_views,
+    }
+    if args.source_id:
+        config["source_ids"] = list(args.source_id)
+    if args.models:
+        config["models"] = [m.strip() for m in args.models.split(",") if m.strip()]
+    if args.limit is not None:
+        config["limit"] = args.limit
+
+    agent = E2EPipeline(root, config=config)
+    try:
+        result = agent.execute()
+    except Exception as exc:
+        return {"command": "e2e", "error": True, "message": f"E2EPipeline failed: {exc}"}
+
+    payload = result.to_dict()
+    payload["command"] = "e2e"
+    payload["message"] = result.summary
+    if result.status.value == "failed":
+        payload["error"] = True
+    return payload
+
+
+def cmd_incremental_status(args: argparse.Namespace) -> dict[str, Any]:
+    """Show incremental pipeline state (which sources are done per stage)."""
+    root = Path(args.root) if args.root else _get_root()
+    state = IncrementalState(root)
+    report = state.status_report()
+    lines = []
+    for sid, stages in sorted(report["sources"].items()):
+        done = [s for s, v in stages.items() if v]
+        pending = [s for s, v in stages.items() if not v]
+        lines.append(f"  {sid}: done={done} pending={pending}")
+    return {
+        "command": "incremental-status",
+        "report": report,
+        "message": "\n".join(lines) or "  (no incremental state recorded yet)",
+    }
+
+
 # ═══════════════════════════════════════════════════════════════════════
 # CLI argument parser
 # ═══════════════════════════════════════════════════════════════════════
@@ -714,6 +1052,15 @@ def build_parser() -> argparse.ArgumentParser:
 
               # Rescind a previous approval
               %(prog)s rescind --pipeline-id release-v0.3
+
+              # Retry a failed agent
+              %(prog)s retry --pipeline-id release-v0.3
+
+              # Resume a failed pipeline
+              %(prog)s resume --pipeline-id release-v0.3
+
+              # Show retry history
+              %(prog)s retry-history --pipeline-id release-v0.3
         """),
     )
 
@@ -812,6 +1159,223 @@ def build_parser() -> argparse.ArgumentParser:
     rescind_parser.add_argument("--pipeline-id", required=True)
     rescind_parser.set_defaults(func=cmd_rescind)
 
+    # ── retry ───────────────────────────────────────────────────────
+    retry_parser = subparsers.add_parser(
+        "retry",
+        help="Retry a failed agent in a pipeline.",
+    )
+    retry_parser.add_argument("--pipeline-id", required=True,
+                              help="Pipeline identifier to retry.")
+    retry_parser.add_argument("--config",
+                              help="JSON config string for the pipeline.")
+    retry_parser.set_defaults(func=cmd_retry)
+
+    # ── resume ──────────────────────────────────────────────────────
+    resume_parser = subparsers.add_parser(
+        "resume",
+        help="Resume a failed pipeline by clearing failure and continuing.",
+    )
+    resume_parser.add_argument("--pipeline-id", required=True,
+                               help="Pipeline identifier to resume.")
+    resume_parser.add_argument("--config",
+                               help="JSON config string for the pipeline.")
+    resume_parser.set_defaults(func=cmd_resume)
+
+    # ── acquire ───────────────────────────────────────────────────────
+    acquire_parser = subparsers.add_parser(
+        "acquire",
+        help="Run AcquisitionAgent v1 with dry-run or acquire mode.",
+    )
+    acquire_parser.add_argument("--mode", default="dry-run", choices=["dry-run", "acquire"],
+                                help="Acquisition mode.")
+    acquire_parser.set_defaults(func=cmd_acquire)
+
+    # ── download (v1.6) ──────────────────────────────────────────────
+    download_parser = subparsers.add_parser(
+        "download",
+        help="Download acquired sources into raw/.cache/ (Downloader v1.6).",
+    )
+    download_parser.add_argument(
+        "--mode",
+        default="dry-run",
+        choices=["dry-run", "download"],
+        help="Download mode (default: dry-run).",
+    )
+    download_parser.add_argument(
+        "--source-id",
+        action="append",
+        default=[],
+        help="Limit to one or more source ids (repeatable).",
+    )
+    download_parser.add_argument(
+        "--use-registry",
+        action="store_true",
+        help="Fall back to accepted/review registry sources when no acquisition logs exist.",
+    )
+    download_parser.add_argument(
+        "--max-files",
+        type=int,
+        default=None,
+        help="Max files per HuggingFace dataset (default adapter: 3).",
+    )
+    download_parser.add_argument(
+        "--max-retries",
+        type=int,
+        default=3,
+        help="Network retry budget (default: 3).",
+    )
+    download_parser.add_argument(
+        "--timeout",
+        type=float,
+        default=60.0,
+        help="Per-request timeout seconds (default: 60).",
+    )
+    download_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Re-download even when a cache entry already exists.",
+    )
+    download_parser.set_defaults(func=cmd_download)
+
+    # ── cache-stats ──────────────────────────────────────────────────
+    cache_parser = subparsers.add_parser(
+        "cache-stats",
+        help="Show raw/.cache/ statistics and optional entry listing.",
+    )
+    cache_parser.add_argument(
+        "--list-entries",
+        action="store_true",
+        help="Include per-source cache entries in the output.",
+    )
+    cache_parser.set_defaults(func=cmd_cache_stats)
+
+    # ── etl (v1.7) ───────────────────────────────────────────────────
+    etl_parser = subparsers.add_parser(
+        "etl",
+        help="Extract → Normalize → Clean cached downloads (ETL v1.7).",
+    )
+    etl_parser.add_argument(
+        "--source-id",
+        action="append",
+        default=[],
+        help="Source id(s) to process (repeatable). Defaults to all download logs.",
+    )
+    etl_parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Max records to extract per source (useful for smoke tests).",
+    )
+    etl_parser.add_argument(
+        "--no-promote",
+        action="store_true",
+        help="Skip promotion to atlas_staging.jsonl.",
+    )
+    etl_parser.set_defaults(func=cmd_etl)
+
+    # ── transform (v1.8) ─────────────────────────────────────────────
+    transform_parser = subparsers.add_parser(
+        "transform",
+        help="Transform cleaned ETL records into 5 training types (v1.8).",
+    )
+    transform_parser.add_argument("--source-id", action="append", default=[])
+    transform_parser.add_argument("--limit", type=int, default=None)
+    transform_parser.add_argument(
+        "--prefer",
+        choices=["cleaned", "atlas_staging", "normalized"],
+        default="cleaned",
+        help="Which ETL artifact to transform (default: cleaned).",
+    )
+    transform_parser.set_defaults(func=cmd_transform)
+
+    # ── views (v1.8) ─────────────────────────────────────────────────
+    views_parser = subparsers.add_parser(
+        "views",
+        help="Build model-family training views (v1.8).",
+    )
+    views_parser.add_argument("--version", required=True, help="View package version id.")
+    views_parser.add_argument("--source-id", action="append", default=[])
+    views_parser.add_argument("--models", default="qwen,llama,deepseek")
+    views_parser.add_argument("--curated-version", default=None,
+                              help="Load from curated/<version> instead of ETL staging.")
+    views_parser.add_argument("--production", action="store_true",
+                              help="Require approved curated records (no staging).")
+    views_parser.add_argument("--quality-threshold", type=int, default=7)
+    views_parser.add_argument("--eval-ratio", type=float, default=0.1)
+    views_parser.add_argument("--limit", type=int, default=None)
+    views_parser.set_defaults(func=cmd_views)
+
+    # ── release-build (v1.8) ─────────────────────────────────────────
+    rb_parser = subparsers.add_parser(
+        "release-build",
+        help="Package a release bundle under metadata/release_bundles/ (v1.8).",
+    )
+    rb_parser.add_argument("--version", required=True)
+    rb_parser.add_argument("--source-id", action="append", default=[])
+    rb_parser.add_argument("--view-version", default=None)
+    rb_parser.add_argument("--production", action="store_true")
+    rb_parser.add_argument("--hub-publish", action="store_true",
+                           help="Request HF Hub publish (stub — not configured).")
+    rb_parser.set_defaults(func=cmd_release_build)
+
+    # ── publish (v1.8 orchestrator) ──────────────────────────────────
+    pub_parser = subparsers.add_parser(
+        "publish",
+        help="Run Transform → Views → Release Bundle (PublishAgent v1.8).",
+    )
+    pub_parser.add_argument("--version", required=True)
+    pub_parser.add_argument("--source-id", action="append", default=[])
+    pub_parser.add_argument("--models", default="qwen,llama,deepseek")
+    pub_parser.add_argument("--limit", type=int, default=None)
+    pub_parser.add_argument("--production", action="store_true")
+    pub_parser.add_argument("--hub-publish", action="store_true")
+    pub_parser.add_argument("--skip-transform", action="store_true")
+    pub_parser.add_argument("--skip-views", action="store_true")
+    pub_parser.set_defaults(func=cmd_publish)
+
+    # ── e2e (v2.0) ───────────────────────────────────────────────────
+    e2e_parser = subparsers.add_parser(
+        "e2e",
+        help="Run full end-to-end pipeline: download→etl→transform→views→release (v2.0).",
+    )
+    e2e_parser.add_argument("--version", required=True,
+                            help="Release version id (e.g. v0.3-gsm8k).")
+    e2e_parser.add_argument("--source-id", action="append", default=[],
+                            help="Source id(s) to process (repeatable).")
+    e2e_parser.add_argument("--models", default="qwen,llama,deepseek")
+    e2e_parser.add_argument("--limit", type=int, default=None)
+    e2e_parser.add_argument("--max-workers", type=int, default=4,
+                            help="Parallel thread pool size (default 4).")
+    e2e_parser.add_argument("--dry-run", action="store_true",
+                            help="Plan all stages without network/disk writes.")
+    e2e_parser.add_argument("--force", action="store_true",
+                            help="Re-run all stages ignoring incremental state.")
+    e2e_parser.add_argument("--production", action="store_true",
+                            help="Require approved curated records.")
+    e2e_parser.add_argument("--use-registry", action="store_true", default=True,
+                            help="Fall back to registry when no acquisition logs (default on).")
+    e2e_parser.add_argument("--skip-download", action="store_true")
+    e2e_parser.add_argument("--skip-etl", action="store_true")
+    e2e_parser.add_argument("--skip-transform", action="store_true")
+    e2e_parser.add_argument("--skip-views", action="store_true")
+    e2e_parser.set_defaults(func=cmd_e2e)
+
+    # ── incremental-status ───────────────────────────────────────────
+    inc_parser = subparsers.add_parser(
+        "incremental-status",
+        help="Show which sources are done per pipeline stage (v1.9).",
+    )
+    inc_parser.set_defaults(func=cmd_incremental_status)
+
+    # ── retry-history ───────────────────────────────────────────────
+    rh_parser = subparsers.add_parser(
+        "retry-history",
+        help="Show retry history for a pipeline.",
+    )
+    rh_parser.add_argument("--pipeline-id", required=True,
+                           help="Pipeline identifier to query.")
+    rh_parser.set_defaults(func=cmd_retry_history)
+
     return parser
 
 
@@ -906,6 +1470,56 @@ def _render_text(result: dict[str, Any]) -> None:
                 status = ar.get("status", "?")
                 summary = ar.get("summary", "")
                 print(f"    [{status.upper():8s}] {name}: {summary}")
+
+    elif result.get("command") == "etl":
+        totals = (result.get("data") or {}).get("totals") or {}
+        sources = (result.get("data") or {}).get("sources") or []
+        print(f"\n  Totals: extracted={totals.get('extracted', 0)} "
+              f"cleaned={totals.get('cleaned', 0)} "
+              f"atlas_staging={totals.get('atlas_records', 0)} "
+              f"dropped={totals.get('dropped', 0)}")
+        for src in sources:
+            print(f"    [{src.get('status', '?'):7s}] {src.get('source_id')}: "
+                  f"{src.get('summary', '')}")
+            if src.get("output_dir"):
+                print(f"             → {src['output_dir']}")
+
+    elif result.get("command") == "transform":
+        for rep in result.get("reports") or []:
+            print(f"    [{rep.get('status', '?'):7s}] {rep.get('source_id')}: "
+                  f"{rep.get('summary', '')}")
+            if rep.get("type_counts"):
+                print(f"             types={rep['type_counts']}")
+
+    elif result.get("command") == "views":
+        print(f"\n  Mode: {result.get('mode')}  records={result.get('record_count')}  "
+              f"eval={result.get('eval_count')}")
+        for model, meta in (result.get("views") or {}).items():
+            print(f"    {model}: {meta.get('records')} → {meta.get('path')}")
+        if result.get("output_dir"):
+            print(f"  Output: {result['output_dir']}")
+
+    elif result.get("command") == "release-build":
+        print(f"\n  Bundle: {result.get('bundle_dir')}")
+        print(f"  Records: {result.get('record_count')}  files={len(result.get('files') or [])}")
+
+    elif result.get("command") == "publish":
+        data = result.get("data") or {}
+        if data.get("release"):
+            print(f"\n  Release: {data['release'].get('summary')}")
+            print(f"  Bundle: {data['release'].get('bundle_dir')}")
+
+    elif result.get("command") == "e2e":
+        data = result.get("data") or {}
+        print(f"\n  Mode: {'dry-run' if data.get('dry_run') else 'live'}")
+        print(f"  Sources: {data.get('source_ids')}")
+        print(f"  Stages: {data.get('stages_run')}")
+        print(f"  Records: {data.get('record_count')}  Elapsed: {data.get('elapsed_s')}s")
+        if data.get("bundle_dir"):
+            print(f"  Bundle: {data['bundle_dir']}")
+
+    elif result.get("command") == "incremental-status":
+        print(f"\n{result.get('message')}")
 
 
 if __name__ == "__main__":
