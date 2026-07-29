@@ -57,3 +57,5 @@ metadata/download_logs/
 metadata/etl/
 metadata/views/
 metadata/release_bundles/
+metadata/e2e_reports/
+metadata/pipeline_incremental.json
