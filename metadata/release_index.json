@@ -32,6 +32,17 @@
       "previous_hash": "2931c7c425406194227ede3cc3bfbadf532b0cc9d66a0a60595f9c6217717513",
       "gates_passed": true,
       "release_id": "009285f2099075e6"
+    },
+    {
+      "version": "v1.0-RC1",
+      "release_type": "major",
+      "created_at": "2026-07-30T14:40:31.399+00:00",
+      "total_records": 9893844,
+      "chain_hash": "e66408aa594d9438cae0f8bb393322e4e1433900fc4d515c2582bbf1d037b3cf",
+      "content_hash": "c2e117b9829f4dea994937c87782d59c3d9ff925a0bb1e6b8d4805f2f8f970a2",
+      "previous_hash": "009285f2099075e6c2eb8bc17ad27c76442a19cca547cc6ffa1643caebdf093c",
+      "gates_passed": true,
+      "release_id": "e66408aa594d9438"
     }
   ],
   "genesis_hash": "34e190d38030793a5b2455997051d0be57bd6fc987278229f7c11f435ab82b4b"
