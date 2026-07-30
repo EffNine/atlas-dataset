@@ -29,7 +29,7 @@ from typing import Any
 # Constants
 # ---------------------------------------------------------------------------
 
-CLASSIFIER_VERSION = "1.0.0"
+CLASSIFIER_VERSION = "1.1.0"
 
 # Technical vocabulary per skill domain (used for density scoring)
 TECHNICAL_VOCAB: dict[str, set[str]] = {
@@ -160,6 +160,26 @@ SOURCE_TRUST: dict[str, float] = {
     "other": 0.40,
 }
 
+# Difficulty thresholds (overridable at module level or via parameter)
+# Format: (raw_score_threshold, difficulty_level)
+# v1.0 defaults:  L3@0.40, L4@0.62, L5@0.80
+# v1.1 calibrated: L3@0.35, L4@0.55, L5@0.75
+LEVEL_THRESHOLDS_V1_0: list[tuple[float, int]] = [
+    (0.0, 1),   # Basic
+    (0.18, 2),  # Intermediate
+    (0.40, 3),  # Advanced
+    (0.62, 4),  # Expert
+    (0.80, 5),  # Research
+]
+
+LEVEL_THRESHOLDS_V1_1: list[tuple[float, int]] = [
+    (0.0, 1),   # Basic
+    (0.18, 2),  # Intermediate
+    (0.35, 3),  # Advanced  (was 0.40)
+    (0.55, 4),  # Expert    (was 0.62)
+    (0.75, 5),  # Research  (was 0.80)
+]
+
 # Category base difficulty (default offset per category)
 CATEGORY_DIFFICULTY_OFFSET: dict[str, float] = {
     "01_foundation": 0.0,
@@ -173,14 +193,8 @@ CATEGORY_DIFFICULTY_OFFSET: dict[str, float] = {
     "09_personal_assistant": -0.2,
 }
 
-# Level thresholds (raw score -> difficulty level)
-LEVEL_THRESHOLDS = [
-    (0.0, 1),   # Basic
-    (0.18, 2),  # Intermediate
-    (0.40, 3),  # Advanced
-    (0.62, 4),  # Expert
-    (0.80, 5),  # Research
-]
+# Level thresholds (active — currently v1.1 calibrated)
+LEVEL_THRESHOLDS = LEVEL_THRESHOLDS_V1_1
 
 
 # ---------------------------------------------------------------------------
@@ -425,8 +439,25 @@ def _reasoning_depth(prompt: str, answer: str) -> float:
     return min(raw, 1.0)
 
 
+def _normalize_source_name(raw_name: str) -> str:
+    """Normalize a source name for fuzzy matching against SOURCE_TRUST keys.
+
+    Strips hyphens, underscores, and whitespace; lowercases; extracts the
+    meaningful identifier portion so that e.g. 'open-web-math/open-web-math'
+    matches the key 'openwebmath'.
+    """
+    return raw_name.lower().replace("-", "").replace("_", "").replace("/", "").replace(" ", "")
+
+
 def _source_reliability(record: dict) -> float:
-    """Extract source reliability score (0..1) from record metadata."""
+    """Extract source reliability score (0..1) from record metadata.
+
+    Supports progressive matching:
+      1. Exact lookup against SOURCE_TRUST keys.
+      2. Normalized (hyphen/underscore/case-insensitive) lookup.
+      3. Partial containment (any direction) after normalization.
+      4. Fallback to 'other'.
+    """
     source = record.get("source", {})
     if isinstance(source, str):
         source_name = source
@@ -435,15 +466,23 @@ def _source_reliability(record: dict) -> float:
     else:
         source_name = "other"
 
-    # Direct lookup
+    # 1. Direct lookup
     if source_name in SOURCE_TRUST:
         return SOURCE_TRUST[source_name]
 
-    # Partial match
-    for key, trust in SOURCE_TRUST.items():
-        if key in source_name:
+    # 2. Normalized lookup
+    normalized_name = _normalize_source_name(source_name)
+    normalized_trust = {_normalize_source_name(k): v for k, v in SOURCE_TRUST.items()}
+
+    if normalized_name in normalized_trust:
+        return normalized_trust[normalized_name]
+
+    # 3. Partial containment (safe: only match when one is fully contained in the other)
+    for norm_key, trust in normalized_trust.items():
+        if norm_key in normalized_name or normalized_name in norm_key:
             return trust
 
+    # 4. Fallback
     return SOURCE_TRUST["other"]
 
 
@@ -525,10 +564,19 @@ def _compute_difficulty(
     reasoning_depth: float,
     source_reliability: float,
     domain_offset: float,
+    override_thresholds: list[tuple[float, int]] | None = None,
 ) -> tuple[int, float]:
     """
     Fuse all signals into a difficulty level (1..5) and confidence (0..1).
+
+    Parameters
+    ----------
+    override_thresholds : optional list of (raw_score_threshold, level) pairs.
+        When provided, this overrides the module-level LEVEL_THRESHOLDS for
+        this call.  Used for A/B threshold calibration without global mutation.
     """
+    thresholds = LEVEL_THRESHOLDS if override_thresholds is None else override_thresholds
+
     # Weighted raw score
     raw = (
         prompt_complexity * 0.15 +
@@ -540,13 +588,13 @@ def _compute_difficulty(
 
     raw = max(0.0, min(raw, 1.0))
 
-    # Map to level
+    # Map to level using provided thresholds
     level = 1
-    for threshold, lvl in LEVEL_THRESHOLDS:
+    for threshold, lvl in thresholds:
         if raw >= threshold:
             level = lvl
 
-    # Confidence: based on signal agreement and source reliability
+    # Confidence: based on signal agreement, source reliability, and evidence volume
     signals = [prompt_complexity, answer_complexity, tech_vocab_density, reasoning_depth]
     mean_signal = sum(signals) / len(signals)
     variance = sum((s - mean_signal) ** 2 for s in signals) / len(signals)
@@ -555,10 +603,14 @@ def _compute_difficulty(
     # Boost confidence if source is reliable, penalise if low
     source_factor = source_reliability * 0.3 + 0.7
 
-    # Boost confidence if we have substantial text to analyse
-    has_content = 1.0 if mean_signal > 0.05 else 0.3
+    # Evidence-volume factor: continuous ramp from 0.45 (minimal text) to 1.0 (rich text).
+    # Replaces the old binary cutoff (has_content = 1.0 if mean_signal > 0.05 else 0.3)
+    # which collapsed confidence on short-but-clear records.
+    # The ramp uses prompt+answer complexity as a proxy for text volume:
+    text_volume = prompt_complexity + answer_complexity
+    evidence_factor = min(0.45 + text_volume * 2.0, 1.0)
 
-    confidence = agreement * source_factor * has_content
+    confidence = agreement * source_factor * evidence_factor
     confidence = max(0.0, min(confidence, 1.0))
 
     return level, round(confidence, 4)

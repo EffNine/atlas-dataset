@@ -34,6 +34,10 @@ from difficulty_analyzer import (
     _detect_skill_domains,
     _estimate_tokens,
     _text_from_messages,
+    _normalize_source_name,
+    _source_reliability,
+    LEVEL_THRESHOLDS_V1_0,
+    LEVEL_THRESHOLDS_V1_1,
 )
 
 # ---------------------------------------------------------------------------
@@ -334,6 +338,135 @@ def test_text_from_messages() -> None:
     check("No messages -> empty answer", answer2 == "")
 
 
+# ---------------------------------------------------------------------------
+# v1.1 Regression tests
+# ---------------------------------------------------------------------------
+
+
+def test_source_trust_normalization() -> None:
+    """Source names are normalized to match SOURCE_TRUST keys."""
+    # open-web-math (hyphenated) -> openwebmath key
+    rec1 = {"id": "t1", "source": {"name": "open-web-math/open-web-math", "license": "ODC-BY"}}
+    trust1 = _source_reliability(rec1)
+    check("open-web-math matches openwebmath trust (0.80)", abs(trust1 - 0.80) < 0.01, f"got={trust1}")
+
+    # Tulu-3 with OASST1 sub-source
+    rec2 = {"id": "t2", "source": {"name": "ai2-adapt-dev/oasst1_converted", "license": "MIT"}}
+    trust2 = _source_reliability(rec2)
+    check(
+        "oasst1_converted falls back to 'other' (no tulu3_sft in name)",
+        abs(trust2 - 0.40) < 0.01,
+        f"got={trust2}",
+    )
+
+    # arXiv (capitalised, with dot notation)
+    rec3 = {"id": "t3", "source": {"name": "arXiv cs.LO, cs.PL, cs.SE", "license": "arXiv"}}
+    trust3 = _source_reliability(rec3)
+    check("arXiv cs.* matches arxiv_cs trust (0.90)", abs(trust3 - 0.90) < 0.01, f"got={trust3}")
+
+    # C4 direct match
+    rec4 = {"id": "t4", "source": {"name": "allenai/c4", "license": "ODC-BY"}}
+    trust4 = _source_reliability(rec4)
+    check("allenai/c4 direct match (0.60)", abs(trust4 - 0.60) < 0.01, f"got={trust4}")
+
+    # Empty / missing source -> other
+    rec5 = {"id": "t5"}
+    trust5 = _source_reliability(rec5)
+    check("Missing source -> other (0.40)", abs(trust5 - 0.40) < 0.01, f"got={trust5}")
+
+
+def test_short_record_confidence() -> None:
+    """Short records with clear signals should not have collapsed confidence."""
+    # A very short but clear Q&A: confidence should NOT be ~0.24
+    rec = {
+        "id": "short_001",
+        "category": "01_foundation",
+        "source": {"name": "tulu3_sft", "license": "MIT"},
+        "messages": [
+            {"role": "user", "content": "What is 2+2?"},
+            {"role": "assistant", "content": "4."},
+        ],
+    }
+    result = analyze_record(rec)
+    check("Short record is classified", result is not None)
+    if result:
+        conf = result["difficulty"]["confidence"]
+        check(
+            f"Short record confidence > 0.30 (no collapse)",
+            conf > 0.30,
+            f"got={conf}",
+        )
+        check(
+            "Short record is L1",
+            result["difficulty"]["level"] == 1,
+            f"got level={result['difficulty']['level']}",
+        )
+
+
+def test_override_thresholds() -> None:
+    """_compute_difficulty accepts override_thresholds for A/B calibration."""
+    # Use v1.0 thresholds to reproduce v1.0 behaviour
+    level, conf = _compute_difficulty(
+        prompt_complexity=0.38,
+        answer_complexity=0.40,
+        tech_vocab_density=0.30,
+        reasoning_depth=0.35,
+        source_reliability=0.80,
+        domain_offset=0.20,
+        override_thresholds=LEVEL_THRESHOLDS_V1_0,
+    )
+    # Under v1.0 thresholds: raw ~0.38*0.15+0.40*0.30+0.30*0.18+0.35*0.30+0.20*0.07
+    # = 0.057+0.12+0.054+0.105+0.014 = 0.35 → L2 (below 0.40 L3 threshold)
+    check(
+        "V1.0 thresholds: raw ~0.35 → L2",
+        level == 2,
+        f"got level={level}",
+    )
+    # Under v1.1 thresholds: same raw=0.35 → L3 (above 0.35)
+    level2, _ = _compute_difficulty(
+        prompt_complexity=0.38,
+        answer_complexity=0.40,
+        tech_vocab_density=0.30,
+        reasoning_depth=0.35,
+        source_reliability=0.80,
+        domain_offset=0.20,
+        override_thresholds=LEVEL_THRESHOLDS_V1_1,
+    )
+    check(
+        "V1.1 thresholds: raw ~0.35 → L3",
+        level2 == 3,
+        f"got level={level2}",
+    )
+
+
+def test_threshold_calibration_shifts() -> None:
+    """V1.1 thresholds should push more records into higher levels."""
+    # Near-boundary record: raw ~0.38
+    high_v1 = 0
+    high_v1_1 = 0
+    borderline_cases = [
+        # (prompt, answer, tech_vocab, reasoning_depth, source, domain)
+        (0.35, 0.40, 0.15, 0.30, 0.80, 0.20),  # raw ≈ 0.34
+        (0.40, 0.42, 0.20, 0.35, 0.80, 0.20),  # raw ≈ 0.38
+        (0.45, 0.50, 0.25, 0.40, 0.80, 0.20),  # raw ≈ 0.43
+        (0.50, 0.55, 0.35, 0.50, 0.80, 0.30),  # raw ≈ 0.52
+        (0.55, 0.65, 0.40, 0.60, 0.80, 0.30),  # raw ≈ 0.60
+    ]
+    for sig in borderline_cases:
+        lv1, _ = _compute_difficulty(*sig, override_thresholds=LEVEL_THRESHOLDS_V1_0)
+        lv11, _ = _compute_difficulty(*sig, override_thresholds=LEVEL_THRESHOLDS_V1_1)
+        if lv11 > lv1:
+            high_v1_1 += 1
+        elif lv11 == lv1:
+            high_v1 += 1
+
+    check(
+        "V1.1 thresholds promote >=1 borderline case vs v1.0",
+        high_v1_1 >= 1,
+        f"v1.0 higher={high_v1}, v1.1 higher={high_v1_1}",
+    )
+
+
 # ===================================================================
 # Main
 # ===================================================================
@@ -361,6 +494,10 @@ def main() -> int:
         ("Feature fields", test_feature_fields),
         ("Token estimator", test_token_estimator),
         ("Text from messages", test_text_from_messages),
+        ("Source trust normalization (v1.1)", test_source_trust_normalization),
+        ("Short record confidence (v1.1)", test_short_record_confidence),
+        ("Override thresholds (v1.1)", test_override_thresholds),
+        ("Threshold calibration shifts (v1.1)", test_threshold_calibration_shifts),
     ]
 
     failures = 0

@@ -1,0 +1,953 @@
+{
+  "report_metadata": {
+    "report_type": "difficulty_calibration_v1_1",
+    "intelligence_layer_version": "1.1.0",
+    "generated_at": "2026-07-30T15:19:14.126172+00:00",
+    "classifier": "difficulty_analyzer.py",
+    "classifier_version": "1.1.0",
+    "evaluation_scope": "calibration_evaluation_v1_1",
+    "data_snapshot": "atlas-v1.0-RC1",
+    "status": "calibration",
+    "changes_since_v1": [
+      "Source trust normalization: _normalize_source_name strips hyphens/underscores/case for fuzzy matching",
+      "Threshold calibration: L3=0.35 (was 0.40), L4=0.55 (was 0.62), L5=0.75 (was 0.80)",
+      "Short-record handling: continuous evidence_factor ramp replaces binary has_content cutoff",
+      "Configurable thresholds: override_thresholds parameter in _compute_difficulty"
+    ]
+  },
+  "evaluation_parameters": {
+    "sample_size_per_source": 500,
+    "sources": {
+      "tulu3": "Tulu-3 SFT Mixture",
+      "openwebmath": "OpenWebMath",
+      "arxiv": "ArXiv CS/ML/Hardware",
+      "c4": "C4 AI/ML Subset"
+    },
+    "random_seed": 42,
+    "classifier_version": "1.1.0",
+    "active_thresholds": [
+      [
+        0.0,
+        1
+      ],
+      [
+        0.18,
+        2
+      ],
+      [
+        0.35,
+        3
+      ],
+      [
+        0.55,
+        4
+      ],
+      [
+        0.75,
+        5
+      ]
+    ]
+  },
+  "sampling_summary": {
+    "total_records_requested": 2000,
+    "total_records_sampled": 2000,
+    "total_classified": 2000,
+    "total_errors": 0
+  },
+  "overall_statistics": {
+    "difficulty_distribution": {
+      "1": 1125,
+      "2": 513,
+      "3": 347,
+      "4": 15,
+      "5": 0
+    },
+    "confidence_stats": {
+      "mean": 0.5535,
+      "min": 0.166,
+      "max": 0.9269,
+      "low_confidence_count": 643,
+      "low_confidence_fraction": 0.3215
+    }
+  },
+  "source_distribution": {
+    "tulu3": {
+      "label": "Tulu-3 SFT Mixture",
+      "sample_size": 500,
+      "difficulty_distribution": {
+        "1": 187,
+        "2": 96,
+        "3": 203,
+        "4": 14,
+        "5": 0
+      },
+      "confidence_stats": {
+        "mean": 0.5162,
+        "min": 0.166,
+        "max": 0.8629
+      }
+    },
+    "openwebmath": {
+      "label": "OpenWebMath",
+      "sample_size": 500,
+      "difficulty_distribution": {
+        "1": 324,
+        "2": 104,
+        "3": 71,
+        "4": 1,
+        "5": 0
+      },
+      "confidence_stats": {
+        "mean": 0.6063,
+        "min": 0.3041,
+        "max": 0.9269
+      }
+    },
+    "arxiv": {
+      "label": "ArXiv CS/ML/Hardware",
+      "sample_size": 500,
+      "difficulty_distribution": {
+        "1": 382,
+        "2": 113,
+        "3": 5,
+        "4": 0,
+        "5": 0
+      },
+      "confidence_stats": {
+        "mean": 0.5176,
+        "min": 0.3654,
+        "max": 0.8825
+      }
+    },
+    "c4": {
+      "label": "C4 AI/ML Subset",
+      "sample_size": 500,
+      "difficulty_distribution": {
+        "1": 232,
+        "2": 200,
+        "3": 68,
+        "4": 0,
+        "5": 0
+      },
+      "confidence_stats": {
+        "mean": 0.5739,
+        "min": 0.3164,
+        "max": 0.7434
+      }
+    }
+  },
+  "confidence_analysis": {
+    "confidence_bands": [
+      {
+        "band": "0.0-0.25",
+        "count": 11,
+        "fraction": 0.0055,
+        "difficulty_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 7,
+          "4": 4,
+          "5": 0
+        }
+      },
+      {
+        "band": "0.25-0.50",
+        "count": 632,
+        "fraction": 0.316,
+        "difficulty_distribution": {
+          "1": 312,
+          "2": 27,
+          "3": 283,
+          "4": 10,
+          "5": 0
+        }
+      },
+      {
+        "band": "0.50-0.75",
+        "count": 1184,
+        "fraction": 0.592,
+        "difficulty_distribution": {
+          "1": 740,
+          "2": 387,
+          "3": 56,
+          "4": 1,
+          "5": 0
+        }
+      },
+      {
+        "band": "0.75-1.00",
+        "count": 173,
+        "fraction": 0.0865,
+        "difficulty_distribution": {
+          "1": 73,
+          "2": 99,
+          "3": 1,
+          "4": 0,
+          "5": 0
+        }
+      }
+    ],
+    "low_confidence_threshold": 0.5,
+    "low_confidence_count": 643,
+    "low_confidence_fraction": 0.3215,
+    "low_confidence_samples": [
+      {
+        "record_id": "s6_tulu3_308294",
+        "source": "tulu3",
+        "difficulty": 4,
+        "confidence": 0.4074,
+        "reason": "Level 4 (expert): complex prompt, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 358,
+          "answer_tokens": 705,
+          "total_tokens": 1063,
+          "vocabulary_density": 0.0224
+        }
+      },
+      {
+        "record_id": "s6_tulu3_681842",
+        "source": "tulu3",
+        "difficulty": 4,
+        "confidence": 0.4443,
+        "reason": "Level 4 (expert): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 461,
+          "answer_tokens": 220,
+          "total_tokens": 681,
+          "vocabulary_density": 0.0488
+        }
+      },
+      {
+        "record_id": "s6_tulu3_529040",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4383,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 205,
+          "answer_tokens": 646,
+          "total_tokens": 851,
+          "vocabulary_density": 0.1
+        }
+      },
+      {
+        "record_id": "s6_tulu3_160105",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.3782,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 2,
+          "answer_tokens": 78,
+          "total_tokens": 80,
+          "vocabulary_density": 0.0682
+        }
+      },
+      {
+        "record_id": "s6_tulu3_486495",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.2625,
+        "reason": "Level 3 (advanced): simple query, detailed answer, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 50,
+          "answer_tokens": 796,
+          "total_tokens": 846,
+          "vocabulary_density": 0.0242
+        }
+      },
+      {
+        "record_id": "s6_tulu3_853327",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.3742,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 8,
+          "answer_tokens": 22,
+          "total_tokens": 30,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_763405",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.4833,
+        "reason": "Level 1 (basic): simple query, short answer",
+        "features": {
+          "prompt_tokens": 24,
+          "answer_tokens": 174,
+          "total_tokens": 198,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_342621",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4147,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 177,
+          "answer_tokens": 1057,
+          "total_tokens": 1234,
+          "vocabulary_density": 0.0556
+        }
+      },
+      {
+        "record_id": "s6_tulu3_200753",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.4133,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 37,
+          "answer_tokens": 280,
+          "total_tokens": 317,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_722721",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.4246,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 45,
+          "answer_tokens": 113,
+          "total_tokens": 158,
+          "vocabulary_density": 0.0469
+        }
+      },
+      {
+        "record_id": "s6_tulu3_313727",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4245,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 241,
+          "answer_tokens": 480,
+          "total_tokens": 721,
+          "vocabulary_density": 0.0513
+        }
+      },
+      {
+        "record_id": "s6_tulu3_497268",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4046,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 90,
+          "answer_tokens": 333,
+          "total_tokens": 423,
+          "vocabulary_density": 0.037
+        }
+      },
+      {
+        "record_id": "s6_tulu3_655301",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.3504,
+        "reason": "Level 3 (advanced): simple query, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 53,
+          "answer_tokens": 309,
+          "total_tokens": 362,
+          "vocabulary_density": 0.0294
+        }
+      },
+      {
+        "record_id": "s6_tulu3_300036",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4437,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 414,
+          "answer_tokens": 746,
+          "total_tokens": 1160,
+          "vocabulary_density": 0.0469
+        }
+      },
+      {
+        "record_id": "s6_tulu3_859159",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.376,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 5,
+          "answer_tokens": 44,
+          "total_tokens": 49,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_786341",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.4432,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 9,
+          "answer_tokens": 52,
+          "total_tokens": 61,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_296560",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4506,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 281,
+          "answer_tokens": 573,
+          "total_tokens": 854,
+          "vocabulary_density": 0.0795
+        }
+      },
+      {
+        "record_id": "s6_tulu3_689611",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.3448,
+        "reason": "Level 3 (advanced): simple query, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 41,
+          "answer_tokens": 685,
+          "total_tokens": 726,
+          "vocabulary_density": 0.033
+        }
+      },
+      {
+        "record_id": "s6_tulu3_593727",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.3699,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 52,
+          "answer_tokens": 230,
+          "total_tokens": 282,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_917320",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.3783,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 18,
+          "answer_tokens": 29,
+          "total_tokens": 47,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_730069",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.4877,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 14,
+          "answer_tokens": 409,
+          "total_tokens": 423,
+          "vocabulary_density": 0.0408
+        }
+      },
+      {
+        "record_id": "s6_tulu3_177800",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.3291,
+        "reason": "Level 3 (advanced): simple query, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 113,
+          "answer_tokens": 2157,
+          "total_tokens": 2270,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_361585",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4144,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 94,
+          "answer_tokens": 229,
+          "total_tokens": 323,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_541575",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.3647,
+        "reason": "Level 3 (advanced): short answer, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 120,
+          "answer_tokens": 38,
+          "total_tokens": 158,
+          "vocabulary_density": 0.0811
+        }
+      },
+      {
+        "record_id": "s6_tulu3_908503",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.3713,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 5,
+          "answer_tokens": 5,
+          "total_tokens": 10,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_480264",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.2314,
+        "reason": "Level 3 (advanced): simple query, detailed answer, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 49,
+          "answer_tokens": 420,
+          "total_tokens": 469,
+          "vocabulary_density": 0.039
+        }
+      },
+      {
+        "record_id": "s6_tulu3_900202",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.4192,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 2,
+          "answer_tokens": 190,
+          "total_tokens": 192,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_371029",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4203,
+        "reason": "Level 3 (advanced): simple query, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 105,
+          "answer_tokens": 190,
+          "total_tokens": 295,
+          "vocabulary_density": 0.0588
+        }
+      },
+      {
+        "record_id": "s6_tulu3_217506",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4278,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 192,
+          "answer_tokens": 748,
+          "total_tokens": 940,
+          "vocabulary_density": 0.0469
+        }
+      },
+      {
+        "record_id": "s6_tulu3_224937",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4043,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 298,
+          "answer_tokens": 842,
+          "total_tokens": 1140,
+          "vocabulary_density": 0.018
+        }
+      },
+      {
+        "record_id": "s6_tulu3_752267",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4571,
+        "reason": "Level 3 (advanced): simple query, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 30,
+          "answer_tokens": 521,
+          "total_tokens": 551,
+          "vocabulary_density": 0.0159
+        }
+      },
+      {
+        "record_id": "s6_tulu3_577396",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.3675,
+        "reason": "Level 3 (advanced): simple query, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 45,
+          "answer_tokens": 293,
+          "total_tokens": 338,
+          "vocabulary_density": 0.0909
+        }
+      },
+      {
+        "record_id": "s6_tulu3_899560",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.3754,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 16,
+          "answer_tokens": 12,
+          "total_tokens": 28,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_329290",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4444,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 300,
+          "answer_tokens": 664,
+          "total_tokens": 964,
+          "vocabulary_density": 0.0923
+        }
+      },
+      {
+        "record_id": "s6_tulu3_343463",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4971,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 292,
+          "answer_tokens": 666,
+          "total_tokens": 958,
+          "vocabulary_density": 0.1579
+        }
+      },
+      {
+        "record_id": "s6_tulu3_487758",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.2763,
+        "reason": "Level 3 (advanced): simple query, detailed answer, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 49,
+          "answer_tokens": 673,
+          "total_tokens": 722,
+          "vocabulary_density": 0.075
+        }
+      },
+      {
+        "record_id": "s6_tulu3_934907",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.3972,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 9,
+          "answer_tokens": 206,
+          "total_tokens": 215,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_331439",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4526,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 317,
+          "answer_tokens": 1257,
+          "total_tokens": 1574,
+          "vocabulary_density": 0.1095
+        }
+      },
+      {
+        "record_id": "s6_tulu3_596002",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.332,
+        "reason": "Level 3 (advanced): simple query, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 53,
+          "answer_tokens": 372,
+          "total_tokens": 425,
+          "vocabulary_density": 0.028
+        }
+      },
+      {
+        "record_id": "s6_tulu3_840825",
+        "source": "tulu3",
+        "difficulty": 2,
+        "confidence": 0.498,
+        "reason": "Level 2 (intermediate): simple query, short answer, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 10,
+          "answer_tokens": 142,
+          "total_tokens": 152,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_400279",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4297,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 110,
+          "answer_tokens": 354,
+          "total_tokens": 464,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_137578",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4249,
+        "reason": "Level 3 (advanced): simple query, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 77,
+          "answer_tokens": 589,
+          "total_tokens": 666,
+          "vocabulary_density": 0.0291
+        }
+      },
+      {
+        "record_id": "s6_tulu3_256509",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.3816,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 222,
+          "answer_tokens": 468,
+          "total_tokens": 690,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_632357",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.4388,
+        "reason": "Level 3 (advanced): multi-step reasoning",
+        "features": {
+          "prompt_tokens": 157,
+          "answer_tokens": 230,
+          "total_tokens": 387,
+          "vocabulary_density": 0.0606
+        }
+      },
+      {
+        "record_id": "s6_tulu3_622527",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.4797,
+        "reason": "Level 1 (basic): simple query, short answer",
+        "features": {
+          "prompt_tokens": 60,
+          "answer_tokens": 461,
+          "total_tokens": 521,
+          "vocabulary_density": 0.0536
+        }
+      },
+      {
+        "record_id": "s6_tulu3_918642",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.3715,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 6,
+          "answer_tokens": 4,
+          "total_tokens": 10,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_472831",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.2969,
+        "reason": "Level 3 (advanced): simple query, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 70,
+          "answer_tokens": 333,
+          "total_tokens": 403,
+          "vocabulary_density": 0.038
+        }
+      },
+      {
+        "record_id": "s6_tulu3_883039",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.3765,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 6,
+          "answer_tokens": 44,
+          "total_tokens": 50,
+          "vocabulary_density": 0.0
+        }
+      },
+      {
+        "record_id": "s6_tulu3_481458",
+        "source": "tulu3",
+        "difficulty": 3,
+        "confidence": 0.3953,
+        "reason": "Level 3 (advanced): simple query, detailed answer, multi-step reasoning",
+        "features": {
+          "prompt_tokens": 42,
+          "answer_tokens": 276,
+          "total_tokens": 318,
+          "vocabulary_density": 0.1017
+        }
+      },
+      {
+        "record_id": "s6_tulu3_893445",
+        "source": "tulu3",
+        "difficulty": 1,
+        "confidence": 0.376,
+        "reason": "Level 1 (basic): simple query, short answer, single-step reasoning",
+        "features": {
+          "prompt_tokens": 20,
+          "answer_tokens": 6,
+          "total_tokens": 26,
+          "vocabulary_density": 0.0
+        }
+      }
+    ],
+    "low_confidence_by_source": {
+      "tulu3": 50
+    }
+  },
+  "v1_vs_v1_1_comparison": {
+    "difficulty_distribution_comparison": {
+      "1": {
+        "v1.0_count": 1125,
+        "v1.1_count": 1125,
+        "v1.0_pct": 56.2,
+        "v1.1_pct": 56.2,
+        "delta_pct": 0.0
+      },
+      "2": {
+        "v1.0_count": 600,
+        "v1.1_count": 513,
+        "v1.0_pct": 30.0,
+        "v1.1_pct": 25.7,
+        "delta_pct": -4.3
+      },
+      "3": {
+        "v1.0_count": 274,
+        "v1.1_count": 347,
+        "v1.0_pct": 13.7,
+        "v1.1_pct": 17.3,
+        "delta_pct": 3.6
+      },
+      "4": {
+        "v1.0_count": 1,
+        "v1.1_count": 15,
+        "v1.0_pct": 0.1,
+        "v1.1_pct": 0.8,
+        "delta_pct": 0.7
+      },
+      "5": {
+        "v1.0_count": 0,
+        "v1.1_count": 0,
+        "v1.0_pct": 0.0,
+        "v1.1_pct": 0.0,
+        "delta_pct": 0.0
+      }
+    },
+    "confidence_comparison": {
+      "v1.0_mean": 0.6006,
+      "v1.1_mean": 0.5535,
+      "delta_mean": -0.0471,
+      "v1.0_low_conf_pct": 35.2,
+      "v1.1_low_conf_pct": 32.1,
+      "delta_low_conf_pct": -3.1
+    },
+    "v1_classifier_version": "1.0.0",
+    "v1_1_classifier_version": "1.1.0",
+    "v1_thresholds": [
+      [
+        0.0,
+        1
+      ],
+      [
+        0.18,
+        2
+      ],
+      [
+        0.4,
+        3
+      ],
+      [
+        0.62,
+        4
+      ],
+      [
+        0.8,
+        5
+      ]
+    ],
+    "v1_1_thresholds": [
+      [
+        0.0,
+        1
+      ],
+      [
+        0.18,
+        2
+      ],
+      [
+        0.35,
+        3
+      ],
+      [
+        0.55,
+        4
+      ],
+      [
+        0.75,
+        5
+      ]
+    ]
+  },
+  "limitations": {
+    "sample_size": "Sample of 2000 records provides directional signal but not statistical certainty.",
+    "ceiling_effect": "V1.1 thresholds partially address ceiling effect. Full production run needed for validation.",
+    "source_matching": "Source trust normalization improved matching but some multi-source records may still map to 'other'."
+  },
+  "next_steps": [
+    "Review v1.1 vs v1.0 comparison to confirm threshold calibration is effective",
+    "Run full production classification across all 1,543,548 unknown records with v1.1 classifier",
+    "Validate classifier output against human review on stratified n=400 sample",
+    "Publish v1.1 as stable if calibration report shows improvement"
+  ]
+}
