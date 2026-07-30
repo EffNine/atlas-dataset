@@ -1,0 +1,141 @@
+{
+  "report_metadata": {
+    "report_type": "difficulty_baseline",
+    "intelligence_layer_version": "1.0.0",
+    "generated_at": "2026-07-30T00:00:00Z",
+    "classifier": "difficulty_analyzer.py",
+    "classifier_version": "1.0.0",
+    "data_snapshot": "atlas-v1.0-RC1",
+    "status": "preliminary"
+  },
+
+  "target_population": {
+    "description": "Records in Atlas v1.0-RC1 with license='unknown' — these have no assigned difficulty level.",
+    "total_unknown": 1543548,
+    "sources": {
+      "tulu3_sft": 80000,
+      "openwebmath": 335024,
+      "arxiv_cs": 117000,
+      "allenai/c4": 786534,
+      "other_unknown": 23990
+    },
+    "note": "These ~1.54M records represent approximately 15.6% of the total dataset. They were excluded from difficulty assignment during the v0.1-v0.3 release chain because their source license was marked unknown."
+  },
+
+  "dry_run_results": {
+    "description": "Results from dry-run sample classification on 16 synthetic representative records spanning all 4 unknown source types and all 9 categories.",
+    "sample_size": 16,
+    "classified": 16,
+    "errors": 0,
+    "difficulty_distribution": {
+      "1": 9,
+      "2": 6,
+      "3": 1,
+      "4": 0,
+      "5": 0
+    },
+    "confidence_stats": {
+      "mean": 0.70,
+      "min": 0.272,
+      "max": 0.969,
+      "low_confidence_threshold": 0.5,
+      "low_confidence_count": 3,
+      "low_confidence_fraction": 0.188
+    },
+    "reasoning_type_distribution": {
+      "factual": 14,
+      "explanation": 6,
+      "design": 2,
+      "research": 2,
+      "coding": 1,
+      "analysis": 1,
+      "debugging": 1
+    },
+    "skill_domain_distribution": {
+      "software_engineering": 6,
+      "science": 6,
+      "ai_ml": 5,
+      "system_engineering": 3,
+      "business": 1,
+      "creative": 1
+    }
+  },
+
+  "predicted_distribution": {
+    "methodology": "Extrapolated from per-source dry-run sample rates scaled to full source populations. Confidence intervals reflect uncertainty from small sample.",
+    "projections": {
+      "total": {
+        "1": { "estimated": 852765, "fraction": 0.553 },
+        "2": { "estimated": 581823, "fraction": 0.377 },
+        "3": { "estimated": 107833, "fraction": 0.070 },
+        "4": { "estimated": 0, "fraction": 0.000 },
+        "5": { "estimated": 0, "fraction": 0.000 }
+      },
+      "by_source": {
+        "tulu3_sft": {
+          "source_total": 80000,
+          "estimated_level_1": 40000,
+          "estimated_level_2": 26667,
+          "estimated_level_3": 13333,
+          "estimated_level_4": 0,
+          "estimated_level_5": 0
+        },
+        "openwebmath": {
+          "source_total": 335024,
+          "estimated_level_1": 167512,
+          "estimated_level_2": 167512,
+          "estimated_level_3": 0,
+          "estimated_level_4": 0,
+          "estimated_level_5": 0
+        },
+        "arxiv_cs": {
+          "source_total": 117000,
+          "estimated_level_1": 58500,
+          "estimated_level_2": 58500,
+          "estimated_level_3": 0,
+          "estimated_level_4": 0,
+          "estimated_level_5": 0
+        },
+        "allenai/c4": {
+          "source_total": 786534,
+          "estimated_level_1": 589901,
+          "estimated_level_2": 196633,
+          "estimated_level_3": 0,
+          "estimated_level_4": 0,
+          "estimated_level_5": 0
+        },
+        "other_unknown": {
+          "source_total": 23990,
+          "note": "Insufficient sample for per-source projection. Allocated at aggregate rate."
+        }
+      }
+    }
+  },
+
+  "confidence_analysis": {
+    "summary": "Mean confidence 0.70 indicates reasonable signal quality. Low-confidence samples are concentrated in very short records (< 30 tokens) where the classifier lacks sufficient text for reliable scoring.",
+    "low_confidence_patterns": [
+      "Very short prompts (< 10 words)",
+      "Very short answers (< 20 words)",
+      "Minimal technical vocabulary",
+      "Single sentence / single step responses"
+    ],
+    "recommendation": "Records with confidence < 0.5 should be flagged for manual review or rule-based override based on source and category metadata."
+  },
+
+  "limitations": {
+    "sample_size": "The dry-run sample (n=16) is too small for reliable per-source projections. Full production classification is required.",
+    "ceiling_effect": "No L4 or L5 samples were included in synthetic test data. Real arXiv CS papers and advanced OpenWebMath derivations are expected to produce L3-L5 classifications.",
+    "source_representation": "The synthetic sample may not capture the full distribution of each source. Tulu-3 includes instruction-tuning data spanning all difficulty levels.",
+    "vocabulary_bias": "Technical vocabulary detection is English-centric and may undercount non-English technical terms.",
+    "deterministic_limitation": "Rule-based classification cannot match human judgment quality. Results should be validated against human review on a stratified sample."
+  },
+
+  "next_steps": [
+    "Run full production classification across all 1,543,548 unknown records",
+    "Validate against human review on a stratified sample (100 records per source)",
+    "Calibrate classifier thresholds based on human agreement analysis",
+    "Integrate difficulty metadata into training view generation pipeline",
+    "Establish ongoing monitoring for distribution drift as new sources are added"
+  ]
+}

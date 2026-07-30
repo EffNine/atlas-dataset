@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.dataset/intelligence/difficulty_taxonomy_v1.json",
+  "title": "Atlas Difficulty Taxonomy v1",
+  "description": "Five-level difficulty framework for classifying dataset records by cognitive demand, reasoning depth, and required expertise. Applies to all 9 Atlas categories.",
+  "version": "1.0.0",
+  "created_at": "2026-07-30T00:00:00Z",
+  "classification": "metadata-only",
+  "immutable_reference": "atlas-v1.0-RC1",
+
+  "levels": {
+    "1": {
+      "label": "Basic",
+      "short": "L1 — Basic",
+      "description": "Simple factual questions, direct answers, basic explanations, single-step reasoning, and common knowledge. Requires no specialised expertise.",
+      "indicators": [
+        "single factual statement or definition",
+        "one-step retrieval or recall",
+        "common-knowledge domain terms",
+        "short prompt and short answer (< 100 tokens each)",
+        "no conditional logic or branching required",
+        "trivial or self-evident reasoning chain",
+        "word-level vocabulary (no domain jargon)"
+      ],
+      "positive_examples": [
+        "What is the capital of France?",
+        "Define a variable in programming.",
+        "What year did World War II end?",
+        "Explain what RAM does in simple terms."
+      ],
+      "negative_examples": [
+        "Compare and contrast two programming paradigms.",
+        "Debug a race condition in a multi-threaded application.",
+        "Explain the implications of the P vs NP problem."
+      ],
+      "scoring_criteria": {
+        "prompt_complexity_max": 0.2,
+        "answer_complexity_max": 0.2,
+        "technical_vocab_density_max": 0.1,
+        "reasoning_steps_max": 1,
+        "token_length_max": 200,
+        "domain_depth": "surface-level"
+      }
+    },
+
+    "2": {
+      "label": "Intermediate",
+      "short": "L2 — Intermediate",
+      "description": "Multi-concept explanations, standard programming tasks, applied engineering knowledge, moderate reasoning chains, and practical problem-solving. Requires domain familiarity but not deep specialisation.",
+      "indicators": [
+        "multiple concepts linked in explanation",
+        "routine programming task (implement a known algorithm)",
+        "moderate reasoning chain (2-4 steps)",
+        "applied knowledge from standard curricula",
+        "domain jargon present but well-established",
+        "prompt and answer typically 100-500 tokens each",
+        "practical problem-solving with known solutions"
+      ],
+      "positive_examples": [
+        "Explain how a hash table works and when to use one.",
+        "Write a Python function to reverse a linked list.",
+        "Describe the difference between TCP and UDP with use cases.",
+        "How would you optimise a SQL query with a JOIN on large tables?"
+      ],
+      "negative_examples": [
+        "Design a distributed consensus algorithm from scratch.",
+        "Prove a novel bound in approximation theory.",
+        "What is a transformer attention head? (too basic — Level 1)"
+      ],
+      "scoring_criteria": {
+        "prompt_complexity_max": 0.4,
+        "answer_complexity_max": 0.5,
+        "technical_vocab_density_max": 0.3,
+        "reasoning_steps_max": 4,
+        "token_length_max": 800,
+        "domain_depth": "applied-knowledge"
+      }
+    },
+
+    "3": {
+      "label": "Advanced",
+      "short": "L3 — Advanced",
+      "description": "Multi-step reasoning, debugging real-world issues, design trade-off analysis, complex technical explanations bridging multiple sub-domains. Requires professional-level understanding.",
+      "indicators": [
+        "multi-step reasoning chains (5+ steps)",
+        "debugging realistic code or system failures",
+        "weighing design trade-offs with context",
+        "cross-domain knowledge (e.g. systems + networking)",
+        "prompt and answer can exceed 500 tokens",
+        "specialised technical vocabulary at professional level",
+        "solution requires synthesis, not just recall",
+        "conditional analysis: 'if X then Y else Z under constraint W'"
+      ],
+      "positive_examples": [
+        "Identify why a distributed system experiences degraded throughput under partial network partition and propose mitigations.",
+        "Debug a memory leak in a long-running C++ service, given heap profiles and access logs.",
+        "Compare leader-election protocols (Raft vs Zab) in terms of liveness guarantees and practical deployment trade-offs.",
+        "Design a cache invalidation strategy for a read-heavy, eventually-consistent microservice architecture."
+      ],
+      "negative_examples": [
+        "What is Raft consensus? (too basic — Level 2)",
+        "Propose a novel cryptographic primitive for post-quantum signatures. (too speculative — Level 5)"
+      ],
+      "scoring_criteria": {
+        "prompt_complexity_max": 0.7,
+        "answer_complexity_max": 0.7,
+        "technical_vocab_density_max": 0.5,
+        "reasoning_steps_min": 5,
+        "token_length_min": 400,
+        "domain_depth": "professional"
+      }
+    },
+
+    "4": {
+      "label": "Expert",
+      "short": "L4 — Expert",
+      "description": "Architecture decisions, deep technical analysis, professional-level problem-solving at scale, system optimisation, advanced research interpretation. Requires mastery in a domain.",
+      "indicators": [
+        "architectural or system-level design decisions",
+        "deep analytical reasoning with multiple interacting constraints",
+        "optimisation at production scale (latency, throughput, reliability)",
+        "interpretation of primary research literature",
+        "prompt and answer typically 800+ tokens",
+        "dense technical vocabulary with precise meaning required",
+        "no single 'correct' answer — trade-off space explored",
+        "requires substantial domain experience to evaluate"
+      ],
+      "positive_examples": [
+        "Design a control plane for a multi-region Kubernetes federation that tolerates region failure with < 5s convergence.",
+        "Analyse the throughput-latency trade-off space for a write-optimised LSM-tree storage engine under diverse access patterns.",
+        "Critique a recent ML paper's methodology and propose a more rigorous evaluation protocol.",
+        "Design a capacity planning model for a real-time inference serving platform with bursty traffic patterns."
+      ],
+      "negative_examples": [
+        "Explain how Kubernetes scheduling works. (not expert-level — Level 3)",
+        "Write an HTTP server in Go. (not expert-level — Level 2)"
+      ],
+      "scoring_criteria": {
+        "prompt_complexity_min": 0.6,
+        "answer_complexity_min": 0.7,
+        "technical_vocab_density_min": 0.4,
+        "reasoning_steps_min": 8,
+        "token_length_min": 800,
+        "domain_depth": "mastery"
+      }
+    },
+
+    "5": {
+      "label": "Research",
+      "short": "L5 — Research",
+      "description": "Frontier knowledge, novel synthesis across disconnected fields, original hypothesis generation, research-level reasoning about unanswered problems. Requires research expertise or novel contribution.",
+      "indicators": [
+        "addresses open or frontier problems",
+        "synthesises knowledge across disparate fields",
+        "generates original hypotheses or research directions",
+        "evaluates competing theories with nuanced epistemology",
+        "requires understanding of ongoing research frontier",
+        "prompt and answer often exceed 1500 tokens",
+        "no established solution path — novelty required",
+        "content may reference preprints, unpublished results"
+      ],
+      "positive_examples": [
+        "Propose a research agenda for mechanistic interpretability of multimodal foundation models, identifying key open challenges and measurable milestones.",
+        "Synthesise recent advances in neural scaling laws with algorithmic information theory — what testable predictions emerge?",
+        "Design an experiment to determine whether in-context learning in LLMs constitutes a form of meta-learning or a distinct capability.",
+        "Evaluate the plausibility of different approaches to aligning superhuman AI systems, given current theoretical limitations."
+      ],
+      "negative_examples": [
+        "Explain what mechanistic interpretability is. (not research level — Level 3)",
+        "Describe neural scaling laws. (not research level — Level 3)"
+      ],
+      "scoring_criteria": {
+        "prompt_complexity_min": 0.8,
+        "answer_complexity_min": 0.8,
+        "technical_vocab_density_min": 0.3,
+        "reasoning_steps_min": 10,
+        "token_length_min": 1000,
+        "domain_depth": "research-frontier"
+      }
+    }
+  },
+
+  "level_mapping": {
+    "description": "Maps the prior Atlas difficulty scheme (0-3) to the new 5-level taxonomy for continuity.",
+    "v0_scheme_to_v1": {
+      "0_unassessed": "unknown",
+      "1_easy": "1",
+      "2_medium": "2",
+      "3_hard": "3"
+    },
+    "note": "Records previously classified as 'hard' (L3) under the v0 scheme may map to L3 or L4 under the v1 taxonomy. Re-classification is required for confidence. Levels 4 and 5 have no v0 equivalent."
+  },
+
+  "classification_guidelines": {
+    "general": [
+      "A record's difficulty is determined by the HARDEST dimension — if either prompt or answer reaches L4 characteristics, the whole record is L4.",
+      "Do not conflate token length with difficulty: a 2000-token answer can be L2 if it simply repeats many easy steps.",
+      "Confidence below 0.5 indicates the classifier could not gather sufficient evidence; record as 'unknown' for manual review.",
+      "Cross-domain records default to the difficulty level implied by the more demanding domain."
+    ],
+    "per_category": {
+      "01_foundation": "Base knowledge tends toward L1-L2; L5 is rare and requires original synthesis.",
+      "02_software_engineering": "Covers L1-L4; research-level (L5) may appear on novel language/paradigm frontiers.",
+      "03_system_engineering": "L3-L4 are typical for real-world ops; L5 covers unchecked failure domains.",
+      "04_ai_machine_learning": "Broad distribution L1-L5; frontier research is well-represented.",
+      "05_hardware_engineering": "L2-L4 typical; L5 reserved for novel architecture proposals.",
+      "06_science_engineering": "L3-L5 possible; L5 for original hypotheses and novel experimental design.",
+      "07_business_knowledge": "L1-L4 typical; L5 uncommon — requires novel strategic synthesis.",
+      "08_creative_knowledge": "L2-L4 typical; L5 for avant-garde techniques or cross-medium synthesis.",
+      "09_personal_assistant": "L1-L2 dominant; practical problem-solving tops at L3."
+    }
+  }
+}
