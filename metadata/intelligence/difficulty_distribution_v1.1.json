@@ -1,0 +1,92 @@
+{
+  "report_metadata": {
+    "report_type": "difficulty_distribution_v1_1",
+    "intelligence_layer_version": "1.1.0",
+    "generated_at": "2026-07-30T18:41:42.280876+00:00",
+    "classifier": "difficulty_analyzer.py",
+    "classifier_version": "1.1.0",
+    "data_snapshot": "atlas-v1.0-RC1",
+    "status": "production"
+  },
+  "total_records": 2575622,
+  "classified": 2575622,
+  "failed": 0,
+  "remaining_unknown": 0,
+  "difficulty_distribution": {
+    "1": 1304455,
+    "2": 639908,
+    "3": 594430,
+    "4": 36818,
+    "5": 11
+  },
+  "confidence_stats": {
+    "mean": 0.5538,
+    "min": 0.0045,
+    "max": 0.9686,
+    "low_confidence_count": 810969,
+    "low_confidence_fraction": 0.3149
+  },
+  "reasoning_type_distribution": {
+    "factual": 1955356,
+    "explanation": 1159878,
+    "coding": 376863,
+    "debugging": 276054,
+    "design": 134607,
+    "analysis": 106992,
+    "research": 102055
+  },
+  "skill_domain_distribution": {
+    "ai_ml": 1852063,
+    "science": 1650224,
+    "software_engineering": 1051857,
+    "system_engineering": 21037,
+    "business": 16877,
+    "creative": 8252
+  },
+  "per_source": {
+    "tulu3": {
+      "total_records": 939343,
+      "classified": 939343,
+      "difficulty_distribution": {
+        "1": 365643,
+        "2": 165104,
+        "3": 372111,
+        "4": 36474,
+        "5": 11
+      }
+    },
+    "openwebmath": {
+      "total_records": 728447,
+      "classified": 728447,
+      "difficulty_distribution": {
+        "1": 489147,
+        "2": 139349,
+        "3": 99607,
+        "4": 344,
+        "5": 0
+      }
+    },
+    "arxiv": {
+      "total_records": 121298,
+      "classified": 121298,
+      "difficulty_distribution": {
+        "1": 95461,
+        "2": 24943,
+        "3": 894,
+        "4": 0,
+        "5": 0
+      }
+    },
+    "c4": {
+      "total_records": 786534,
+      "classified": 786534,
+      "difficulty_distribution": {
+        "1": 354204,
+        "2": 310512,
+        "3": 121818,
+        "4": 0,
+        "5": 0
+      }
+    }
+  }
+}

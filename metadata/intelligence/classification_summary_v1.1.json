@@ -1,0 +1,111 @@
+{
+  "report_metadata": {
+    "report_type": "classification_summary_v1_1",
+    "intelligence_layer_version": "1.1.0",
+    "generated_at": "2026-07-30T18:41:42.293735+00:00",
+    "classifier": "difficulty_analyzer.py",
+    "classifier_version": "1.1.0",
+    "data_snapshot": "atlas-v1.0-RC1",
+    "status": "production"
+  },
+  "overall": {
+    "total_records": 2575622,
+    "successful_classifications": 2575622,
+    "failed_classifications": 0,
+    "classification_rate": 100.0,
+    "elapsed": "N/A (parallel run)"
+  },
+  "target_population": {
+    "description": "All records from Tulu-3, OpenWebMath, ArXiv, and C4 source shards in raw/generated/",
+    "estimated_unknown_before": 1543548,
+    "actual_records_processed": 2575622
+  },
+  "difficulty_distribution": {
+    "1": {
+      "count": 1304455,
+      "percentage": 50.65
+    },
+    "2": {
+      "count": 639908,
+      "percentage": 24.84
+    },
+    "3": {
+      "count": 594430,
+      "percentage": 23.08
+    },
+    "4": {
+      "count": 36818,
+      "percentage": 1.43
+    },
+    "5": {
+      "count": 11,
+      "percentage": 0.0
+    }
+  },
+  "confidence": {
+    "mean": 0.5538,
+    "min": 0.0045,
+    "max": 0.9686,
+    "low_confidence_count": 810969,
+    "low_confidence_fraction": 0.3149
+  },
+  "per_source": {
+    "tulu3": {
+      "total_records": 939343,
+      "classified": 939343,
+      "difficulty_distribution": {
+        "1": 365643,
+        "2": 165104,
+        "3": 372111,
+        "4": 36474,
+        "5": 11
+      }
+    },
+    "openwebmath": {
+      "total_records": 728447,
+      "classified": 728447,
+      "difficulty_distribution": {
+        "1": 489147,
+        "2": 139349,
+        "3": 99607,
+        "4": 344,
+        "5": 0
+      }
+    },
+    "arxiv": {
+      "total_records": 121298,
+      "classified": 121298,
+      "difficulty_distribution": {
+        "1": 95461,
+        "2": 24943,
+        "3": 894,
+        "4": 0,
+        "5": 0
+      }
+    },
+    "c4": {
+      "total_records": 786534,
+      "classified": 786534,
+      "difficulty_distribution": {
+        "1": 354204,
+        "2": 310512,
+        "3": 121818,
+        "4": 0,
+        "5": 0
+      }
+    }
+  },
+  "comparison": {
+    "before": {
+      "unknown": 2575622
+    },
+    "after": {
+      "1": 1304455,
+      "2": 639908,
+      "3": 594430,
+      "4": 36818,
+      "5": 11
+    },
+    "remaining_unknown": 0
+  }
+}

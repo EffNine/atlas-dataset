@@ -61,3 +61,7 @@ metadata/views/
 metadata/release_bundles/
 metadata/e2e_reports/
 metadata/pipeline_incremental.json
+
+# Intelligence Layer ephemeral artifacts (regenerable per release)
+metadata/intelligence/_tmp/
+metadata/intelligence/unknown_classified_v*.jsonl
