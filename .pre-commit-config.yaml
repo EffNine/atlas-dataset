@@ -1,0 +1,21 @@
+# Pre-commit hooks for Atlas
+# Install:  python -m pip install pre-commit && pre-commit install
+# Run all:  pre-commit run --all-files
+repos:
+  - repo: local
+    hooks:
+      - id: atlas-architecture-governance
+        name: Atlas architecture governance
+        description: Enforce dependency layering, forbidden imports, cycles, duplication, and the worker-count contract (ADR-010 / ADR-013)
+        entry: python scripts/validate_architecture.py
+        language: system
+        files: \.py$
+        pass_filenames: false
+
+      - id: atlas-stabilization-tests
+        name: Atlas stabilization tests
+        description: Run the parallel-functionality test suite (deterministic, CI-safe)
+        entry: python -m pytest tests/test_parallel_stabilization.py -q
+        language: system
+        files: \.(py|yaml)$
+        pass_filenames: false

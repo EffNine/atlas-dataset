@@ -2,8 +2,8 @@
   "schema_version": "1.0",
   "validator": "validate_architecture.py",
   "contract_version": "1.0",
-  "timestamp": "2026-07-28T02:39:00.878171",
-  "files_checked": 55,
+  "timestamp": "2026-08-01T21:40:20.017561",
+  "files_checked": 137,
   "total_violations": 0,
   "known_violations": 4,
   "result": "PASS",
@@ -14,6 +14,7 @@
     "duplicated_constants": 0,
     "duplicated_license_functions": 0,
     "duplicated_schema_definitions": 0,
-    "direct_path_construction": 0
+    "direct_path_construction": 0,
+    "hardcoded_worker_counts": 0
   }
 }

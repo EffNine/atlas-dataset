@@ -600,6 +600,65 @@ def extract_imports(content: str) -> set[str]:
 
 
 # ---------------------------------------------------------------------------
+# Check 7: Hardcoded worker counts outside config/parallelism.yaml
+# ---------------------------------------------------------------------------
+
+# Files that legitimately define worker-count defaults (config loader + CLI
+# default args) and are exempt from this check.
+WORKER_CONFIG_EXEMPT: frozenset[str] = frozenset({
+    "run_classify_all_v2", "run_extract_all", "validate_dataset",
+})
+
+
+def check_hardcoded_worker_counts(path: Path) -> None:
+    """Enforce ADR-013: worker counts come from config/parallelism.yaml.
+
+    Pipeline stages must read worker counts from the unified config rather
+    than hardcoding them. CLI scripts that declare a --workers default as a
+    fallback (and then override from config) are exempt.
+    """
+    module = module_name_from_path(path)
+    if module is None or module in WORKER_CONFIG_EXEMPT:
+        return
+    # Skip tests and the config itself
+    if module.startswith("test_") or "tests" in path.parts:
+        return
+
+    content = path.read_text(encoding="utf-8")
+    try:
+        tree = ast.parse(content)
+    except SyntaxError:
+        return
+
+    for node in ast.walk(tree):
+        # Keyword args like max_workers=8, workers=4, file_workers=2
+        if isinstance(node, ast.Call):
+            for kw in node.keywords:
+                if kw.arg in ("max_workers", "workers", "file_workers", "shard_workers"):
+                    if isinstance(kw.value, ast.Constant) and isinstance(kw.value.value, int):
+                        violation(
+                            "hardcoded_worker_count",
+                            str(path.relative_to(PROJECT_ROOT)),
+                            f"Hardcoded {kw.arg}={kw.value.value} in {module}",
+                            "Read worker counts from config/parallelism.yaml (see ADR-013)"
+                        )
+        # Assignments like shard_workers = 8 (module or function scope)
+        if isinstance(node, (ast.Assign, ast.AnnAssign)):
+            target = node.targets[0] if isinstance(node, ast.Assign) else node.target
+            if isinstance(target, ast.Name) and target.id in (
+                "max_workers", "workers", "file_workers", "shard_workers",
+            ):
+                val = node.value
+                if isinstance(val, ast.Constant) and isinstance(val.value, int):
+                    violation(
+                        "hardcoded_worker_count",
+                        str(path.relative_to(PROJECT_ROOT)),
+                        f"Hardcoded {target.id}={val.value} in {module}",
+                        "Read worker counts from config/parallelism.yaml (see ADR-013)"
+                    )
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -648,6 +707,9 @@ def main() -> int:
         # technical debt (~1 day). Uncomment to enforce after path refactoring.
         # check_direct_path_construction(fp)
 
+        # Check 7: Hardcoded worker counts (ADR-013)
+        check_hardcoded_worker_counts(fp)
+
     # Check 2: Circular dependencies (requires full import map)
     check_circular_dependencies()
 
@@ -673,6 +735,7 @@ def main() -> int:
             "duplicated_license_functions": sum(1 for v in violations if v["category"] == "duplicated_license_function"),
             "duplicated_schema_definitions": sum(1 for v in violations if v["category"] == "duplicated_schema_definition"),
             "direct_path_construction": sum(1 for v in violations if v["category"] == "direct_path_construction"),
+            "hardcoded_worker_counts": sum(1 for v in violations if v["category"] == "hardcoded_worker_count"),
         },
     }
 

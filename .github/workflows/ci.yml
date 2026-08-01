@@ -1,0 +1,43 @@
+# GitHub Actions CI — Atlas architecture governance + test suite
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  architecture-governance:
+    name: Architecture Governance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PyYAML (for config parsing)
+        run: python -m pip install --quiet pyyaml
+
+      - name: Validate architecture (forbidden imports, cycles, duplication, worker-count contract)
+        run: python scripts/validate_architecture.py
+        # Exit 1 on violation fails the build (ADR-010, ADR-013)
+
+  tests:
+    name: Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install test deps
+        run: python -m pip install --quiet pytest pyyaml
+
+      - name: Run stabilization test suite (parallel functionality)
+        run: python -m pytest tests/test_parallel_stabilization.py -q

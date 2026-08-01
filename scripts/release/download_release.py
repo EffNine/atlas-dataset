@@ -69,6 +69,18 @@ def main(argv: list[str] | None = None) -> int:
         f"Downloading {args.repo_id} release {args.release} → {dest}\n"
         f"  revision : {args.revision or 'main'}"
     )
+    # Worker count from unified config (ADR-013); fallback 4.
+    import yaml
+    dl_workers = 4
+    try:
+        cfg_path = REPO_ROOT / "config" / "parallelism.yaml"
+        if cfg_path.exists():
+            cfg = yaml.safe_load(cfg_path.read_text()) or {}
+            dl_workers = int(
+                cfg.get("parallelism", {}).get("acquisition", {}).get("file_workers", 4)
+            )
+    except Exception:
+        pass
     snapshot_download(
         repo_id=args.repo_id,
         repo_type="dataset",
@@ -76,7 +88,7 @@ def main(argv: list[str] | None = None) -> int:
         token=token,
         local_dir=dest,
         allow_patterns=[f"{prefix}*"],
-        max_workers=4,
+        max_workers=dl_workers,
     )
 
     # snapshot_download with local_dir mirrors the repo tree; the release files

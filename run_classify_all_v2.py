@@ -52,37 +52,41 @@ def load_parallelism_config() -> dict:
     root = {}
     stack = [(root, -1)]  # (container, indent_level)
     
-    with open(CONFIG_PATH, "r") as f:
-        for raw_line in f:
-            line = raw_line.rstrip()
-            if not line or line.startswith("#") or line.strip() == "---":
-                continue
-            
-            # Calculate indent
-            indent = len(line) - len(line.lstrip())
-            stripped = line.strip()
-            
-            if ":" not in stripped:
-                continue
-            
-            key, _, value = stripped.partition(":")
-            key = key.strip()
-            value = value.strip()
-            
-            # Pop stack to find parent at correct depth
-            while len(stack) > 1 and stack[-1][1] >= indent:
-                stack.pop()
-            
-            parent = stack[-1][0]
-            
-            if value:
-                # Leaf node
-                parent[key] = _convert_value(value)
-            else:
-                # Section node
-                new_section = {}
-                parent[key] = new_section
-                stack.append((new_section, indent))
+    try:
+        with open(CONFIG_PATH, "r") as f:
+            lines = f.readlines()
+    except OSError:
+        return root
+    for raw_line in lines:
+        line = raw_line.rstrip()
+        if not line or line.startswith("#") or line.strip() == "---":
+            continue
+        
+        # Calculate indent
+        indent = len(line) - len(line.lstrip())
+        stripped = line.strip()
+        
+        if ":" not in stripped:
+            continue
+        
+        key, _, value = stripped.partition(":")
+        key = key.strip()
+        value = value.strip()
+        
+        # Pop stack to find parent at correct depth
+        while len(stack) > 1 and stack[-1][1] >= indent:
+            stack.pop()
+        
+        parent = stack[-1][0]
+        
+        if value:
+            # Leaf node
+            parent[key] = _convert_value(value)
+        else:
+            # Section node
+            new_section = {}
+            parent[key] = new_section
+            stack.append((new_section, indent))
     
     return root
 

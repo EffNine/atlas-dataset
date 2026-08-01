@@ -18,6 +18,94 @@ from atlas_schema import KNOWLEDGE_OBJECT_REQUIRED_FIELDS, LINEAGE_SUB_FIELDS
 from .manifest import TrainingViewManifest
 
 
+def validate_record_standalone(
+    rec: dict[str, Any],
+    quality_threshold: int = 7,
+) -> list[str]:
+    """Validate a single record for training-view eligibility.
+
+    Module-level so ProcessPoolExecutor workers can pickle it
+    (a bound method or closure is not picklable).
+
+    Args:
+        rec: A knowledge object record.
+        quality_threshold: Minimum quality score.
+
+    Returns:
+        A list of error messages (empty if valid).
+    """
+    errors: list[str] = []
+
+    # Verification status
+    vs = rec.get("verification_status", "")
+    if vs != "approved":
+        errors.append(
+            f"record {rec.get('id', '?')}: verification_status={vs!r}, "
+            f"expected 'approved'"
+        )
+
+    # License
+    lic = rec.get("license", "")
+    if is_denied_license(lic):
+        errors.append(
+            f"record {rec.get('id', '?')}: denied license {lic!r}"
+        )
+    elif not lic or lic == "unknown":
+        errors.append(
+            f"record {rec.get('id', '?')}: unknown license {lic!r}"
+        )
+
+    # Quality
+    try:
+        qs = int(rec.get("quality_score", 0))
+    except (TypeError, ValueError):
+        qs = 0
+    if qs < quality_threshold:
+        errors.append(
+            f"record {rec.get('id', '?')}: quality_score {qs} "
+            f"below threshold {quality_threshold}"
+        )
+
+    # Lineage
+    lineage = rec.get("lineage", {})
+    required_lineage = set(LINEAGE_SUB_FIELDS)
+    missing_lineage = required_lineage - set(lineage.keys())
+    if missing_lineage:
+        errors.append(
+            f"record {rec.get('id', '?')}: lineage missing fields: "
+            f"{missing_lineage}"
+        )
+
+    # Required fields
+    missing_fields = [
+        f for f in KNOWLEDGE_OBJECT_REQUIRED_FIELDS
+        if f not in rec
+    ]
+    if missing_fields:
+        errors.append(
+            f"record {rec.get('id', '?')}: missing required fields: "
+            f"{missing_fields}"
+        )
+
+    return errors
+
+
+def _validate_chunk_standalone(
+    args: tuple[list[dict[str, Any]], int],
+) -> list[dict[str, Any]]:
+    """Validate a chunk of records in a worker process."""
+    chunk, quality_threshold = args
+    out: list[dict[str, Any]] = []
+    for rec in chunk:
+        errs = validate_record_standalone(rec, quality_threshold)
+        out.append({
+            "record_id": rec.get("id", "?"),
+            "valid": len(errs) == 0,
+            "errors": errs,
+        })
+    return out
+
+
 class TrainingViewValidator:
     """Validate training view inputs, content, and outputs.
 
@@ -117,60 +205,7 @@ class TrainingViewValidator:
         Returns:
             A list of error messages (empty if valid).
         """
-        errors: list[str] = []
-
-        # Verification status
-        vs = rec.get("verification_status", "")
-        if vs != "approved":
-            errors.append(
-                f"record {rec.get('id', '?')}: verification_status={vs!r}, "
-                f"expected 'approved'"
-            )
-
-        # License
-        lic = rec.get("license", "")
-        if is_denied_license(lic):
-            errors.append(
-                f"record {rec.get('id', '?')}: denied license {lic!r}"
-            )
-        elif not lic or lic == "unknown":
-            errors.append(
-                f"record {rec.get('id', '?')}: unknown license {lic!r}"
-            )
-
-        # Quality
-        try:
-            qs = int(rec.get("quality_score", 0))
-        except (TypeError, ValueError):
-            qs = 0
-        if qs < quality_threshold:
-            errors.append(
-                f"record {rec.get('id', '?')}: quality_score {qs} "
-                f"below threshold {quality_threshold}"
-            )
-
-        # Lineage
-        lineage = rec.get("lineage", {})
-        required_lineage = set(LINEAGE_SUB_FIELDS)
-        missing_lineage = required_lineage - set(lineage.keys())
-        if missing_lineage:
-            errors.append(
-                f"record {rec.get('id', '?')}: lineage missing fields: "
-                f"{missing_lineage}"
-            )
-
-        # Required fields
-        missing_fields = [
-            f for f in KNOWLEDGE_OBJECT_REQUIRED_FIELDS
-            if f not in rec
-        ]
-        if missing_fields:
-            errors.append(
-                f"record {rec.get('id', '?')}: missing required fields: "
-                f"{missing_fields}"
-            )
-
-        return errors
+        return validate_record_standalone(rec, quality_threshold)
 
     def validate_records(
         self,
@@ -197,20 +232,12 @@ class TrainingViewValidator:
             chunk_size = max(1, len(records) // (workers * 4))
             chunks = [records[i:i + chunk_size] for i in range(0, len(records), chunk_size)]
 
-            def _validate_chunk(chunk: list[dict[str, Any]]) -> list[dict[str, Any]]:
-                out = []
-                for rec in chunk:
-                    errs = self.validate_record(rec, quality_threshold)
-                    out.append({
-                        "record_id": rec.get("id", "?"),
-                        "valid": len(errs) == 0,
-                        "errors": errs,
-                    })
-                return out
-
             results: list[dict[str, Any]] = []
             with ProcessPoolExecutor(max_workers=workers) as ex:
-                for chunk_results in ex.map(_validate_chunk, chunks):
+                for chunk_results in ex.map(
+                    _validate_chunk_standalone,
+                    [(chunk, quality_threshold) for chunk in chunks],
+                ):
                     results.extend(chunk_results)
             return results
 
