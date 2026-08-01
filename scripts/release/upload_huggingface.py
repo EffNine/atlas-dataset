@@ -132,12 +132,18 @@ def _upload_section_with_retry(
     *,
     repo_id: str,
     token: str,
-    path_in_repo: str,
+    release_root: Path,
     commit_message: str,
     dry_run: bool = False,
 ) -> dict[str, Any]:
-    """Upload one section; retry on transient failure."""
+    """Upload one section; retry on transient failure.
+
+    Uploads only the section's own folder (release_root/<section>) so the
+    remote repo gets dataset/, metadata/, docs/ at top level — NOT the whole
+    release root nested under each section.
+    """
     last_err: Exception | None = None
+    section_dir = release_root / section
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             if dry_run:
@@ -149,7 +155,7 @@ def _upload_section_with_retry(
                 }
             commit = api.upload_folder(
                 repo_id=repo_id,
-                folder_path=path_in_repo,
+                folder_path=str(section_dir),
                 path_in_repo=section,
                 repo_type="dataset",
                 token=token,
@@ -318,7 +324,7 @@ def main(argv: list[str] | None = None) -> int:
                     files,
                     repo_id=args.repo_id,
                     token=token,
-                    path_in_repo=str(release_root),
+                    release_root=release_root,
                     commit_message=args.commit_message.format(release=args.release),
                 )
             )
@@ -332,7 +338,7 @@ def main(argv: list[str] | None = None) -> int:
                     files,
                     repo_id=args.repo_id,
                     token=token,
-                    path_in_repo=str(release_root),
+                    release_root=release_root,
                     commit_message=args.commit_message.format(release=args.release),
                 ): section
                 for section, files in pending_sections

@@ -34,6 +34,38 @@ from common import REPO_ROOT, read_json, utc_now, write_json
 INDEX_PATH = REPO_ROOT / "metadata" / "release_index.json"
 
 
+def _commit_hash_from_url(url: str) -> str:
+    """Extract commit hash from a HF commit URL (CommitInfo lacks commit_hash
+    in huggingface_hub 1.26 — only commit_url is exposed)."""
+    if not url:
+        return ""
+    # https://huggingface.co/datasets/{repo}/commit/{hash}
+    return url.rstrip("/").split("/")[-1]
+
+
+def _manifest_chain_fields(release: str, index_path: Path) -> dict:
+    """Read chain fields from the frozen release manifest if present.
+
+    The release_index chain fields MUST match the signed manifest
+    byte-for-byte (governance rule §7.1). Returns {} if no manifest.
+    """
+    manifest_path = index_path.parent / "releases" / f"{release}_release.json"
+    if not manifest_path.exists():
+        return {}
+    try:
+        m = read_json(manifest_path)
+        sig = m.get("release_signature", {})
+        return {
+            "total_records": int(m.get("total_records", 0)),
+            "chain_hash": sig.get("chain_hash", ""),
+            "content_hash": sig.get("content_hash", ""),
+            "previous_hash": sig.get("previous_release_hash", ""),
+            "release_id": m.get("release_id", ""),
+        }
+    except Exception:
+        return {}
+
+
 def update_index(
     *,
     release: str,
@@ -58,20 +90,22 @@ def update_index(
     releases = index.setdefault("releases", [])
     entry = next((r for r in releases if r.get("version") == release), None)
     if entry is None:
+        chain = _manifest_chain_fields(release, index_path)
         entry = {
             "version": release,
             "release_type": "major",
             "created_at": utc_now(),
-            "total_records": total_records,
-            "chain_hash": "",
-            "content_hash": "",
-            "previous_hash": "",
+            "total_records": chain.get("total_records", total_records),
+            "chain_hash": chain.get("chain_hash", ""),
+            "content_hash": chain.get("content_hash", ""),
+            "previous_hash": chain.get("previous_hash", ""),
             "gates_passed": True,
-            "release_id": "",
+            "release_id": chain.get("release_id", ""),
             "hub": {},
         }
         releases.append(entry)
 
+    commit_hash = commit_hash or _commit_hash_from_url(commit_url)
     entry["hub"] = {
         "repo_id": repo_id,
         "repo_type": repo_type,

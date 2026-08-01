@@ -127,6 +127,10 @@ def main(argv: list[str] | None = None) -> int:
             problems.append(f"MISMATCH: {rel}")
     for fp in files:
         rel = str(fp.relative_to(release_dir))
+        # The checksum manifest itself is never listed in checksums.sha256
+        # (self-referential hash avoidance in generate_checksums.py).
+        if rel == "metadata/checksums.sha256":
+            continue
         if rel not in expected:
             problems.append(f"EXTRA (not in checksums): {rel}")
 
