@@ -6,10 +6,10 @@ parallelism:
     skip_v11_sources: true
     print_interval: 1
     scheduler: adaptive
-    target_task_size_mb: 512
-    max_task_size_mb: 1024
+    target_task_size_mb: 64
+    max_task_size_mb: 128
     split_large_shards: true
-    min_split_size_mb: 2048
+    min_split_size_mb: 128
     task_timeout_seconds: 3600
     max_retries: 2
 
