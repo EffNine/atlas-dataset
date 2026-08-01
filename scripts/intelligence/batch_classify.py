@@ -179,11 +179,12 @@ def classify_source_shards(
     # Single-shard sources (e.g. swebench, mmlu) cannot use shard-level
     # parallelism — one worker does all the work. Split the single file into
     # line chunks and process them as virtual shards so multi-core speedup
-    # applies to every source type.
+    # applies to every source type. Per-source subdir keeps concurrent
+    # sources (parallel_sources>1) from colliding.
     if shard_workers > 1 and len(shards) == 1:
         shards = split_single_shard(
             shards[0],
-            out.parent / "_tmp_shards",
+            out.parent / "_tmp_shards" / config.label,
             n_chunks=min(shard_workers, 64),
             label=config.label,
         )
@@ -227,8 +228,10 @@ def classify_source_shards(
         # Parallel path: each worker gets a shard, writes to temp file, merge at end
         from concurrent.futures import ProcessPoolExecutor, as_completed
 
-        tmp_dir = out.parent / "_tmp_shards"
-        tmp_dir.mkdir(exist_ok=True)
+        # Per-source subdirectory so concurrent sources (parallel_sources>1)
+        # never share/delete each other's in-flight chunk files.
+        tmp_dir = out.parent / "_tmp_shards" / config.label
+        tmp_dir.mkdir(parents=True, exist_ok=True)
 
         with ProcessPoolExecutor(max_workers=shard_workers) as pool:
             futures = {}
@@ -353,7 +356,9 @@ def classify_source_shards_adaptive(
     worker_group = "stage2" if shard_workers >= 8 else "stage1"
     tasks = plan_tasks(config.label, shards, scheduler_cfg, worker_group)
     registry = TaskRegistry(root, worker_group)
-    tmp_dir = out.parent / "_tmp_shards"
+    # Per-source subdirectory so concurrent sources (parallel_sources>1)
+    # never share/delete each other's in-flight task outputs.
+    tmp_dir = out.parent / "_tmp_shards" / config.label
     tmp_dir.mkdir(parents=True, exist_ok=True)
 
     print(
