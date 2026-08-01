@@ -268,3 +268,113 @@ the workload is very unbalanced.
   registry (NFS/object store) enables cross-machine workers.
 - Dynamic rebalancing: move pending tasks from a slow worker to idle ones.
 - GPU-aware task sizing for model-based scoring.
+
+---
+
+## 11. Configuration Tuning Guide
+
+### 11.1 How the knobs interact
+
+| Key | Effect |
+|-----|--------|
+| `target_task_size_mb` | Ideal task size. Shards ≥ this are split into ~this-sized chunks. Lower = more tasks = more parallelism (but more overhead). |
+| `max_task_size_mb` | Hard ceiling. A shard above this is split even if `split_large_shards` is false. |
+| `min_split_size_mb` | Only shards ≥ this are candidates for splitting. Keeps small files as single tasks. |
+| `split_large_shards` | Master switch for splitting. |
+| `task_timeout_seconds` | Stale-running threshold for resume (not yet enforced in v1; reserved). |
+| `max_retries` | Failed task retry limit. |
+
+**Rule of thumb:** `target_task_size_mb` should be roughly
+`total_source_bytes / (workers × 4)` so each worker has 3-4 queued tasks to
+avoid idle tail. `min_split_size_mb` should be ≥ 4 × `target_task_size_mb`
+so small files are never split.
+
+### 11.2 Example: Mac (8GB RAM)
+
+```yaml
+parallelism:
+  classification:
+    stage1_shard_workers: 2
+    stage2_shard_workers: 2
+    parallel_sources: 1
+    scheduler: adaptive
+    target_task_size_mb: 256
+    max_task_size_mb: 512
+    split_large_shards: true
+    min_split_size_mb: 1024
+    task_timeout_seconds: 3600
+    max_retries: 2
+```
+
+Fewer workers (2) to stay within 8GB; smaller tasks (256MB) so each worker
+holds one in memory at a time.
+
+### 11.3 Example: dev-pc (16 cores, 30GB RAM)
+
+```yaml
+parallelism:
+  classification:
+    stage1_shard_workers: 8
+    stage2_shard_workers: 10
+    parallel_sources: 2
+    scheduler: adaptive
+    target_task_size_mb: 512
+    max_task_size_mb: 1024
+    split_large_shards: true
+    min_split_size_mb: 2048
+    task_timeout_seconds: 3600
+    max_retries: 2
+```
+
+Current production values. 512MB tasks give 10 workers ~2-4 tasks each on a
+typical 4-8GB source, balancing CPU utilization without memory pressure.
+
+### 11.4 Example: future multi-node execution
+
+```yaml
+parallelism:
+  classification:
+    stage2_shard_workers: 32
+    parallel_sources: 4
+    scheduler: adaptive
+    target_task_size_mb: 128
+    max_task_size_mb: 256
+    split_large_shards: true
+    min_split_size_mb: 512
+    task_timeout_seconds: 7200
+    max_retries: 3
+```
+
+Small tasks (128MB) spread across 32 workers on multiple nodes; the task
+registry (with `worker_id`) is the coordination point. A shared registry
+(NFS / object store / SQLite) is required for true multi-machine resume.
+
+---
+
+## 12. Backward Compatibility Notes (implemented)
+
+- `run_classify_all_v2.py` unchanged: no new required flags.
+- `batch_classify_v2.py` gains an implicit adaptive path via
+  `load_scheduler_config()`; `scheduler: static` restores the old per-shard
+  path exactly.
+- Per-source output contract unchanged:
+  `metadata/intelligence/_tmp/classified_{label}.jsonl` → merged → deleted
+  after append to v1.2.
+- The planner emits one whole-file task per small shard, so corpora under
+  the split threshold behave identically to the previous pipeline.
+
+---
+
+## 13. Implementation Status
+
+| Component | Status |
+|-----------|--------|
+| Design doc | ✅ Commit `0155494` |
+| `adaptive_scheduler.py` (planner, Task, TaskRegistry, report, config) | ✅ Commit `cbb1445` |
+| `classify_source_shards_adaptive` + `_process_task_worker` | ✅ Commit `cbb1445` |
+| `process_file_range` (streaming line range) | ✅ Commit `cbb1445` |
+| `batch_classify_v2` adaptive wiring | ✅ Commit `cbb1445` |
+| Config keys | ✅ Commit `cbb1445` |
+| `tests/test_adaptive_scheduler.py` (15 tests) | ✅ Commit 3 |
+| Tuning guide + examples | ✅ Commit 3 |
+
