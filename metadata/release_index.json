@@ -64,6 +64,27 @@
         "total_records": 9515938,
         "verified": true
       }
+    },
+    {
+      "version": "v1.0",
+      "release_type": "major",
+      "created_at": "2026-08-01T07:19:10.860566+00:00",
+      "total_records": 9515938,
+      "chain_hash": "4dcfd43e9da2d7567b69037e73403ea57a84fb7f5a969f46f7dea7361cbab75c",
+      "content_hash": "ed43824c8a8f8526af12b31d60c7858fcbd2349e7ac687c740c44dc164bc3dee",
+      "previous_hash": "d7cab61461d634196ba891a52b5f6d5ab62d796056bc5770ac6a165d5a1a45ee",
+      "gates_passed": true,
+      "release_id": "4dcfd43e9da2d756",
+      "hub": {
+        "repo_id": "EffNine/atlas-dataset",
+        "repo_type": "dataset",
+        "published_at": "2026-08-01T07:19:10.860790+00:00",
+        "commit_url": "https://huggingface.co/datasets/EffNine/atlas-dataset/commit/1370ac420b55fd9d2f7f7b0d26971beafed8ba80",
+        "commit_hash": "1370ac420b55fd9d2f7f7b0d26971beafed8ba80",
+        "files": 15,
+        "total_records": 9515938,
+        "verified": true
+      }
     }
   ],
   "genesis_hash": "34e190d38030793a5b2455997051d0be57bd6fc987278229f7c11f435ab82b4b"
