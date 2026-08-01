@@ -77,6 +77,7 @@ def classify_source_shards(
     output_path: str | Path,
     *,
     print_progress_interval: int = 20,
+    shard_workers: int = 1,
 ) -> dict[str, Any]:
     """Classify all shards for one source by streaming through *process_file*.
 
@@ -85,6 +86,7 @@ def classify_source_shards(
         config: Source configuration (label, glob pattern).
         output_path: Write classified JSONL records here.
         print_progress_interval: Print a progress line every N shards (0 = off).
+        shard_workers: Parallel workers for shards within this source (1 = sequential).
 
     Returns:
         Stats dict with keys: label, total, classified, errors, elapsed, shards.
@@ -108,35 +110,80 @@ def classify_source_shards(
         }
 
     label_str = config.description or config.label
-    print(f"[{config.label}] {label_str}: {len(shards)} shards", flush=True)
+    print(f"[{config.label}] {label_str}: {len(shards)} shards, {shard_workers} workers", flush=True)
 
     total = 0
     total_errors = 0
     start = time.time()
 
-    with open(out, "w", encoding="utf-8") as fh:
-        for idx, shard in enumerate(shards, 1):
-            t0 = time.time()
-            _, _, results, errors = process_file(shard, None)
+    if shard_workers <= 1:
+        # Sequential path: original behavior
+        with open(out, "w", encoding="utf-8") as fh:
+            for idx, shard in enumerate(shards, 1):
+                t0 = time.time()
+                _, _, results, errors = process_file(shard, None)
 
-            for r in results:
-                fh.write(json.dumps(r, ensure_ascii=False) + "\n")
-            fh.flush()
+                for r in results:
+                    fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+                fh.flush()
 
-            total += len(results)
-            total_errors += len(errors)
+                total += len(results)
+                total_errors += len(errors)
 
-            if print_progress_interval > 0 and (idx % print_progress_interval == 0 or idx == len(shards)):
-                elapsed = time.time() - t0
-                rate = len(results) / max(elapsed, 0.1)
-                total_elapsed = time.time() - start
-                print(
-                    f"  [{idx}/{len(shards)}] {config.label}/{shard.name}: "
-                    f"{len(results)} classified, {len(errors)} errors "
-                    f"({elapsed:.0f}s, {rate:.0f}/s) "
-                    f"[total: {total} in {total_elapsed:.0f}s]",
-                    flush=True,
-                )
+                if print_progress_interval > 0 and (idx % print_progress_interval == 0 or idx == len(shards)):
+                    elapsed = time.time() - t0
+                    rate = len(results) / max(elapsed, 0.1)
+                    total_elapsed = time.time() - start
+                    print(
+                        f"  [{idx}/{len(shards)}] {config.label}/{shard.name}: "
+                        f"{len(results)} classified, {len(errors)} errors "
+                        f"({elapsed:.0f}s, {rate:.0f}/s) "
+                        f"[total: {total} in {total_elapsed:.0f}s]",
+                        flush=True,
+                    )
+    else:
+        # Parallel path: each worker gets a shard, writes to temp file, merge at end
+        from concurrent.futures import ProcessPoolExecutor, as_completed
+
+        tmp_dir = out.parent / "_tmp_shards"
+        tmp_dir.mkdir(exist_ok=True)
+
+        with ProcessPoolExecutor(max_workers=shard_workers) as pool:
+            futures = {}
+            for idx, shard in enumerate(shards, 1):
+                tmp_path = tmp_dir / f"{config.label}_{idx:04d}_{shard.name}.jsonl"
+                fut = pool.submit(_process_shard_worker, shard, tmp_path)
+                futures[fut] = (idx, shard)
+
+            for fut in as_completed(futures):
+                idx, shard = futures[fut]
+                try:
+                    _, classified_count, error_count = fut.result()
+                    total += classified_count
+                    total_errors += error_count
+
+                    if print_progress_interval > 0 and (idx % print_progress_interval == 0 or idx == len(shards)):
+                        total_elapsed = time.time() - start
+                        print(
+                            f"  [{idx}/{len(shards)}] {config.label}/{shard.name}: "
+                            f"{classified_count} classified, {error_count} errors "
+                            f"[total: {total} in {total_elapsed:.0f}s]",
+                            flush=True,
+                        )
+                except Exception as exc:
+                    print(f"  [ERROR] {config.label}/{shard.name}: {exc}", file=sys.stderr, flush=True)
+                    total_errors += 1
+
+        # Merge temp files into final output
+        with open(out, "w", encoding="utf-8") as fh:
+            for tmp_file in sorted(tmp_dir.glob(f"{config.label}_*.jsonl")):
+                with open(tmp_file, "r", encoding="utf-8") as tf:
+                    for line in tf:
+                        line = line.strip()
+                        if line:
+                            fh.write(line + "\n")
+                tmp_file.unlink()
+            tmp_dir.rmdir()
 
     elapsed = time.time() - start
     elapsed_str = f"{elapsed:.0f}s" if elapsed < 60 else f"{elapsed/60:.1f}m"
@@ -154,6 +201,20 @@ def classify_source_shards(
         "elapsed": elapsed_str,
         "shards": len(shards),
     }
+
+
+def _process_shard_worker(shard: Path, output_path: Path) -> tuple[int, int, int]:
+    """Worker function for parallel shard processing.
+
+    Returns (total_records, classified_count, error_count).
+    """
+    _, _, results, errors = process_file(shard, None)
+
+    with open(output_path, "w", encoding="utf-8") as fh:
+        for r in results:
+            fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+
+    return len(results) + len(errors), len(results), len(errors)
 
 
 # ---------------------------------------------------------------------------
