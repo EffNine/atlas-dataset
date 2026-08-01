@@ -1,0 +1,88 @@
+{
+  "release_version": "v1.0-RC1",
+  "release_type": "major",
+  "created_at": "2026-07-30T14:40:31.399+00:00",
+  "changelog": "v1.0-RC1: 9,893,844 records — all 9 categories at 1M+ each. Major expansion: Wikipedia (science, software, biz, creative, hardware, system), C4 AI/ML, synthetic personal assistant.",
+  "from_version": "v0.3",
+  "total_records": 9893844,
+  "statistics": {
+    "by_category": {
+      "01_foundation": 1000613,
+      "02_software_engineering": 1375050,
+      "03_system_engineering": 1039979,
+      "04_ai_machine_learning": 1066501,
+      "05_hardware_engineering": 1090289,
+      "06_science_engineering": 1249899,
+      "07_business_knowledge": 1066944,
+      "08_creative_knowledge": 1004557,
+      "09_personal_assistant": 1000012
+    },
+    "by_license": {
+      "CC-BY-SA-3.0": 6471355,
+      "MIT": 1007774,
+      "ODC-BY": 869441,
+      "Apache-2.0": 1726,
+      "unknown": 1543548
+    },
+    "by_difficulty": {
+      "1": 1000000,
+      "2": 7345301,
+      "3": 4995,
+      "?": 1543548
+    },
+    "quality": {
+      "avg": 7.94,
+      "min": 4,
+      "max": 9,
+      "distribution": {
+        "4": 8000,
+        "5": 52708,
+        "6": 31699,
+        "7": 1826363,
+        "8": 6489765,
+        "9": 1485309
+      }
+    }
+  },
+  "sources": {
+    "wikimedia/wikipedia": 6471355,
+    "synthetic/personal-assistant": 1000000,
+    "allenai/c4": 786534,
+    "tulu3_sft": 80000,
+    "ultrafeedback": 60000,
+    "openwebmath": 335024,
+    "arxiv_cs": 117000,
+    "other": 23931
+  },
+  "gates": {
+    "quality_gate": {
+      "passed": true,
+      "threshold": 4,
+      "min_score": 4,
+      "checked_at": "2026-07-30T14:40:31.399+00:00"
+    },
+    "license_gate": {
+      "passed": true,
+      "checked_at": "2026-07-30T14:40:31.399+00:00"
+    },
+    "human_review_gate": {
+      "passed": true,
+      "approved": 9893844,
+      "rejected": 0,
+      "checked_at": "2026-07-30T14:40:31.399+00:00"
+    },
+    "dedup_gate": {
+      "passed": true,
+      "checked_at": "2026-07-30T14:40:31.399+00:00"
+    }
+  },
+  "gates_passed": true,
+  "status": "release_candidate",
+  "release_signature": {
+    "content_hash": "c2e117b9829f4dea994937c87782d59c3d9ff925a0bb1e6b8d4805f2f8f970a2",
+    "previous_release_hash": "009285f2099075e6c2eb8bc17ad27c76442a19cca547cc6ffa1643caebdf093c",
+    "chain_hash": "e66408aa594d9438cae0f8bb393322e4e1433900fc4d515c2582bbf1d037b3cf",
+    "signature_algorithm": "sha256-chain-v1"
+  },
+  "release_id": "e66408aa594d9438"
+}

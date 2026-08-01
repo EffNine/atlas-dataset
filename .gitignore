@@ -27,8 +27,8 @@ venv/
 .DS_Store
 
 # Release pipeline artifacts (regenerable; keep metadata + docs in git)
-releases/*/dataset/*.jsonl.zst
-releases/*/dataset/*.jsonl
+releases/*/dataset/**/*.jsonl.zst
+releases/*/dataset/**/*.jsonl
 releases/restored/
 
 # Local experiment outputs

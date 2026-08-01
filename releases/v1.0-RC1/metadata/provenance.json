@@ -1,0 +1,55 @@
+{
+  "release_version": "v1.0-RC1",
+  "generated_at": "2026-07-30T14:40:31.399+00:00",
+  "description": "Source provenance for Atlas v1.0-RC1, derived from the frozen release manifest (metadata/releases/v1.0-RC1_release.json). Per-record provenance lives in each record's source_attribution/lineage fields.",
+  "sources": [
+    {
+      "source_id": "wikimedia/wikipedia",
+      "records": 6471355,
+      "note": "Wikipedia keyword extraction shards (raw/generated/wiki_*_atlas.jsonl). CC-BY-SA-3.0."
+    },
+    {
+      "source_id": "synthetic/personal-assistant",
+      "records": 1000000,
+      "note": "Synthetic personal-assistant corpus (category 09_personal_assistant)."
+    },
+    {
+      "source_id": "allenai/c4",
+      "records": 786534,
+      "note": "C4 AI/ML streaming subset (raw/generated/c4_ai_*_atlas.jsonl)."
+    },
+    {
+      "source_id": "tulu3_sft",
+      "records": 80000,
+      "note": "allenai/tulu-3-sft-mixture extraction (raw/generated/tulu3_shard*_atlas.jsonl)."
+    },
+    {
+      "source_id": "ultrafeedback",
+      "records": 60000,
+      "note": "UltraFeedback extraction (raw/generated/ultrafeedback_atlas.jsonl)."
+    },
+    {
+      "source_id": "openwebmath",
+      "records": 335024,
+      "note": "OpenWebMath shards (raw/generated/openwebmath_*_atlas.jsonl)."
+    },
+    {
+      "source_id": "arxiv_cs",
+      "records": 117000,
+      "note": "arXiv CS/ML papers (raw/generated/arxiv_*_atlas.jsonl)."
+    },
+    {
+      "source_id": "other",
+      "records": 23931,
+      "note": "Miscellaneous sources: mmlu_*, gsm8k, swebench, stackoverflow, sciq, oasst1, codealpaca, fin-alpaca, capybara, gutenberg, github_readmes."
+    }
+  ],
+  "license_distribution": {
+    "CC-BY-SA-3.0": 6471355,
+    "MIT": 1007774,
+    "ODC-BY": 869441,
+    "Apache-2.0": 1726,
+    "unknown": 1543548
+  },
+  "total_records": 9893844
+}
