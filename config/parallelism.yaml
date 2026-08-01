@@ -1,0 +1,15 @@
+parallelism:
+  classification:
+    stage1_shard_workers: 8
+    stage2_shard_workers: 2
+    skip_v11_sources: true
+    print_interval: 1
+
+  validation:
+    file_workers: 8
+    chunk_size: 1000
+    per_file_timeout_seconds: 600
+
+  acquisition:
+    file_workers: 4
+    chunk_size: 500

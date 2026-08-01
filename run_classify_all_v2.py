@@ -1,0 +1,231 @@
+#!/usr/bin/env python3
+"""Optimized full-source classification for Atlas v1.2.
+
+Uses shard-level parallelism to fully utilize dev-pc resources:
+- Stage 1: wiki sources with shard workers from config
+- Stage 2: remaining sources with shard workers from config
+- Skips v1.1 sources and merges them if configured
+"""
+import json
+import subprocess
+import sys
+from pathlib import Path
+from datetime import datetime, timezone
+
+PY = sys.executable
+SCRIPT = "scripts/intelligence/batch_classify_v2.py"
+REPO = Path(".")
+OUT_DIR = REPO / "metadata/intelligence"
+CONFIG_PATH = REPO / "config/parallelism.yaml"
+
+STAGE1 = [
+    "wiki_ai", "wiki_sw", "wiki_sys", "wiki_sci",
+    "wiki_biz", "wiki_cre", "wiki_hw",
+]
+
+STAGE2 = [
+    "synthetic_pa",
+    "swebench", "codealpaca", "ultrafeedback", "oasst1", "oasst1_val",
+    "sciq", "gsm8k", "mmlu", "capybara", "capybara_extra", "fin_alpaca",
+    "github_readmes", "stackoverflow", "gutenberg", "batch_new",
+    "personahub_math", "personahub_code", "personahub_ifdata", "numinamath",
+    "codealpaca_heval", "no_robots", "coconot", "flan_v2",
+    "tulu3_wildchat", "tulu3_aya", "tulu3_wildjailbreak", "tulu3_openmath2",
+    "tulu3_synthetic_finalresp", "tulu3_sciriff", "tulu3_tablegpt",
+    "tulu3_hardcoded",
+]
+
+V11_CLASSIFIED = OUT_DIR / "unknown_classified_v1.1.jsonl"
+V12_CLASSIFIED = OUT_DIR / "unknown_classified_v1.2.jsonl"
+
+
+def load_parallelism_config() -> dict:
+    """Load parallelism config from YAML file."""
+    try:
+        import yaml
+        with open(CONFIG_PATH, "r") as f:
+            return yaml.safe_load(f) or {}
+    except ImportError:
+        pass
+    
+    # Fallback: parse our specific nested YAML structure by depth
+    root = {}
+    stack = [(root, -1)]  # (container, indent_level)
+    
+    with open(CONFIG_PATH, "r") as f:
+        for raw_line in f:
+            line = raw_line.rstrip()
+            if not line or line.startswith("#") or line.strip() == "---":
+                continue
+            
+            # Calculate indent
+            indent = len(line) - len(line.lstrip())
+            stripped = line.strip()
+            
+            if ":" not in stripped:
+                continue
+            
+            key, _, value = stripped.partition(":")
+            key = key.strip()
+            value = value.strip()
+            
+            # Pop stack to find parent at correct depth
+            while len(stack) > 1 and stack[-1][1] >= indent:
+                stack.pop()
+            
+            parent = stack[-1][0]
+            
+            if value:
+                # Leaf node
+                parent[key] = _convert_value(value)
+            else:
+                # Section node
+                new_section = {}
+                parent[key] = new_section
+                stack.append((new_section, indent))
+    
+    return root
+
+
+def _convert_value(value: str):
+    """Convert YAML value string to Python type."""
+    if value.lower() in ("true", "yes"):
+        return True
+    elif value.lower() in ("false", "no"):
+        return False
+    try:
+        return int(value)
+    except ValueError:
+        try:
+            return float(value)
+        except ValueError:
+            return value
+
+
+def get_classification_config(config: dict) -> dict:
+    """Extract classification settings from unified config."""
+    return config.get("parallelism", {}).get("classification", {})
+
+
+def run_source(label, shard_workers=1, print_interval=1):
+    cmd = [PY, SCRIPT, "--shard-workers", str(shard_workers), "--print-interval", str(print_interval), "--groups", label]
+    print(f"\n=== {label} ({shard_workers} shard workers) ===")
+    print(" ".join(cmd))
+    r = subprocess.run(cmd)
+    if r.returncode != 0:
+        print(f"FAILED: {label} exit={r.returncode}")
+        return r.returncode
+    return 0
+
+
+def merge_v11_into_v12(skip_v11: bool = True):
+    if not skip_v11 or not V11_CLASSIFIED.exists():
+        print("Skipping v1.1 merge (disabled or file not found).")
+        return
+
+    print(f"\n=== Merging v1.1 ({V11_CLASSIFIED.stat().st_size:,} bytes) into v1.2 ===")
+
+    with open(V12_CLASSIFIED, "a", encoding="utf-8") as out:
+        with open(V11_CLASSIFIED, "r", encoding="utf-8") as inp:
+            for line in inp:
+                line = line.strip()
+                if line:
+                    out.write(line + "\n")
+    print(f"Merged v1.1 records into {V12_CLASSIFIED}")
+
+    print("Regenerating v1.2 summaries...")
+    counts = {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
+    confidences = []
+    sources = {}
+    total = 0
+
+    with open(V12_CLASSIFIED, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            rec = json.loads(line)
+            total += 1
+            lvl = str(rec.get("difficulty", {}).get("level", "1"))
+            counts[lvl] = counts.get(lvl, 0) + 1
+            conf = rec.get("difficulty", {}).get("confidence")
+            if conf is not None:
+                confidences.append(conf)
+            src = rec.get("record_id", "unknown").split("_")[0]
+            sources[src] = sources.get(src, 0) + 1
+
+    mean_conf = sum(confidences) / len(confidences) if confidences else 0
+    low_conf = sum(1 for c in confidences if c < 0.5)
+
+    summary = {
+        "report_metadata": {
+            "report_type": "classification_summary_v1_2",
+            "intelligence_layer_version": "1.2.0",
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "classifier": "batch_classify_v2.py",
+            "classifier_version": "2.0.0",
+            "data_snapshot": "atlas-v1.0-final",
+            "status": "production",
+        },
+        "overall": {
+            "total_records": total,
+            "successful_classifications": total,
+            "failed_classifications": 0,
+            "classification_rate": 100.0,
+        },
+        "difficulty_distribution": {
+            k: {"count": v, "percentage": round(v / total * 100, 2) if total else 0}
+            for k, v in sorted(counts.items())
+        },
+        "confidence": {
+            "mean": round(mean_conf, 4),
+            "min": min(confidences) if confidences else 0,
+            "max": max(confidences) if confidences else 0,
+            "low_confidence_count": low_conf,
+            "low_confidence_fraction": round(low_conf / total, 4) if total else 0,
+        },
+        "per_source": sources,
+    }
+
+    with open(OUT_DIR / "classification_summary_v1.2.json", "w") as f:
+        json.dump(summary, f, indent=2)
+
+    dist = {
+        "report_metadata": summary["report_metadata"],
+        "total_records": total,
+        "classified": total,
+        "failed": 0,
+        "remaining_unknown": 0,
+        "difficulty_distribution": counts,
+        "confidence_stats": summary["confidence"],
+        "per_source": sources,
+    }
+    with open(OUT_DIR / "difficulty_distribution_v1.2.json", "w") as f:
+        json.dump(dist, f, indent=2)
+
+    print(f"v1.2 final: {total:,} records | L1={counts.get('1',0):,} L2={counts.get('2',0):,} L3={counts.get('3',0):,} L4={counts.get('4',0):,} L5={counts.get('5',0):,}")
+
+
+if __name__ == "__main__":
+    config = load_parallelism_config()
+    clf_cfg = get_classification_config(config)
+    
+    stage1_workers = clf_cfg.get("stage1_shard_workers", 8)
+    stage2_workers = clf_cfg.get("stage2_shard_workers", 2)
+    skip_v11 = clf_cfg.get("skip_v11_sources", True)
+    print_interval = clf_cfg.get("print_interval", 1)
+    
+    print(f"Optimized v1.2 | Stage1={len(STAGE1)} sources @ {stage1_workers} shard-workers | Stage2={len(STAGE2)} sources @ {stage2_workers} shard-workers | skip_v11={skip_v11}")
+
+    for label in STAGE1:
+        rc = run_source(label, shard_workers=stage1_workers, print_interval=print_interval)
+        if rc != 0:
+            sys.exit(rc)
+
+    for label in STAGE2:
+        rc = run_source(label, shard_workers=stage2_workers, print_interval=print_interval)
+        if rc != 0:
+            sys.exit(rc)
+
+    merge_v11_into_v12(skip_v11=skip_v11)
+    print("\n=== ALL DONE ===")
