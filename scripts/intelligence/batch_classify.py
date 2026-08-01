@@ -112,6 +112,9 @@ def split_single_shard(
     written = 0
     idx = 0
 
+    # Strip the shard's .jsonl extension to avoid double-extension chunk names
+    base = shard.name[:-len(".jsonl")] if shard.name.endswith(".jsonl") else shard.name
+
     try:
         with open(shard, "r", encoding="utf-8") as src:
             for line in src:
@@ -119,7 +122,7 @@ def split_single_shard(
                     if fh is not None:
                         fh.close()
                     idx += 1
-                    current = tmp_dir / f"{label}_chunk{idx:04d}_{shard.name}.jsonl"
+                    current = tmp_dir / f"{label}_chunk{idx:04d}_{base}.jsonl"
                     fh = open(current, "w", encoding="utf-8")
                     chunks.append(current)
                     written = 0
