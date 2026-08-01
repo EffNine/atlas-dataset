@@ -168,7 +168,7 @@ nohup .venv-release/bin/python run_classify_all_v2.py > /mnt/d/atlas-dataset/log
 
 ---
 
-## 6. Resume Workflow (crash recovery)
+## 6. Resume Workflow (Failure Recovery)
 
 **Principle**: never lose already-classified work. The runner appends each
 source's output to v1.2 immediately after the source completes, then deletes
@@ -222,7 +222,7 @@ Cross-check with the actual source list in §8 before skipping.
 
 ---
 
-## 7. Verification Steps
+## 7. Verification Steps (Expected Outputs)
 
 ### 7.1 During a run (live checks)
 
