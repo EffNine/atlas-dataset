@@ -51,6 +51,7 @@ class Scheduler:
         safety_margin: float | None = None,
         worker_id: str = "",
         cfg: dict | None = None,
+        lease_seconds: int = 900,
     ):
         self.stage = stage
         self.pool_kind = pool
@@ -58,6 +59,7 @@ class Scheduler:
         self.per_task_ram_mb = per_task_ram_mb
         self.safety_margin = safety_margin
         self.cfg = cfg
+        self.lease_seconds = max(0, int(lease_seconds))
         self.worker_id = worker_id or f"{stage}-{time.strftime('%H%M%S')}"
         self.registry = TaskRegistry(registry_root, stage, max_retries=max_retries)
 
@@ -105,7 +107,7 @@ class Scheduler:
                 )
 
         # Crash recovery: re-claim stale 'running' tasks from a dead worker.
-        stale = self.registry.reclaim_stale_running()
+        stale = self.registry.reclaim_stale_running(lease_seconds=self.lease_seconds)
         if stale:
             print(f"[scheduler:{self.stage}] reclaimed {len(stale)} stale running task(s)")
 

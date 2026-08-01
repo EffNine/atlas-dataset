@@ -216,3 +216,71 @@ report = mon.finish({"total_tasks": len(tasks)})
   nvidia-smi/torch found); no pipeline schedules on GPU yet.
 - Only **validation** is migrated. Extraction, training views, acquisition,
   release remain on their existing executors (next phases).
+
+---
+
+## 8. Migration example: Extraction (Phase 2)
+
+The extraction runner (`scripts/run_extract_all.py`) is the second pipeline
+migrated to the Universal Scheduler. It fans out per-shard invocations of
+`scripts/extract_wiki_<source>.py` (one subprocess per shard).
+
+### Before (Phase 1 baseline)
+
+```python
+# Manual ProcessPoolExecutor — no registry, no resume, fixed workers.
+with ProcessPoolExecutor(max_workers=shard_workers) as ex:
+    futures = {ex.submit(extract_one, t): t for t in tasks}
+    for fut in as_completed(futures):
+        _, shard, out = fut.result()
+        ...
+```
+
+### After (Phase 2 — scheduler)
+
+```python
+def plan_extraction_tasks(source, shards_per_source, script_dir=None):
+    # one shard = one task; byte-range split supported by planner for future
+    return [
+        Task(
+            task_id=f"extract:{source}:{s:03d}",
+            source=source,
+            operation="extract_wiki_shard",
+            input=str(script_dir / f"extract_{source}.py"),
+            extra={"shard": s},
+        )
+        for s in range(shards_per_source)
+    ]
+
+def extract_task(task) -> dict:
+    """Module-level scheduler worker (picklable for process pools)."""
+    shard = int(task.extra["shard"])
+    r = subprocess.run([sys.executable, task.input, str(shard)], capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError(f"shard {shard}: {r.stderr[-200:]}")
+    return {"shard": shard, "output": ...}
+```
+
+CLI is unchanged — the scheduler path is automatic with a fallback:
+
+```bash
+python scripts/run_extract_all.py --all --shard-workers 8
+# -> [scheduler:extraction] reclaimed N stale running task(s)   (after crash)
+# -> [wiki_sys] 41/41 shards done
+# registry: metadata/pipeline_state/task_registry_extraction.jsonl
+```
+
+### Behavior guarantees (verified by tests)
+
+- **Output identical**: manual pool vs scheduler produce byte-identical
+  per-shard JSONL files (SHA-256 equality).
+- **One shard = one task**, deterministic `task_id` (`extract:<source>:NNN`).
+- **Resume**: completed shards are skipped on re-run; a shard stuck
+  `running` (crash) is re-claimed after the lease (default 900 s) and re-run.
+- **Retry**: failed shards retried up to `max_retries` (default 2) with
+  backoff.
+- **Duplicate prevention**: completed tasks are terminal — never re-run.
+- **Resource-aware**: adaptive workers capped by `safe_worker_limit()`
+  (RAM margin 0.8, CPU cores, optional explicit cap).
+- **Fallback preserved**: if the scheduler import fails, the runner falls
+  back to the original manual ProcessPoolExecutor with identical behavior.

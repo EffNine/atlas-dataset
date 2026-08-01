@@ -1,0 +1,66 @@
+{
+  "report_metadata": {
+    "report_type": "scheduler_phase2_extraction_report",
+    "phase": 2,
+    "date": "2026-08-01T16:48:09.266940+00:00",
+    "status": "complete",
+    "pipeline": "extraction"
+  },
+  "audit": {
+    "executor_before": "ProcessPoolExecutor over (source, shard) tuples; subprocess per shard",
+    "task_unit": "shard index (0..40)",
+    "shard_handling": "one subprocess invocation of extract_wiki_<source>.py per shard",
+    "output_generation": "per-shard JSONL raw/generated/wiki_<source>_shard<N>_atlas.jsonl (no merge)",
+    "resume_before": "none \u2014 failed shards reported, rerun re-extracts all"
+  },
+  "implementation": {
+    "planner": "plan_extraction_tasks: one shard = one Task (deterministic id extract:<source>:NNN)",
+    "worker": "extract_task (module-level, subprocess via task.input, raises on failure for retry)",
+    "registry": "metadata/pipeline_state/task_registry_extraction.jsonl (pending/running/completed/failed/retry)",
+    "scheduler": "adaptive workers, bounded submission, retry max_retries=2, lease re-claim 900s",
+    "fallback": "manual ProcessPoolExecutor preserved on scheduler import failure (identical behavior)",
+    "unchanged": "extraction logic, parsing rules, output schema, metadata generation (extract_wiki_*.py untouched)"
+  },
+  "resource_awareness": {
+    "small_machine": {
+      "ram_avail_mb": 512,
+      "cores": 16,
+      "expected_workers": "1 (512*0.8/512)",
+      "rule": "never exceed RAM margin"
+    },
+    "normal_devpc": {
+      "profile": "dev-pc",
+      "cores": 16,
+      "ram_mb": 30720,
+      "per_task_mb": 512,
+      "rule": "workers = min(cores, ram*0.8/per_task)"
+    },
+    "large_profile": {
+      "ram_avail_mb": 200000,
+      "cores": 64,
+      "cap": 10,
+      "rule": "explicit/CPU cap always wins"
+    }
+  },
+  "verification": {
+    "extraction_test_suite": "13 passed in 4.60s",
+    "full_suite_summary": "1 failed, 309 passed, 2 skipped in 15.28s",
+    "architecture_validator": "PASS",
+    "output_identity": "manual pool vs scheduler SHA-256 equal on per-shard JSONL (verified by test_identical_outputs)",
+    "record_counts": "identical (verified by test_record_counts_match)"
+  },
+  "out_of_scope": {
+    "migrated_pipelines": [
+      "validation (Phase 1)",
+      "extraction (Phase 2)"
+    ],
+    "deferred": [
+      "training views",
+      "acquisition",
+      "release",
+      "compression",
+      "evaluation"
+    ],
+    "dataset_release_hf_changes": "none"
+  }
+}
