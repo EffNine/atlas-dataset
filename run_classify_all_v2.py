@@ -107,6 +107,28 @@ def get_classification_config(config: dict) -> dict:
     return config.get("parallelism", {}).get("classification", {})
 
 
+def append_source_to_v12(label: str):
+    """Append a source's classified output into the unified v1.2 file."""
+    src_file = OUT_DIR / f"classified_{label}.jsonl"
+    if not src_file.exists():
+        print(f"[merge] WARNING: {src_file} not found, skipping append")
+        return 0
+    
+    count = 0
+    with open(src_file, "r", encoding="utf-8") as inp:
+        with open(V12_CLASSIFIED, "a", encoding="utf-8") as out:
+            for line in inp:
+                line = line.strip()
+                if line:
+                    out.write(line + "\n")
+                    count += 1
+    
+    # Delete source file after append to prevent duplicate append on restart
+    src_file.unlink()
+    print(f"[merge] Appended {count:,} records from {label} into v1.2; removed {src_file.name}")
+    return count
+
+
 def run_source(label, shard_workers=1, print_interval=1):
     cmd = [PY, SCRIPT, "--shard-workers", str(shard_workers), "--print-interval", str(print_interval), "--groups", label]
     print(f"\n=== {label} ({shard_workers} shard workers) ===")
@@ -115,6 +137,8 @@ def run_source(label, shard_workers=1, print_interval=1):
     if r.returncode != 0:
         print(f"FAILED: {label} exit={r.returncode}")
         return r.returncode
+    
+    append_source_to_v12(label)
     return 0
 
 
