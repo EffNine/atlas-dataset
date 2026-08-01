@@ -1,0 +1,73 @@
+{
+  "report_metadata": {
+    "report_type": "scheduler_phase4_etl_report",
+    "phase": 4,
+    "date": "2026-08-01T17:05:06.180133+00:00",
+    "status": "complete",
+    "pipeline": "etl"
+  },
+  "audit": {
+    "current_execution_model": "sequential per source (run_etl_for_source loop in ExtractAgent)",
+    "task_boundaries": "source (extract->normalize->clean->promote as one pipeline; cross-file limit)",
+    "input_output_flow": "cache files -> extracted.jsonl -> normalized.jsonl -> cleaned.jsonl -> atlas_staging.jsonl + report.json",
+    "checkpoint_resume_before": "none (re-run reprocesses all sources)",
+    "parallel_opportunity": "source-level fan-out (files within a source are not safely splittable due to limit semantics)",
+    "files": [
+      "scripts/etl/pipeline.py",
+      "scripts/etl/extract_agent.py"
+    ]
+  },
+  "implementation": {
+    "task_design": "source-level tasks (Option A variant): one Task per source_id",
+    "task_shape": {
+      "task_id": "etl:<source_id> (deterministic, sorted)",
+      "operation": "run_etl_for_source",
+      "input": "source_id",
+      "estimated_size": "task.estimated_size_mb",
+      "output_target": "metadata/etl/<source_id>/*.jsonl (worker writes; report.json for resume reload)",
+      "extra": "root, limit, promote_atlas"
+    },
+    "worker": "etl_task (module-level, picklable; raises on failed status for retry)",
+    "orchestrator": "run_etl_scheduler(root, source_ids, ...) -> EtlResult dicts sorted by source_id",
+    "registry": "metadata/pipeline_state/task_registry_etl.jsonl",
+    "scheduler": "adaptive workers, bounded submission, retry max_retries=2, lease 900s",
+    "fallback": "sequential loop preserved on scheduler error (identical output)",
+    "unchanged": "cleaners, converters, schema logic, validators, extractors, normalizer"
+  },
+  "resource_awareness": {
+    "adaptive_workers": "scheduler decides via safe_worker_limit() (RAM margin 0.8, CPU cores)",
+    "memory": "per-source processing streams through extract/normalize/clean; no full-corpus load",
+    "disk_headroom": "respected via scheduler design (disk threshold rule in architecture doc)",
+    "duplicate_writes": "avoided \u2014 completed sources skipped via registry; output written once per task"
+  },
+  "verification": {
+    "etl_test_suite": "13 passed in 11.42s",
+    "full_suite_summary": "1 failed, 338 passed, 2 skipped in 32.08s",
+    "architecture_validator": "PASS",
+    "determinism": "extracted.jsonl + atlas_staging.jsonl SHA-256 identical; normalized/cleaned compared by record ids (created_at=utc_now pre-existing)",
+    "resume": "completed sources skipped on rerun (report.json reloaded); stale running re-claimed",
+    "retry": "failed source retried then completed; terminal after max_retries",
+    "failure_recovery": "source with no cached files -> failed dict, not a crash",
+    "schema_preserved": "EtlResult keys + output files unchanged; curated/raw-external untouched"
+  },
+  "platform_note": {
+    "macos": "SQLite fork segfault (Python 3.9) may fall back to sequential executor; output identical",
+    "devpc_linux": "fork+SQLite safe; process pool used"
+  },
+  "out_of_scope": {
+    "migrated_pipelines": [
+      "validation (P1)",
+      "extraction (P2)",
+      "training views (P3)",
+      "ETL (P4)"
+    ],
+    "deferred": [
+      "acquisition",
+      "release",
+      "compression",
+      "evaluation",
+      "publishing"
+    ],
+    "dataset_release_hf_changes": "none"
+  }
+}

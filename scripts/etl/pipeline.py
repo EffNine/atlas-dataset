@@ -9,6 +9,7 @@ training_views/, or immutable raw trees.
 from __future__ import annotations
 
 import json
+import sys
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
@@ -298,3 +299,119 @@ def _write_report(out_dir: Path, result: EtlResult) -> None:
         json.dumps(result.to_dict(), indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
+
+
+# ----------------------------------------------------------------------
+# Universal Scheduler integration (Phase 4)
+# ----------------------------------------------------------------------
+
+
+def etl_task(task) -> dict:
+    """Universal Scheduler worker: run ETL for one source.
+
+    Module-level so it can be pickled into process workers. Task carries
+    source_id in task.input (or task.source), and options in task.extra.
+    Raises on failure so the scheduler can retry and mark the registry entry.
+    """
+    source_id = task.input or task.source
+    extra = getattr(task, "extra", {}) or {}
+    root = Path(extra.get("root", "."))
+    limit = extra.get("limit")
+    promote = bool(extra.get("promote_atlas", True))
+    result = run_etl_for_source(
+        root,
+        source_id,
+        limit=limit,
+        promote_atlas=promote,
+    )
+    if result.status == "failed":
+        raise RuntimeError(f"ETL failed for {source_id}: {'; '.join(result.errors)}")
+    return result.to_dict()
+
+
+def plan_etl_tasks(
+    source_ids: list[str],
+    root: str | Path,
+    *,
+    limit: int | None = None,
+    promote_atlas: bool = True,
+) -> list:
+    """Build ETL Tasks (one per source) for the Universal Scheduler."""
+    from parallel.models import Task
+
+    return [
+        Task(
+            task_id=f"etl:{sid}",
+            source=sid,
+            operation="run_etl_for_source",
+            input=sid,
+            extra={
+                "root": str(Path(root).resolve()),
+                "limit": limit,
+                "promote_atlas": promote_atlas,
+            },
+        )
+        for sid in sorted(source_ids)
+    ]
+
+
+def run_etl_scheduler(
+    root: str | Path,
+    source_ids: list[str],
+    *,
+    limit: int | None = None,
+    promote_atlas: bool = True,
+    registry_root: str | Path | None = None,
+) -> list[dict[str, Any]]:
+    """Run ETL for many sources through the Universal Scheduler.
+
+    Returns a list of EtlResult dicts, one per source, sorted by source_id
+    (deterministic). Falls back to the sequential loop on scheduler error.
+    """
+    root_p = Path(root).resolve()
+    tasks = plan_etl_tasks(source_ids, root_p, limit=limit, promote_atlas=promote_atlas)
+    try:
+        from parallel.scheduler import Scheduler
+
+        reg_root = registry_root or (root_p / "metadata" / "pipeline_state")
+        sched = Scheduler(
+            "etl",
+            registry_root=str(reg_root),
+            workers=None,  # adaptive
+            pool="process",
+            max_retries=2,
+        )
+        print(f"[etl] scheduler: {len(tasks)} source tasks, {sched.workers} adaptive workers")
+        results: list[dict[str, Any]] = []
+        trs = sched.run(tasks, etl_task)
+        for tr in trs:
+            if tr.status == "completed" and isinstance(tr.result, dict):
+                results.append(tr.result)
+            elif tr.status == "failed":
+                results.append({
+                    "source_id": tr.task_id.split(":", 1)[1],
+                    "status": "failed",
+                    "summary": f"scheduler task failed: {tr.error}",
+                    "errors": [tr.error],
+                })
+            # skipped: completed in a prior run — reload report.json from disk
+            elif tr.status == "skipped":
+                sid = tr.task_id.split(":", 1)[1]
+                report_path = root_p / "metadata" / "etl" / sid / "report.json"
+                try:
+                    results.append(json.loads(report_path.read_text(encoding="utf-8")))
+                except (OSError, json.JSONDecodeError):
+                    results.append({
+                        "source_id": sid,
+                        "status": "skipped",
+                        "summary": "completed in prior run (report.json missing)",
+                        "errors": [],
+                    })
+        return results
+    except Exception as sched_exc:
+        print(f"[etl] scheduler unavailable ({sched_exc}); falling back to sequential", file=sys.stderr)
+        results = []
+        for sid in sorted(source_ids):
+            etl = run_etl_for_source(root_p, sid, limit=limit, promote_atlas=promote_atlas)
+            results.append(etl.to_dict())
+        return results

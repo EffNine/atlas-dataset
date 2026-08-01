@@ -47,20 +47,37 @@ class ExtractAgent(BaseAgent):
         warnings: list[str] = []
         totals = {"extracted": 0, "cleaned": 0, "atlas_records": 0, "dropped": 0}
 
-        for sid in source_ids:
-            etl = run_etl_for_source(
+        # Universal Scheduler path (Phase 4): source-level tasks with
+        # adaptive workers + TaskRegistry resume. Falls back to the original
+        # sequential loop on scheduler error (identical behavior).
+        try:
+            from .pipeline import run_etl_scheduler
+
+            result_dicts = run_etl_scheduler(
                 self.root,
-                sid,
+                source_ids,
                 limit=self.limit,
                 promote_atlas=self.promote_atlas,
             )
-            results.append(etl.to_dict())
-            totals["extracted"] += etl.extracted
-            totals["cleaned"] += etl.cleaned
-            totals["atlas_records"] += etl.atlas_records
-            totals["dropped"] += etl.dropped
-            errors.extend(etl.errors)
-            warnings.extend(etl.warnings)
+            results = result_dicts
+        except Exception:
+            # Sequential fallback (original behavior).
+            for sid in source_ids:
+                etl = run_etl_for_source(
+                    self.root,
+                    sid,
+                    limit=self.limit,
+                    promote_atlas=self.promote_atlas,
+                )
+                results.append(etl.to_dict())
+
+        for r in results:
+            totals["extracted"] += r.get("extracted", 0)
+            totals["cleaned"] += r.get("cleaned", 0)
+            totals["atlas_records"] += r.get("atlas_records", 0)
+            totals["dropped"] += r.get("dropped", 0)
+            errors.extend(r.get("errors", []))
+            warnings.extend(r.get("warnings", []))
 
         failed = [r for r in results if r.get("status") == "failed"]
         if failed and len(failed) == len(results):

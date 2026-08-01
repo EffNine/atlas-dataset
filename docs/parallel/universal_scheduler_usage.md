@@ -352,3 +352,76 @@ tasks = file_tasks(files, source="curated/v0.1", operation="load_curated_file")
 python scripts/training_readiness.py --dry-run
 # registry: metadata/pipeline_state/task_registry_training_views.jsonl
 ```
+
+---
+
+## 10. Migration example: ETL / Transform (Phase 4)
+
+The ETL pipeline (`scripts/etl/pipeline.py` + `extract_agent.py`) is the
+fourth pipeline migrated. The ETL unit is the **source** — each source runs
+extract → normalize → clean → promote as one pipeline (with a cross-file
+`limit`), so splitting per-file would change semantics. We chose
+**source-level tasks** (a file/batch variant of Option A).
+
+### Task design
+
+```python
+Task(
+    task_id="etl:s1",                # deterministic, sorted by source_id
+    source="s1",
+    operation="run_etl_for_source",
+    input="s1",
+    extra={"root": "...", "limit": None, "promote_atlas": True},
+)
+```
+
+### Worker
+
+```python
+def etl_task(task) -> dict:
+    """Module-level scheduler worker (picklable for process pools)."""
+    result = run_etl_for_source(Path(task.extra["root"]), task.input,
+                                limit=task.extra["limit"],
+                                promote_atlas=task.extra["promote_atlas"])
+    if result.status == "failed":
+        raise RuntimeError(f"ETL failed: {'; '.join(result.errors)}")
+    return result.to_dict()
+```
+
+### Orchestrator
+
+`run_etl_scheduler(root, source_ids, ...)` runs all sources through the
+scheduler and returns EtlResult dicts sorted by source_id. On scheduler
+error it falls back to the original sequential loop (identical behavior).
+`ExtractAgent.execute` now uses it.
+
+### Behavior guarantees (verified by tests)
+
+- **Deterministic**: extracted.jsonl + atlas_staging.jsonl byte-identical
+  (SHA-256) between scheduler and sequential runs; normalized/cleaned files
+  carry `created_at=utc_now()` (pre-existing pipeline behavior) so they are
+  compared by record count + record ids.
+- **Ordering**: results sorted by source_id (task_id order).
+- **Resume**: completed sources skipped on re-run (report.json reloaded);
+  stale `running` re-claimed after lease.
+- **Retry**: failed source tasks retried up to `max_retries`.
+- **Failure recovery**: a source with no cached files returns a `failed`
+  result dict (not a crash).
+- **Fallback**: sequential loop preserved on scheduler error (identical
+  output).
+- **Schema**: EtlResult keys + output files unchanged; immutable trees
+  (curated/, raw/external/) untouched.
+
+### CLI / agent unchanged
+
+```bash
+python scripts/automation_runner.py ... extract_agent ...
+# registry: metadata/pipeline_state/task_registry_etl.jsonl
+```
+
+### Platform note (macOS)
+
+`CacheManager` uses SQLite; forking a process that already opened a SQLite
+connection segfaults on macOS (Python 3.9 fork hazard). On macOS the ETL
+scheduler may fall back to the sequential executor — output is identical.
+On dev-pc (Linux) fork+SQLite is safe, so the process pool is used.
