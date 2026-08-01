@@ -20,7 +20,16 @@ curated/v1.0/*.jsonl
 __pycache__/
 *.pyc
 .venv/
+.venv-release/
 venv/
+
+# macOS junk
+.DS_Store
+
+# Release pipeline artifacts (regenerable; keep metadata + docs in git)
+releases/*/dataset/*.jsonl.zst
+releases/*/dataset/*.jsonl
+releases/restored/
 
 # Local experiment outputs
 outputs/

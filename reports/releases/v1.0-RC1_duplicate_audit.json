@@ -1,0 +1,54 @@
+{
+  "release": "v1.0-RC1",
+  "generated_at": "2026-07-31T22:55:02.406436+00:00",
+  "tool": "scripts/release/audit_duplicates.py",
+  "input": {
+    "approved_path": "review_queue/approved.jsonl",
+    "approved_total_records": 9893844,
+    "unique_ids": 9515938,
+    "duplicate_ids": 377906
+  },
+  "summary": {
+    "total_duplicate_ids": 377906,
+    "total_duplicate_records": 755812,
+    "duplicate_groups": 377906,
+    "byte_identical_groups": 377906,
+    "byte_identical_percentage": 100.0,
+    "content_identical_groups": 377906,
+    "content_identical_percentage": 100.0,
+    "conflicting_duplicates": 0,
+    "metadata_only_conflicts": 0,
+    "same_category_groups": 377906,
+    "same_category_percentage": 100.0,
+    "cross_category_duplicates": 0,
+    "provenance_consistent_groups": 377906,
+    "provenance_consistent_percentage": 100.0,
+    "provenance_different_groups": 0
+  },
+  "multiplicity_distribution": {
+    "2x": 377906,
+    "3x": 0,
+    "gt3x": 0,
+    "max_multiplicity": 2,
+    "distribution": {
+      "2": 377906
+    }
+  },
+  "category_distribution": {
+    "02_software_engineering": 377906
+  },
+  "subcategory_distribution": {
+    "software-engineering": 377906
+  },
+  "source_origin": {
+    "total_duplicate_ids_by_source": {
+      "wikimedia/wikipedia": 377906
+    },
+    "unique_sources": 1
+  },
+  "validation": {
+    "all_groups_analyzed": true,
+    "all_duplicate_records_captured": true,
+    "audit_only_no_modifications": true
+  }
+}
