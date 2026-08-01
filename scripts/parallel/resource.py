@@ -114,6 +114,41 @@ def safe_worker_limit(
     return max(1, limit)
 
 
+def safe_io_worker_limit(
+    max_workers: int | None = None,
+    cfg: dict | None = None,
+) -> int:
+    """Compute a safe worker count for I/O-bound stages (downloads).
+
+    I/O-bound work does not scale on CPU cores the way CPU-bound work does;
+    the limiting factors are bandwidth, disk pressure, and memory. We use:
+
+      workers = min(
+          io_worker_cap (config, default 8),
+          available_ram_mb * safety_margin / per_task_ram_mb,
+          explicit max_workers if given,
+      )
+
+    The cap keeps concurrent transfers bounded so aggregate bandwidth and
+    disk write pressure stay predictable, instead of blindly spawning one
+    worker per core.
+    """
+    cfg = cfg or load_parallelism_config()
+    global_cfg = get_global_config(cfg)
+    per_task = int(global_cfg.get("default_per_task_ram_mb", 512))
+    margin = float(global_cfg.get("safety_margin_ram", 0.8))
+
+    io_cap = int(global_cfg.get("io_worker_cap", 8))
+
+    ram = detect_ram()
+    ram_workers = max(1, int((ram["available_mb"] * margin) // max(1, per_task)))
+
+    limit = min(io_cap, ram_workers)
+    if max_workers is not None:
+        limit = min(limit, max(1, int(max_workers)))
+    return max(1, limit)
+
+
 def has_ram_headroom(min_available_mb: int | None = None, cfg: dict | None = None) -> bool:
     """Backpressure check: True if available RAM is above the margin."""
     cfg = cfg or load_parallelism_config()

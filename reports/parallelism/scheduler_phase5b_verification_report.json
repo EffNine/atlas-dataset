@@ -1,0 +1,38 @@
+{
+  "report_metadata": {
+    "report_type": "verification_report_phase5b",
+    "phase": "5B",
+    "date": "2026-08-01T17:27:23.849736+00:00",
+    "status": "complete"
+  },
+  "tests_run": [
+    {
+      "suite": "tests/test_scheduler_acquisition.py",
+      "result": "15 passed in 7.18s"
+    },
+    {
+      "suite": "tests/test_downloader_v1_6.py (legacy)",
+      "result": "10 passed in 3.71s"
+    },
+    {
+      "suite": "tests/ full (excl pre-existing zstd)",
+      "result": "1 failed, 353 passed, 2 skipped in 39.08s"
+    }
+  ],
+  "architecture_validator": "PASS",
+  "behavior_preserved": {
+    "cache_handling": "unchanged (content-addressed, checksum-verified)",
+    "http_range_resume": "unchanged (http_util.download_with_resume)",
+    "validation": "unchanged (adapter + cache verify)",
+    "engine_checkpoint": "untouched (constraint 3)"
+  },
+  "new_capabilities": {
+    "deterministic_task_ids": "download:<sid>:<url_hash>",
+    "io_aware_workers": "safe_io_worker_limit (not CPU-scaled)",
+    "registry_resume": "completed-skip + lease re-claim",
+    "retry": "max_retries=2 with backoff",
+    "cache_conflict_prevention": "in-run task_id dedupe",
+    "kill_switch": "_SCHEDULER_ENABLED"
+  },
+  "no_dataset_release_hf_changes": true
+}

@@ -17,6 +17,7 @@ Safety:
 from __future__ import annotations
 
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -78,67 +79,119 @@ class DownloadAgent(BaseAgent):
         dry_run = self.mode == "dry-run"
         source_filter = set(self.config.get("source_ids") or [])
 
-        for source in sources:
-            sid = str(source.get("id") or source.get("source_id") or "")
-            if source_filter and sid not in source_filter:
-                skipped.append({"source_id": sid, "reason": "filtered by source_ids"})
-                continue
+        # Universal Scheduler path (Phase 5B): deterministic per-source tasks
+        # (download:<sid>:<url_hash>) with I/O-aware worker limits, TaskRegistry
+        # resume/retry, and sequential fallback (identical behavior).
+        # Cache handling, HTTP Range resume, checksum verification, and adapter
+        # logic are unchanged (downloader/scheduler_tasks.py is orchestration
+        # only).
+        try:
+            from .scheduler_tasks import run_download_scheduler
 
-            adapter = select_adapter(source, self.adapters)
-            if adapter is None:
-                skipped.append(
-                    {
+            planned_sources = []
+            for source in sources:
+                sid = str(source.get("id") or source.get("source_id") or "")
+                if source_filter and sid not in source_filter:
+                    skipped.append({"source_id": sid, "reason": "filtered by source_ids"})
+                    continue
+                adapter = select_adapter(source, self.adapters)
+                if adapter is None:
+                    skipped.append({
                         "source_id": sid,
                         "reason": "no adapter supports this source",
                         "url": source.get("url"),
-                    }
-                )
-                continue
-
-            planned.append(
-                {
+                    })
+                    continue
+                planned_sources.append(source)
+                planned.append({
                     "source_id": sid,
                     "adapter": adapter.name,
                     "url": source.get("url"),
                     "name": source.get("name"),
-                }
-            )
+                })
 
-            try:
-                result = adapter.download(source, dry_run=dry_run)
-            except Exception as exc:
-                failed.append(
+            payloads = run_download_scheduler(
+                self.root,
+                planned_sources,
+                self.adapters,
+                self.cache,
+                self._write_download_log,
+                dry_run=dry_run,
+            )
+            for payload in payloads:
+                status = payload.get("status", "")
+                if status == "failed":
+                    failed.append(payload)
+                elif status == "cached":
+                    cached.append(payload)
+                elif status in ("downloaded", "planned"):
+                    downloaded.append(payload)
+                else:
+                    skipped.append(payload)
+        except Exception as sched_exc:
+            # Sequential fallback (original behavior) on any scheduler error.
+            print(f"[downloader] scheduler unavailable ({sched_exc}); falling back to sequential", file=sys.stderr)
+            for source in sources:
+                sid = str(source.get("id") or source.get("source_id") or "")
+                if source_filter and sid not in source_filter:
+                    skipped.append({"source_id": sid, "reason": "filtered by source_ids"})
+                    continue
+
+                adapter = select_adapter(source, self.adapters)
+                if adapter is None:
+                    skipped.append(
+                        {
+                            "source_id": sid,
+                            "reason": "no adapter supports this source",
+                            "url": source.get("url"),
+                        }
+                    )
+                    continue
+
+                planned.append(
                     {
                         "source_id": sid,
                         "adapter": adapter.name,
-                        "error": str(exc),
+                        "url": source.get("url"),
+                        "name": source.get("name"),
                     }
                 )
-                continue
 
-            payload = {
-                "source_id": sid,
-                "adapter": adapter.name,
-                "status": result.status.value,
-                "summary": result.summary,
-                "url": result.url,
-                "files": result.files,
-                "errors": result.errors,
-                "warnings": result.warnings,
-                "entries": [e.to_dict() for e in result.entries],
-            }
+                try:
+                    result = adapter.download(source, dry_run=dry_run)
+                except Exception as exc:
+                    failed.append(
+                        {
+                            "source_id": sid,
+                            "adapter": adapter.name,
+                            "error": str(exc),
+                        }
+                    )
+                    continue
 
-            if result.status == DownloadStatus.FAILED:
-                failed.append(payload)
-            elif result.status == DownloadStatus.CACHED:
-                cached.append(payload)
-            elif result.status in {DownloadStatus.DOWNLOADED, DownloadStatus.PLANNED}:
-                downloaded.append(payload)
-            else:
-                skipped.append(payload)
+                payload = {
+                    "source_id": sid,
+                    "adapter": adapter.name,
+                    "status": result.status.value,
+                    "summary": result.summary,
+                    "url": result.url,
+                    "files": result.files,
+                    "errors": result.errors,
+                    "warnings": result.warnings,
+                    "entries": [e.to_dict() for e in result.entries],
+                }
 
-            if self.mode == "download" and result.status != DownloadStatus.FAILED:
-                self._write_download_log(sid, result)
+                if result.status == DownloadStatus.FAILED:
+                    failed.append(payload)
+                elif result.status == DownloadStatus.CACHED:
+                    cached.append(payload)
+                elif result.status in {DownloadStatus.DOWNLOADED, DownloadStatus.PLANNED}:
+                    downloaded.append(payload)
+                else:
+                    skipped.append(payload)
+
+                if self.mode == "download" and result.status != DownloadStatus.FAILED:
+                    self._write_download_log(sid, result)
 
         stats = {
             "planned": len(planned),

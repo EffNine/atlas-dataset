@@ -425,3 +425,59 @@ python scripts/automation_runner.py ... extract_agent ...
 connection segfaults on macOS (Python 3.9 fork hazard). On macOS the ETL
 scheduler may fall back to the sequential executor — output is identical.
 On dev-pc (Linux) fork+SQLite is safe, so the process pool is used.
+
+---
+
+## 11. Migration example: Acquisition — Downloader (Phase 5B)
+
+The downloader (`scripts/downloader/`) now runs through the Universal
+Scheduler. This migration is **execution orchestration only** — cache
+handling, HTTP Range resume, checksum verification, and adapter logic are
+unchanged.
+
+### Deterministic task identity
+
+```python
+from downloader.scheduler_tasks import download_task_id
+
+download_task_id("s1", "https://example.com/s1")
+# -> "download:s1:9ee7ad79b2e2"   (download:<source_id>:<url_hash>)
+```
+
+Same URL → same task id (duplicate prevention via completed-skip). URL
+change → new task id (never confused with the old source).
+
+### I/O-aware worker limits
+
+Download workers do **not** scale on CPU cores. `safe_io_worker_limit()`
+returns `min(io_worker_cap, RAM margin, explicit cap)`:
+
+```python
+from parallel.resource import safe_io_worker_limit
+limit = safe_io_worker_limit()   # config global.io_worker_cap (default 8)
+```
+
+The Scheduler accepts a `worker_limit_fn` for this:
+
+```python
+sched = Scheduler(
+    "acquisition",
+    registry_root="metadata/pipeline_state",
+    pool="thread",                       # I/O-bound
+    worker_limit_fn=safe_io_worker_limit,
+)
+```
+
+### CLI / agent unchanged
+
+```bash
+python scripts/automation_runner.py download --mode download ...
+# registry: metadata/pipeline_state/task_registry_acquisition.jsonl
+# logs: metadata/download_logs/{sid}.download.json (unchanged)
+```
+
+### Fallback + kill-switch
+
+- Any scheduler error → sequential loop (identical behavior).
+- `downloader.scheduler_tasks._SCHEDULER_ENABLED = False` forces the
+  fallback (operational kill-switch / test hook).

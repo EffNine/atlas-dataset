@@ -218,21 +218,50 @@ functions.
 
 ## 10. Implementation Plan
 
-### Phase 5B — Downloader migration
+### Phase 5B — Downloader migration (IMPLEMENTED)
 
-1. Add `downloader/scheduler_tasks.py`: `download_task`, `plan_download_tasks`,
-   `run_download_scheduler` (with sequential fallback).
-2. Swap `DownloadAgent.execute` loop to `run_download_scheduler`; keep
-   AgentResult aggregation unchanged.
-3. Tests: planning, cache-conflict prevention, resume (cached skip), retry,
-   deterministic ordering, fallback, output identity (same files/hashes).
-4. Verify: `pytest`, arch validator, ad-hoc probe.
+**Constraints applied (approved):**
+1. **Scheduler = execution orchestration only.** Cache handling, HTTP Range
+   resume, checksum verification, and adapter logic stay in
+   `downloader/cache.py` + `downloader/adapters/`. `scheduler_tasks.py`
+   only plans/executes — the worker calls the unchanged `adapter.download`
+   and `_write_download_log`.
+2. **Deterministic task identity:** `download:<source_id>:<url_hash>` —
+   `url_hash` is a 12-char SHA-256 of the source URL. Same URL → same task
+   (duplicate prevention); URL change → new task (never mistaken for a
+   duplicate of the old source).
+3. **engine_checkpoint.json retained.** The downloader does not write it;
+   the AcquisitionEngine facade migration (Phase 5C) will implement the
+   TaskRegistry adapter on top of the existing checkpoint file. Nothing in
+   5B removes or alters `metadata/engine_checkpoint.json`.
+4. **I/O-aware scheduling:** `resource.safe_io_worker_limit()` —
+   `min(io_worker_cap (config, default 8), RAM margin, explicit cap)`.
+   Downloader workers do NOT scale on CPU cores (bandwidth/disk/memory are
+   the limiting factors). Scheduler accepts `worker_limit_fn` for this.
 
-### Phase 5C — Engine pipeline migration
+**Implementation:**
+- `scripts/downloader/scheduler_tasks.py`: `download_task_id`,
+  `plan_download_tasks`, `download_task` (module-level worker),
+  `run_download_scheduler` (thread pool + `safe_io_worker_limit` +
+  TaskRegistry + sequential fallback). `_SCHEDULER_ENABLED` kill-switch.
+- `scripts/parallel/resource.py`: `safe_io_worker_limit()`.
+- `scripts/parallel/config.py`: `global.io_worker_cap` default 8.
+- `scripts/parallel/scheduler.py`: `worker_limit_fn` param + in-run task_id
+  dedupe (fixes terminal-state registry error on duplicate input sources).
+- `scripts/downloader/download_agent.py`: `execute()` uses
+  `run_download_scheduler` with sequential fallback (identical behavior).
+
+**Tests:** `tests/test_scheduler_acquisition.py` (15 tests: task identity,
+I/O-aware limits, end-to-end, retry, resume, cache-conflict prevention,
+fallback).
+
+### Phase 5C — Engine pipeline migration (NEXT — not started)
 
 1. Add `acquisition_engine/scheduler_tasks.py`: `engine_source_task`,
    `plan_engine_tasks`, `run_engine_scheduler` (with sequential fallback).
-2. Swap `execute()` inner loop; `CheckpointManager` facade.
+2. Swap `execute()` inner loop; **`CheckpointManager` facade that keeps
+   `metadata/engine_checkpoint.json`** and adapts TaskRegistry state into
+   the same checkpoint shape (constraint 3).
 3. Tests: resume-equivalence contract, license gate preserved, dedup
    preserved, record counts identical, failed-source recovery.
 4. Verify: `pytest`, arch validator, ad-hoc probe.

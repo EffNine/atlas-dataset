@@ -52,6 +52,7 @@ class Scheduler:
         worker_id: str = "",
         cfg: dict | None = None,
         lease_seconds: int = 900,
+        worker_limit_fn: Callable[..., int] | None = None,
     ):
         self.stage = stage
         self.pool_kind = pool
@@ -62,15 +63,20 @@ class Scheduler:
         self.lease_seconds = max(0, int(lease_seconds))
         self.worker_id = worker_id or f"{stage}-{time.strftime('%H%M%S')}"
         self.registry = TaskRegistry(registry_root, stage, max_retries=max_retries)
+        # Custom worker-limit function (e.g. I/O-aware for downloads).
+        self.worker_limit_fn = worker_limit_fn
 
         # Adaptive worker count: explicit > config/env > safe limit.
         resolved = resolve_worker_count(stage, cfg, explicit=workers)
         if resolved == "auto":
-            self.workers = resource.safe_worker_limit(
-                per_task_ram_mb=per_task_ram_mb,
-                safety_margin=safety_margin,
-                cfg=cfg,
-            )
+            if worker_limit_fn is not None:
+                self.workers = worker_limit_fn(cfg=cfg)
+            else:
+                self.workers = resource.safe_worker_limit(
+                    per_task_ram_mb=per_task_ram_mb,
+                    safety_margin=safety_margin,
+                    cfg=cfg,
+                )
         else:
             self.workers = max(1, int(resolved))
             # Still never exceed the safety margin.
@@ -97,7 +103,18 @@ class Scheduler:
         retried up to max_retries. Results always include every task exactly
         once (skipped tasks return status='skipped').
         """
-        # Resume: drop tasks already completed in a previous run.
+        # Resume: drop tasks already completed in a previous run. Also dedupe
+        # identical task_ids within this run (deterministic ids -> same work;
+        # avoids a terminal-state registry error when the same source appears
+        # twice in the input list).
+        seen: set[str] = set()
+        unique: list[Task] = []
+        for t in tasks:
+            if t.task_id in seen:
+                continue
+            seen.add(t.task_id)
+            unique.append(t)
+        tasks = unique
         pending = [t for t in tasks if not self.registry.is_completed(t.task_id)]
         results: dict[str, TaskResult] = {}
         for t in tasks:

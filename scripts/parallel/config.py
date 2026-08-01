@@ -30,6 +30,7 @@ DEFAULTS: dict[str, Any] = {
             "cpu_saturation_threshold": 0.95,
             "disk_headroom_gb": 10,
             "default_per_task_ram_mb": 512,
+            "io_worker_cap": 8,
         },
         "validation": {"file_workers": "auto", "chunk_size": 1000},
         "classification": {"stage1_shard_workers": 8, "stage2_shard_workers": 10},
