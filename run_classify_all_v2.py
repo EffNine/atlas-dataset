@@ -173,9 +173,16 @@ def merge_v11_into_v12(skip_v11: bool = True):
                 continue
             rec = json.loads(line)
             total += 1
-            lvl = str(rec.get("difficulty", {}).get("level", "1"))
+            # v1.2 records carry difficulty as a dict {level, confidence};
+            # v1.1 records carry difficulty as an int. Handle both.
+            diff = rec.get("difficulty")
+            if isinstance(diff, dict):
+                lvl = str(diff.get("level", "1"))
+                conf = diff.get("confidence")
+            else:
+                lvl = str(diff) if isinstance(diff, int) else "1"
+                conf = None
             counts[lvl] = counts.get(lvl, 0) + 1
-            conf = rec.get("difficulty", {}).get("confidence")
             if conf is not None:
                 confidences.append(conf)
             src = rec.get("record_id", "unknown").split("_")[0]
