@@ -231,6 +231,13 @@ def merge_v11_into_v12(skip_v11: bool = True):
 
 
 if __name__ == "__main__":
+    import argparse
+    ap = argparse.ArgumentParser(description="Run full-source v1.2 classification")
+    ap.add_argument("--skip", default="", help="Comma-separated source labels to skip (already classified)")
+    args = ap.parse_args()
+    
+    skip_sources = {s.strip() for s in args.skip.split(",") if s.strip()}
+    
     config = load_parallelism_config()
     clf_cfg = get_classification_config(config)
     
@@ -240,13 +247,21 @@ if __name__ == "__main__":
     print_interval = clf_cfg.get("print_interval", 1)
     
     print(f"Optimized v1.2 | Stage1={len(STAGE1)} sources @ {stage1_workers} shard-workers | Stage2={len(STAGE2)} sources @ {stage2_workers} shard-workers | skip_v11={skip_v11}")
+    if skip_sources:
+        print(f"Skipping already-classified sources: {sorted(skip_sources)}")
 
     for label in STAGE1:
+        if label in skip_sources:
+            print(f"[skip] {label} already classified")
+            continue
         rc = run_source(label, shard_workers=stage1_workers, print_interval=print_interval)
         if rc != 0:
             sys.exit(rc)
 
     for label in STAGE2:
+        if label in skip_sources:
+            print(f"[skip] {label} already classified")
+            continue
         rc = run_source(label, shard_workers=stage2_workers, print_interval=print_interval)
         if rc != 0:
             sys.exit(rc)
