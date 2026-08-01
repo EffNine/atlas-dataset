@@ -190,7 +190,15 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.no_merge:
         print(f"Output: {temp_dir} (per-source files; --no-merge, caller merges)")
-        return 0 if all(r.get("errors", 0) == 0 for r in results) else 1
+        # A source only "failed" if its classification worker crashed
+        # (classified=0, errors=1). Record-level errors (bad JSON lines) are
+        # expected in noisy sources and are not fatal — valid records are kept
+        # in the per-source output file and the caller still appends them.
+        fatal = [r for r in results if r.get("classified", 0) == 0 and r.get("errors", 0) > 0]
+        if fatal:
+            for r in fatal:
+                print(f"  [FATAL] {r.get('label', '?')}: worker crashed, no output")
+        return 1 if fatal else 0
 
     # Merge and generate reports
     print("Merging reports...")
