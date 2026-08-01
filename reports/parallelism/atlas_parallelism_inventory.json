@@ -1,0 +1,296 @@
+{
+  "audit_metadata": {
+    "report_type": "atlas_parallelism_inventory",
+    "date": "2026-08-01",
+    "scope": "read-only",
+    "repo": "atlas-dataset",
+    "purpose": "pre-universal-scheduler baseline"
+  },
+  "pipelines": {
+    "intelligence_classification": {
+      "files": [
+        "scripts/intelligence/difficulty_analyzer.py",
+        "scripts/intelligence/batch_classify.py",
+        "scripts/intelligence/batch_classify_v2.py"
+      ],
+      "execution_model": "adaptive scheduler + ProcessPoolExecutor",
+      "config_source": ["config/parallelism.yaml (classification.*)", "CLI --shard-workers", "CLI --workers"],
+      "worker_values": {"stage1_shard_workers": 8, "stage2_shard_workers": 10, "parallel_sources": 2, "target_task_size_mb": 64, "max_task_size_mb": 128, "min_split_size_mb": 128, "max_retries": 2},
+      "resource_aware": false,
+      "resume": "yes (TaskRegistry, completed-skip, failed-retry)",
+      "workload_unit": "task (line-range chunk of shard)",
+      "bottleneck": "MEDIUM",
+      "adaptive_compatible": true,
+      "migrate_to_shared": "reference implementation"
+    },
+    "intelligence_runner_v12": {
+      "files": ["run_classify_all_v2.py"],
+      "execution_model": "custom orchestration (ThreadPoolExecutor sources + subprocess per source)",
+      "config_source": ["config/parallelism.yaml", "CLI --skip"],
+      "worker_values": {"parallel_sources": 2},
+      "resource_aware": false,
+      "resume": "partial (--skip + _tmp per-source, append-per-source)",
+      "workload_unit": "source",
+      "bottleneck": "MEDIUM",
+      "adaptive_compatible": true,
+      "migrate_to_shared": "consumer of classification tasks"
+    },
+    "intelligence_archived_v11": {
+      "files": ["scripts/intelligence/archive/production_v1_1/*"],
+      "execution_model": "custom workers (subprocess fan-out)",
+      "config_source": ["HARD"],
+      "worker_values": {},
+      "resource_aware": false,
+      "resume": "no",
+      "workload_unit": "shard",
+      "bottleneck": "HIGH",
+      "adaptive_compatible": false,
+      "migrate_to_shared": "archived - do not migrate"
+    },
+    "acquisition_downloader": {
+      "files": ["scripts/downloader/download_agent.py", "scripts/downloader/cache.py", "scripts/downloader/http_util.py"],
+      "execution_model": "sequential",
+      "config_source": ["HARD"],
+      "worker_values": {},
+      "resource_aware": false,
+      "resume": "partial (download cache)",
+      "workload_unit": "file",
+      "bottleneck": "MEDIUM",
+      "adaptive_compatible": false,
+      "migrate_to_shared": "needs I/O task pool + registry"
+    },
+    "acquisition_engine": {
+      "files": ["scripts/acquisition_engine/engine.py", "scripts/acquisition_engine/checkpoint.py", "scripts/acquisition_engine/lifecycle.py"],
+      "execution_model": "sequential generation + ProcessPoolExecutor loading",
+      "config_source": ["config/parallelism.yaml (acquisition.file_workers=4, chunk_size=500)"],
+      "worker_values": {"file_workers": 4, "chunk_size": 500},
+      "resource_aware": false,
+      "resume": "yes (checkpoint.py, resume(), integrity verify)",
+      "workload_unit": "source/pack; loading=file",
+      "bottleneck": "MEDIUM",
+      "adaptive_compatible": true,
+      "migrate_to_shared": "use shared loader + registry"
+    },
+    "etl_source_processing": {
+      "files": ["scripts/etl/pipeline.py", "scripts/etl/normalizer.py", "scripts/etl/types.py"],
+      "execution_model": "sequential",
+      "config_source": ["HARD"],
+      "worker_values": {},
+      "resource_aware": false,
+      "resume": "partial (download log registry)",
+      "workload_unit": "file",
+      "bottleneck": "LOW",
+      "adaptive_compatible": false,
+      "migrate_to_shared": "adopt ParallelRunner-style fan-out"
+    },
+    "transform_parallelrunner": {
+      "files": ["scripts/parallel/__init__.py", "scripts/e2e_pipeline.py", "scripts/automation_runner.py"],
+      "execution_model": "ThreadPoolExecutor wrapper (ParallelRunner)",
+      "config_source": ["CLI --max-workers (default 4)"],
+      "worker_values": {"max_workers": 4},
+      "resource_aware": false,
+      "resume": "partial (IncrementalState, use_registry)",
+      "workload_unit": "source",
+      "bottleneck": "LOW",
+      "adaptive_compatible": true,
+      "migrate_to_shared": "wrap ParallelRunner into shared scheduler"
+    },
+    "extraction_shard_orchestrator": {
+      "files": ["scripts/run_extract_all.py"],
+      "execution_model": "ProcessPoolExecutor over per-shard extract scripts",
+      "config_source": ["config/parallelism.yaml (extraction.shard_workers=8, shards_per_source=41)", "CLI --shard-workers"],
+      "worker_values": {"shard_workers": 8, "shards_per_source": 41},
+      "resource_aware": false,
+      "resume": "partial (per-shard files, total_failed report)",
+      "workload_unit": "shard",
+      "bottleneck": "MEDIUM",
+      "adaptive_compatible": true,
+      "migrate_to_shared": "planner-compatible (shards=tasks, byte-aware)"
+    },
+    "extraction_wiki_scripts": {
+      "files": ["scripts/extract_wiki_*.py", "scripts/extract_tulu3_shard.py", "scripts/extract_openwebmath.py", "scripts/extract_oasst1.py", "scripts/extract_mmlu_subject.py"],
+      "execution_model": "sequential single-shard (parallelized upstream by run_extract_all)",
+      "config_source": ["N/A"],
+      "worker_values": {},
+      "resource_aware": false,
+      "resume": "no",
+      "workload_unit": "shard",
+      "bottleneck": "LOW",
+      "adaptive_compatible": false,
+      "migrate_to_shared": "leave as leaf workers"
+    },
+    "validation_dataset": {
+      "files": ["scripts/validate_dataset.py"],
+      "execution_model": "ProcessPoolExecutor (file-level)",
+      "config_source": ["config/parallelism.yaml (validation.file_workers=8, chunk_size=1000, per_file_timeout_seconds=600)", "CLI --file-workers"],
+      "worker_values": {"file_workers": 8, "chunk_size": 1000},
+      "resource_aware": false,
+      "resume": "no (per-file results manual re-run)",
+      "workload_unit": "file",
+      "bottleneck": "MEDIUM",
+      "adaptive_compatible": true,
+      "migrate_to_shared": "high priority (files=tasks)"
+    },
+    "validation_schema_arch": {
+      "files": ["scripts/validate_architecture.py", "scripts/validate_knowledge_object.py", "scripts/validate_quality_engine.py"],
+      "execution_model": "sequential",
+      "config_source": ["HARD/CLI"],
+      "worker_values": {},
+      "resource_aware": false,
+      "resume": "no",
+      "workload_unit": "file",
+      "bottleneck": "LOW",
+      "adaptive_compatible": false,
+      "migrate_to_shared": "low priority"
+    },
+    "training_views_generator": {
+      "files": ["scripts/training_view_engine/generator.py", "scripts/training_view_engine/filter.py", "scripts/training_view_engine/manifest.py"],
+      "execution_model": "ProcessPoolExecutor load + sequential generation",
+      "config_source": ["config/parallelism.yaml (training_views.workers=8)"],
+      "worker_values": {"workers": 8},
+      "resource_aware": false,
+      "resume": "partial (manifest/eligibility filter)",
+      "workload_unit": "file (load) / view (generate)",
+      "bottleneck": "MEDIUM",
+      "adaptive_compatible": true,
+      "migrate_to_shared": "shared loader + registry"
+    },
+    "training_views_validator": {
+      "files": ["scripts/training_view_engine/validator.py"],
+      "execution_model": "ProcessPoolExecutor (record chunking)",
+      "config_source": ["config/parallelism.yaml (training_views.workers=8)"],
+      "worker_values": {"workers": 8},
+      "resource_aware": false,
+      "resume": "no",
+      "workload_unit": "record-chunk",
+      "bottleneck": "MEDIUM",
+      "adaptive_compatible": true,
+      "migrate_to_shared": "record-range tasks via planner"
+    },
+    "evaluation_engine": {
+      "files": ["scripts/evaluation_engine/engine.py", "scripts/evaluation_engine/runner.py", "scripts/evaluation_engine/registry.py", "scripts/evaluation_engine/metrics.py", "scripts/evaluation_engine/report.py", "scripts/eval_dataset.py"],
+      "execution_model": "sequential",
+      "config_source": ["HARD"],
+      "worker_values": {},
+      "resource_aware": false,
+      "resume": "no",
+      "workload_unit": "benchmark",
+      "bottleneck": "LOW",
+      "adaptive_compatible": false,
+      "migrate_to_shared": "needs redesign for full eval mode"
+    },
+    "release_join": {
+      "files": ["scripts/release/join_release.py"],
+      "execution_model": "sequential",
+      "config_source": ["HARD"],
+      "worker_values": {},
+      "resource_aware": false,
+      "resume": "partial (manifest-based skip)",
+      "workload_unit": "file",
+      "bottleneck": "MEDIUM",
+      "adaptive_compatible": false,
+      "migrate_to_shared": "low urgency"
+    },
+    "release_compress": {
+      "files": ["scripts/release/compress_release.py"],
+      "execution_model": "ProcessPoolExecutor",
+      "config_source": ["CLI --workers (default 1)"],
+      "worker_values": {"default_workers": 1},
+      "resource_aware": false,
+      "resume": "partial (--skip-existing)",
+      "workload_unit": "shard",
+      "bottleneck": "MEDIUM",
+      "adaptive_compatible": true,
+      "migrate_to_shared": "planner-compatible (uneven shard sizes)"
+    },
+    "release_checksum": {
+      "files": ["scripts/release/generate_checksums.py"],
+      "execution_model": "sequential",
+      "config_source": ["HARD"],
+      "worker_values": {},
+      "resource_aware": false,
+      "resume": "partial (skip-if-exists)",
+      "workload_unit": "file",
+      "bottleneck": "LOW",
+      "adaptive_compatible": false,
+      "migrate_to_shared": "low urgency"
+    },
+    "release_upload": {
+      "files": ["scripts/release/upload_huggingface.py"],
+      "execution_model": "ThreadPoolExecutor",
+      "config_source": ["CLI --workers (default 4)"],
+      "worker_values": {"default_workers": 4},
+      "resource_aware": false,
+      "resume": "yes (remote size-match skip, retry backoff, verify)",
+      "workload_unit": "section/file",
+      "bottleneck": "MEDIUM",
+      "adaptive_compatible": false,
+      "migrate_to_shared": "I/O-bound; registry optional"
+    },
+    "release_publish_promote": {
+      "files": ["scripts/release/publish_promotion.py", "scripts/release/promote_release.py", "scripts/release/update_release_index.py"],
+      "execution_model": "sequential",
+      "config_source": ["HARD"],
+      "worker_values": {},
+      "resource_aware": false,
+      "resume": "no",
+      "workload_unit": "release",
+      "bottleneck": "LOW",
+      "adaptive_compatible": false,
+      "migrate_to_shared": "low urgency"
+    },
+    "release_download": {
+      "files": ["scripts/release/download_release.py"],
+      "execution_model": "ThreadPoolExecutor (HF snapshot_download)",
+      "config_source": ["config/parallelism.yaml (acquisition.file_workers=4 reused)", "CLI"],
+      "worker_values": {"file_workers": 4},
+      "resource_aware": false,
+      "resume": "yes (HF cache + --verify SHA-256)",
+      "workload_unit": "file",
+      "bottleneck": "LOW",
+      "adaptive_compatible": false,
+      "migrate_to_shared": "I/O-bound; registry optional"
+    }
+  },
+  "cross_cutting": {
+    "duplicate_implementations": [
+      "parallel curated-file loaders: acquisition_engine.engine.generate_knowledge_pack (_load_one) vs training_view_engine.generator (_load_view_workers)",
+      "per-source wrappers: ParallelRunner (ThreadPool) vs batch_classify_v2._classify_one (ProcessPool+subprocess) vs e2e_pipeline",
+      "split logic: batch_classify.split_single_shard vs adaptive_scheduler.plan_tasks",
+      "parallelism config parsing: validate_dataset.load_parallelism_config, adaptive_scheduler.load_scheduler_config, run_extract_all.load_config, acquisition_engine._load_file_workers, training_view_engine._load_view_workers",
+      "resume helpers: downloader/cache, upload size-match, compress --skip-existing, TaskRegistry"
+    ],
+    "migrate_to_shared_scheduler": [
+      "TaskRegistry -> scripts/parallel/registry.py",
+      "plan_tasks -> scripts/parallel/planner.py (workload_unit-aware)",
+      "classify_source_shards_adaptive task-loop (reference)",
+      "validate_one_file file fan-out",
+      "validate_records record-chunking",
+      "extract_one shard fan-out",
+      "ParallelRunner thread wrapper",
+      "shared load_parallelism_config -> scripts/parallel/config.py"
+    ],
+    "adaptive_compatible_pipelines": ["intelligence_classification", "intelligence_runner_v12", "acquisition_engine", "transform_parallelrunner", "extraction_shard_orchestrator", "validation_dataset", "training_views_generator", "training_views_validator", "release_compress"],
+    "pipelines_requiring_redesign": ["acquisition_downloader", "etl_source_processing", "evaluation_engine", "release_join", "release_publish_promote"],
+    "resource_aware_pipelines": []
+  },
+  "recommendations": {
+    "phase1_first_migrations": [
+      "shared config loader -> scripts/parallel/config.py",
+      "TaskRegistry -> shared resume layer; wire into validation + extraction",
+      "plan_tasks -> universal planner; migrate compress_release + validate_dataset"
+    ],
+    "phase2_resource_aware_scope": [
+      "psutil RAM/CPU/disk monitoring in planner",
+      "runtime task_size = total_bytes / (workers x 4), workers = min(cores, ram/per_task_ram)",
+      "wire into training views + classification",
+      "optional GPU awareness for evaluation"
+    ],
+    "phase3_multi_machine_readiness": [
+      "TaskRegistry to shared store (NFS/object/SQLite)",
+      "content-addressed tasks for any-node claiming",
+      "extraction + classification first; validation/views follow",
+      "worker_group -> host mapping in config"
+    ]
+  }
+}
