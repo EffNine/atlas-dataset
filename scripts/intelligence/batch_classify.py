@@ -105,7 +105,7 @@ def split_single_shard(
         # File smaller than worker count — no point splitting
         return [shard]
 
-    chunk_size = max(1, line_count // n_chunks)
+    chunk_size = max(1, (line_count + n_chunks - 1) // n_chunks)  # ceil, exact chunk count
     chunks: list[Path] = []
     current: Path | None = None
     fh = None
@@ -296,12 +296,184 @@ def classify_source_shards(
     }
 
 
+def classify_source_shards_adaptive(
+    root_path: str | Path,
+    config: SourceConfig,
+    output_path: str | Path,
+    *,
+    shard_workers: int = 1,
+    scheduler_cfg: dict | None = None,
+    print_progress_interval: int = 20,
+    worker_id: str = "",
+) -> dict[str, Any]:
+    """Classify one source using the adaptive workload scheduler.
+
+    Plans balanced tasks (whole shard or line-range chunk), runs them
+    through ProcessPoolExecutor, tracks state in the task registry, and
+    merges per-task outputs in deterministic order.
+
+    Args:
+        root_path: Repo root.
+        config: Source configuration.
+        output_path: Per-source classified output (merged).
+        shard_workers: Max parallel workers.
+        scheduler_cfg: Scheduler config (from load_scheduler_config).
+        print_progress_interval: Progress print cadence.
+        worker_id: Worker id for the registry.
+
+    Returns:
+        Stats dict (label, total, classified, errors, elapsed, shards).
+    """
+    from concurrent.futures import ProcessPoolExecutor, as_completed
+
+    from adaptive_scheduler import (
+        TaskRegistry,
+        load_scheduler_config,
+        plan_tasks,
+        write_scheduler_report,
+    )
+
+    if scheduler_cfg is None:
+        scheduler_cfg = load_scheduler_config()
+
+    root = Path(root_path)
+    out = Path(output_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+
+    shards = sorted(
+        f for f in root.glob(config.glob_pattern) if f.stat().st_size > 0
+    )
+    if not shards:
+        print(f"[{config.label}] No shards found for {config.glob_pattern}", flush=True)
+        return {
+            "label": config.label, "total": 0, "classified": 0,
+            "errors": 0, "elapsed": "0s", "shards": 0,
+        }
+
+    worker_group = "stage2" if shard_workers >= 8 else "stage1"
+    tasks = plan_tasks(config.label, shards, scheduler_cfg, worker_group)
+    registry = TaskRegistry(root, worker_group)
+    tmp_dir = out.parent / "_tmp_shards"
+    tmp_dir.mkdir(parents=True, exist_ok=True)
+
+    print(
+        f"[{config.label}] adaptive: {len(shards)} shards -> {len(tasks)} tasks "
+        f"({shard_workers} workers)",
+        flush=True,
+    )
+
+    total = 0
+    total_errors = 0
+    start = time.time()
+    split_ops = sum(1 for t in tasks if "chunk" in t.task_id)
+
+    with ProcessPoolExecutor(max_workers=shard_workers) as pool:
+        futures = {}
+        for task in tasks:
+            # Resume: skip completed, re-queue failed up to max_retries
+            if registry.is_completed(task.task_id):
+                continue
+            if registry.is_failed(task.task_id) and registry.attempts(task.task_id) >= scheduler_cfg["max_retries"]:
+                print(f"  [SKIP] {task.task_id} failed {scheduler_cfg['max_retries']}x", flush=True)
+                continue
+            tmp_path = tmp_dir / f"{task.task_id}.jsonl"
+            registry.record(task, "running", worker_id=worker_id, output_file=str(tmp_path))
+            futures[pool.submit(_process_task_worker, task.to_dict(), tmp_path)] = task
+
+        for fut in as_completed(futures):
+            task = futures[fut]
+            try:
+                total_records, classified_count, error_count = fut.result()
+                total += classified_count
+                total_errors += error_count
+                registry.record(
+                    task, "completed",
+                    worker_id=worker_id,
+                    output_file=str(tmp_dir / f"{task.task_id}.jsonl"),
+                    record_count=classified_count,
+                )
+            except Exception as exc:
+                total_errors += 1
+                registry.record(task, "failed", worker_id=worker_id)
+                print(f"  [ERROR] {task.task_id}: {exc}", file=sys.stderr, flush=True)
+
+    # Merge per-task outputs in deterministic (sorted task_id) order
+    with open(out, "w", encoding="utf-8") as fh:
+        for task in sorted(tasks, key=lambda t: t.task_id):
+            tmp_path = tmp_dir / f"{task.task_id}.jsonl"
+            if not tmp_path.exists():
+                continue
+            with open(tmp_path, "r", encoding="utf-8") as tf:
+                for line in tf:
+                    line = line.strip()
+                    if line:
+                        fh.write(line + "\n")
+            tmp_path.unlink()
+
+    # Cleanup empty tmp dir
+    try:
+        tmp_dir.rmdir()
+    except OSError:
+        import shutil
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+
+    elapsed = time.time() - start
+    elapsed_str = f"{elapsed:.0f}s" if elapsed < 60 else f"{elapsed/60:.1f}m"
+
+    write_scheduler_report(
+        root, worker_group, shards, tasks, registry,
+        split_operations=split_ops,
+    )
+
+    print(
+        f"[{config.label}] Done: {total} classified, {total_errors} errors "
+        f"in {elapsed_str}",
+        flush=True,
+    )
+    return {
+        "label": config.label,
+        "total": total,
+        "classified": total,
+        "errors": total_errors,
+        "elapsed": elapsed_str,
+        "shards": len(shards),
+    }
+
+
 def _process_shard_worker(shard: Path, output_path: Path) -> tuple[int, int, int]:
     """Worker function for parallel shard processing.
 
     Returns (total_records, classified_count, error_count).
     """
     _, _, results, errors = process_file(shard, None)
+
+    with open(output_path, "w", encoding="utf-8") as fh:
+        for r in results:
+            fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+
+    return len(results) + len(errors), len(results), len(errors)
+
+
+def _process_task_worker(task: dict, output_path: Path) -> tuple[int, int, int]:
+    """Worker function for adaptive scheduler tasks.
+
+    A task covers a whole file (offset_end < 0) or a line range
+    [offset_start, offset_end). Streaming — never modifies the input.
+
+    Returns (total_records, classified_count, error_count).
+    """
+    from difficulty_analyzer import process_file_range
+
+    input_file = Path(task["input_file"])
+    offset_start = int(task.get("offset_start", 0))
+    offset_end = int(task.get("offset_end", -1))
+
+    if offset_end < 0:
+        _, _, results, errors = process_file(input_file, None)
+    else:
+        _, _, results, errors = process_file_range(
+            input_file, offset_start, offset_end, None
+        )
 
     with open(output_path, "w", encoding="utf-8") as fh:
         for r in results:

@@ -802,6 +802,67 @@ def process_file(
     return len(records), classified, results, errors
 
 
+def process_file_range(
+    input_path: Path,
+    offset_start: int,
+    offset_end: int,
+    output_path: Path | None,
+    dry_run: bool = False,
+) -> tuple[int, int, list[dict], list[dict]]:
+    """Process a line range [offset_start, offset_end) of a JSONL file.
+
+    Streaming: opens the file once, skips offset_start lines, reads until
+    offset_end (or EOF if offset_end < 0), classifies each record. The
+    original file is never modified.
+
+    Returns (total, classified, results, errors) like process_file().
+    """
+    records: list[dict] = []
+    with open(input_path, "r", encoding="utf-8") as f:
+        for i, line in enumerate(f):
+            if i < offset_start:
+                continue
+            if offset_end >= 0 and i >= offset_end:
+                break
+            line = line.strip()
+            if line:
+                try:
+                    records.append(json.loads(line))
+                except json.JSONDecodeError as e:
+                    print(f"  [WARN] JSON parse error: {e}", file=sys.stderr)
+
+    results: list[dict] = []
+    errors: list[dict] = []
+    classified = 0
+
+    for i, rec in enumerate(records):
+        try:
+            result = analyze_record(rec)
+            if result:
+                results.append(result)
+                classified += 1
+            else:
+                errors.append({
+                    "index": offset_start + i,
+                    "record_id": rec.get("id", "unknown"),
+                    "error": "Could not parse record (missing content)",
+                })
+        except Exception as e:
+            errors.append({
+                "index": offset_start + i,
+                "record_id": rec.get("id", "unknown"),
+                "error": str(e),
+            })
+
+    if output_path and not dry_run:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(output_path, "w", encoding="utf-8") as f:
+            for result in results:
+                f.write(json.dumps(result, ensure_ascii=False) + "\n")
+
+    return len(records), classified, results, errors
+
+
 # ---------------------------------------------------------------------------
 # Reporting helpers
 # ---------------------------------------------------------------------------

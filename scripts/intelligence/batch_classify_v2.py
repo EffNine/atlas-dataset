@@ -113,17 +113,36 @@ ALL_SOURCES: list[SourceConfig] = [
 
 def _classify_one(config: SourceConfig, root: str, out_dir: str,
                   print_interval: int, shard_workers: int) -> dict[str, Any]:
-    """Run classify_source_shards for one source (worker function)."""
-    from batch_classify import classify_source_shards  # local import for pickling
+    """Run classify_source_shards for one source (worker function).
+
+    Uses the adaptive scheduler by default; falls back to the static
+    per-shard path when scheduler=static.
+    """
+    from batch_classify import (
+        classify_source_shards,
+        classify_source_shards_adaptive,
+    )
+    from adaptive_scheduler import load_scheduler_config
 
     out_path = Path(out_dir) / f"classified_{config.label}.jsonl"
-    stats = classify_source_shards(
-        root_path=root,
-        config=config,
-        output_path=out_path,
-        print_progress_interval=print_interval,
-        shard_workers=shard_workers,
-    )
+    scheduler_cfg = load_scheduler_config()
+
+    if scheduler_cfg.get("scheduler", "adaptive") == "adaptive":
+        stats = classify_source_shards_adaptive(
+            root_path=root,
+            config=config,
+            output_path=out_path,
+            shard_workers=shard_workers,
+            scheduler_cfg=scheduler_cfg,
+        )
+    else:
+        stats = classify_source_shards(
+            root_path=root,
+            config=config,
+            output_path=out_path,
+            print_progress_interval=print_interval,
+            shard_workers=shard_workers,
+        )
     return stats
 
 # ---------------------------------------------------------------------------
