@@ -308,8 +308,9 @@ def test_run_extract_all_missing_script_fails_cleanly():
 def test_append_source_to_v12_and_cleanup(tmp_path: Path):
     ns = _exec_runner()
     out_dir = tmp_path
+    (out_dir / "_tmp").mkdir()
     v12 = out_dir / "unknown_classified_v1.2.jsonl"
-    src = out_dir / "classified_wiki_test.jsonl"
+    src = out_dir / "_tmp" / "classified_wiki_test.jsonl"
     src.write_text(
         json.dumps(_valid_record(1)) + "\n" + json.dumps(_valid_record(2)) + "\n",
         encoding="utf-8",
@@ -337,8 +338,9 @@ def test_append_source_to_v12_missing_src(tmp_path: Path):
 def test_append_source_to_v12_no_duplicates_on_restart(tmp_path: Path):
     ns = _exec_runner()
     out_dir = tmp_path
+    (out_dir / "_tmp").mkdir()
     v12 = out_dir / "unknown_classified_v1.2.jsonl"
-    src = out_dir / "classified_dup.jsonl"
+    src = out_dir / "_tmp" / "classified_dup.jsonl"
     src.write_text(json.dumps(_valid_record()) + "\n", encoding="utf-8")
     ns["OUT_DIR"] = out_dir
     ns["V12_CLASSIFIED"] = v12
