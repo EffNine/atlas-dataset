@@ -71,6 +71,67 @@ DEFAULT_DATA_SNAPSHOT = "atlas-v1.0-RC1"
 # Source shard classifier
 # ---------------------------------------------------------------------------
 
+def split_single_shard(
+    shard: Path,
+    tmp_dir: Path,
+    n_chunks: int,
+    label: str,
+) -> list[Path]:
+    """Split a single JSONL shard into n_chunks line-chunk files.
+
+    Returns a list of chunk file paths in _tmp_shards, so the parallel
+    shard path can process them with multiple workers. Chunks are named
+    {label}_chunk{idx:04d}_{shard.name}.jsonl so the merge glob
+    ({label}_*.jsonl) picks them up and cleanup removes them.
+
+    Args:
+        shard: The single input JSONL file.
+        tmp_dir: Directory for chunk files (created if missing).
+        n_chunks: Number of chunks to create.
+        label: Source label for chunk filenames.
+
+    Returns:
+        List of chunk paths (may be [shard] if the file is tiny).
+    """
+    tmp_dir.mkdir(parents=True, exist_ok=True)
+
+    # Count lines cheaply (one pass) to size chunks evenly
+    line_count = 0
+    with open(shard, "r", encoding="utf-8") as f:
+        for _ in f:
+            line_count += 1
+
+    if line_count <= n_chunks:
+        # File smaller than worker count — no point splitting
+        return [shard]
+
+    chunk_size = max(1, line_count // n_chunks)
+    chunks: list[Path] = []
+    current: Path | None = None
+    fh = None
+    written = 0
+    idx = 0
+
+    try:
+        with open(shard, "r", encoding="utf-8") as src:
+            for line in src:
+                if current is None or written >= chunk_size:
+                    if fh is not None:
+                        fh.close()
+                    idx += 1
+                    current = tmp_dir / f"{label}_chunk{idx:04d}_{shard.name}.jsonl"
+                    fh = open(current, "w", encoding="utf-8")
+                    chunks.append(current)
+                    written = 0
+                fh.write(line)
+                written += 1
+    finally:
+        if fh is not None:
+            fh.close()
+
+    return chunks
+
+
 def classify_source_shards(
     root_path: str | Path,
     config: SourceConfig,
@@ -111,6 +172,24 @@ def classify_source_shards(
 
     label_str = config.description or config.label
     print(f"[{config.label}] {label_str}: {len(shards)} shards, {shard_workers} workers", flush=True)
+
+    # Single-shard sources (e.g. swebench, mmlu) cannot use shard-level
+    # parallelism — one worker does all the work. Split the single file into
+    # line chunks and process them as virtual shards so multi-core speedup
+    # applies to every source type.
+    if shard_workers > 1 and len(shards) == 1:
+        shards = split_single_shard(
+            shards[0],
+            out.parent / "_tmp_shards",
+            n_chunks=min(shard_workers, 64),
+            label=config.label,
+        )
+        if len(shards) > 1:
+            print(
+                f"[{config.label}] split single file into {len(shards)} chunks "
+                f"for {shard_workers} workers",
+                flush=True,
+            )
 
     total = 0
     total_errors = 0
