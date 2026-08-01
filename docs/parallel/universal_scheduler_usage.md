@@ -481,3 +481,71 @@ python scripts/automation_runner.py download --mode download ...
 - Any scheduler error → sequential loop (identical behavior).
 - `downloader.scheduler_tasks._SCHEDULER_ENABLED = False` forces the
   fallback (operational kill-switch / test hook).
+
+---
+
+## 12. Migration example: Acquisition — Engine (Phase 5C)
+
+`AcquisitionEngine.execute()` now runs through the Universal Scheduler using
+**PURE WORKERS + SERIALIZED FINALIZE**.
+
+### Design
+
+Workers (`acquisition_engine.scheduler_tasks.engine_source_task`) are pure:
+resolve source → license gate → generate records → return data only. They
+**never** write checkpoints, lifecycle files, verification logs, curated
+output, or mutate global state. A serialized finalize
+(`AcquisitionEngine._finalize_from_results`) consumes worker results in
+deterministic manifest order and applies global dedup (first-wins),
+max_records cap, lifecycle transitions, verification log chain, checkpoint
+updates, curated output write, and checksum/provenance registry — exactly
+like the original sequential loop, so output is **byte-identical**.
+
+### Task model
+
+```python
+Task(
+    task_id="acq:engine:B01:s1",   # acq:engine:<batch_id>:<source_id>
+    source="s1",
+    operation="engine_source_pipeline",
+    input="s1",
+    extra={"root": "...", "batch_id": "B01", "dataset": {...},
+           "registry_entry": {...}, "max_records": 100},
+)
+```
+
+### Registry
+
+- Stage `"acquisition"` → `metadata/pipeline_state/task_registry_acquisition.jsonl`
+  (shared with the 5B downloader registry; distinct `acq:engine:` /
+  `download:` prefixes).
+- Completed tasks skipped on resume; failed tasks retried (max 2); stale
+  `running` re-claimed after lease (900 s) — fixes the old engine's
+  no-re-claim gap.
+- `metadata/engine_checkpoint.json` is **kept** and still written in the
+  same shape (session_id, status, completed_batches, per-source statuses,
+  integrity checksum) — the CheckpointManager facade derives completed
+  status from the registry.
+
+### Resource awareness
+
+- Pool: `process` (CPU record generation). Workers are pure → no SQLite fork
+  hazard on macOS.
+- Workers: `safe_worker_limit()` (CPU/RAM aware).
+
+### Fallback + kill-switch
+
+- Any scheduler error → original sequential loop (identical behavior).
+- `acquisition_engine.engine._ENGINE_SCHEDULER_ENABLED = False` forces the
+  sequential loop.
+- `acquisition_engine.scheduler_tasks._SCHEDULER_ENABLED = False` forces the
+  in-process pure-worker path.
+
+### CLI / agent unchanged
+
+```bash
+python scripts/atlas.py acq --execute ...
+python scripts/automation_runner.py ...
+# registry: metadata/pipeline_state/task_registry_acquisition.jsonl
+# checkpoint: metadata/engine_checkpoint.json (unchanged shape)
+```

@@ -1,0 +1,87 @@
+{
+  "report_metadata": {
+    "report_type": "scheduler_phase5c_acquisition_report",
+    "phase": "5C",
+    "date": "2026-08-01T17:50:56.958886+00:00",
+    "status": "complete",
+    "pipeline": "acquisition (engine)"
+  },
+  "design": {
+    "pattern": "PURE WORKERS + SERIALIZED FINALIZE",
+    "worker_responsibilities": [
+      "resolve source",
+      "license gate",
+      "generate records",
+      "worker-local stats"
+    ],
+    "worker_forbidden": [
+      "write checkpoints",
+      "write lifecycle files",
+      "write verification logs",
+      "write curated output",
+      "mutate global state"
+    ],
+    "finalize_order": [
+      "merge worker results (manifest order)",
+      "global dedup (first-wins)",
+      "max_records limit",
+      "lifecycle state",
+      "verification log chain",
+      "checkpoint",
+      "curated output",
+      "checksum/provenance registry"
+    ],
+    "output_guarantee": "byte-identical to sequential execution"
+  },
+  "implementation": {
+    "new_files": [
+      "scripts/acquisition_engine/scheduler_tasks.py"
+    ],
+    "modified": [
+      "scripts/acquisition_engine/engine.py (module-level generate_source_records; execute() scheduler branch; _finalize_from_results; _finalize_tail shared; _ENGINE_SCHEDULER_ENABLED)"
+    ],
+    "unchanged": [
+      "downloader/*",
+      "adapters",
+      "cache",
+      "ETL",
+      "dataset content",
+      "release",
+      "HF",
+      "metadata/engine_checkpoint.json shape",
+      "sequential loop (fallback)"
+    ],
+    "task_id_format": "acq:engine:<batch_id>:<source_id>",
+    "registry": "metadata/pipeline_state/task_registry_acquisition.jsonl (shared with 5B; acq:engine: prefix)",
+    "pool": "process (pure workers, no SQLite fork hazard)",
+    "workers": "safe_worker_limit() (CPU/RAM aware)",
+    "retry": "max_retries=2",
+    "lease": "900 s stale-running re-claim (fixes old no-re-claim gap)",
+    "kill_switches": [
+      "acquisition_engine.engine._ENGINE_SCHEDULER_ENABLED",
+      "acquisition_engine.scheduler_tasks._SCHEDULER_ENABLED"
+    ],
+    "fallback": "original sequential loop preserved"
+  },
+  "verification": {
+    "acquisition_engine_test_suite": "15 passed in 10.36s",
+    "downloader_acquisition_legacy_suites": "31 passed in 10.86s",
+    "full_suite_summary": "1 failed, 368 passed, 2 skipped in 49.25s",
+    "architecture_validator": "PASS",
+    "sha256_equality": "scheduler vs sequential curated pilot_candidates.jsonl byte-identical (verified)",
+    "record_count_equality": "12 records both paths (4+3+5)",
+    "provenance_equality": "source_attribution + lineage + license + quality_score identical per record",
+    "dedup_unchanged": "cross-source identical messages -> first-wins dedup identical",
+    "max_records_unchanged": "max_records=6 cap applied identically in both paths",
+    "checkpoint_resume": "engine_checkpoint.json kept; resume skips completed sources (0 new records)",
+    "worker_purity": "worker writes no shared files (verified by tests)",
+    "retry": "failed worker retried then completed; terminal after max_retries",
+    "lease_recovery": "stale running re-claimed",
+    "fallback": "kill-switch -> sequential loop; identical output"
+  },
+  "out_of_scope": {
+    "phase_5d": "cleanup (generate_knowledge_pack loader) NOT started",
+    "phase_6_8": "release/compression/evaluation NOT started",
+    "dataset_release_hf_changes": "none"
+  }
+}

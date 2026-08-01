@@ -128,6 +128,67 @@ def _assert_write_safe(path: Path):
 # Engine
 # ---------------------------------------------------------------------------
 
+def generate_source_records(
+    source_id: str,
+    dataset: dict,
+    reg: dict,
+    target_count: int,
+    max_allowed: int,
+) -> list[dict[str, Any]]:
+    """Generate synthetic records for a source (module-level, pure).
+
+    Relocated verbatim from AcquisitionEngine._generate_source_records so the
+    Phase 5C scheduler worker can call it without an engine instance. No
+    shared state, no writes — deterministic per (source, dataset, target).
+    """
+    records: list[dict[str, Any]] = []
+    n = min(target_count, max_allowed, 10)  # cap at 10 per source for pilot
+    subcats = dataset.get("subcategories", ["general"])
+    for i in range(n):
+        uid = f"{source_id}_{dataset['category']}_{subcats[0]}_{i:04d}"
+        rec = {
+            "id": uid,
+            "category": dataset["category"],
+            "subcategory": subcats[i % len(subcats)],
+            "difficulty": (i % 3) + 1,
+            "knowledge_type": "procedure",
+            "canonical_answer": f"This is the canonical answer for {uid}.",
+            "metadata": {"language": "en"},
+            "source_attribution": {
+                "source_id": source_id,
+                "name": dataset.get("name", ""),
+                "url": dataset.get("url", ""),
+                "license": dataset.get("license", ""),
+                "attribution_text": f"Source: {dataset.get('name', 'unknown')}",
+            },
+            "license": dataset.get("license", ""),
+            "messages": [
+                {"role": "user", "content": f"Question about {subcats[i % len(subcats)]}?"},
+                {"role": "assistant", "content": f"Answer {i} for {subcats[i % len(subcats)]}."},
+            ],
+            "tags": subcats + [("synthetic" if dataset.get("synthetic") else "")],
+            "quality_score": 9,
+            "verification_status": "pending",
+            "verified": False,
+            "lineage": {
+                "source": dataset.get("name", source_id),
+                "transformations": ["pipeline:clean", "pipeline:score"],
+                "knowledge_object": uid,
+                "curated_dataset": "curated/v0.1",
+                "training_view": "qwen,llama,deepseek",
+            },
+            "training_view_eligibility": {"qwen": True, "llama": True, "deepseek": True},
+            "notes": dataset.get("notes", ""),
+        }
+        records.append(rec)
+    return records
+
+
+# Operational kill-switch: set False to force the sequential loop even when
+# the scheduler path imports cleanly (also used by tests).
+_ENGINE_SCHEDULER_ENABLED = True
+
+
 class AcquisitionEngine:
     """
     Orchestrates the full acquisition workflow.
@@ -484,6 +545,26 @@ class AcquisitionEngine:
             )
         self.checkpoint_mgr.set_status("running")
 
+        # Phase 5C: Universal Scheduler path (PURE WORKERS + SERIALIZED
+        # FINALIZE). Workers resolve/license/generate only; everything that
+        # touches shared state (dedup, lifecycle, ver_log, checkpoint,
+        # curated write) runs in _finalize_from_results in manifest order,
+        # so output is byte-identical to the sequential loop below. On any
+        # scheduler error the original sequential loop is the fallback.
+        try:
+            from .scheduler_tasks import engine_task_id, run_engine_scheduler
+            if _ENGINE_SCHEDULER_ENABLED:
+                results_by_id = run_engine_scheduler(
+                    self.root, self.manifest, self.reg_by_id, max_records,
+                )
+                return self._finalize_from_results(
+                    results_by_id, engine_task_id, max_records, t0
+                )
+        except Exception as exc:
+            print(f"[engine] scheduler path failed ({exc}); using sequential loop", file=sys.stderr)
+
+        # ── Sequential loop (fallback, unchanged) ──────────────────────────
+
         out_records: list[dict[str, Any]] = []
         seen_norm: set[str] = set()
 
@@ -619,52 +700,8 @@ class AcquisitionEngine:
 
             self.checkpoint_mgr.set_batch_completed(bid)
 
-        # Validate output
-        self.checkpoint_mgr.set_current_batch(None)
-        self.checkpoint_mgr.update_source_status("__all__", "validating")
-        ko_validation_failures = self._validate_output(out_records)
-
-        # Write curated candidates
-        curated_path = self.root / "curated" / "v0.1" / "pilot_candidates.jsonl"
-        _assert_write_safe(curated_path)
-        curated_path.parent.mkdir(parents=True, exist_ok=True)
-        with curated_path.open("w", encoding="utf-8") as f:
-            for rec in out_records:
-                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
-
-        # Integrity: compute checksums
-        curated_checksums = compute_file_checksums(curated_path.parent, "*.jsonl")
-        self.checksum_registry.create("v0.1", curated_checksums)
-        self.ver_log.append("curated_output", "validating", "passed",
-                            {"record_count": len(out_records), "checksums": curated_checksums})
-
-        # Version manifest
-        self.ver_log.append("version_snapshot", "releasing", "passed",
-                            {"version": "v0.1", "records": len(out_records)})
-
-        self.checkpoint_mgr.set_status("completed")
-        self.checkpoint_mgr.update_stats({
-            "total_attempted": stats["attempted"],
-            "total_accepted": stats["accepted"],
-            "ko_validation_failures": ko_validation_failures,
-        })
-
-        dt = round(time.time() - t0, 3)
-        result = {
-            "status": "ok",
-            "mode": "execute",
-            "records_attempted": stats["attempted"],
-            "records_accepted": stats["accepted"],
-            "records_rejected": stats["rejected"],
-            "license_blocked": stats["license_blocked"],
-            "by_category": stats["by_category"],
-            "avg_quality": round(sum(stats["quality_scores"]) / len(stats["quality_scores"]), 2)
-                if stats["quality_scores"] else 0,
-            "ko_validation_failures": ko_validation_failures,
-            "output": str(curated_path),
-            "execution_time_s": dt,
-        }
-        return result
+        # Shared finalize tail (byte-identical to scheduler path).
+        return self._finalize_tail(stats, out_records, t0)
 
     # -----------------------------------------------------------------------
     # Resume from checkpoint
@@ -996,51 +1033,214 @@ class AcquisitionEngine:
         target_count: int,
         max_allowed: int,
     ) -> list[dict[str, Any]]:
-        """
-        Generate synthetic records for a source (stub — in production this
+        """Generate synthetic records for a source (stub — in production this
         would download and process real data).
+
+        Delegates to the module-level pure function so the Phase 5C scheduler
+        worker and the sequential path share identical logic.
         """
-        records: list[dict[str, Any]] = []
-        n = min(target_count, max_allowed, 10)  # cap at 10 per source for pilot
-        subcats = dataset.get("subcategories", ["general"])
-        for i in range(n):
-            uid = f"{source_id}_{dataset['category']}_{subcats[0]}_{i:04d}"
-            rec = {
-                "id": uid,
-                "category": dataset["category"],
-                "subcategory": subcats[i % len(subcats)],
-                "difficulty": (i % 3) + 1,
-                "knowledge_type": "procedure",
-                "canonical_answer": f"This is the canonical answer for {uid}.",
-                "metadata": {"language": "en"},
-                "source_attribution": {
-                    "source_id": source_id,
-                    "name": dataset.get("name", ""),
-                    "url": dataset.get("url", ""),
-                    "license": dataset.get("license", ""),
-                    "attribution_text": f"Source: {dataset.get('name', 'unknown')}",
-                },
-                "license": dataset.get("license", ""),
-                "messages": [
-                    {"role": "user", "content": f"Question about {subcats[i % len(subcats)]}?"},
-                    {"role": "assistant", "content": f"Answer {i} for {subcats[i % len(subcats)]}."},
-                ],
-                "tags": subcats + [("synthetic" if dataset.get("synthetic") else "")],
-                "quality_score": 9,
-                "verification_status": "pending",
-                "verified": False,
-                "lineage": {
-                    "source": dataset.get("name", source_id),
-                    "transformations": ["pipeline:clean", "pipeline:score"],
-                    "knowledge_object": uid,
-                    "curated_dataset": "curated/v0.1",
-                    "training_view": "qwen,llama,deepseek",
-                },
-                "training_view_eligibility": {"qwen": True, "llama": True, "deepseek": True},
-                "notes": dataset.get("notes", ""),
-            }
-            records.append(rec)
-        return records
+        return generate_source_records(source_id, dataset, reg, target_count, max_allowed)
+
+    def _finalize_from_results(
+        self,
+        results_by_id: dict[str, dict[str, Any]],
+        engine_task_id_fn,
+        max_records: int,
+        t0: float,
+    ) -> dict[str, Any]:
+        """SERIALIZED FINALIZE (Phase 5C scheduler path).
+
+        Consumes pure-worker results in deterministic manifest order and
+        replicates the sequential loop's per-source/per-record semantics
+        exactly: global dedup (first-wins), max_records cap, quality score,
+        lifecycle transitions, checkpoint statuses, stats accumulation.
+        The finalize tail (validate -> curated write -> checksums -> ver_log
+        -> version snapshot -> checkpoint completed) is shared with the
+        sequential path via _finalize_tail, so output is byte-identical.
+        """
+        stats = {
+            "attempted": 0, "accepted": 0, "rejected": 0,
+            "license_blocked": 0, "by_category": {},
+            "quality_scores": [], "license_stats": {},
+        }
+        out_records: list[dict[str, Any]] = []
+        seen_norm: set[str] = set()
+
+        for b in self.manifest.get("batches", []):
+            bid = b["batch_id"]
+            cp = self.checkpoint_mgr.get()
+            if cp and bid in cp.completed_batches:
+                print(f"[engine] Batch {bid} already completed, skipping")
+                continue
+            self.checkpoint_mgr.set_current_batch(bid)
+            print(f"[engine] Processing batch {bid}: {b['theme']}")
+
+            for d in b.get("datasets", []):
+                sid = d["source_id"]
+                rid = engine_task_id_fn(bid, sid)
+                payload = results_by_id.get(rid, {})
+                pstatus = payload.get("status", "failed")
+
+                if pstatus == "skipped":
+                    # Completed in a prior run (registry). Mark checkpoint
+                    # completed (matches sequential resume skip) and move on.
+                    self.checkpoint_mgr.update_source_status(
+                        sid, "completed", records_processed=0, records_accepted=0,
+                    )
+                    print(f"[engine]   Source {sid} already completed, skipping")
+                    continue
+
+                if pstatus == "failed":
+                    error = payload.get("error", "task failed")
+                    self.checkpoint_mgr.update_source_status(sid, "failed", error=error)
+                    if payload.get("license_blocked"):
+                        stats["license_blocked"] += 1
+                        stats["rejected"] += 1
+                        self.ver_log.append(
+                            "license_blocked", f"resolve:{sid}", "failed",
+                            {"source_id": sid, "license": d.get("license", "")},
+                        )
+                    print(f"[engine]   Source {sid} failed: {error}")
+                    continue
+
+                # pstatus == "ok": records available
+                lic = d.get("license", "")
+                self.checkpoint_mgr.update_source_status(sid, "pipelining")
+                # Match sequential generation cap: the worker generated up to
+                # min(target, max_records, 10); sequential capped at the
+                # remaining global budget, so slice to the same budget.
+                remaining = max_records - len(out_records)
+                records_generated = payload.get("records", [])[: max(0, remaining)]
+
+                for rec in records_generated:
+                    if len(out_records) >= max_records:
+                        break
+                    stats["attempted"] += 1
+
+                    rec_lic = rec.get("license") or lic
+                    if is_denied_license(rec_lic):
+                        stats["license_blocked"] += 1
+                        stats["rejected"] += 1
+                        continue
+
+                    msgs = rec.get("messages", [])
+                    norm = "\n".join(
+                        f"{m.get('role','')}:{m.get('content','').strip().lower()}"
+                        for m in msgs
+                    )
+                    h = hashlib.sha1(norm.encode()).hexdigest()
+                    if h in seen_norm:
+                        stats["rejected"] += 1
+                        continue
+                    seen_norm.add(h)
+
+                    q = rec.get("quality_score", 0)
+                    if not isinstance(q, (int, float)):
+                        q = 0
+                    q = max(0, min(10, int(q)))
+                    rec["quality_score"] = q
+                    stats["quality_scores"].append(q)
+
+                    stats["license_stats"][rec_lic] = stats["license_stats"].get(rec_lic, 0) + 1
+
+                    cat = rec.get("category", "unknown")
+                    stats["by_category"][cat] = stats["by_category"].get(cat, 0) + 1
+
+                    self.lifecycle.transition(
+                        rec.get("id", "unknown"),
+                        "processing",
+                        source="engine",
+                        reason="Pipeline processing",
+                    )
+
+                    if q >= 7:
+                        rec["verification_status"] = "pending"
+                        rec["verified"] = False
+                    else:
+                        rec["verification_status"] = "needs_revision"
+                        rec["verified"] = False
+
+                    out_records.append(rec)
+
+                    self.lifecycle.transition(
+                        rec.get("id", "unknown"),
+                        "curated",
+                        source="engine",
+                        reason="Passed pipeline gate",
+                    )
+
+                self.checkpoint_mgr.update_source_status(
+                    sid, "completed",
+                    records_processed=len(records_generated),
+                    records_accepted=sum(1 for r in out_records if r.get("id", "").startswith(sid[:3])),
+                )
+                stats["accepted"] = len(out_records)
+
+                if len(out_records) >= max_records:
+                    break
+            if len(out_records) >= max_records:
+                break
+
+            self.checkpoint_mgr.set_batch_completed(bid)
+
+        return self._finalize_tail(stats, out_records, t0)
+
+    def _finalize_tail(
+        self,
+        stats: dict[str, Any],
+        out_records: list[dict[str, Any]],
+        t0: float,
+    ) -> dict[str, Any]:
+        """Shared finalize tail (validate -> curated write -> checksums ->
+        ver_log -> version snapshot -> checkpoint completed -> result). Used
+        by both the scheduler path and the sequential fallback so output is
+        byte-identical."""
+        # Validate output
+        self.checkpoint_mgr.set_current_batch(None)
+        self.checkpoint_mgr.update_source_status("__all__", "validating")
+        ko_validation_failures = self._validate_output(out_records)
+
+        # Write curated candidates
+        curated_path = self.root / "curated" / "v0.1" / "pilot_candidates.jsonl"
+        _assert_write_safe(curated_path)
+        curated_path.parent.mkdir(parents=True, exist_ok=True)
+        with curated_path.open("w", encoding="utf-8") as f:
+            for rec in out_records:
+                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+        # Integrity: compute checksums
+        curated_checksums = compute_file_checksums(curated_path.parent, "*.jsonl")
+        self.checksum_registry.create("v0.1", curated_checksums)
+        self.ver_log.append("curated_output", "validating", "passed",
+                            {"record_count": len(out_records), "checksums": curated_checksums})
+
+        # Version manifest
+        self.ver_log.append("version_snapshot", "releasing", "passed",
+                            {"version": "v0.1", "records": len(out_records)})
+
+        self.checkpoint_mgr.set_status("completed")
+        self.checkpoint_mgr.update_stats({
+            "total_attempted": stats["attempted"],
+            "total_accepted": stats["accepted"],
+            "ko_validation_failures": ko_validation_failures,
+        })
+
+        dt = round(time.time() - t0, 3)
+        result = {
+            "status": "ok",
+            "mode": "execute",
+            "records_attempted": stats["attempted"],
+            "records_accepted": stats["accepted"],
+            "records_rejected": stats["rejected"],
+            "license_blocked": stats["license_blocked"],
+            "by_category": stats["by_category"],
+            "avg_quality": round(sum(stats["quality_scores"]) / len(stats["quality_scores"]), 2)
+                if stats["quality_scores"] else 0,
+            "ko_validation_failures": ko_validation_failures,
+            "output": str(curated_path),
+            "execution_time_s": dt,
+        }
+        return result
 
     def _validate_output(self, records: list[dict]) -> int:
         """Validate output records against the KO schema (structural fallback)."""
