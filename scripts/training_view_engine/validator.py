@@ -176,12 +176,14 @@ class TrainingViewValidator:
         self,
         records: list[dict[str, Any]],
         quality_threshold: int = 7,
+        workers: int = 1,
     ) -> list[dict[str, Any]]:
         """Validate a list of records for training-view eligibility.
 
         Args:
             records: List of knowledge object records.
             quality_threshold: Minimum quality score.
+            workers: Parallel process workers (1 = sequential).
 
         Returns:
             A list of validation result dicts, one per record, each with:
@@ -189,7 +191,30 @@ class TrainingViewValidator:
               - valid: bool
               - errors: list[str]
         """
-        results: list[dict[str, Any]] = []
+        if workers > 1 and len(records) > 100:
+            from concurrent.futures import ProcessPoolExecutor
+            # Chunk records for balanced distribution
+            chunk_size = max(1, len(records) // (workers * 4))
+            chunks = [records[i:i + chunk_size] for i in range(0, len(records), chunk_size)]
+
+            def _validate_chunk(chunk: list[dict[str, Any]]) -> list[dict[str, Any]]:
+                out = []
+                for rec in chunk:
+                    errs = self.validate_record(rec, quality_threshold)
+                    out.append({
+                        "record_id": rec.get("id", "?"),
+                        "valid": len(errs) == 0,
+                        "errors": errs,
+                    })
+                return out
+
+            results: list[dict[str, Any]] = []
+            with ProcessPoolExecutor(max_workers=workers) as ex:
+                for chunk_results in ex.map(_validate_chunk, chunks):
+                    results.extend(chunk_results)
+            return results
+
+        results = []
         for rec in records:
             errs = self.validate_record(rec, quality_threshold)
             results.append({

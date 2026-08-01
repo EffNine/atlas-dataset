@@ -208,19 +208,22 @@ def strict_jsonschema(records: list[dict]) -> list[list[str]]:
     return out
 
 
-def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="Validate Atlas dataset JSONL.")
-    ap.add_argument("--input", required=True)
-    ap.add_argument("--stats", action="store_true", help="print composition statistics")
-    ap.add_argument("--strict", action="store_true", help="enforce curated-stage gate (verified + score>=7 + license!=unknown)")
-    ap.add_argument("--quiet", action="store_true", help="only print errors + summary")
-    args = ap.parse_args(argv)
+def load_parallelism_config() -> dict:
+    """Load unified parallelism config (config/parallelism.yaml)."""
+    cfg_path = ROOT / "config" / "parallelism.yaml"
+    try:
+        import yaml
+        with open(cfg_path, "r") as f:
+            return yaml.safe_load(f) or {}
+    except Exception:
+        return {}
 
-    path = Path(args.input)
-    if not path.exists():
-        print(f"[validate] ERROR: input not found: {path}", file=sys.stderr)
-        return 2
 
+def validate_one_file(path: Path, strict: bool = False, quiet: bool = False) -> dict:
+    """Validate a single JSONL file, returning summary stats.
+
+    Kept self-contained so it can be dispatched to process workers.
+    """
     records = []
     bad_json = 0
     with path.open(encoding="utf-8") as f:
@@ -232,7 +235,7 @@ def main(argv=None) -> int:
                 records.append(json.loads(line))
             except json.JSONDecodeError as e:
                 bad_json += 1
-                print(f"[validate] line {i}: invalid JSON ({e})", file=sys.stderr)
+                print(f"[validate] {path}: line {i}: invalid JSON ({e})", file=sys.stderr)
 
     total = len(records)
     errors_per_record: list[list[str]] = [[] for _ in records]
@@ -264,7 +267,7 @@ def main(argv=None) -> int:
             seen_hash[h] = rec.get("id")
 
     # strict gate
-    if args.strict:
+    if strict:
         for idx, rec in enumerate(records):
             if rec.get("source", {}).get("license") == "unknown":
                 errors_per_record[idx].append("curated license must not be 'unknown'")
@@ -276,15 +279,78 @@ def main(argv=None) -> int:
     for idx, errs in enumerate(errors_per_record):
         if errs:
             record_errors += 1
-            if not args.quiet or True:
-                print(f"[validate] {records[idx].get('id', f'line{idx+1}')}: {'; '.join(errs)}", file=sys.stderr)
+            if not quiet:
+                print(f"[validate] {path}: {records[idx].get('id', f'line{idx+1}')}: {'; '.join(errs)}", file=sys.stderr)
 
-    if args.stats:
-        print_stats(records)
+    return {
+        "path": str(path),
+        "total": total,
+        "bad_json": bad_json,
+        "record_errors": record_errors,
+    }
 
-    print(f"[validate] total={total} bad_json={bad_json} records_with_errors={record_errors}")
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser(description="Validate Atlas dataset JSONL.")
+    ap.add_argument("--input", required=True, help="JSONL file or glob pattern")
+    ap.add_argument("--stats", action="store_true", help="print composition statistics")
+    ap.add_argument("--strict", action="store_true", help="enforce curated-stage gate (verified + score>=7 + license!=unknown)")
+    ap.add_argument("--quiet", action="store_true", help="only print errors + summary")
+    ap.add_argument("--file-workers", type=int, default=None,
+                    help="parallel files to validate (default: config validation.file_workers or 1)")
+    args = ap.parse_args(argv)
+
+    config = load_parallelism_config()
+    file_workers = args.file_workers or config.get("parallelism", {}).get("validation", {}).get("file_workers", 1)
+
+    # Expand glob / single file
+    raw = Path(args.input)
+    if any(ch in args.input for ch in "*?["):
+        files = sorted(raw.parent.glob(raw.name))
+    else:
+        files = [raw] if raw.exists() else []
+
+    if not files:
+        print(f"[validate] ERROR: input not found: {args.input}", file=sys.stderr)
+        return 2
+
+    if file_workers > 1 and len(files) > 1:
+        from concurrent.futures import ProcessPoolExecutor, as_completed
+        print(f"[validate] validating {len(files)} files with {file_workers} workers...")
+        results = []
+        with ProcessPoolExecutor(max_workers=file_workers) as ex:
+            futures = {ex.submit(validate_one_file, p, args.strict, args.quiet): p for p in files}
+            for fut in as_completed(futures):
+                try:
+                    results.append(fut.result())
+                except Exception as e:
+                    results.append({"path": str(futures[fut]), "total": 0, "bad_json": 0, "record_errors": -1, "error": str(e)})
+    else:
+        results = [validate_one_file(p, args.strict, args.quiet) for p in files]
+
+    total = sum(r["total"] for r in results)
+    bad_json = sum(r["bad_json"] for r in results)
+    record_errors = sum(r["record_errors"] for r in results)
+
+    for r in results:
+        print(f"[validate] {r['path']}: total={r['total']} bad_json={r['bad_json']} records_with_errors={r['record_errors']}")
+
+    print(f"[validate] FILES={len(files)} TOTAL={total} bad_json={bad_json} records_with_errors={record_errors}")
     ok = (bad_json == 0 and record_errors == 0)
     print(f"[validate] RESULT: {'PASS' if ok else 'FAIL'}")
+
+    if args.stats and len(files) == 1:
+        records = []
+        with files[0].open(encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        records.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        pass
+        print_stats(records)
+
     return 0 if ok else 1
 
 

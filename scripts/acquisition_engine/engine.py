@@ -735,6 +735,17 @@ class AcquisitionEngine:
     # Knowledge Pack generation
     # -----------------------------------------------------------------------
 
+    def _load_file_workers(self) -> int:
+        """Load acquisition.file_workers from config/parallelism.yaml."""
+        cfg_path = self.root / "config" / "parallelism.yaml"
+        try:
+            import yaml
+            with open(cfg_path, "r") as f:
+                cfg = yaml.safe_load(f) or {}
+            return int(cfg.get("parallelism", {}).get("acquisition", {}).get("file_workers", 1))
+        except Exception:
+            return 1
+
     def generate_knowledge_pack(
         self,
         name: str,
@@ -751,15 +762,37 @@ class AcquisitionEngine:
         if source_records is None:
             source_records = []
             curated_dir = self.root / "curated" / "v0.1"
-            for f in sorted(curated_dir.rglob("*.jsonl")):
-                with open(f, encoding="utf-8") as fh:
-                    for line in fh:
-                        line = line.strip()
-                        if line:
-                            try:
-                                source_records.append(json.loads(line))
-                            except json.JSONDecodeError:
-                                pass
+            files = sorted(curated_dir.rglob("*.jsonl"))
+            if files:
+                file_workers = self._load_file_workers()
+                if file_workers > 1 and len(files) > 1:
+                    from concurrent.futures import ProcessPoolExecutor
+                    print(f"[engine] loading {len(files)} curated files with {file_workers} workers...")
+                    def _load_one(fp):
+                        out = []
+                        with open(fp, encoding="utf-8") as fh:
+                            for line in fh:
+                                line = line.strip()
+                                if line:
+                                    try:
+                                        out.append(json.loads(line))
+                                    except json.JSONDecodeError:
+                                        pass
+                        return out
+                    with ProcessPoolExecutor(max_workers=file_workers) as ex:
+                        chunks = list(ex.map(_load_one, files))
+                    for chunk in chunks:
+                        source_records.extend(chunk)
+                else:
+                    for f in files:
+                        with open(f, encoding="utf-8") as fh:
+                            for line in fh:
+                                line = line.strip()
+                                if line:
+                                    try:
+                                        source_records.append(json.loads(line))
+                                    except json.JSONDecodeError:
+                                        pass
 
         pack_dir = self.root / "knowledge_packs"
         _assert_write_safe(pack_dir)

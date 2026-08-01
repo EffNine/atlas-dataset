@@ -204,9 +204,10 @@ class TrainingViewGenerator:
             approved, target_model
         )
 
-        # Validate each eligible record
+        # Validate each eligible record (parallel via unified config)
+        view_workers = self._load_view_workers()
         validation_results = self._validator.validate_records(
-            eligible, quality_threshold
+            eligible, quality_threshold, workers=view_workers
         )
         validation_errors = [
             v for v in validation_results if not v["valid"]
@@ -265,13 +266,31 @@ class TrainingViewGenerator:
     # Internal helpers
     # ------------------------------------------------------------------
 
+    def _load_view_workers(self) -> int:
+        """Load training view workers from config/parallelism.yaml.
+
+        Falls back to the classification worker count, then 1.
+        """
+        cfg_path = self._root / "config" / "parallelism.yaml"
+        try:
+            import yaml
+            with open(cfg_path, "r") as f:
+                cfg = yaml.safe_load(f) or {}
+            workers = cfg.get("parallelism", {}).get("training_views", {}).get("workers")
+            if workers is None:
+                workers = cfg.get("parallelism", {}).get("classification", {}).get("stage2_shard_workers")
+            return int(workers or 1)
+        except Exception:
+            return 1
+
     def _load_curated_records(
         self,
         version: str = "v0.1",
     ) -> list[dict[str, Any]]:
         """Load curated records from a specific release version.
 
-        Scans curated/<version>/ for JSONL files.
+        Scans curated/<version>/ for JSONL files, reading them in
+        parallel when the unified config enables it.
 
         Args:
             version: The curated version directory name (e.g., "v0.1").
@@ -284,18 +303,32 @@ class TrainingViewGenerator:
         if not curated_path.exists():
             return records
 
-        for fp in sorted(curated_path.rglob("*.jsonl")):
+        files = sorted(curated_path.rglob("*.jsonl"))
+        workers = self._load_view_workers()
+
+        def _load_one(fp: Path) -> list[dict[str, Any]]:
+            out: list[dict[str, Any]] = []
             try:
                 with open(fp, encoding="utf-8") as f:
                     for line in f:
                         line = line.strip()
                         if line:
                             try:
-                                records.append(json.loads(line))
+                                out.append(json.loads(line))
                             except json.JSONDecodeError:
                                 continue
             except (OSError, IOError):
-                continue
+                return out
+            return out
+
+        if workers > 1 and len(files) > 1:
+            from concurrent.futures import ProcessPoolExecutor
+            with ProcessPoolExecutor(max_workers=workers) as ex:
+                for chunk in ex.map(_load_one, files):
+                    records.extend(chunk)
+        else:
+            for fp in files:
+                records.extend(_load_one(fp))
 
         return records
 

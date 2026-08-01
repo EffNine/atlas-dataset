@@ -13,3 +13,10 @@ parallelism:
   acquisition:
     file_workers: 4
     chunk_size: 500
+
+  extraction:
+    shard_workers: 8
+    shards_per_source: 41
+
+  training_views:
+    workers: 8
