@@ -134,17 +134,15 @@ def append_source_to_v12(label: str):
     return count
 
 
-def run_source(label, shard_workers=1, print_interval=1):
+def run_source_classify(label, shard_workers=1, print_interval=1):
+    """Classify one source (subprocess only). Returns (label, rc)."""
     cmd = [PY, SCRIPT, "--shard-workers", str(shard_workers), "--print-interval", str(print_interval), "--groups", label, "--no-merge"]
     print(f"\n=== {label} ({shard_workers} shard workers) ===")
     print(" ".join(cmd))
     r = subprocess.run(cmd)
     if r.returncode != 0:
         print(f"FAILED: {label} exit={r.returncode}")
-        return r.returncode
-    
-    append_source_to_v12(label)
-    return 0
+    return label, r.returncode
 
 
 def merge_v11_into_v12(skip_v11: bool = True):
@@ -248,28 +246,38 @@ if __name__ == "__main__":
     
     stage1_workers = clf_cfg.get("stage1_shard_workers", 8)
     stage2_workers = clf_cfg.get("stage2_shard_workers", 2)
+    parallel_sources = clf_cfg.get("parallel_sources", 1)
     skip_v11 = clf_cfg.get("skip_v11_sources", True)
     print_interval = clf_cfg.get("print_interval", 1)
     
-    print(f"Optimized v1.2 | Stage1={len(STAGE1)} sources @ {stage1_workers} shard-workers | Stage2={len(STAGE2)} sources @ {stage2_workers} shard-workers | skip_v11={skip_v11}")
+    print(f"Optimized v1.2 | Stage1={len(STAGE1)} sources @ {stage1_workers} shard-workers | Stage2={len(STAGE2)} sources @ {stage2_workers} shard-workers | parallel_sources={parallel_sources} | skip_v11={skip_v11}")
     if skip_sources:
         print(f"Skipping already-classified sources: {sorted(skip_sources)}")
 
-    for label in STAGE1:
-        if label in skip_sources:
-            print(f"[skip] {label} already classified")
-            continue
-        rc = run_source(label, shard_workers=stage1_workers, print_interval=print_interval)
-        if rc != 0:
-            sys.exit(rc)
+    from concurrent.futures import ThreadPoolExecutor, as_completed
 
-    for label in STAGE2:
-        if label in skip_sources:
-            print(f"[skip] {label} already classified")
-            continue
-        rc = run_source(label, shard_workers=stage2_workers, print_interval=print_interval)
-        if rc != 0:
-            sys.exit(rc)
+    def run_stage(sources, shard_workers):
+        """Run sources in a stage with up to parallel_sources at once.
+        Classification is concurrent; appends are serialized in this thread
+        so the v1.2 file is never written by two threads at once."""
+        pending = [s for s in sources if s not in skip_sources]
+        if not pending:
+            return 0
+        with ThreadPoolExecutor(max_workers=parallel_sources) as ex:
+            futures = {
+                ex.submit(run_source_classify, label, shard_workers, print_interval): label
+                for label in pending
+            }
+            for fut in as_completed(futures):
+                label = futures[fut]
+                _, rc = fut.result()
+                if rc != 0:
+                    sys.exit(rc)
+                append_source_to_v12(label)
+        return 0
+
+    run_stage(STAGE1, stage1_workers)
+    run_stage(STAGE2, stage2_workers)
 
     merge_v11_into_v12(skip_v11=skip_v11)
     print("\n=== ALL DONE ===")
