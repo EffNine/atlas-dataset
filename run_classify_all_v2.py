@@ -258,22 +258,36 @@ if __name__ == "__main__":
 
     def run_stage(sources, shard_workers):
         """Run sources in a stage with up to parallel_sources at once.
+
+        Bounded submission: only parallel_sources futures are in flight, so a
+        failure stops promptly instead of letting every queued source run to
+        completion (executor shutdown(wait=True) would otherwise drain them).
         Classification is concurrent; appends are serialized in this thread
-        so the v1.2 file is never written by two threads at once."""
+        so the v1.2 file is never written by two threads at once.
+        """
         pending = [s for s in sources if s not in skip_sources]
         if not pending:
             return 0
         with ThreadPoolExecutor(max_workers=parallel_sources) as ex:
-            futures = {
-                ex.submit(run_source_classify, label, shard_workers, print_interval): label
-                for label in pending
-            }
-            for fut in as_completed(futures):
-                label = futures[fut]
-                _, rc = fut.result()
+            inflight: dict = {}
+            # Submit the first batch
+            for label in pending[:parallel_sources]:
+                fut = ex.submit(run_source_classify, label, shard_workers, print_interval)
+                inflight[fut] = label
+            idx = parallel_sources
+            while inflight:
+                done_fut = next(as_completed(inflight))
+                label = inflight.pop(done_fut)
+                _, rc = done_fut.result()
                 if rc != 0:
                     sys.exit(rc)
                 append_source_to_v12(label)
+                # Submit next if more pending (bounded: never exceed parallel_sources)
+                if idx < len(pending):
+                    label = pending[idx]
+                    idx += 1
+                    fut = ex.submit(run_source_classify, label, shard_workers, print_interval)
+                    inflight[fut] = label
         return 0
 
     run_stage(STAGE1, stage1_workers)
