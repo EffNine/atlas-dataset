@@ -29,6 +29,7 @@ import json
 import sys
 import time
 from collections import Counter, defaultdict
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -52,6 +53,13 @@ def _canonical_id(rec: dict[str, Any]) -> str:
     if not isinstance(rid, str):
         return json.dumps(rec.get("id"), ensure_ascii=False)
     return rid
+
+
+def dedup_category_worker(src: str, dst: str) -> dict[str, Any]:
+    """ProcessPool worker: dedup one category, return its stats dict."""
+    cat_stats: dict[str, Any] = {}
+    dedup_category(Path(src), Path(dst), cat_stats=cat_stats)
+    return cat_stats
 
 
 def dedup_category(
@@ -242,6 +250,9 @@ def main(argv: list[str] | None = None) -> int:
                     help="expected kept record total (default: real v1.0-RC2)")
     ap.add_argument("--expect-software", type=int, default=997144,
                     help="expected 02_software_engineering kept count")
+    ap.add_argument("--jobs", type=int, default=1,
+                    help="parallel worker processes (one per category); "
+                         "e.g. --jobs 8 on multi-core machines")
     args = ap.parse_args(argv)
 
     root = Path(args.root)
@@ -280,23 +291,47 @@ def main(argv: list[str] | None = None) -> int:
     total_dropped = 0
     total_conflicts = 0
 
+    jobs: list[tuple[str, Path, Path]] = []
     for cat in CATEGORIES:
         src = src_dataset / cat / f"{cat}.jsonl.zst"
         if not src.exists():
             print(f"  [{cat}] SKIP (not found)")
             continue
         dst = dst_dataset / cat / f"{cat}.jsonl.zst"
-        cat_stats: dict[str, Any] = {}
-        dedup_category(src, dst, cat_stats=cat_stats)
-        per_category[cat] = cat_stats
-        total_in += cat_stats["kept"] + cat_stats["dropped"]
-        total_kept += cat_stats["kept"]
-        total_dropped += cat_stats["dropped"]
-        total_conflicts += cat_stats["conflicts"]
-        print(
-            f"  [{cat}] kept={cat_stats['kept']:,} dropped={cat_stats['dropped']:,} "
-            f"conflicts={cat_stats['conflicts']}"
-        )
+        jobs.append((cat, src, dst))
+
+    if args.jobs > 1:
+        print(f"  parallel: {args.jobs} workers across {len(jobs)} categories")
+        with ProcessPoolExecutor(max_workers=args.jobs) as pool:
+            futures = {
+                pool.submit(dedup_category_worker, str(src), str(dst)): cat
+                for cat, src, dst in jobs
+            }
+            for fut in as_completed(futures):
+                cat = futures[fut]
+                cat_stats = fut.result()
+                per_category[cat] = cat_stats
+                total_in += cat_stats["kept"] + cat_stats["dropped"]
+                total_kept += cat_stats["kept"]
+                total_dropped += cat_stats["dropped"]
+                total_conflicts += cat_stats["conflicts"]
+                print(
+                    f"  [{cat}] kept={cat_stats['kept']:,} dropped={cat_stats['dropped']:,} "
+                    f"conflicts={cat_stats['conflicts']}"
+                )
+    else:
+        for cat, src, dst in jobs:
+            cat_stats: dict[str, Any] = {}
+            dedup_category(src, dst, cat_stats=cat_stats)
+            per_category[cat] = cat_stats
+            total_in += cat_stats["kept"] + cat_stats["dropped"]
+            total_kept += cat_stats["kept"]
+            total_dropped += cat_stats["dropped"]
+            total_conflicts += cat_stats["conflicts"]
+            print(
+                f"  [{cat}] kept={cat_stats['kept']:,} dropped={cat_stats['dropped']:,} "
+                f"conflicts={cat_stats['conflicts']}"
+            )
 
     elapsed = round(time.time() - start, 2)
     print(f"\nTotal: in={total_in:,} kept={total_kept:,} dropped={total_dropped:,} "

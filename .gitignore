@@ -71,6 +71,12 @@ metadata/release_bundles/
 metadata/e2e_reports/
 metadata/pipeline_incremental.json
 
+# Release manifests are governance-critical; track them despite ignoring
+# other metadata/releases artifacts.
+!metadata/releases/
+metadata/releases/*
+!metadata/releases/*_release.json
+
 # Intelligence Layer ephemeral artifacts (regenerable per release)
 metadata/intelligence/_tmp/
 metadata/intelligence/unknown_classified_v*.jsonl
