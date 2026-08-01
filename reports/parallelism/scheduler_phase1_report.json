@@ -1,0 +1,60 @@
+{
+  "report_metadata": {
+    "report_type": "scheduler_phase1_report",
+    "phase": 1,
+    "date": "2026-08-01T16:42:14.998741+00:00",
+    "status": "complete"
+  },
+  "deliverables": {
+    "scripts_parallel": [
+      "config.py",
+      "resource.py",
+      "models.py",
+      "registry.py",
+      "planner.py",
+      "scheduler.py",
+      "monitor.py",
+      "runner.py"
+    ],
+    "validation_pilot": "scripts/validate_dataset.py (execution layer migrated, fallback preserved)",
+    "tests": "tests/test_universal_scheduler.py",
+    "docs": "docs/parallel/universal_scheduler_usage.md"
+  },
+  "verification": {
+    "scheduler_test_suite": "32 passed in 4.21s",
+    "scheduler_suite_exit": 0,
+    "full_suite_summary": "1 failed, 296 passed, 2 skipped in 10.75s",
+    "architecture_validator": "PASS",
+    "validation_cli_scheduler_path": true,
+    "validation_cli_result": "PASS",
+    "validation_cli_output": "[validate] scheduler: validating 4 files with 2 adaptive workers...\n[validate] /var/folders/wr/w_yx2pys31xgy3z4nvt5yjg40000gn/T/tmppw40_w3u/f1.jsonl: total=0 bad_json=0 records_with_errors=0\n[validate] /var/folders/wr/w_yx2pys31xgy3z4nvt5yjg40000gn/T/tmppw40_w3u/f2.jsonl: total=0 bad_json=0 records_with_errors=0\n[validate] /var/folders/wr/w_yx2pys31xgy3z4nvt5yjg40000gn/T/tmppw40_w3u/f3.jsonl: tota"
+  },
+  "behavior_preserved": {
+    "same_worker_function": "validate_one_file reused unchanged",
+    "same_output_format": "per-file stats + FILES/TOTAL/records_with_errors summary",
+    "backward_compat": "from parallel import ParallelRunner works (runner.py re-export)",
+    "manual_pool_fallback": "preserved on scheduler import failure"
+  },
+  "new_capabilities": {
+    "task_registry": "metadata/pipeline_state/task_registry_validation.jsonl",
+    "resume": "completed tasks skipped on re-run",
+    "crash_recovery": "stale running re-claimed after 900s lease",
+    "retry": "failed tasks retried up to max_retries=2 with backoff",
+    "adaptive_workers": "safe_worker_limit() from CPU/RAM with 0.8 margin",
+    "deterministic_ordering": "results sorted by task_id",
+    "backpressure": "RAM-headroom pause (designed, enforced on low RAM)"
+  },
+  "out_of_scope": {
+    "migrated_pipelines": [
+      "validation only"
+    ],
+    "deferred": [
+      "extraction",
+      "training views",
+      "acquisition",
+      "release",
+      "evaluation"
+    ],
+    "dataset_release_hf_changes": "none"
+  }
+}

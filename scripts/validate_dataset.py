@@ -290,6 +290,20 @@ def validate_one_file(path: Path, strict: bool = False, quiet: bool = False) -> 
     }
 
 
+def validate_task(task) -> dict:
+    """Scheduler worker wrapper: dispatch a Task to validate_one_file.
+
+    Module-level so it can be pickled into ProcessPool workers.
+    Task.extra carries strict/quiet flags.
+    """
+    extra = getattr(task, "extra", {}) or {}
+    return validate_one_file(
+        Path(task.input),
+        strict=bool(extra.get("strict", False)),
+        quiet=bool(extra.get("quiet", False)),
+    )
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Validate Atlas dataset JSONL.")
     ap.add_argument("--input", required=True, help="JSONL file or glob pattern")
@@ -315,16 +329,57 @@ def main(argv=None) -> int:
         return 2
 
     if file_workers > 1 and len(files) > 1:
-        from concurrent.futures import ProcessPoolExecutor, as_completed
-        print(f"[validate] validating {len(files)} files with {file_workers} workers...")
-        results = []
-        with ProcessPoolExecutor(max_workers=file_workers) as ex:
-            futures = {ex.submit(validate_one_file, p, args.strict, args.quiet): p for p in files}
-            for fut in as_completed(futures):
-                try:
-                    results.append(fut.result())
-                except Exception as e:
-                    results.append({"path": str(futures[fut]), "total": 0, "bad_json": 0, "record_errors": -1, "error": str(e)})
+        # Universal Scheduler pilot: same worker function, scheduler-owned
+        # pool. Results are identical to the manual ProcessPoolExecutor path
+        # (per-file validate_one_file stats), but the scheduler adds
+        # registry resume, adaptive worker limits, and retry.
+        try:
+            from parallel.models import Task
+            from parallel.planner import file_tasks
+            from parallel.scheduler import Scheduler
+
+            tasks = file_tasks(files, source="validation", operation="validate_one_file",
+                               extra={"strict": args.strict, "quiet": args.quiet})
+            sched = Scheduler(
+                "validation",
+                registry_root=str(ROOT / "metadata" / "pipeline_state"),
+                workers=file_workers,
+                pool="process",
+                max_retries=2,
+            )
+            print(f"[validate] scheduler: validating {len(files)} files with {sched.workers} adaptive workers...")
+            trs = sched.run(tasks, validate_task)
+            results = []
+            for tr in trs:
+                if tr.status == "completed":
+                    r = dict(tr.result) if isinstance(tr.result, dict) else {
+                        "path": "", "total": 0, "bad_json": 0, "record_errors": 0,
+                    }
+                    results.append(r)
+                elif tr.status == "failed":
+                    t = next((t for t in tasks if t.task_id == tr.task_id), None)
+                    results.append({
+                        "path": t.input if t else tr.task_id,
+                        "total": 0, "bad_json": 0, "record_errors": -1, "error": tr.error,
+                    })
+                else:  # skipped (completed in a prior run)
+                    t = next((t for t in tasks if t.task_id == tr.task_id), None)
+                    results.append({
+                        "path": t.input if t else tr.task_id,
+                        "total": 0, "bad_json": 0, "record_errors": 0, "skipped": True,
+                    })
+        except Exception as sched_exc:
+            # Fallback: manual ProcessPoolExecutor (behavior identical).
+            print(f"[validate] scheduler unavailable ({sched_exc}); falling back to ProcessPoolExecutor", file=sys.stderr)
+            from concurrent.futures import ProcessPoolExecutor, as_completed
+            results = []
+            with ProcessPoolExecutor(max_workers=file_workers) as ex:
+                futures = {ex.submit(validate_one_file, p, args.strict, args.quiet): p for p in files}
+                for fut in as_completed(futures):
+                    try:
+                        results.append(fut.result())
+                    except Exception as e:
+                        results.append({"path": str(futures[fut]), "total": 0, "bad_json": 0, "record_errors": -1, "error": str(e)})
     else:
         results = [validate_one_file(p, args.strict, args.quiet) for p in files]
 
