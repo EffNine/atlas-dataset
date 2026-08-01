@@ -113,6 +113,7 @@ def build(release: str, root: Path) -> int:
     sig = manifest.get("release_signature", {})
     rid = manifest["release_id"]
     created = manifest.get("created_at", "")[:10]
+    status_label = manifest.get("status", "frozen")
     cat_rows = "\n".join(f"| {c} | {by_cat[c]:,} |" for c in CATEGORIES)
     lic_rows = "\n".join(f"| {k} | {v:,} |" for k, v in sorted(stats.get("by_license", {}).items(), key=lambda kv: -kv[1]))
     qdist = stats.get("quality", {}).get("distribution", {})
@@ -138,7 +139,7 @@ generated downstream and never stored as source of truth.
 |---|---|
 | Version | {release} |
 | Release ID | `{rid}` |
-| Status | release_candidate (frozen) |
+| Status | {status_label} (frozen) |
 | Records | {manifest['total_records']:,} |
 | Categories | 9 (each ≥ 1,000,000) |
 | Avg quality_score | {stats.get('quality', {}).get('avg', '?')} |
@@ -219,17 +220,13 @@ Each record is a canonical Atlas knowledge object:
     notes = f"""# Release Notes — Atlas {release}
 
 **Release ID:** `{rid}`
-**Status:** release_candidate (frozen) · **Date:** {created}
+**Status:** {status_label} (frozen) · **Date:** {created}
 **Total records:** {manifest['total_records']:,} · **Categories:** 9 (each ≥ 1M)
 
 ## Highlights
 
-- **Lossless deduplication of v1.0-RC1**: removed {dups_removed:,} byte-identical
-  duplicate records ({dups_removed:,} wiki_sw_1_* records in
-  02_software_engineering), preserving unique IDs. 9,893,844 → {manifest['total_records']:,}.
+- {manifest.get('changelog', 'Promoted release; see the frozen manifest for details.')}
 - All 9 categories remain at 1M+ records each.
-- Dedup rule: keep first occurrence per ID; drop only byte-identical
-  (SHA-256 of raw line); 0 conflicts.
 - Provenance verified for the release.
 
 ## What's inside
@@ -263,9 +260,8 @@ Each record is a canonical Atlas knowledge object:
 
 ## Known notes
 
-- {sum(1 for v in stats.get('by_difficulty', {}).values() if False)} (placeholder for any downstream flags)
-- {release} is a **release candidate**. Promotion to v1.0 final requires
-  explicit human instruction.
+- {release} is **frozen**. Any new work creates a new version (e.g. v1.1),
+  never edits this release.
 """
     (docs_dir / "release_notes.md").write_text(notes, encoding="utf-8")
     print(f"Wrote {docs_dir / 'release_notes.md'}")
