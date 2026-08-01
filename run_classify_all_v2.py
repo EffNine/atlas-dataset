@@ -113,7 +113,8 @@ def get_classification_config(config: dict) -> dict:
 
 def append_source_to_v12(label: str):
     """Append a source's classified output into the unified v1.2 file."""
-    src_file = OUT_DIR / f"classified_{label}.jsonl"
+    # batch_classify_v2 writes per-source output into _tmp/
+    src_file = OUT_DIR / "_tmp" / f"classified_{label}.jsonl"
     if not src_file.exists():
         print(f"[merge] WARNING: {src_file} not found, skipping append")
         return 0
@@ -134,7 +135,7 @@ def append_source_to_v12(label: str):
 
 
 def run_source(label, shard_workers=1, print_interval=1):
-    cmd = [PY, SCRIPT, "--shard-workers", str(shard_workers), "--print-interval", str(print_interval), "--groups", label]
+    cmd = [PY, SCRIPT, "--shard-workers", str(shard_workers), "--print-interval", str(print_interval), "--groups", label, "--no-merge"]
     print(f"\n=== {label} ({shard_workers} shard workers) ===")
     print(" ".join(cmd))
     r = subprocess.run(cmd)

@@ -140,6 +140,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--print-interval", type=int, default=20, help="Progress print every N shards")
     ap.add_argument("--shard-workers", type=int, default=1, help="Parallel workers within each source")
     ap.add_argument("--groups", nargs="*", default=None, help="Only run these source labels")
+    ap.add_argument("--no-merge", action="store_true",
+                    help="Skip merge_and_report (caller merges per-source files, e.g. run_classify_all_v2.py)")
     ap.add_argument("--dry-run", action="store_true", help="List sources, no work")
     args = ap.parse_args(argv)
 
@@ -185,6 +187,10 @@ def main(argv: list[str] | None = None) -> int:
     elapsed = time.time() - start
     total_classified = sum(r.get("classified", 0) for r in results)
     print(f"\nAll sources done: {total_classified:,} records in {elapsed:.0f}s")
+
+    if args.no_merge:
+        print(f"Output: {temp_dir} (per-source files; --no-merge, caller merges)")
+        return 0 if all(r.get("errors", 0) == 0 for r in results) else 1
 
     # Merge and generate reports
     print("Merging reports...")
