@@ -182,8 +182,19 @@ def classify_source_shards(
                         line = line.strip()
                         if line:
                             fh.write(line + "\n")
-                tmp_file.unlink()
+
+        # Remove ALL temp files (including stale files left by interrupted
+        # runs of other sources) so rmdir() never hits Errno 39.
+        for stale in tmp_dir.iterdir():
+            try:
+                stale.unlink()
+            except OSError:
+                pass
+        try:
             tmp_dir.rmdir()
+        except OSError:
+            import shutil
+            shutil.rmtree(tmp_dir, ignore_errors=True)
 
     elapsed = time.time() - start
     elapsed_str = f"{elapsed:.0f}s" if elapsed < 60 else f"{elapsed/60:.1f}m"
