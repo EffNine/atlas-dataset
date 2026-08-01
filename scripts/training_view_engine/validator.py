@@ -106,6 +106,20 @@ def _validate_chunk_standalone(
     return out
 
 
+def _validate_task(task) -> list[dict[str, Any]]:
+    """Universal Scheduler worker: validate a record-range Task.
+
+    Module-level so it can be pickled into process workers. The Task's
+    extra carries the record chunk and quality threshold (mirrors
+    _validate_chunk_standalone args); offset_start/offset_end identify the
+    original record range for deterministic merging.
+    """
+    extra = getattr(task, "extra", {}) or {}
+    chunk = extra.get("records", [])
+    qt = int(extra.get("quality_threshold", 7))
+    return _validate_chunk_standalone((chunk, qt))
+
+
 class TrainingViewValidator:
     """Validate training view inputs, content, and outputs.
 
@@ -227,6 +241,71 @@ class TrainingViewValidator:
               - errors: list[str]
         """
         if workers > 1 and len(records) > 100:
+            # Universal Scheduler path: record-range tasks, deterministic
+            # ordering (task_id encodes the offset range, so results sorted
+            # by task_id preserve original record order). Falls back to the
+            # manual ProcessPoolExecutor below on any scheduler error.
+            try:
+                from parallel.models import Task
+                from parallel.scheduler import Scheduler
+
+                chunk_size = max(1, len(records) // (workers * 4))
+                tasks: list[Task] = []
+                for start in range(0, len(records), chunk_size):
+                    end = min(len(records), start + chunk_size)
+                    tasks.append(Task(
+                        task_id=f"tv:validate:{start:06d}:{end:06d}",
+                        source="training_views",
+                        operation="validate_record_range",
+                        input="",
+                        offset_start=start,
+                        offset_end=end,
+                        extra={
+                            "records": records[start:end],
+                            "quality_threshold": quality_threshold,
+                        },
+                    ))
+                sched = Scheduler(
+                    "training_views",
+                    registry_root=str(
+                        Path(self._root) / "metadata" / "pipeline_state"
+                        if self._root else "metadata/pipeline_state"
+                    ),
+                    workers=workers,
+                    pool="process",
+                    max_retries=2,
+                )
+                trs = sched.run(tasks, _validate_task)
+                results: list[dict[str, Any]] = []
+                for tr in trs:
+                    if tr.status == "completed" and isinstance(tr.result, list):
+                        results.extend(tr.result)
+                    elif tr.status == "failed":
+                        # Keep the failure visible: mark every record in range failed.
+                        start = int(tr.task_id.split(":")[2])
+                        end = int(tr.task_id.split(":")[3])
+                        for ridx in range(start, end):
+                            results.append({
+                                "record_id": records[ridx].get("id", "?"),
+                                "valid": False,
+                                "errors": [f"scheduler task failed: {tr.error}"],
+                            })
+                    # skipped tasks (completed in a prior run): reconstruct
+                    # from registry result is not stored — re-validate inline.
+                    elif tr.status == "skipped":
+                        start = int(tr.task_id.split(":")[2])
+                        end = int(tr.task_id.split(":")[3])
+                        for rec in records[start:end]:
+                            errs = validate_record_standalone(rec, quality_threshold)
+                            results.append({
+                                "record_id": rec.get("id", "?"),
+                                "valid": len(errs) == 0,
+                                "errors": errs,
+                            })
+                return results
+            except Exception:
+                pass  # fall through to manual ProcessPoolExecutor
+
             from concurrent.futures import ProcessPoolExecutor
             # Chunk records for balanced distribution
             chunk_size = max(1, len(records) // (workers * 4))

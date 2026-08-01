@@ -22,6 +22,28 @@ from .manifest import TrainingViewManifest
 from .validator import TrainingViewValidator
 
 
+def _load_curated_file(fp: Path) -> list[dict[str, Any]]:
+    """Load one curated JSONL file (module-level, picklable)."""
+    out: list[dict[str, Any]] = []
+    try:
+        with open(fp, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        out.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        continue
+    except (OSError, IOError):
+        return out
+    return out
+
+
+def _load_curated_file_task(task) -> list[dict[str, Any]]:
+    """Universal Scheduler worker: load one curated file from a Task."""
+    return _load_curated_file(Path(task.input))
+
+
 class TrainingViewGenerator:
     """Top-level orchestrator for training view generation.
 
@@ -306,29 +328,45 @@ class TrainingViewGenerator:
         files = sorted(curated_path.rglob("*.jsonl"))
         workers = self._load_view_workers()
 
-        def _load_one(fp: Path) -> list[dict[str, Any]]:
-            out: list[dict[str, Any]] = []
-            try:
-                with open(fp, encoding="utf-8") as f:
-                    for line in f:
-                        line = line.strip()
-                        if line:
-                            try:
-                                out.append(json.loads(line))
-                            except json.JSONDecodeError:
-                                continue
-            except (OSError, IOError):
-                return out
-            return out
-
         if workers > 1 and len(files) > 1:
+            # Universal Scheduler path: file tasks, deterministic ordering
+            # (task_id encodes the filename, so sorted results preserve the
+            # sorted-files order). Falls back to the manual ProcessPool
+            # executor below on any scheduler error.
+            try:
+                from parallel.planner import file_tasks
+                from parallel.scheduler import Scheduler
+
+                tasks = file_tasks(files, source=f"curated/{version}", operation="load_curated_file")
+                sched = Scheduler(
+                    "training_views",
+                    registry_root=str(self._root / "metadata" / "pipeline_state"),
+                    workers=workers,
+                    pool="process",
+                    max_retries=2,
+                )
+                trs = sched.run(tasks, _load_curated_file_task)
+                task_by_id = {t.task_id: t for t in tasks}
+                for tr in trs:
+                    if tr.status == "completed" and isinstance(tr.result, list):
+                        records.extend(tr.result)
+                    elif tr.status == "skipped":
+                        # Completed in a prior run; registry result is not
+                        # stored, so reload the file deterministically.
+                        t = task_by_id.get(tr.task_id)
+                        records.extend(_load_curated_file(Path(t.input) if t else Path(tr.task_id)))
+                    # failed tasks are excluded (matching manual-pool tolerance)
+                return records
+            except Exception:
+                pass  # fall through to manual ProcessPoolExecutor
+
             from concurrent.futures import ProcessPoolExecutor
             with ProcessPoolExecutor(max_workers=workers) as ex:
-                for chunk in ex.map(_load_one, files):
+                for chunk in ex.map(_load_curated_file, files):
                     records.extend(chunk)
         else:
             for fp in files:
-                records.extend(_load_one(fp))
+                records.extend(_load_curated_file(fp))
 
         return records
 

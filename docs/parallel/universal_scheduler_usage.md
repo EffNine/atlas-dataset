@@ -284,3 +284,71 @@ python scripts/run_extract_all.py --all --shard-workers 8
   (RAM margin 0.8, CPU cores, optional explicit cap).
 - **Fallback preserved**: if the scheduler import fails, the runner falls
   back to the original manual ProcessPoolExecutor with identical behavior.
+
+---
+
+## 9. Migration example: Training Views (Phase 3)
+
+The training view engine (`scripts/training_view_engine/`) is the third
+pipeline migrated. Two parallel layers now run through the Universal
+Scheduler:
+
+1. **Curated file loading** (`generator._load_curated_records`) — file
+   tasks.
+2. **Record validation** (`validator.validate_records`) — record-range
+   tasks.
+
+### Task design
+
+For validation we chose **record-range tasks** (Option B): the existing
+pipeline already chunks the in-memory records list, so each task carries the
+chunk in `extra` (mirroring `_validate_chunk_standalone`'s pickling
+contract) plus `offset_start`/`offset_end` identifying the original range.
+`task_id` encodes the offsets (`tv:validate:<start>:<end>`) so
+deterministic ordering = original record order.
+
+```python
+Task(
+    task_id="tv:validate:000000:000031",
+    source="training_views",
+    operation="validate_record_range",
+    input="",                 # records travel in extra (in-memory chunks)
+    offset_start=0,
+    offset_end=31,
+    extra={"records": chunk, "quality_threshold": 7},
+)
+```
+
+For loading we chose **file tasks** (Option A):
+
+```python
+from parallel.planner import file_tasks
+tasks = file_tasks(files, source="curated/v0.1", operation="load_curated_file")
+# worker: _load_curated_file_task(task) -> reads task.input, returns records
+```
+
+### Behavior guarantees (verified by tests)
+
+- **Deterministic generation**: scheduler path produces identical
+  `validate_records` results to sequential (same record_ids, same validity,
+  same order) — including invalid records at known positions.
+- **Ordering**: task_id encodes offset ranges, so sorted results preserve
+  the original record order and the sorted-files order for loading.
+- **Schema preserved**: validation results keep
+  `{record_id, valid, errors}`; loaded records are byte-identical.
+- **Resume**: completed tasks skipped on re-run; stale `running` re-claimed
+  after lease.
+- **Retry**: failed record-range tasks retried up to `max_retries`.
+- **Fallback**: manual ProcessPoolExecutor preserved (scheduler error → old
+  path, identical behavior).
+- **Resource-aware**: worker count via `safe_worker_limit()`; record chunks
+  are balanced (`len(records) // (workers * 4)`); no full dataset is loaded
+  twice (chunks carry slices, not duplicates).
+
+### CLI unchanged
+
+```bash
+# dry-run still works; generation logic, filters, manifests untouched.
+python scripts/training_readiness.py --dry-run
+# registry: metadata/pipeline_state/task_registry_training_views.jsonl
+```

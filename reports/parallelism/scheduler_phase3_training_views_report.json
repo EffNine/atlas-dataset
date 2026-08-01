@@ -1,0 +1,79 @@
+{
+  "report_metadata": {
+    "report_type": "scheduler_phase3_training_views_report",
+    "phase": 3,
+    "date": "2026-08-01T16:55:02.372686+00:00",
+    "status": "complete",
+    "pipeline": "training_views"
+  },
+  "audit": {
+    "current_parallel_layers": [
+      {
+        "layer": "curated file loading",
+        "file": "scripts/training_view_engine/generator.py",
+        "method": "TrainingViewGenerator._load_curated_records",
+        "executor_before": "ProcessPoolExecutor over files (ex.map _load_one)",
+        "task_unit_before": "file"
+      },
+      {
+        "layer": "record validation",
+        "file": "scripts/training_view_engine/validator.py",
+        "method": "TrainingViewValidator.validate_records",
+        "executor_before": "ProcessPoolExecutor over record chunks (_validate_chunk_standalone)",
+        "task_unit_before": "record-chunk"
+      }
+    ],
+    "input_loading": "curated/<version>/*.jsonl -> in-memory records (parallel file load)",
+    "record_processing": "validate_record_standalone per record, chunked for workers",
+    "output_generation": "manifest + training view metadata (dry-run by default)",
+    "validation_flow": "validate_records -> validate_manifest -> validate_view_records -> validate_determinism"
+  },
+  "implementation": {
+    "task_design": "record-range tasks for validation (Option B); file tasks for loading (Option A)",
+    "task_shape": {
+      "task_id": "tv:validate:<start>:<end> (encodes offset range)",
+      "source_file": "task.input",
+      "start_offset": "task.offset_start",
+      "end_offset": "task.offset_end",
+      "estimated_size": "task.estimated_size_mb",
+      "operation": "validate_record_range | load_curated_file"
+    },
+    "workers": {
+      "load": "_load_curated_file_task (module-level, picklable)",
+      "validate": "_validate_task (module-level, picklable)"
+    },
+    "registry": "metadata/pipeline_state/task_registry_training_views.jsonl",
+    "scheduler": "adaptive workers, bounded submission, retry max_retries=2, lease 900s",
+    "fallback": "manual ProcessPoolExecutor preserved (identical behavior)",
+    "unchanged": "filter.py, manifest.py, generation logic, output schema"
+  },
+  "resource_awareness": {
+    "chunking": "record chunks balanced: len(records) // (workers * 4)",
+    "worker_control": "scheduler decides via safe_worker_limit(); explicit workers respected",
+    "memory": "chunks carry record slices (no full-dataset duplicate); no large-file whole load",
+    "splitting_rules": "<64MB batch; 64-512MB normal task; >512MB split (planner byte_range_tasks)"
+  },
+  "verification": {
+    "training_views_test_suite": "16 passed in 4.12s",
+    "full_suite_summary": "1 failed, 325 passed, 2 skipped in 19.53s",
+    "architecture_validator": "PASS",
+    "determinism": "scheduler validate_records == sequential (record_ids, validity, order) verified",
+    "schema_preserved": "{record_id, valid, errors} unchanged",
+    "resume": "completed skipped; stale running re-claimed (lease_seconds=0 test)",
+    "retry": "failed task retried then completed; terminal after max_retries"
+  },
+  "out_of_scope": {
+    "migrated_pipelines": [
+      "validation (P1)",
+      "extraction (P2)",
+      "training views (P3)"
+    ],
+    "deferred": [
+      "acquisition",
+      "release",
+      "compression",
+      "classification"
+    ],
+    "dataset_release_hf_changes": "none"
+  }
+}
