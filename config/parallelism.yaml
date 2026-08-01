@@ -1,7 +1,7 @@
 parallelism:
   classification:
     stage1_shard_workers: 8
-    stage2_shard_workers: 2
+    stage2_shard_workers: 10
     skip_v11_sources: true
     print_interval: 1
 
