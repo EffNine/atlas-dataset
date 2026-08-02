@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0",
+  "report": "phase5d_cleanup_report",
+  "phase": "5D",
+  "title": "Universal Scheduler Cleanup & Consolidation — Implementation Report",
+  "date": "2026-08-02",
+  "baseline": {
+    "local_head": "5224e17608ff799e6ab092a8e50ab317e6bac7b7",
+    "remote_head": "5224e17608ff799e6ab092a8e50ab317e6bac7b7",
+    "divergence": {"ahead": 0, "behind": 0},
+    "branch": "main"
+  },
+  "summary": {
+    "files_changed": 14,
+    "files_added_untracked": 6,
+    "commits_planned": 4,
+    "commit_1_docs": "docs: reconcile phase5d cleanup design with shim policy",
+    "commit_2_fix": "fix: repair classification compatibility shims",
+    "commit_3_refactor": "refactor: migrate remaining duplicate config/loading paths",
+    "commit_4_docs": "docs: add phase5d cleanup verification report"
+  },
+  "design_decision": {
+    "decision": "compatibility shims, not deletion",
+    "rationale": "Atlas has many existing pipeline references; legacy modules remain temporarily as thin compatibility layers",
+    "shim_policy": [
+      "may re-export canonical implementations",
+      "may expose old import paths",
+      "must contain NO duplicated business logic",
+      "must contain NO independent scheduler/config/retry implementation",
+      "must emit DeprecationWarning on use",
+      "canonical modules are the only home of real logic"
+    ],
+    "removal_target": "Atlas v2.0",
+    "design_doc": "docs/architecture/scheduler_cleanup_design_v1.md (status: Reviewed — Implementation Approved)"
+  },
+  "bugs_fixed": [
+    {
+      "id": "B1",
+      "title": "Infinite recursion in classification shims",
+      "detail": "batch_classify_v2._classify_one imported classify_source_shards/classify_source_shards_adaptive from the batch_classify shim, which forwarded back to _classify_one -> RecursionError on every adaptive run.",
+      "fix": "batch_classify_v2.py is now the canonical home: real classify_source_shards, classify_source_shards_adaptive, merge_and_report, split_single_shard, _process_shard_worker, _process_task_worker, SummaryAccumulator and report helpers ported in; _classify_one calls module-local functions only; shim is a pure re-export. Verified no recursion (16/16 tests, smoke test runs end-to-end)."
+    },
+    {
+      "id": "B2",
+      "title": "SourceConfig identity mismatch (stub poisoning)",
+      "detail": "shim's try/except ImportError fallback created batch_classify.SourceConfig = type('SourceConfig', (), {}) — empty stub; shim.SourceConfig is not v2.SourceConfig; instantiation raised TypeError.",
+      "fix": "batch_classify.py now imports SourceConfig (and ALL_SOURCES, functions) directly from batch_classify_v2 at module top — identity preserved in both import orders. Verified shim.SourceConfig is v2.SourceConfig."
+    },
+    {
+      "id": "B3",
+      "title": "Missing ALL_SOURCES export",
+      "detail": "shim re-exported ALL_SOURCES as SourceConfig alias which fell into the stub fallback; no real ALL_SOURCES list.",
+      "fix": "shim re-exports ALL_SOURCES directly from batch_classify_v2 (45 sources). Verified count = 45 in shim-first import order."
+    }
+  ],
+  "steps_executed": [
+    {
+      "step": 1,
+      "action": "Reconcile design decision",
+      "detail": "Updated docs/architecture/scheduler_cleanup_design_v1.md: shim policy (may re-export, must contain no business logic), migration strategy, removal criteria for v2.0, rollback plan, risks, acceptance criteria, sign-off."
+    },
+    {
+      "step": 2,
+      "action": "Fix classification shim regressions",
+      "detail": "batch_classify_v2.py ported to canonical home (real implementations, parallel.* usage); batch_classify.py -> pure re-export shim; adaptive_scheduler.py -> forwarding shim (Task/TaskRegistry/plan_tasks/load_scheduler_config/write_scheduler_report forward to parallel.*, legacy field names preserved). Added parallel/monitor.write_legacy_scheduler_report for the legacy report shape."
+    },
+    {
+      "step": 3,
+      "action": "Remove remaining duplicate infrastructure",
+      "detail": "run_classify_all_v2.py: replaced hand-rolled YAML loader + fallback parser with parallel.config.load_parallelism_config (sys.path bootstrap added). generate_knowledge_pack loader: evaluated — full Scheduler migration NOT safe (registry resume would skip re-read of changed curated files); converted inline closure to module-level _load_curated_file (picklable under spawn); documented rationale inline and in design doc 4.4."
+    },
+    {
+      "step": 4,
+      "action": "Testing",
+      "detail": "test_adaptive_scheduler.py 16/16 (was 4/16); scheduler suites 104 passed; full suite 374 passed + pre-existing zstandard/unrelated failures."
+    },
+    {
+      "step": 5,
+      "action": "Verification",
+      "detail": "Architecture validator RESULT: PASS (0 violations). Shim business-logic scan clean. No remaining duplicate parallelism.yaml readers outside parallel.config."
+    }
+  ],
+  "files_changed": [
+    {"path": "docs/architecture/scheduler_cleanup_design_v1.md", "kind": "docs", "commit": 1},
+    {"path": "scripts/intelligence/batch_classify_v2.py", "kind": "canonical_impl", "commit": 2},
+    {"path": "scripts/intelligence/batch_classify.py", "kind": "shim", "commit": 2},
+    {"path": "scripts/intelligence/adaptive_scheduler.py", "kind": "shim", "commit": 2},
+    {"path": "scripts/parallel/monitor.py", "kind": "canonical_impl", "commit": 2},
+    {"path": "run_classify_all_v2.py", "kind": "refactor", "commit": 3},
+    {"path": "scripts/acquisition_engine/engine.py", "kind": "refactor", "commit": 3},
+    {"path": "scripts/validate_dataset.py", "kind": "refactor", "commit": 3},
+    {"path": "scripts/run_extract_all.py", "kind": "refactor", "commit": 3},
+    {"path": "scripts/training_view_engine/generator.py", "kind": "refactor", "commit": 3},
+    {"path": "scripts/release/download_release.py", "kind": "refactor", "commit": 3},
+    {"path": "config/parallelism.yaml", "kind": "docs", "commit": 1},
+    {"path": "scripts/parallel/__init__.py", "kind": "docs", "commit": 1},
+    {"path": "scripts/parallel/config.py", "kind": "docs", "commit": 1},
+    {"path": "metadata/architecture_validation_report.json", "kind": "generated", "commit": 4}
+  ],
+  "untracked_docs": [
+    {"path": "docs/architecture/scheduler_api_freeze_v1.md", "commit": 1},
+    {"path": "docs/architecture/scheduler_deprecation_policy.md", "commit": 1},
+    {"path": "reports/parallelism/scheduler_cleanup_audit.md", "commit": 1},
+    {"path": "reports/parallelism/phase5d_pre_audit.md", "commit": 1},
+    {"path": "reports/parallelism/phase5d_pre_audit.json", "commit": 1},
+    {"path": "reports/parallelism/phase5d_cleanup_report.md", "commit": 4},
+    {"path": "reports/parallelism/phase5d_cleanup_report.json", "commit": 4}
+  ],
+  "deferred_items": [
+    {"item": "run_classify_all_v2.py loader", "status": "MIGRATED", "detail": "hand-rolled YAML loader + fallback parser removed; uses parallel.config"},
+    {"item": "generate_knowledge_pack curated loader (engine.py)", "status": "RETAINED + HARDENED", "detail": "full scheduler migration unsafe (registry resume would skip changed curated files); worker count from unified config; worker is module-level picklable; rationale documented"},
+    {"item": "release/compression/evaluation pipelines", "status": "DEFERRED", "detail": "out of scope for Phase 5D per plan"},
+    {"item": "resolve_worker_count('classification') key gap", "status": "DOCUMENTED", "detail": "classification uses stage1/stage2_shard_workers keys which the unified resolver ignores (returns 'auto'); batch_classify_v2 falls back to --workers default 8. Pre-existing behavior preserved."}
+  ],
+  "test_results": {
+    "test_adaptive_scheduler_py": {"passed": 16, "failed": 0, "total": 16, "was": "4/16"},
+    "scheduler_suites": {"passed": 104, "failed": 0, "note": "universal+extraction+training_views+etl+acquisition+acquisition_engine"},
+    "full_suite": {"passed": 374, "failed": 5, "errors": 9, "note": "failures are pre-existing: zstandard missing (test_join_release, test_release_pipeline), flaky resource-limit tests (pass on rerun), test_parallel_stabilization malformed-config (monkeypatches old CONFIG_PATH contract; was 2 failures at HEAD, now 1 — improved)"},
+    "architecture_validator": "PASS (0 violations)"
+  },
+  "no_dataset_changes": true,
+  "no_hf_changes": true,
+  "no_release_changes": true,
+  "generated_by": "Hermes Phase 5D implementation"
+}
