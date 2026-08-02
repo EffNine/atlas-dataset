@@ -1,0 +1,80 @@
+{
+  "release": "repository_freeze_v1.0",
+  "timestamp": "2026-08-03T06:50:00+08:00",
+  "branch": "main",
+  "commit": "303b9fac2850b2760633372ec92a41c4c1795cbc",
+  "origin_commit": "303b9fac2850b2760633372ec92a41c4c1795cbc",
+  "push": {
+    "success": true,
+    "to": "https://github.com/EffNine/atlas-dataset.git",
+    "result": "aa9d008..303b9fa  main -> main"
+  },
+  "sync": {
+    "mac": {
+      "current_commit": "303b9fac2850b2760633372ec92a41c4c1795cbc",
+      "matches_origin": true,
+      "working_tree_clean": true
+    },
+    "dev_pc": {
+      "current_commit": "daf2e25c1e0774152509dfdec242fb1798249121",
+      "matches_origin": false,
+      "working_tree_clean": false,
+      "uncommitted_files": [
+        "atlas/eval/report_generator.py",
+        "reports/v1.0_baseline_eval.json",
+        ".hermes_tmp/",
+        ".venv-lora-pilot/",
+        "_run_eval_metrics.py",
+        "docs/expert_pilot_6500_human_review_guideline_v0.1.md",
+        "docs/expert_pilot_6500_sonnet5_review_execution_plan_v0.1.md",
+        "docs/specialist_10k_pilot_extraction_plan_v0.1.md",
+        "docs/specialist_model_data_strategy_v0.1.md",
+        "docs/specialist_training_budget_v0.1.md",
+        "experiments/",
+        "metadata/expert_math_source_resolution_v0.1.json",
+        "metadata/expert_pilot_6500_manifest_v0.1.json",
+        "metadata/expert_source_registry_v0.1.json",
+        "output/",
+        "reports/._expert_pilot_6500_decision_v0.1.md",
+        "reports/._expert_pilot_6500_review_summary_v0.1.json",
+        "reports/expert_pilot_6500_decision_v0.1.md",
+        "reports/expert_pilot_6500_quality_v0.1.json",
+        "reports/expert_pilot_6500_review_summary_v0.1.json",
+        "reports/expert_pilot_sample_calibration_arxiv_v0.1.json",
+        "reports/expert_pilot_sample_calibration_openmath_v0.1.json",
+        "reports/expert_pilot_sample_calibration_openplatypus_v0.1.json",
+        "reports/expert_pilot_sample_calibration_swe_v0.2.json",
+        "reports/lora_pilot_math_v0.1_final.json",
+        "review/._expert_pilot_6500_review_decisions_v0.1.jsonl",
+        "review/._expert_pilot_6500_review_sample_v0.1.jsonl",
+        "review/._expert_pilot_6500_sonnet5_input_v0.1.jsonl",
+        "review/expert_pilot_6500_review_decisions_v0.1.jsonl",
+        "review/expert_pilot_6500_review_sample_v0.1.jsonl",
+        "review/expert_pilot_6500_sonnet5_input_v0.1.jsonl",
+        "scripts/._expert_pipeline",
+        "scripts/expert_pipeline/",
+        "scripts/phase2b_materialize.py",
+        "tests/._expert_pipeline",
+        "tests/expert_pipeline/"
+      ]
+    }
+  },
+  "machine_consistency": {
+    "all_match_origin": false,
+    "mac": "OK",
+    "dev_pc": "MISMATCH"
+  },
+  "verification": {
+    "repository_health": "OK",
+    "temp_cleanup": "OK",
+    "commit_created": true,
+    "commit_hash": "303b9fac2850b2760633372ec92a41c4c1795cbc",
+    "push_successful": true,
+    "branch_up_to_date": {
+      "mac": true,
+      "dev_pc": false
+    }
+  },
+  "decision": "HOLD",
+  "hold_reason": "Dev-PC repository does not match origin: commit=daf2e25, working tree dirty, uncommitted artifacts present. No automatic conflict resolution attempted."
+}
