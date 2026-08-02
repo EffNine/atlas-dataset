@@ -34,6 +34,7 @@ releases/restored/
 # Local experiment outputs
 outputs/
 tmp/
+.hermes_tmp/
 *.log
 
 # Quality-calibration artifacts
