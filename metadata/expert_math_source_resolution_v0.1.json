@@ -1,0 +1,200 @@
+{
+  "version": "0.1.0",
+  "generated_at": "2026-08-02",
+  "scope": "Atlas Expert Mathematics Source Resolution Sprint. Resolve a mathematics expert source suitable for Atlas. No ingestion, no full-dataset download, no Atlas data modification.",
+  "method": "Measured verification only. Each candidate checked via: (1) Hugging Face API dataset metadata (license tag, gated/private/disabled flags, splits), (2) official README/license file fetch where applicable, (3) GitHub API + LICENSE file fetch for canonical repos, (4) streaming schema probe of 3 rows per candidate to confirm field structure. No license is invented; entries marked UNKNOWN where a fact could not be confirmed.",
+  "verification_policy": "license status VERIFIED only when the license tag was read from the official HF card/README or the official LICENSE file was fetched. PARTIAL when custom license terms were inspected but are non-SPDX. UNKNOWN when no authoritative source was reachable.",
+  "candidates": [
+    {
+      "id": "expert-math-002",
+      "source_name": "OpenMathInstruct-2 (NVIDIA)",
+      "official_url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+      "license_status": "VERIFIED - CC-BY-4.0 (HF card license tag 'cc-by-4.0' + README YAML 'license: cc-by-4.0')",
+      "access_status": "PUBLIC - not gated, not private, not disabled",
+      "size": "13,972,791 train rows + train_1M / train_2M / train_5M subsets (HF API splits)",
+      "schema_fit": "HIGH - fields: problem, generated_solution, expected_answer, problem_source (verified by 3-row stream probe)",
+      "estimated_suitability": "HIGH - math instruction pairs with generated solutions and expected answers; E2 reasoning signal",
+      "risk": "LOW - permissive CC-BY-4.0, redistribution-friendly; model-generated solutions (Mixtral-derived) require model_generated flag",
+      "recommendation": "ACCEPT - resolves previously BLOCKED expert-math-002. NOTE: registered URL Ai-MO/OpenMathInstruct-2 returns 404; canonical repo is nvidia/OpenMathInstruct-2."
+    },
+    {
+      "id": "expert-math-002-alt",
+      "source_name": "OpenMathInstruct-1 (NVIDIA)",
+      "official_url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-1",
+      "license_status": "PARTIAL - custom 'NVIDIA License' (non-SPDX). LICENSE file fetched: permits commercial use, reproduction, derivative works, sublicense, distribution; redistribution requires including the license and retaining notices; patent-termination clause (Section 3.3).",
+      "access_status": "PUBLIC - not gated, not private",
+      "size": "large (no splits exposed in HF API metadata)",
+      "schema_fit": "HIGH - same family as OpenMathInstruct-2 (problem/solution structure expected)",
+      "estimated_suitability": "HIGH",
+      "risk": "MEDIUM - custom license (not SPDX), patent-termination clause; OpenMathInstruct-2 (CC-BY-4.0) is cleaner for redistribution",
+      "recommendation": "CONDITIONAL - use only if OpenMathInstruct-2 CC-BY-4.0 path is insufficient; prefer CC-BY-4.0 version."
+    },
+    {
+      "id": "expert-math-005",
+      "source_name": "NuminaMath-CoT (AI-MO)",
+      "official_url": "https://huggingface.co/datasets/AI-MO/NuminaMath-CoT",
+      "license_status": "VERIFIED - Apache-2.0 (HF card license tag 'apache-2.0')",
+      "access_status": "PUBLIC - not gated, not private, not disabled",
+      "size": "859,494 train + 100 test (HF API splits)",
+      "schema_fit": "HIGH - fields: problem, solution, messages (already user/assistant chat format), source (verified by 3-row stream probe)",
+      "estimated_suitability": "HIGH - olympiad/competition + synthetic math with CoT reasoning; strong E2/E3 signal; messages field maps directly to expert schema",
+      "risk": "LOW - Apache-2.0, redistribution-friendly; contains synthetic and competition-derived content (AoPS/AMC lineage) - verify per-record source tags before promotion",
+      "recommendation": "ACCEPT - top candidate alongside OpenMathInstruct-2."
+    },
+    {
+      "id": "expert-math-005b",
+      "source_name": "NuminaMath-1.5 (AI-MO)",
+      "official_url": "https://huggingface.co/datasets/AI-MO/NuminaMath-1.5",
+      "license_status": "VERIFIED - Apache-2.0 (HF card license tag 'apache-2.0')",
+      "access_status": "PUBLIC - not gated, not private, not disabled",
+      "size": "100K-1M category (HF size_categories); no per-split counts exposed",
+      "schema_fit": "HIGH (Numina family structure expected)",
+      "estimated_suitability": "HIGH",
+      "risk": "LOW",
+      "recommendation": "ACCEPT - newer Numina release; confirm splits at ingestion time."
+    },
+    {
+      "id": "expert-math-005c",
+      "source_name": "NuminaMath-TIR (AI-MO)",
+      "official_url": "https://huggingface.co/datasets/AI-MO/NuminaMath-TIR",
+      "license_status": "VERIFIED - Apache-2.0 (HF card license tag 'apache-2.0')",
+      "access_status": "PUBLIC - not gated, not private",
+      "size": "72,441 train + 99 test (HF API splits)",
+      "schema_fit": "HIGH (Numina family structure expected)",
+      "estimated_suitability": "MEDIUM-HIGH - tool-integrated reasoning variant",
+      "risk": "LOW",
+      "recommendation": "ACCEPT - supplementary TIR variant."
+    },
+    {
+      "id": "expert-math-006",
+      "source_name": "MetaMathQA (meta-math)",
+      "official_url": "https://huggingface.co/datasets/meta-math/MetaMathQA",
+      "license_status": "VERIFIED - MIT (HF card license tag 'mit')",
+      "access_status": "PUBLIC - not gated, not private, not disabled",
+      "size": "100K-1M category (HF size_categories); no per-split counts exposed",
+      "schema_fit": "HIGH - fields: original_question, query, response, type (verified by 3-row stream probe)",
+      "estimated_suitability": "HIGH - MATH-derived augmented problems with step-by-step responses",
+      "risk": "LOW - MIT, redistribution-friendly",
+      "recommendation": "ACCEPT - solid E2 supplement."
+    },
+    {
+      "id": "expert-math-007",
+      "source_name": "MathInstruct (TIGER-Lab)",
+      "official_url": "https://huggingface.co/datasets/TIGER-Lab/MathInstruct",
+      "license_status": "VERIFIED - MIT (HF card license tag 'mit')",
+      "access_status": "PUBLIC - not gated, not private, not disabled",
+      "size": "100K-1M category (HF size_categories); no per-split counts exposed",
+      "schema_fit": "HIGH - fields: instruction, output, source (verified by 3-row stream probe)",
+      "estimated_suitability": "HIGH - multi-source math instruction mix (CoT, AQuA, GSM8K lineage)",
+      "risk": "LOW - MIT",
+      "recommendation": "ACCEPT."
+    },
+    {
+      "id": "expert-math-008",
+      "source_name": "Orca-Math Word Problems 200K (Microsoft)",
+      "official_url": "https://huggingface.co/datasets/microsoft/orca-math-word-problems-200k",
+      "license_status": "VERIFIED - MIT (HF card license tag 'mit')",
+      "access_status": "PUBLIC - not gated, not private, not disabled",
+      "size": "200,035 train (HF API splits)",
+      "schema_fit": "HIGH - fields: question, answer (verified by 3-row stream probe)",
+      "estimated_suitability": "MEDIUM-HIGH - grade-school word problems with detailed solutions",
+      "risk": "LOW - MIT. NOTE: registered URL Microsoft/orca-math returns 404; canonical repo is microsoft/orca-math-word-problems-200k",
+      "recommendation": "ACCEPT - supplementary E1/E2 word-problem source."
+    },
+    {
+      "id": "expert-math-009",
+      "source_name": "GSM8K (OpenAI)",
+      "official_url": "https://huggingface.co/datasets/openai/gsm8k",
+      "license_status": "VERIFIED - MIT (HF card license tag 'mit')",
+      "access_status": "PUBLIC - not gated, not private, not disabled",
+      "size": "7,473 train + 1,319 test (main config); same for socratic config (HF API splits)",
+      "schema_fit": "HIGH - fields: question, answer (verified by 3-row stream probe)",
+      "estimated_suitability": "MEDIUM - grade-school arithmetic with chain-of-thought; baseline, not frontier",
+      "risk": "LOW - MIT",
+      "recommendation": "ACCEPT - E1 baseline; small, use as supplement only."
+    },
+    {
+      "id": "expert-math-001",
+      "source_name": "MATH benchmark (hendrycks/math) - competition math",
+      "official_url": "https://github.com/hendrycks/math",
+      "license_status": "VERIFIED - MIT (GitHub API license 'MIT' + LICENSE file fetched: 'MIT License Copyright (c) 2021 Dan Hendrycks'). HF mirror hendrycks/competition_math also tagged MIT but is DISABLED on HF.",
+      "access_status": "PUBLIC on GitHub; HF mirror disabled (disabled=true) - use GitHub canonical",
+      "size": "7,500 train + 5,000 test (HF mirror splits; GitHub canonical identical set)",
+      "schema_fit": "HIGH - competition problems with step-by-step solutions",
+      "estimated_suitability": "HIGH - AIME/AMC-level competition math; E2/E3 frontier signal",
+      "risk": "MEDIUM - redistribution rights for MAA-derived problems not fully confirmed; MIT covers the dataset packaging, but original problem copyright is MAA's; competition-content licensing requires care",
+      "recommendation": "ACCEPT WITH CAUTION - high expert value, but verify MAA problem copyright posture before volume ingestion; avoid re-deriving from HF mirror while disabled."
+    },
+    {
+      "id": "expert-math-010",
+      "source_name": "AIME / AMC competition problem sets (various)",
+      "official_url": "https://huggingface.co/datasets/MathArena/aime_2025",
+      "license_status": "VERIFIED NC - MathArena aime_2025 / aime_2026 tagged cc-by-nc-sa-4.0 (HF API). AI-MO/aime-1983-2024, Hothan/aime-1983-2024, MATH-AI/AIMO2 require auth (401) - license not readable.",
+      "access_status": "MathArena public (NC); AI-MO/Hothan/MATH-AI gated",
+      "size": "UNKNOWN (not resolved)",
+      "schema_fit": "HIGH (competition problems)",
+      "estimated_suitability": "HIGH - E3 frontier, but license-blocked",
+      "risk": "HIGH - NC license incompatible with Atlas training without explicit policy exception; MAA copyright on AMC/AIME problems",
+      "recommendation": "REJECT for training use without policy exception. Do not use NC-licensed AIME sets. Competition math should come from MIT MATH benchmark or permissively-licensed Numina/MetaMath derivatives instead."
+    },
+    {
+      "id": "expert-math-003",
+      "source_name": "Proof-Pile / mathematical documents corpus",
+      "official_url": "UNKNOWN",
+      "license_status": "UNKNOWN - canonical EleutherAI/proof-pile GitHub repo not found (404); HF EleutherAI/proof-pile not found (404); proof-pile-v2 not found (404). No authoritative license source reachable.",
+      "access_status": "UNKNOWN",
+      "size": "UNKNOWN",
+      "schema_fit": "UNKNOWN",
+      "estimated_suitability": "UNKNOWN",
+      "risk": "HIGH - no verified redistributable location or license",
+      "recommendation": "REJECT until a canonical redistributable URL + license are confirmed. Do not ingest from unverified mirrors."
+    },
+    {
+      "id": "expert-math-004",
+      "source_name": "University-level math reasoning problems (courseware)",
+      "official_url": "UNKNOWN",
+      "license_status": "UNKNOWN - no specific open courseware dataset with confirmed license identified in this sprint",
+      "access_status": "UNKNOWN",
+      "size": "UNKNOWN",
+      "schema_fit": "UNKNOWN",
+      "estimated_suitability": "UNKNOWN",
+      "risk": "HIGH - unidentified source",
+      "recommendation": "HOLD - revisit via NuminaMath (which already contains olympiad/competition content) or explicit open courseware with verified license."
+    },
+    {
+      "id": "expert-math-011",
+      "source_name": "openai/grade-school-math (GitHub source of GSM8K)",
+      "official_url": "https://github.com/openai/grade-school-math",
+      "license_status": "UNKNOWN on HF (openai/grade-school-math HF dataset returns 404). GitHub repo license not fetched in this sprint.",
+      "access_status": "PARTIAL - GitHub repo known to exist; HF dataset not found",
+      "size": "UNKNOWN",
+      "schema_fit": "UNKNOWN",
+      "estimated_suitability": "LOW-MEDIUM - superseded by openai/gsm8k which is MIT-verified",
+      "risk": "LOW (redundant with gsm8k)",
+      "recommendation": "SKIP - use MIT-verified openai/gsm8k on HF instead."
+    }
+  ],
+  "summary": {
+    "total_candidates": 14,
+    "accepted": 9,
+    "conditional": 1,
+    "reject": 2,
+    "hold": 1,
+    "skip": 1,
+    "mathematics_domain_status": "UNBLOCKED",
+    "primary_recommendation": "OpenMathInstruct-2 (nvidia/OpenMathInstruct-2, CC-BY-4.0, public) resolves the previously BLOCKED expert-math-002 with a permissive, redistribution-friendly license. NuminaMath-CoT (Apache-2.0) is the strongest secondary candidate for E2/E3 olympiad reasoning. Both verified by HF API metadata + 3-row schema probes.",
+    "blocked_items": [
+      "OpenMathInstruct-2 registered URL (Ai-MO/OpenMathInstruct-2) is stale - 404; canonical is nvidia/OpenMathInstruct-2",
+      "OpenMathInstruct-1 uses custom non-SPDX NVIDIA license - prefer CC-BY-4.0 OpenMathInstruct-2",
+      "AIME/AMC sets are NC-licensed or gated - rejected without policy exception",
+      "Proof-Pile canonical location and license unresolved - rejected until verified",
+      "MATH benchmark MIT on GitHub but HF mirror disabled - use GitHub canonical; MAA problem copyright still a consideration"
+    ],
+    "next_actions": [
+      "Run Phase 0.5 calibration sample for OpenMathInstruct-2 (CC-BY-4.0) per calibration plan 2.4",
+      "Run Phase 0.5 calibration sample for NuminaMath-CoT (Apache-2.0) as secondary",
+      "Update expert_source_registry_v0.1.json: correct expert-math-002 URL to nvidia/OpenMathInstruct-2, license CC-BY-4.0",
+      "Keep Open-Platypus HOLD blockers documented; no changes to Open-Platypus state"
+    ]
+  }
+}

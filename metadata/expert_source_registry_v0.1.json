@@ -138,14 +138,14 @@
         {
           "id": "expert-math-002",
           "name": "OpenMathInstruct-2",
-          "official_source": "https://huggingface.co/datasets/Ai-MO/OpenMathInstruct-2",
-          "license": "MIT, gated; verify on download",
-          "license_verified": "PARTIAL",
-          "availability": "gated",
-          "approximate_size": "~500k examples",
+          "official_source": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+          "license": "CC-BY-4.0",
+          "license_verified": true,
+          "availability": "public",
+          "approximate_size": "~14M examples (13,972,791 train)",
           "suitability_for_expert_schema": "high",
-          "status": "PARTIAL",
-          "notes": "Official HF page exists and claimed size is large, but gated access and exact license terms require verification before ingestion."
+          "status": "VERIFIED",
+          "notes": "Resolved by metadata/expert_math_source_resolution_v0.1.json (2026-08-02). Canonical repo is nvidia/OpenMathInstruct-2; the previously registered Ai-MO/OpenMathInstruct-2 URL returns 404. License CC-BY-4.0 confirmed from HF card tag + README YAML; access is public (not gated). Phase 0.5 calibration report expert_pilot_sample_calibration_openmath_v0.1.json: 100/100 schema pass, KEEP 100, duplicate rate 0.0, recommendation GO. Solutions are model-generated (Llama3.1-405B-Instruct per NVIDIA README) -> metadata.model_generated=true required at ingestion. No dataset ingestion performed during resolution or calibration."
         },
         {
           "id": "expert-math-003",
@@ -189,8 +189,8 @@
     },
     "mathematics": {
       "total_candidates": 4,
-      "verified": 0,
-      "partial": 1,
+      "verified": 1,
+      "partial": 0,
       "unknown": 3
     }
   }
