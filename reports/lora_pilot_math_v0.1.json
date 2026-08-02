@@ -1,0 +1,175 @@
+{
+  "report_id": "lora_pilot_math_v0.1",
+  "generated_at": "2026-08-03T02:05:00+00:00",
+  "experiment_id": "lora_pilot_math_v0.1",
+  "phase": "Phase 3A - Controlled LoRA Validation Pilot",
+  "status": "HOLD",
+  "decision": "HOLD",
+  "decision_rationale": "Training and post-training evaluation were not executed because the active environment lacks a CUDA-capable NVIDIA GPU. Baseline artifacts were created, but no measured before/after metrics exist. GO/HOLD cannot be determined without real evaluation outputs.",
+  "objective": "Validate dataset quality through a small LoRA training experiment using only approved training view sources.",
+  "constraints_met": {
+    "datasets_modified": false,
+    "approved_training_view_used": true,
+    "artifacts_under_experiments": true,
+    "no_release_or_hf_promotion": true
+  },
+  "training_view": {
+    "view_id": "math_300m_v0.1",
+    "config_view_id": "math-300m",
+    "source_id": "expert-math-002",
+    "source_name": "OpenMathInstruct-2",
+    "source_url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+    "license": "CC-BY-4.0",
+    "train_jsonl": "output/training_views/math_300m_v0.1/train.jsonl",
+    "eval_jsonl": "output/training_views/math_300m_v0.1/eval.jsonl",
+    "manifest_json": "output/training_views/math_300m_v0.1/manifest.json",
+    "train_sha256": "6aecc2a754c1a4aec941a9dbb59136445cf04175a0ae02c158e86acd4e4a4572",
+    "eval_sha256": "60b1e078b019c2b815ffd5b55078b914f36baf6a6463db8beeee2b4ce8a28123",
+    "manifest_records_sha256": "a095c9c24dedd78824e231c3033c1691d3423b22ac331a0c51fbe8fe86d99708",
+    "manifest_full_sha256": "a0053caa7e8af7a29e7084f129e1c5b07d9865a4aa2d4b00894c870e41e2987a",
+    "record_counts": {
+      "train": 117,
+      "eval": 13,
+      "total": 130
+    },
+    "determinism": {
+      "train_match": true,
+      "eval_match": true,
+      "note": "manifest created_at may drift; training/eval data checksums are stable."
+    }
+  },
+  "training_config": {
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "seed": 42,
+    "qlora": {
+      "load_in_4bit": true,
+      "bnb_4bit_use_double_quant": true,
+      "bnb_4bit_quant_type": "nf4",
+      "bnb_4bit_compute_dtype": "bfloat16",
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ],
+      "r": 8,
+      "lora_alpha": 16,
+      "lora_dropout": 0.05,
+      "bias": "none",
+      "task_type": "CAUSAL_LM"
+    },
+    "max_steps": 60,
+    "per_device_train_batch_size": 1,
+    "per_device_eval_batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "learning_rate": 0.0002,
+    "lr_scheduler_type": "cosine",
+    "warmup_ratio": 0.03,
+    "weight_decay": 0.01,
+    "logging_steps": 10,
+    "save_steps": 60,
+    "eval_steps": 60,
+    "fp16": false,
+    "bf16": true,
+    "optim": "paged_adamw_8bit",
+    "gradient_checkpointing": true,
+    "max_seq_length": 1024,
+    "use_rslora": false,
+    "output_dir": "experiments/lora_pilot_math_v0.1/checkpoints"
+  },
+  "versions": {
+    "required": {
+      "python": "3.11.15",
+      "torch": "TBD on CUDA box",
+      "transformers": "TBD on CUDA box",
+      "peft": "TBD on CUDA box",
+      "bitsandbytes": "TBD on CUDA box",
+      "trl": "TBD on CUDA box",
+      "datasets": "TBD on CUDA box",
+      "accelerate": "TBD on CUDA box",
+      "cuda": "TBD on CUDA box"
+    },
+    "current_session": {
+      "python": "3.11.15",
+      "torch": "not installed",
+      "transformers": "not installed",
+      "peft": "not installed",
+      "bitsandbytes": "not installed",
+      "trl": "not installed",
+      "datasets": "not installed",
+      "accelerate": "not installed",
+      "cuda": "not available"
+    }
+  },
+  "hardware": {
+    "planned_target": "NVIDIA GeForce RTX 5070 12GB",
+    "current_session": "Apple M2 / 8GB RAM / no NVIDIA GPU / no CUDA",
+    "cuda_available": false,
+    "status": "BLOCKED"
+  },
+  "baseline_evaluation": {
+    "status": "created",
+    "file": "experiments/lora_pilot_math_v0.1/evaluation/baseline.json",
+    "metrics": {
+      "correctness": null,
+      "reasoning_quality": null,
+      "hallucination_rate": null,
+      "answer_format_consistency": null,
+      "evaluated_examples": null
+    },
+    "note": "Baseline evaluation file was prepared but not executed because runtime lacks CUDA."
+  },
+  "post_training_evaluation": {
+    "status": "pending",
+    "file": "experiments/lora_pilot_math_v0.1/evaluation/post_training.json",
+    "metrics": {
+      "correctness": null,
+      "reasoning_quality": null,
+      "hallucination_rate": null,
+      "answer_format_consistency": null,
+      "evaluated_examples": null
+    }
+  },
+  "before_after_metrics": {
+    "before_correctness": null,
+    "after_correctness": null,
+    "before_reasoning_quality": null,
+    "after_reasoning_quality": null,
+    "before_hallucination_rate": null,
+    "after_hallucination_rate": null,
+    "before_answer_format_consistency": null,
+    "after_answer_format_consistency": null,
+    "delta_correctness": null,
+    "delta_reasoning_quality": null,
+    "delta_hallucination_rate": null,
+    "delta_answer_format_consistency": null
+  },
+  "limitations": [
+    "Training was not executed in this session.",
+    "Post-training evaluation was not executed in this session.",
+    "Metrics are placeholders, not measured results.",
+    "Current environment is Apple M2 with no CUDA runtime.",
+    "WSL2 remote execution via ssh+wsl encountered shell-syntax incompatibilities in this session; manual rerun on dev-pc is required."
+  ],
+  "artifacts": {
+    "config": "experiments/lora_pilot_math_v0.1/config.json",
+    "readme": "experiments/lora_pilot_math_v0.1/README.md",
+    "training_log_dir": "experiments/lora_pilot_math_v0.1/training_log",
+    "checkpoints_dir": "experiments/lora_pilot_math_v0.1/checkpoints",
+    "evaluation_dir": "experiments/lora_pilot_math_v0.1/evaluation",
+    "baseline_evaluation": "experiments/lora_pilot_math_v0.1/evaluation/baseline.json",
+    "post_training_evaluation": "experiments/lora_pilot_math_v0.1/evaluation/post_training.json"
+  },
+  "next_actions": [
+    "Re run this experiment on the WSL2 dev-pc with NVIDIA RTX 5070.",
+    "Create a dedicated CUDA venv and install exact package versions.",
+    "Verify dataset checksums match config.json before training.",
+    "Run baseline evaluation with real metrics.",
+    "Run pilot training and save adapter checkpoint.",
+    "Run post-training evaluation and populate post_training.json.",
+    "Update this report with real before/after metrics and final GO/HOLD."
+  ]
+}

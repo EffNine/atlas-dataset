@@ -1,0 +1,135 @@
+{
+  "report_id": "training_view_artifact_reconciliation_v0.1",
+  "generated_at": "2026-08-03T00:00:00+00:00",
+  "scope": "investigation-only reconciliation for Phase 2B training view manifests",
+  "inputs": {
+    "records": "tmp/expert_pilot_6500_records_v0.1.jsonl",
+    "review_decisions": "review/expert_pilot_6500_review_decisions_v0.1.jsonl",
+    "training_views_config": "metadata/training_views_v0.1.json",
+    "policy_decision": "metadata/training_view_policy_decision_v0.1.json",
+    "materializer": "scripts/phase2b_materialize.py"
+  },
+  "artifact_search": {
+    "searched_paths": [
+      "output/training_views/",
+      "artifacts/",
+      "training_views/",
+      "tmp/",
+      "reports/"
+    ],
+    "current_artifacts": [
+      "output/training_views/code_300m_v0.1/train.jsonl",
+      "output/training_views/code_300m_v0.1/eval.jsonl",
+      "output/training_views/code_300m_v0.1/manifest.json",
+      "output/training_views/math_300m_v0.1/train.jsonl",
+      "output/training_views/math_300m_v0.1/eval.jsonl",
+      "output/training_views/math_300m_v0.1/manifest.json",
+      "output/training_views/aiml_300m_v0.1/train.jsonl",
+      "output/training_views/aiml_300m_v0.1/eval.jsonl",
+      "output/training_views/aiml_300m_v0.1/manifest.json",
+      "output/training_views/phase2b_report.json"
+    ],
+    "previous_canonical_artifacts": "not found",
+    "git_history_note": "output/training_views/ is currently untracked; no prior manifest versions were found in git history for the expected view paths."
+  },
+  "current_disk_state": {
+    "code_300m_v0.1": {
+      "train_jsonl_sha256": "71d17e4bc51a925955ac48c9724861e803b6310608009823fe1cff91e21dbc69",
+      "eval_jsonl_sha256": "73b815d6a61ddc96b449db514de21a9383c64aed30a4d96b817f31e0dfc98171",
+      "manifest_sha256": "dc00ad126939715bf363d8b63509929cf4e65fd96cc66ee3cc7ccca7cd59e190",
+      "record_counts": {
+        "train": 22,
+        "eval": 2,
+        "total": 24
+      },
+      "train_eval_leakage": 0,
+      "duplicate_record_ids": false,
+      "manifest_created_at": "2026-08-02T17:24:18.765125+00:00",
+      "manifest_checksum_records": "41a336e51e890a92fd06f2ab76a7c66e5ec28c7a196cfa4bc22622d18e80fd56",
+      "manifest_checksum_manifest": "6a67c9c8b0c00005e9a2d4ec6f25a90ae66ce903474639737237fd729088b4b9"
+    },
+    "math_300m_v0.1": {
+      "train_jsonl_sha256": "6aecc2a754c1a4aec941a9dbb59136445cf04175a0ae02c158e86acd4e4a4572",
+      "eval_jsonl_sha256": "60b1e078b019c2b815ffd5b55078b914f36baf6a6463db8beeee2b4ce8a28123",
+      "manifest_sha256": "263eaf787957ad08a21326da216507411727e8bcf19ee6e971d5ce2702860604",
+      "record_counts": {
+        "train": 117,
+        "eval": 13,
+        "total": 130
+      },
+      "train_eval_leakage": 0,
+      "duplicate_record_ids": false,
+      "manifest_created_at": "2026-08-02T17:24:18.774756+00:00",
+      "manifest_checksum_records": "a095c9c24dedd78824e231c3033c1691d3423b22ac331a0c51fbe8fe86d99708",
+      "manifest_checksum_manifest": "efde035afa374e99bbb1dcf41ac842634c79cea96df46b967412af765cc496c2"
+    },
+    "aiml_300m_v0.1": {
+      "train_jsonl_sha256": "8d282854d3f63dbfd65606c0562e2a9fd22fa60b1c44c8700c2fbb67b4b3c4d5",
+      "eval_jsonl_sha256": "c57f8895ba9cd1989a409ec2d30679d9c1766f00e749722f6c68a5338575823e",
+      "manifest_sha256": "21926612f6e577f67050fe482883c03b514d503f4c0a67cca60e7c3e19243463",
+      "record_counts": {
+        "train": 135,
+        "eval": 14,
+        "total": 149
+      },
+      "train_eval_leakage": 0,
+      "duplicate_record_ids": false,
+      "manifest_created_at": "2026-08-02T17:24:18.785674+00:00",
+      "manifest_checksum_records": "b60b6c07fd15d24eaea624c7416b80a218a734e3c1ac5aad26bfd251d3bebbb2",
+      "manifest_checksum_manifest": "4ecd03791ae156e155929429a2366a2c07fdb592fc57bb63f4d8d3da4a2f53ba"
+    }
+  },
+  "old_reported_hashes": {
+    "code_300m_v0.1": "dc00ad126939715bf363d8b63509929cf4e65fd96cc66ee3cc7ccca7cd59e190",
+    "math_300m_v0.1": "263eaf787957ad08a21326da216507411727e8bcf19ee6e971d5ce2702860604",
+    "aiml_300m_v0.1": "21926612f6e577f67050fe482883c03b514d503f4c0a67cca60e7c3e19243463"
+  },
+  "regeneration_runs": {
+    "run_a_manifest_sha256": {
+      "code_300m_v0.1": "dc00ad126939715bf363d8b63509929cf4e65fd96cc66ee3cc7ccca7cd59e190",
+      "math_300m_v0.1": "263eaf787957ad08a21326da216507411727e8bcf19ee6e971d5ce2702860604",
+      "aiml_300m_v0.1": "21926612f6e577f67050fe482883c03b514d503f4c0a67cca60e7c3e19243463"
+    },
+    "run_b_manifest_sha256": {
+      "code_300m_v0.1": "1d13f4efe0b70afc27ad11bff3d36c2ad57c8f2d5a1b3f502974ccf219b2399e",
+      "math_300m_v0.1": "70e5ed5eced74ed54dc2115d21a865008cb6fc3cdc31946ab869598e337dcdfe",
+      "aiml_300m_v0.1": "a887c81cd1ae4c5e77da1443283674a23c846ac1037ed73816b4c22ecdeb6fff"
+    },
+    "stable_across_runs": [
+      "train.jsonl",
+      "eval.jsonl",
+      "manifest.checksum.records"
+    ],
+    "unstable_across_runs": [
+      "manifest.created_at",
+      "manifest.checksum.manifest"
+    ]
+  },
+  "mismatch_analysis": {
+    "identical_fields": [
+      "train.jsonl bytes and sha256 across reruns",
+      "eval.jsonl bytes and sha256 across reruns",
+      "manifest.checksum.records across reruns",
+      "manifest generation_policy",
+      "manifest filters",
+      "manifest training_view_id",
+      "manifest source_release",
+      "manifest source_records",
+      "train/eval leakage",
+      "record id uniqueness"
+    ],
+    "differing_fields": [
+      "manifest.created_at",
+      "manifest.checksum.manifest"
+    ],
+    "root_cause": "manifest.py uses datetime.now(timezone.utc).isoformat() during manifest creation; this timestamp is embedded in the manifest dict and is included in the self-referential manifest hash calculation. Therefore each manifest write produces a different checksum.manifest even when train/eval records and split behavior are deterministic.",
+    "mismatch_category": "A. Timestamp fields / B. Self-referential manifest hashes"
+  },
+  "hold_items": [
+    "The originally quoted 'old' manifest hashes could not be located in current disk artifacts, tmp/, reports/, or git history for the expected training view paths. Until that prior artifact is located, the reported old hashes cannot be fully reconciled to a specific previous run."
+  ],
+  "success_items": [
+    "Exact source of the on-disk mismatch is identified: non-deterministic created_at timestamp in manifest creation.",
+    "Deterministic behavior of data outputs is explained: train/eval files and records checksum are stable; only manifest metadata varies by timestamp."
+  ]
+}

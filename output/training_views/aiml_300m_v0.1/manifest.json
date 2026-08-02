@@ -1,0 +1,31 @@
+{
+  "checksum": {
+    "algorithm": "SHA-256",
+    "manifest": "c7a83c49f0c1d768c63edc4249aac91cab32c701d6be7dafec0c3cb8019a3478",
+    "records": "b60b6c07fd15d24eaea624c7416b80a218a734e3c1ac5aad26bfd251d3bebbb2"
+  },
+  "created_at": "freeze-685023e8317de4a1",
+  "filters": {
+    "eligibility_missing": 0,
+    "license_denied": 0,
+    "lifecycle_invalid": 0,
+    "lineage_incomplete": 0,
+    "pending_review": 0,
+    "quality_below": 0,
+    "rejected": 0
+  },
+  "generation_policy": {
+    "eligibility_filter": {},
+    "license_filter": "denied_and_unknown_excluded",
+    "lifecycle_filter": "approved_only",
+    "quality_threshold": 7,
+    "sampling_strategy": "deterministic_hash"
+  },
+  "source_distribution": {
+    "expert-aiml-001": 149
+  },
+  "source_records": 6500,
+  "source_release": "expert-pilot-6500-v0.1",
+  "token_estimate": 96740,
+  "training_view_id": "aiml-300m"
+}

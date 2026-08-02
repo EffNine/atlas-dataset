@@ -1,0 +1,23 @@
+{
+  "decision": "APPROVED",
+  "policy_version": "v0.1",
+  "policy_document": "docs/training_view_eligibility_policy_v0.1.md",
+  "human_review_role": "calibration",
+  "training_eligibility": "automated_gate_plus_exclusions",
+  "excluded_categories": [
+    "human_reject",
+    "license_failure",
+    "security_failure",
+    "provenance_failure"
+  ],
+  "specialist_view_mapping": {
+    "code_300m": "SWE-bench Verified",
+    "math_300m": "OpenMathInstruct-2",
+    "aiml_300m": "ArXiv cs.LG/cs.CL/cs.AI/stat.ML"
+  },
+  "evidence": [
+    "Phase 1A report",
+    "Phase 1B review summary",
+    "Phase 2B materialization report"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "checksum": {
+    "algorithm": "SHA-256",
+    "manifest": "a0053caa7e8af7a29e7084f129e1c5b07d9865a4aa2d4b00894c870e41e2987a",
+    "records": "a095c9c24dedd78824e231c3033c1691d3423b22ac331a0c51fbe8fe86d99708"
+  },
+  "created_at": "freeze-685023e8317de4a1",
+  "filters": {
+    "eligibility_missing": 0,
+    "license_denied": 0,
+    "lifecycle_invalid": 0,
+    "lineage_incomplete": 0,
+    "pending_review": 0,
+    "quality_below": 0,
+    "rejected": 0
+  },
+  "generation_policy": {
+    "eligibility_filter": {},
+    "license_filter": "denied_and_unknown_excluded",
+    "lifecycle_filter": "approved_only",
+    "quality_threshold": 7,
+    "sampling_strategy": "deterministic_hash"
+  },
+  "source_distribution": {
+    "expert-math-002": 130
+  },
+  "source_records": 6500,
+  "source_release": "expert-pilot-6500-v0.1",
+  "token_estimate": 34062,
+  "training_view_id": "math-300m"
+}

@@ -1,0 +1,83 @@
+{
+  "version": "v0.1",
+  "views": [
+    {
+      "view_id": "code-300m",
+      "accepted_source_ids": ["expert-swe-001"],
+      "accepted_licenses": ["MIT", "Apache-2.0", "CC-BY-4.0"],
+      "min_quality": 7,
+      "difficulty_range": [1, 10],
+      "expert_tier": ["E1", "E2", "E3"],
+      "synthetic_policy": "allowed_with_flag",
+      "output_path": "training_views/code",
+      "train_ratio": 0.8,
+      "validation_ratio": 0.1,
+      "target_model": ""
+    },
+    {
+      "view_id": "math-300m",
+      "accepted_source_ids": ["expert-math-002"],
+      "accepted_licenses": ["MIT", "Apache-2.0", "CC-BY-4.0"],
+      "min_quality": 7,
+      "difficulty_range": [1, 10],
+      "expert_tier": ["E1", "E2", "E3"],
+      "synthetic_policy": "allowed_with_flag",
+      "output_path": "training_views/math",
+      "train_ratio": 0.8,
+      "validation_ratio": 0.1,
+      "target_model": ""
+    },
+    {
+      "view_id": "aiml-300m",
+      "accepted_source_ids": ["expert-aiml-001", "expert-aiml-002"],
+      "accepted_licenses": ["MIT", "Apache-2.0", "CC-BY-4.0", "arXiv non-exclusive"],
+      "min_quality": 7,
+      "difficulty_range": [1, 10],
+      "expert_tier": ["E1", "E2", "E3"],
+      "synthetic_policy": "allowed_with_flag",
+      "output_path": "training_views/aiml",
+      "train_ratio": 0.8,
+      "validation_ratio": 0.1,
+      "target_model": ""
+    },
+    {
+      "view_id": "system-300m",
+      "accepted_source_ids": [],
+      "accepted_licenses": ["MIT", "Apache-2.0", "CC-BY-4.0"],
+      "min_quality": 7,
+      "difficulty_range": [1, 10],
+      "expert_tier": ["E1", "E2", "E3"],
+      "synthetic_policy": "disallowed",
+      "output_path": "training_views/system",
+      "train_ratio": 0.8,
+      "validation_ratio": 0.1,
+      "target_model": ""
+    },
+    {
+      "view_id": "science-300m",
+      "accepted_source_ids": [],
+      "accepted_licenses": ["MIT", "Apache-2.0", "CC-BY-4.0", "arXiv non-exclusive"],
+      "min_quality": 7,
+      "difficulty_range": [1, 10],
+      "expert_tier": ["E1", "E2", "E3"],
+      "synthetic_policy": "allowed_with_flag",
+      "output_path": "training_views/science",
+      "train_ratio": 0.8,
+      "validation_ratio": 0.1,
+      "target_model": ""
+    },
+    {
+      "view_id": "router-300m",
+      "accepted_source_ids": [],
+      "accepted_licenses": ["MIT", "Apache-2.0", "CC-BY-4.0", "arXiv non-exclusive"],
+      "min_quality": 7,
+      "difficulty_range": [1, 10],
+      "expert_tier": ["E1", "E2", "E3"],
+      "synthetic_policy": "disallowed",
+      "output_path": "training_views/router",
+      "train_ratio": 0.8,
+      "validation_ratio": 0.1,
+      "target_model": ""
+    }
+  ]
+}

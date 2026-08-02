@@ -1,0 +1,59 @@
+{
+  "status": "ok",
+  "policy": {
+    "allow": "auto_gate=KEEP and human_review=KEEP",
+    "require_human_review": "needs_review only",
+    "exclude": "REJECT, unresolved license, security flags, provenance incomplete, source mismatch"
+  },
+  "views": [
+    {
+      "status": "ok",
+      "view_id": "code-300m",
+      "output_dir": "/Users/afnanrudy/Github-Projects/atlas-dataset/output/training_views/code_300m_v0.1",
+      "source_records": 6500,
+      "eligible_records": 25,
+      "train_records": 22,
+      "eval_records": 2,
+      "token_estimate": 19086,
+      "manifest_checksum": "6a67c9c8b0c00005e9a2d4ec6f25a90ae66ce903474639737237fd729088b4b9",
+      "filter_counts": {
+        "no_human_review": 6176,
+        "source_mismatch": 281,
+        "reject": 18
+      }
+    },
+    {
+      "status": "ok",
+      "view_id": "math-300m",
+      "output_dir": "/Users/afnanrudy/Github-Projects/atlas-dataset/output/training_views/math_300m_v0.1",
+      "source_records": 6500,
+      "eligible_records": 131,
+      "train_records": 117,
+      "eval_records": 13,
+      "token_estimate": 34062,
+      "manifest_checksum": "efde035afa374e99bbb1dcf41ac842634c79cea96df46b967412af765cc496c2",
+      "filter_counts": {
+        "no_human_review": 6176,
+        "source_mismatch": 175,
+        "reject": 18
+      }
+    },
+    {
+      "status": "ok",
+      "view_id": "aiml-300m",
+      "output_dir": "/Users/afnanrudy/Github-Projects/atlas-dataset/output/training_views/aiml_300m_v0.1",
+      "source_records": 6500,
+      "eligible_records": 150,
+      "train_records": 135,
+      "eval_records": 14,
+      "token_estimate": 96740,
+      "manifest_checksum": "4ecd03791ae156e155929429a2366a2c07fdb592fc57bb63f4d8d3da4a2f53ba",
+      "filter_counts": {
+        "no_human_review": 6176,
+        "source_mismatch": 156,
+        "reject": 18
+      }
+    }
+  ],
+  "blocked": []
+}

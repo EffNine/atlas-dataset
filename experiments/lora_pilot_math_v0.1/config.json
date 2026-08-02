@@ -1,0 +1,138 @@
+{
+  "experiment_id": "lora_pilot_math_v0.1",
+  "status": "HOLD",
+  "hold_reason": "Current execution environment has no NVIDIA GPU or CUDA runtime; QLoRA 4-bit training requires CUDA-capable GPU.",
+  "objective": "Validate math training-view quality with a small LoRA pilot, not production training or release.",
+  "constraints": [
+    "Do not modify Atlas datasets",
+    "Use only approved training view sources",
+    "Keep all artifacts under experiments/",
+    "Record exact base model, config, seed, GPU info",
+    "No claims of model improvement without evaluation"
+  ],
+  "dataset": {
+    "training_view_id": "math_300m_v0.1",
+    "view_config_id": "math-300m",
+    "approved_policy": "metadata/training_view_policy_decision_v0.1.json",
+    "source_id": "expert-math-002",
+    "source_name": "OpenMathInstruct-2",
+    "source_url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+    "license": "CC-BY-4.0",
+    "view_root": "output/training_views/math_300m_v0.1",
+    "train_jsonl": "output/training_views/math_300m_v0.1/train.jsonl",
+    "eval_jsonl": "output/training_views/math_300m_v0.1/eval.jsonl",
+    "manifest_json": "output/training_views/math_300m_v0.1/manifest.json",
+    "checksums": {
+      "algorithm": "SHA-256",
+      "train_jsonl": "6aecc2a754c1a4aec941a9dbb59136445cf04175a0ae02c158e86acd4e4a4572",
+      "eval_jsonl": "60b1e078b019c2b815ffd5b55078b914f36baf6a6463db8beeee2b4ce8a28123",
+      "manifest_records": "a095c9c24dedd78824e231c3033c1691d3423b22ac331a0c51fbe8fe86d99708",
+      "manifest_full": "a0053caa7e8af7a29e7084f129e1c5b07d9865a4aa2d4b00894c870e41e2987a"
+    },
+    "record_counts": {
+      "train": 117,
+      "eval": 13,
+      "total": 130
+    },
+    "determinism_check": {
+      "train_match": true,
+      "eval_match": true,
+      "note": "manifest created_at may drift; training/eval data checksums are stable."
+    }
+  },
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "hardware": {
+    "planned_target": "NVIDIA GeForce RTX 5070 12GB",
+    "current_session": "Apple M2 / 8GB RAM / no NVIDIA GPU / no CUDA",
+    "cuda_required": true,
+    "cuda_available": false,
+    "status": "BLOCKED"
+  },
+  "seed": 42,
+  "qlora": {
+    "load_in_4bit": true,
+    "bnb_4bit_use_double_quant": true,
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_compute_dtype": "bfloat16",
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "bias": "none",
+    "task_type": "CAUSAL_LM"
+  },
+  "training": {
+    "max_steps": 60,
+    "per_device_train_batch_size": 1,
+    "per_device_eval_batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "learning_rate": 0.0002,
+    "lr_scheduler_type": "cosine",
+    "warmup_ratio": 0.03,
+    "weight_decay": 0.01,
+    "logging_steps": 10,
+    "save_steps": 60,
+    "eval_steps": 60,
+    "fp16": false,
+    "bf16": true,
+    "optim": "paged_adamw_8bit",
+    "gradient_checkpointing": true,
+    "max_seq_length": 1024,
+    "use_rslora": false,
+    "output_dir": "experiments/lora_pilot_math_v0.1/checkpoints"
+  },
+  "versions": {
+    "required": {
+      "python": "3.11.15",
+      "torch": "TBD on CUDA box",
+      "transformers": "TBD on CUDA box",
+      "peft": "TBD on CUDA box",
+      "bitsandbytes": "TBD on CUDA box",
+      "trl": "TBD on CUDA box",
+      "datasets": "TBD on CUDA box",
+      "accelerate": "TBD on CUDA box",
+      "cuda": "TBD on CUDA box"
+    },
+    "current_session_installed": {
+      "python": "3.11.15",
+      "torch": "not installed",
+      "transformers": "not installed",
+      "peft": "not installed",
+      "bitsandbytes": "not installed",
+      "trl": "not installed",
+      "datasets": "not installed",
+      "accelerate": "not installed",
+      "cuda": "not available"
+    }
+  },
+  "evaluation": {
+    "base_model_eval": "experiments/lora_pilot_math_v0.1/evaluation/baseline.json",
+    "post_training_eval": "experiments/lora_pilot_math_v0.1/evaluation/post_training.json",
+    "metrics": [
+      "correctness",
+      "reasoning_quality",
+      "hallucination_rate",
+      "answer_format_consistency"
+    ]
+  },
+  "artifacts": {
+    "training_log": "experiments/lora_pilot_math_v0.1/training_log",
+    "checkpoints": "experiments/lora_pilot_math_v0.1/checkpoints",
+    "evaluation": "experiments/lora_pilot_math_v0.1/evaluation",
+    "report": "reports/lora_pilot_math_v0.1.json"
+  },
+  "stop_conditions": {
+    "dataset_loading_failure": "STOP",
+    "checksum_mismatch": "STOP",
+    "reproducibility_failure": "STOP",
+    "no_cuda_runtime": "HOLD"
+  }
+}

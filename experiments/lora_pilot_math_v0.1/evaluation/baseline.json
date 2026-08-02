@@ -1,0 +1,42 @@
+{
+  "experiment_id": "lora_pilot_math_v0.1",
+  "evaluation_id": "baseline",
+  "status": "completed",
+  "model": "BASE_MODEL",
+  "model_id": "Qwen/Qwen2.5-7B-Instruct",
+  "adapter_path": null,
+  "dataset": {
+    "training_view_id": "math_300m_v0.1",
+    "source_id": "expert-math-002",
+    "source_name": "OpenMathInstruct-2",
+    "license": "CC-BY-4.0",
+    "train_jsonl": "output/training_views/math_300m_v0.1/train.jsonl",
+    "eval_jsonl": "output/training_views/math_300m_v0.1/eval.jsonl",
+    "manifest_json": "output/training_views/math_300m_v0.1/manifest.json",
+    "train_sha256": "6aecc2a754c1a4aec941a9dbb59136445cf04175a0ae02c158e86acd4e4a4572",
+    "eval_sha256": "60b1e078b019c2b815ffd5b55078b914f36baf6a6463db8beeee2b4ce8a28123",
+    "record_counts": {
+      "train": 117,
+      "eval": 13,
+      "total": 130
+    }
+  },
+  "baseline_metrics": {
+    "correctness": 0.0,
+    "reasoning_quality": 0.0,
+    "hallucination_rate": 1.0,
+    "answer_format_consistency": 0.0,
+    "evaluated_examples": 0,
+    "note": "Baseline evaluation was not executed in this session because no CUDA-capable GPU is available in the current environment. Metrics are placeholders, not measured values."
+  },
+  "hardware": {
+    "session": "Apple M2 / 8GB RAM / no NVIDIA GPU / no CUDA",
+    "required": "NVIDIA GeForce RTX 5070 12GB"
+  },
+  "stop_conditions": {
+    "dataset_loading_failure": "not triggered",
+    "checksum_mismatch": "not triggered",
+    "reproducibility_failure": "not triggered",
+    "no_cuda_runtime": "triggered"
+  }
+}
