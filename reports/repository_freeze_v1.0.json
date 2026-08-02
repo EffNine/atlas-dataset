@@ -1,23 +1,26 @@
 {
   "release": "repository_freeze_v1.0",
-  "timestamp": "2026-08-03T06:50:00+08:00",
+  "timestamp": "2026-08-03T06:52:00+08:00",
   "branch": "main",
-  "commit": "85341d919666141bb8015322ea23930e46a37350",
-  "origin_commit": "85341d919666141bb8015322ea23930e46a37350",
+  "commit": "44d84e62cb9a6ba7e42c5a5ff9b4e3a1c9d8f0ab",
+  "origin_commit": "44d84e62cb9a6ba7e42c5a5ff9b4e3a1c9d8f0ab",
   "push": {
     "success": true,
     "to": "https://github.com/EffNine/atlas-dataset.git",
-    "result": "303b9fa..85341d9  main -> main"
+    "result": "85341d9..44d84e6  main -> main"
   },
   "sync": {
     "mac": {
-      "current_commit": "303b9fac2850b2760633372ec92a41c4c1795cbc",
+      "current_commit": "44d84e62cb9a6ba7e42c5a5ff9b4e3a1c9d8f0ab",
       "matches_origin": true,
-      "working_tree_clean": true
+      "working_tree_clean": false,
+      "uncommitted_files": [
+        "reports/repository_freeze_v1.0.json"
+      ]
     },
     "dev_pc": {
-      "current_commit": "daf2e25c1e0774152509dfdec242fb1798249121",
-      "matches_origin": false,
+      "current_commit": "44d84e62cb9a6ba7e42c5a5ff9b4e3a1c9d8f0ab",
+      "matches_origin": true,
       "working_tree_clean": false,
       "uncommitted_files": [
         "atlas/eval/report_generator.py",
@@ -61,20 +64,20 @@
   },
   "machine_consistency": {
     "all_match_origin": false,
-    "mac": "OK",
+    "mac": "MISMATCH",
     "dev_pc": "MISMATCH"
   },
   "verification": {
     "repository_health": "OK",
     "temp_cleanup": "OK",
     "commit_created": true,
-    "commit_hash": "303b9fac2850b2760633372ec92a41c4c1795cbc",
+    "commit_hash": "44d84e62cb9a6ba7e42c5a5ff9b4e3a1c9d8f0ab",
     "push_successful": true,
     "branch_up_to_date": {
       "mac": true,
-      "dev_pc": false
+      "dev_pc": true
     }
   },
   "decision": "HOLD",
-  "hold_reason": "Dev-PC repository does not match origin: commit=daf2e25, working tree dirty, uncommitted artifacts present. No automatic conflict resolution attempted."
+  "hold_reason": "Origin, Mac, and Dev-PC all share commit 44d84e6, but neither checked-out tree is clean: Mac has an unstaged repository freeze report, and Dev-PC has extensive uncommitted artifacts. No automatic conflict resolution attempted."
 }
