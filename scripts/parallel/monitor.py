@@ -85,3 +85,63 @@ class Monitor:
         with open(path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2)
         return report
+
+
+# ---------------------------------------------------------------------------
+# Legacy scheduler report writer (v1.x format, kept for backward compatibility)
+# ---------------------------------------------------------------------------
+
+
+def write_legacy_scheduler_report(
+    root: str | Path,
+    worker_group: str,
+    shards: list[Path],
+    tasks: list[Any],
+    registry: Any,
+    split_operations: int = 0,
+    worker_utilization: float = 1.0,
+    idle_time_seconds: float = 0.0,
+) -> Path:
+    """Write a v1.x-format scheduler performance report.
+
+    The legacy `adaptive_scheduler.write_scheduler_report` contract is
+    preserved here so the compatibility shim can forward without owning
+    report business logic. `registry` must expose `summary()` (parallel
+    TaskRegistry) — a shim wrapper with ``__getattr__`` forwarding also
+    works.
+
+    Returns the written report path.
+    """
+    total_bytes = sum(p.stat().st_size for p in shards)
+    out_dir = Path(root) / "reports" / "performance"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / f"{worker_group}_scheduler_report.json"
+
+    largest = max((p.stat().st_size for p in shards), default=0)
+    avg = int(total_bytes / len(tasks)) if tasks else 0
+
+    # Task sizes: parallel Task exposes estimated_size_mb; legacy Task
+    # exposes estimated_bytes. Accept either.
+    def _task_bytes(t: Any) -> int:
+        eb = getattr(t, "estimated_bytes", None)
+        if eb is not None:
+            return int(eb)
+        emb = getattr(t, "estimated_size_mb", None)
+        return int(emb * 1024 * 1024) if emb is not None else 0
+
+    report = {
+        "schema_version": "1.0",
+        "worker_group": worker_group,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "total_shards": len(shards),
+        "total_bytes": total_bytes,
+        "generated_tasks": len(tasks),
+        "average_task_size_bytes": avg,
+        "worker_utilization": round(worker_utilization, 4),
+        "idle_time_estimate_seconds": round(idle_time_seconds, 1),
+        "largest_shard_bytes": largest,
+        "split_operations": split_operations,
+        "task_status_counts": dict(registry.summary()),
+    }
+    out_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    return out_path
