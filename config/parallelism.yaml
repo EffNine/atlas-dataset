@@ -1,3 +1,19 @@
+# ============================================================================
+# parallelism.yaml — Unified Parallelism Configuration
+# ============================================================================
+#
+# Worker Resolution Precedence (highest → lowest):
+#   1. CLI/Code:    resolve_worker_count(stage, cfg, explicit=N)
+#   2. Environment: ATLAS_WORKERS_<STAGE_UPPER> = N
+#   3. Hardware:    ATLAS_PROFILE or hostname match (see hardware_profiles/)
+#   4. YAML:        This file (config/parallelism.yaml)
+#   5. Default:     Resource detection (cpu_cores, available_ram)
+#
+# All pipelines MUST use resolve_worker_count() from parallel.config.
+# Do NOT read this file directly — use the API instead.
+#
+# ============================================================================
+
 parallelism:
   classification:
     stage1_shard_workers: 8

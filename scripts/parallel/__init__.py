@@ -1,12 +1,30 @@
-"""Universal Adaptive Scheduler — shared parallel subsystem.
+"""Universal Scheduler v1 — Atlas parallel execution subsystem.
 
-Public API:
-    get_scheduler(stage, ...) -> Scheduler
-    plan(...) -> list[Task]
-    Task / TaskResult / WorkerCapacity
-    TaskRegistry
-    load_parallelism_config / get_stage_config
-    safe_worker_limit
+**Scheduler API Freeze v1** — These are the ONLY public interfaces.
+Everything else is internal implementation. Pipelines MUST import from
+this module, never from sub-modules directly.
+
+## Worker Resolution Precedence
+
+CLI override (explicit=)
+  ↓
+Environment: ATLAS_WORKERS_<STAGE>
+  ↓
+Hardware profile (ATLAS_PROFILE or hostname match)
+  ↓
+YAML config (config/parallelism.yaml)
+  ↓
+Safe default (resource detection)
+
+## Public API
+
+Task / TaskResult / WorkerCapacity — data models
+Scheduler — adaptive worker pool with backpressure + retry
+TaskRegistry — append-only JSONL checkpoint + resume
+load_parallelism_config — single YAML loader
+resolve_worker_count — unified worker resolution
+plan_workload / file_tasks / shard_tasks — deterministic task generation
+safe_worker_limit — resource-aware worker cap
 """
 
 from .config import (

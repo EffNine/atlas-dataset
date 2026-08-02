@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0",
+  "report": "phase5d_pre_audit",
+  "phase": "5D",
+  "title": "Universal Scheduler Hardening Preparation — Pre-Audit",
+  "date": "2026-08-02",
+  "mode": "read-only",
+  "repository": "/Users/afnanrudy/Github-Projects/atlas-dataset",
+  "baseline": {
+    "local_head": "5224e17608ff799e6ab092a8e50ab317e6bac7b7",
+    "remote_head": "5224e17608ff799e6ab092a8e50ab317e6bac7b7",
+    "divergence": {"ahead": 0, "behind": 0},
+    "branch": "main"
+  },
+  "git_state": {
+    "modified": 12,
+    "staged": 0,
+    "untracked": 4,
+    "total_uncommitted": 16,
+    "modified_files": [
+      {"path": "config/parallelism.yaml", "classification": "required_change", "note": "precedence doc header only"},
+      {"path": "metadata/architecture_validation_report.json", "classification": "generated_artifact", "note": "timestamp bump"},
+      {"path": "scripts/acquisition_engine/engine.py", "classification": "required_change", "note": "unified config loader"},
+      {"path": "scripts/intelligence/adaptive_scheduler.py", "classification": "required_change", "note": "deprecation shim"},
+      {"path": "scripts/intelligence/batch_classify.py", "classification": "required_change", "note": "deprecation shim"},
+      {"path": "scripts/intelligence/batch_classify_v2.py", "classification": "required_change", "note": "unified worker resolution"},
+      {"path": "scripts/parallel/__init__.py", "classification": "required_change", "note": "API freeze docstring"},
+      {"path": "scripts/parallel/config.py", "classification": "required_change", "note": "precedence docstring"},
+      {"path": "scripts/release/download_release.py", "classification": "required_change", "note": "unified config loader"},
+      {"path": "scripts/run_extract_all.py", "classification": "required_change", "note": "unified config loader"},
+      {"path": "scripts/training_view_engine/generator.py", "classification": "required_change", "note": "unified config loader"},
+      {"path": "scripts/validate_dataset.py", "classification": "required_change", "note": "unified config loader"}
+    ],
+    "untracked_files": [
+      {"path": "docs/architecture/scheduler_api_freeze_v1.md", "classification": "documentation"},
+      {"path": "docs/architecture/scheduler_cleanup_design_v1.md", "classification": "documentation", "note": "Status: Draft — Awaiting Review"},
+      {"path": "docs/architecture/scheduler_deprecation_policy.md", "classification": "documentation"},
+      {"path": "reports/parallelism/scheduler_cleanup_audit.md", "classification": "report"}
+    ],
+    "change_classification_summary": {
+      "required_change": 10,
+      "documentation_report": 4,
+      "generated_artifact": 1,
+      "temporary": 0,
+      "accidental": 0,
+      "phase5c_leftovers": 0,
+      "unrelated": 0
+    }
+  },
+  "architecture_audit": {
+    "duplicate_config_loaders": {"resolved_in_tree": 6, "remaining": ["run_classify_all_v2.py (repo root, own YAML loader + hand-rolled fallback parser)"]},
+    "duplicate_worker_limit_logic": "resolved — resolve_worker_count() single source",
+    "duplicate_retry_logic": "none — Scheduler+TaskRegistry max_retries; downloader http_util/cache retry is protocol-level (domain-specific, kept)",
+    "duplicate_planners": "none — parallel.planner is single shared planner; per-pipeline plan_* wrappers are thin",
+    "duplicate_registries": "none — parallel.registry.TaskRegistry only; adaptive_scheduler shim forwards; CheckpointManager is different abstraction (kept)",
+    "hardcoded_resources": {
+      "intentional_fallbacks": ["validate_dataset.py:370", "run_extract_all.py:146", "training_view_engine/validator.py:315", "training_view_engine/generator.py:356"],
+      "unmigrated_5d_leftover": ["acquisition_engine/engine.py:815 generate_knowledge_pack loader"],
+      "out_of_scope_release": ["compress_release.py:245", "upload_huggingface.py:332", "dedup_release.py:305", "download_release.py:87"],
+      "test_utility": ["e2e_pipeline.py:97"]
+    },
+    "registry_consistency": {
+      "schema_fields": ["task_id", "status", "attempt", "timestamp"],
+      "free_form_fields": ["record_count", "error", "worker_id"],
+      "states": ["pending", "running", "completed", "failed", "retry", "skipped"],
+      "terminal_states": ["completed", "skipped"],
+      "lease": "derived from timestamp via reclaim_stale_running(lease_seconds=900); not a stored column",
+      "metadata": "free-form via **fields; no strict schema enforcement",
+      "on_disk": {
+        "task_registry_validation.jsonl": {"records": 7, "keys": ["attempt", "record_count", "status", "task_id", "timestamp"]},
+        "task_registry_training_views.jsonl": {"records": 69, "keys": ["attempt", "record_count", "status", "task_id", "timestamp"]}
+      },
+      "verdict": "consistent across all six migrated pipelines"
+    }
+  },
+  "pipeline_status": [
+    {"pipeline": "validation", "scheduler": true, "registry": true, "resume": true, "retry": true, "resource_aware": true, "issues": "none"},
+    {"pipeline": "extraction", "scheduler": true, "registry": true, "resume": true, "retry": true, "resource_aware": true, "issues": "none"},
+    {"pipeline": "training_views", "scheduler": true, "registry": true, "resume": true, "retry": true, "resource_aware": true, "issues": "double-fallback in _load_view_workers (training_views -> classification -> 1), behavior same with current config"},
+    {"pipeline": "etl", "scheduler": true, "registry": true, "resume": true, "retry": true, "resource_aware": true, "issues": "none"},
+    {"pipeline": "downloader", "scheduler": true, "registry": true, "resume": true, "retry": true, "resource_aware": true, "issues": "none"},
+    {"pipeline": "acquisition", "scheduler": true, "registry": true, "resume": true, "retry": true, "resource_aware": true, "issues": "generate_knowledge_pack inline executor unmigrated (engine.py:815)"},
+    {"pipeline": "compression", "scheduler": false, "registry": false, "resume": false, "retry": false, "resource_aware": false, "issues": "deferred — release pipeline, own ProcessPoolExecutor"},
+    {"pipeline": "release", "scheduler": false, "registry": false, "resume": false, "retry": false, "resource_aware": false, "issues": "deferred — compress/upload/dedup release-specific"},
+    {"pipeline": "evaluation", "scheduler": false, "registry": false, "resume": false, "retry": false, "resource_aware": false, "issues": "deferred — evaluation_engine/registry.py is different abstraction"}
+  ],
+  "verification": {
+    "architecture_validator": {"result": "PASS", "files_checked": 155, "violations": 0, "known": 4},
+    "tests_dirty_tree": {
+      "test_adaptive_scheduler": {"passed": 4, "failed": 12, "total": 16},
+      "scheduler_suites_universal_extraction_training_views_etl_acquisition": {"passed": 104, "failed": 0},
+      "test_parallel_stabilization": {"passed": 20, "failed": 2, "pre_existing": true},
+      "test_downloader_v1_6_test_acquisition_agent": {"passed": true}
+    },
+    "tests_clean_head": {
+      "test_adaptive_scheduler": {"passed": 16, "failed": 0},
+      "test_parallel_stabilization": {"passed": 20, "failed": 2, "pre_existing": true}
+    },
+    "new_regressions": 12,
+    "regression_source": "uncommitted Phase 5D shim implementation"
+  },
+  "confirmed_bugs": [
+    {
+      "id": "F2",
+      "severity": "critical",
+      "title": "Infinite recursion in adaptive classification",
+      "detail": "batch_classify_v2._classify_one imports classify_source_shards_adaptive from the new batch_classify shim, which forwards back to _classify_one. RecursionError reproduced with smoke test; breaks all adaptive classification (default path)."
+    },
+    {
+      "id": "F3",
+      "severity": "critical",
+      "title": "Shim SourceConfig is an empty stub",
+      "detail": "batch_classify.SourceConfig is type('SourceConfig', (), {}) — not the real v2 dataclass. Verified: shim.SourceConfig is v2.SourceConfig -> False; instantiation raises TypeError. Breaks legacy imports incl. test_adaptive_scheduler.py:301."
+    },
+    {
+      "id": "F4",
+      "severity": "critical",
+      "title": "12 test regressions in test_adaptive_scheduler.py",
+      "detail": "16/16 at clean HEAD -> 4/16 with uncommitted changes."
+    },
+    {
+      "id": "F5",
+      "severity": "high",
+      "title": "ALL_SOURCES not re-exported by shim",
+      "detail": "Shim's 'ALL_SOURCES as SourceConfig' lands in the ImportError stub fallback; no real ALL_SOURCES list is exported."
+    }
+  ],
+  "findings": [
+    {"id": "F1", "severity": "critical", "title": "Phase gate violated", "detail": "Cleanup implementation exists in working tree while scheduler_cleanup_design_v1.md is still 'Draft — Awaiting Review'."},
+    {"id": "F6", "severity": "high", "title": "run_classify_all_v2.py still has own YAML loader", "detail": "5th duplicate config loader not covered by cleanup."},
+    {"id": "F7", "severity": "medium", "title": "generate_knowledge_pack inline executor unmigrated", "detail": "engine.py:815 raw ProcessPoolExecutor; design doc targets it for 5D but no code."},
+    {"id": "F8", "severity": "low", "title": "resolve_worker_count('classification') returns 'auto'", "detail": "Classification uses stage1/stage2_shard_workers keys which the unified resolver ignores; config values bypassed."},
+    {"id": "F9", "severity": "info", "title": "Registry lease/metadata are conventions", "detail": "Lease derived from timestamp; metadata free-form. Hardening candidate, not inconsistency."},
+    {"id": "F10", "severity": "info", "title": "6/9 pipelines migrated", "detail": "Compression/release/evaluation deferred as planned."}
+  ],
+  "cleanup_scope_recommendation": [
+    "Approve or amend scheduler_cleanup_design_v1.md (design says 'Remove' legacy files, implementation keeps them as shims — reconcile)",
+    "Fix shims before commit: break _classify_one <-> shim recursion; re-export real SourceConfig/ALL_SOURCES import-order-safely",
+    "Re-run test_adaptive_scheduler.py — must return to 16/16 before commit",
+    "Migrate or explicitly defer run_classify_all_v2.py loader + generate_knowledge_pack file-tasks",
+    "Commit 4 untracked docs as separate docs:/report: commit",
+    "Do not touch compression/release/evaluation pipelines in this phase"
+  ],
+  "no_changes_made": true,
+  "generated_by": "Hermes read-only audit"
+}

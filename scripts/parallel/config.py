@@ -4,10 +4,17 @@
 Single YAML loader for config/parallelism.yaml with:
 - environment variable overrides (ATLAS_WORKERS_*, ATLAS_PROFILE)
 - hardware profile support (static profiles + runtime detection)
+- CLI override support (explicit parameter)
 
-Replaces the five duplicate parsers previously scattered across pipelines
-(validate_dataset, adaptive_scheduler, run_extract_all, acquisition_engine,
-training_view_engine).
+Worker Resolution Precedence:
+  1. CLI/Code: explicit= parameter to resolve_worker_count()
+  2. Environment: ATLAS_WORKERS_<STAGE_UPPER> = N
+  3. Hardware profile: ATLAS_PROFILE or hostname match
+  4. YAML config: config/parallelism.yaml
+  5. Safe default: resource detection (cpu_cores, ram)
+
+This is the ONLY allowed config loader. All pipelines must use
+load_parallelism_config() and resolve_worker_count() from this module.
 """
 
 from __future__ import annotations
