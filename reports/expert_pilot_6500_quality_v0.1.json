@@ -1,0 +1,284 @@
+{
+  "report_name": "expert_pilot_6500_quality_v0.1",
+  "phase": "0.5 pilot extraction (Option A)",
+  "dry_run": false,
+  "per_source": {
+    "expert-swe-001": {
+      "name": "SWE-bench verified",
+      "target": 500,
+      "retrieved_raw": 500,
+      "converted": 500,
+      "dry_run": false,
+      "records_checked": 500,
+      "schema": {
+        "checked": 500,
+        "passed": 500,
+        "failed": 0,
+        "pass_rate": 1.0,
+        "failures": []
+      },
+      "provenance": {
+        "checked": 500,
+        "complete": 500,
+        "rate": 1.0,
+        "failures": []
+      },
+      "license": {
+        "checked": 500,
+        "passed": 500,
+        "rate": 1.0,
+        "failures": []
+      },
+      "security_flags": [
+        {
+          "id": "expert_swe_000364",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_swe_000368",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_swe_000433",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_swe_000440",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        }
+      ],
+      "duplicates": {
+        "exact_ids": 0,
+        "near_groups": 0,
+        "records_involved": 0,
+        "rate": 0.0
+      },
+      "quality": {
+        "dimension_means": {
+          "correctness": 4.978,
+          "reasoning_depth": 4.036,
+          "explanation_quality": 4.146,
+          "provenance_confidence": 4.0
+        },
+        "quality_score_mean": 8.624,
+        "quality_score_ge7": 500,
+        "quality_score_distribution": {
+          "10": 108,
+          "7": 4,
+          "8": 288,
+          "9": 100
+        },
+        "gate": {
+          "KEEP": 500
+        },
+        "gate_distribution": {
+          "KEEP": 1.0
+        },
+        "gold_candidates": 299,
+        "scorer": "calibration-heuristic-v0.1"
+      }
+    },
+    "expert-math-002": {
+      "name": "OpenMathInstruct-2",
+      "target": 3000,
+      "retrieved_raw": 3000,
+      "converted": 3000,
+      "dry_run": false,
+      "records_checked": 3000,
+      "schema": {
+        "checked": 3000,
+        "passed": 3000,
+        "failed": 0,
+        "pass_rate": 1.0,
+        "failures": []
+      },
+      "provenance": {
+        "checked": 3000,
+        "complete": 3000,
+        "rate": 1.0,
+        "failures": []
+      },
+      "license": {
+        "checked": 3000,
+        "passed": 3000,
+        "rate": 1.0,
+        "failures": []
+      },
+      "security_flags": [],
+      "duplicates": {
+        "exact_ids": 0,
+        "near_groups": 0,
+        "records_involved": 0,
+        "rate": 0.0
+      },
+      "quality": {
+        "dimension_means": {
+          "correctness": 3.926,
+          "reasoning_depth": 4.775,
+          "explanation_quality": 4.787,
+          "provenance_confidence": 4.0
+        },
+        "quality_score_mean": 8.725,
+        "quality_score_ge7": 2973,
+        "quality_score_distribution": {
+          "6": 27,
+          "7": 78,
+          "8": 587,
+          "9": 2308
+        },
+        "gate": {
+          "KEEP": 3000
+        },
+        "gate_distribution": {
+          "KEEP": 1.0
+        },
+        "gold_candidates": 2704,
+        "scorer": "calibration-heuristic-v0.1"
+      }
+    },
+    "expert-aiml-001": {
+      "name": "ArXiv cs.LG / cs.CL / cs.AI / stat.ML",
+      "target": 3000,
+      "retrieved_raw": 3000,
+      "converted": 3000,
+      "dry_run": false,
+      "records_checked": 3000,
+      "schema": {
+        "checked": 3000,
+        "passed": 3000,
+        "failed": 0,
+        "pass_rate": 1.0,
+        "failures": []
+      },
+      "provenance": {
+        "checked": 3000,
+        "complete": 3000,
+        "rate": 1.0,
+        "failures": []
+      },
+      "license": {
+        "checked": 3000,
+        "passed": 3000,
+        "rate": 1.0,
+        "failures": []
+      },
+      "security_flags": [],
+      "duplicates": {
+        "exact_ids": 0,
+        "near_groups": 0,
+        "records_involved": 0,
+        "rate": 0.0
+      },
+      "quality": {
+        "dimension_means": {
+          "correctness": 3.0,
+          "reasoning_depth": 4.421,
+          "explanation_quality": 3.17,
+          "provenance_confidence": 4.0
+        },
+        "quality_score_mean": 7.507,
+        "quality_score_ge7": 2903,
+        "quality_score_distribution": {
+          "5": 2,
+          "6": 95,
+          "7": 1283,
+          "8": 1620
+        },
+        "gate": {
+          "KEEP": 3000
+        },
+        "gate_distribution": {
+          "KEEP": 1.0
+        },
+        "gold_candidates": 0,
+        "scorer": "calibration-heuristic-v0.1"
+      }
+    }
+  },
+  "records_checked": 6500,
+  "schema": {
+    "checked": 6500,
+    "passed": 6500,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "failures": []
+  },
+  "provenance": {
+    "checked": 6500,
+    "complete": 6500,
+    "rate": 1.0,
+    "failures": []
+  },
+  "license": {
+    "checked": 6500,
+    "passed": 6500,
+    "rate": 1.0,
+    "failures": []
+  },
+  "security_flags": [
+    {
+      "id": "expert_swe_000364",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_swe_000368",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_swe_000433",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_swe_000440",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    }
+  ],
+  "duplicates": {
+    "exact_ids": 0,
+    "near_groups": 0,
+    "records_involved": 0,
+    "rate": 0.0
+  },
+  "quality": {
+    "dimension_means": {
+      "correctness": 3.579,
+      "reasoning_depth": 4.555,
+      "explanation_quality": 3.992,
+      "provenance_confidence": 4.0
+    },
+    "quality_score_mean": 8.155,
+    "quality_score_ge7": 6376,
+    "quality_score_distribution": {
+      "10": 108,
+      "5": 2,
+      "6": 122,
+      "7": 1365,
+      "8": 2495,
+      "9": 2408
+    },
+    "gate": {
+      "KEEP": 6500
+    },
+    "gate_distribution": {
+      "KEEP": 1.0
+    },
+    "gold_candidates": 3003,
+    "scorer": "calibration-heuristic-v0.1"
+  }
+}
