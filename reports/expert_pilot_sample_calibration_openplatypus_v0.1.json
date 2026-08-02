@@ -1,0 +1,320 @@
+{
+  "report_name": "expert_pilot_sample_calibration_openplatypus_v0.1",
+  "phase": "0.5",
+  "source_id": "expert-aiml-002",
+  "source_name": "Open-Platypus",
+  "generated_at": "2026-08-02T12:51:19.223204+00:00",
+  "environment": {
+    "host": "dev-pc WSL2",
+    "venv": ".venv-exec",
+    "datasets": "5.0.1",
+    "huggingface_hub": "1.26.0",
+    "python": "3.12.3"
+  },
+  "method": "Calibration only. No full acquisition, no dataset modification, no 10K pilot.",
+  "sample": {
+    "requested": 100,
+    "retrieved": 100,
+    "stream_source": "garage-bAInd/Open-Platypus (train split, 24,926 instances)",
+    "sample_data_source_distribution": {
+      "MATH/PRM-800K": 100
+    },
+    "full_stream_source_counts": {
+      "MATH/PRM-800K": 12298,
+      "reclor": 4530,
+      "airoboros": 2605,
+      "scienceqa": 1317,
+      "leetcode_ne": 1100,
+      "guanaco": 797,
+      "ARB": 713,
+      "scibench": 616,
+      "theoremqa": 564,
+      "tigerbot-kaggle": 386
+    },
+    "representativeness_note": "First-100 stream sample is a single sub-source (MATH/PRM-800K); not representative of the 11-source mix. Source-level license audit below covers the full dataset.",
+    "original_ids": [
+      "openplatypus_MATH/PRM-800K_05e9950a7dc0d85b",
+      "openplatypus_MATH/PRM-800K_af234ab23a735133",
+      "openplatypus_MATH/PRM-800K_735d0f0543057954",
+      "openplatypus_MATH/PRM-800K_fa59324a6ea451b2",
+      "openplatypus_MATH/PRM-800K_1c390250866259c5",
+      "openplatypus_MATH/PRM-800K_362aa8113746145f",
+      "openplatypus_MATH/PRM-800K_d10113dc6be20c2d",
+      "openplatypus_MATH/PRM-800K_01a2ab2991d1b60b",
+      "openplatypus_MATH/PRM-800K_3fdd9f47d9621e65",
+      "openplatypus_MATH/PRM-800K_14e4e6f3a491e9b4",
+      "openplatypus_MATH/PRM-800K_15e3a057d8b19de7",
+      "openplatypus_MATH/PRM-800K_4a0ec6c123cb48df",
+      "openplatypus_MATH/PRM-800K_0e4b4908f4105542",
+      "openplatypus_MATH/PRM-800K_5e3da1b7042bcea6",
+      "openplatypus_MATH/PRM-800K_a8fee6aca3a916b5",
+      "openplatypus_MATH/PRM-800K_79d38f24fba6defe",
+      "openplatypus_MATH/PRM-800K_78fc8ab4303db1cf",
+      "openplatypus_MATH/PRM-800K_9d93b5461b686bdb",
+      "openplatypus_MATH/PRM-800K_df961a5384158426",
+      "openplatypus_MATH/PRM-800K_6dc6e8add28f79b3",
+      "openplatypus_MATH/PRM-800K_501c41d51f9c8225",
+      "openplatypus_MATH/PRM-800K_b9ebaece623bc1d5",
+      "openplatypus_MATH/PRM-800K_581ad2b6413ea8e7",
+      "openplatypus_MATH/PRM-800K_7b10b4d8f8941bff",
+      "openplatypus_MATH/PRM-800K_1d64447277904c60",
+      "openplatypus_MATH/PRM-800K_bc24bb5e1508c1f2",
+      "openplatypus_MATH/PRM-800K_0c133fee16ba5532",
+      "openplatypus_MATH/PRM-800K_b8a5d74960785905",
+      "openplatypus_MATH/PRM-800K_d650b2e3928046bb",
+      "openplatypus_MATH/PRM-800K_399f95b0ed9beaa7",
+      "openplatypus_MATH/PRM-800K_ad542ea35f264276",
+      "openplatypus_MATH/PRM-800K_47c57358ef616c4f",
+      "openplatypus_MATH/PRM-800K_3f3191b86e128cde",
+      "openplatypus_MATH/PRM-800K_41f75ebf869edef3",
+      "openplatypus_MATH/PRM-800K_21b3a67d894a4c15",
+      "openplatypus_MATH/PRM-800K_9b1be8aa9c50a0b8",
+      "openplatypus_MATH/PRM-800K_aea89f70132a2574",
+      "openplatypus_MATH/PRM-800K_20f3b9ce406ead0b",
+      "openplatypus_MATH/PRM-800K_d3b31b309894f023",
+      "openplatypus_MATH/PRM-800K_ebd966d0e8b418d3",
+      "openplatypus_MATH/PRM-800K_0f6e20a213c66dc9",
+      "openplatypus_MATH/PRM-800K_594ca2ba930ef376",
+      "openplatypus_MATH/PRM-800K_418a87bd5c4cae0e",
+      "openplatypus_MATH/PRM-800K_57a5a65d99117825",
+      "openplatypus_MATH/PRM-800K_acec2f9b9099aaf5",
+      "openplatypus_MATH/PRM-800K_9ca2d6314d252ab2",
+      "openplatypus_MATH/PRM-800K_2a759915cd24dad4",
+      "openplatypus_MATH/PRM-800K_61aa9fef77210f30",
+      "openplatypus_MATH/PRM-800K_a75b5643322f5024",
+      "openplatypus_MATH/PRM-800K_ea497c5839324f92",
+      "openplatypus_MATH/PRM-800K_bb795bba546f7044",
+      "openplatypus_MATH/PRM-800K_af51423375b0b3c6",
+      "openplatypus_MATH/PRM-800K_5a49b483383f6ddc",
+      "openplatypus_MATH/PRM-800K_7a19fe2d2f0970e7",
+      "openplatypus_MATH/PRM-800K_0803347eff2711f7",
+      "openplatypus_MATH/PRM-800K_9e0f2c3d4f63b999",
+      "openplatypus_MATH/PRM-800K_05c1ef22d1fdb39e",
+      "openplatypus_MATH/PRM-800K_1b5abce271caccbc",
+      "openplatypus_MATH/PRM-800K_bea028588675e9b5",
+      "openplatypus_MATH/PRM-800K_d81d8af921dd5cdc",
+      "openplatypus_MATH/PRM-800K_9554e2eb1acc9443",
+      "openplatypus_MATH/PRM-800K_92c750b13e292c0e",
+      "openplatypus_MATH/PRM-800K_b285277833ebdb59",
+      "openplatypus_MATH/PRM-800K_1509bc3aee5a925c",
+      "openplatypus_MATH/PRM-800K_16a3c4c148156073",
+      "openplatypus_MATH/PRM-800K_2a43d99576c32c94",
+      "openplatypus_MATH/PRM-800K_6a15c7c1153c6708",
+      "openplatypus_MATH/PRM-800K_2b4f4c33c27bbb97",
+      "openplatypus_MATH/PRM-800K_cea310d5db83157a",
+      "openplatypus_MATH/PRM-800K_c2f0ac1a1cdbb65f",
+      "openplatypus_MATH/PRM-800K_d0ded3566e8e8dea",
+      "openplatypus_MATH/PRM-800K_acbd7d46ed1c8f77",
+      "openplatypus_MATH/PRM-800K_ce110baed6ba56d5",
+      "openplatypus_MATH/PRM-800K_5d734cf1cbcacab2",
+      "openplatypus_MATH/PRM-800K_4aaa16143a693f4e",
+      "openplatypus_MATH/PRM-800K_946f77734604f777",
+      "openplatypus_MATH/PRM-800K_f187c4046e53dbd1",
+      "openplatypus_MATH/PRM-800K_14a21fdedf30ac0d",
+      "openplatypus_MATH/PRM-800K_f345905578be7c7d",
+      "openplatypus_MATH/PRM-800K_5ad54935b78586c4",
+      "openplatypus_MATH/PRM-800K_d2b92e37d8a0100b",
+      "openplatypus_MATH/PRM-800K_7dbc289ccb3567d1",
+      "openplatypus_MATH/PRM-800K_2a126905053bcd0e",
+      "openplatypus_MATH/PRM-800K_a7c04f4bb47fcc74",
+      "openplatypus_MATH/PRM-800K_52762297d459ab23",
+      "openplatypus_MATH/PRM-800K_592a8168e393284f",
+      "openplatypus_MATH/PRM-800K_f99e0bfcfab18b8b",
+      "openplatypus_MATH/PRM-800K_f65e2f29267fb06a",
+      "openplatypus_MATH/PRM-800K_43aa072103de6991",
+      "openplatypus_MATH/PRM-800K_190648d29afa1e3c",
+      "openplatypus_MATH/PRM-800K_2f8f168f2e24b55f",
+      "openplatypus_MATH/PRM-800K_1e19f3b335361ecf",
+      "openplatypus_MATH/PRM-800K_2b932d8864986401",
+      "openplatypus_MATH/PRM-800K_3ef87c8a45622604",
+      "openplatypus_MATH/PRM-800K_9db1c42699a82ecb",
+      "openplatypus_MATH/PRM-800K_3761455e3d4f8b9f",
+      "openplatypus_MATH/PRM-800K_d9b1b28c5fb17f45",
+      "openplatypus_MATH/PRM-800K_8f050f8fd63ae31e",
+      "openplatypus_MATH/PRM-800K_31f73979637d2044",
+      "openplatypus_MATH/PRM-800K_67bfbb7f4f4180f8"
+    ]
+  },
+  "conversion": {
+    "attempted": 100,
+    "success": 100,
+    "failed": 0,
+    "failures": []
+  },
+  "schema": {
+    "checked": 100,
+    "passed": 100,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "failures": []
+  },
+  "quality": {
+    "dimension_means": {
+      "correctness": 3.88,
+      "reasoning_depth": 3.93,
+      "explanation_quality": 3.74,
+      "provenance_confidence": 4.0
+    },
+    "quality_score_mean": 7.76,
+    "quality_score_ge7": 89,
+    "gate": {
+      "KEEP": 99,
+      "REVIEW": 0,
+      "REJECT": 1
+    },
+    "gate_distribution": {
+      "KEEP": 0.99,
+      "REVIEW": 0.0,
+      "REJECT": 0.01
+    },
+    "gold_candidates": 51,
+    "scorer": "calibration-heuristic-v0.1",
+    "scoring_method": "Deterministic calibration heuristic (no LLM). correctness: output length + reasoning markers; reasoning_depth: output structure; explanation_quality: length/structure; provenance_confidence: method+evidence present, capped at 4 because verification.status=needs_review (no factual audit)."
+  },
+  "hygiene": {
+    "duplicate_ids_exact": 0,
+    "near_duplicate_groups": 0,
+    "duplicate_records_count": 0,
+    "duplicate_rate": 0.0,
+    "missing_field_counts": {
+      "id": 0,
+      "domain": 0,
+      "expert_tier": 0,
+      "difficulty": 0,
+      "type": 0,
+      "source.source_id": 0,
+      "source.name": 0,
+      "source.url": 0,
+      "source.license": 0,
+      "source.accessed_at": 0,
+      "license": 0,
+      "attribution": 0,
+      "problem": 0,
+      "solution": 0,
+      "verification.method": 0,
+      "verification.status": 0,
+      "provenance.original_id": 0,
+      "provenance.ingestion_pipeline": 0,
+      "provenance.transformations": 0,
+      "metadata.language": 0,
+      "metadata.quality_score": 0,
+      "metadata.synthetic": 0,
+      "metadata.model_generated": 0,
+      "messages": 0,
+      "created_at": 0,
+      "curated": 0
+    },
+    "malformed_records": 0,
+    "security_flags": [],
+    "security_scan_note": "Hard-gate scan covers keys, tokens, credential files. Bare /Users/<name>/ paths in tracebacks are observations only.",
+    "local_home_path_observations": {
+      "record_count": 0,
+      "samples": []
+    }
+  },
+  "provenance_completeness": {
+    "checked": 100,
+    "complete": 100,
+    "rate": 1.0
+  },
+  "license_audit": {
+    "note": "Plan assumed Apache-2.0 for expert-aiml-002. Measured card shows MIXED sub-licenses including NonCommercial and unresolved. Per quality gate 1.2, NC/restricted licenses must be rejected unless an explicit policy exception is recorded; unknown licenses are not allowed in curated expert data.",
+    "sub_source_rows": [
+      {
+        "data_source": "MATH/PRM-800K",
+        "rows": 12298,
+        "share": 0.4934,
+        "license": "MIT",
+        "license_status": "permissive"
+      },
+      {
+        "data_source": "reclor",
+        "rows": 4530,
+        "share": 0.1817,
+        "license": "Non-commercial",
+        "license_status": "nc"
+      },
+      {
+        "data_source": "airoboros",
+        "rows": 2605,
+        "share": 0.1045,
+        "license": "other",
+        "license_status": "unresolved"
+      },
+      {
+        "data_source": "scienceqa",
+        "rows": 1317,
+        "share": 0.0528,
+        "license": "CC-BY-NC-SA-4.0",
+        "license_status": "nc"
+      },
+      {
+        "data_source": "leetcode_ne",
+        "rows": 1100,
+        "share": 0.0441,
+        "license": "None listed",
+        "license_status": "unresolved"
+      },
+      {
+        "data_source": "guanaco",
+        "rows": 797,
+        "share": 0.032,
+        "license": "Apache-2.0",
+        "license_status": "permissive"
+      },
+      {
+        "data_source": "ARB",
+        "rows": 713,
+        "share": 0.0286,
+        "license": "CC-BY-4.0",
+        "license_status": "permissive"
+      },
+      {
+        "data_source": "scibench",
+        "rows": 616,
+        "share": 0.0247,
+        "license": "MIT",
+        "license_status": "permissive"
+      },
+      {
+        "data_source": "theoremqa",
+        "rows": 564,
+        "share": 0.0226,
+        "license": "MIT",
+        "license_status": "permissive"
+      },
+      {
+        "data_source": "tigerbot-kaggle",
+        "rows": 386,
+        "share": 0.0155,
+        "license": "Apache-2.0",
+        "license_status": "permissive"
+      }
+    ],
+    "totals": {
+      "total_rows": 24926,
+      "permissive_rows": 15374,
+      "permissive_share": 0.6168,
+      "nc_rows": 5847,
+      "nc_share": 0.2346,
+      "unresolved_rows": 3705,
+      "unresolved_share": 0.1486
+    },
+    "sample_is_single_source": true
+  },
+  "model_generated_audit": {
+    "flagged_true": 100,
+    "basis": "PRM800K outputs are model-generated solutions (openai/prm800k README: '800,000 step-level correctness labels for model-generated solutions to problems from the MATH dataset'). Other sub-sources not verified -> False."
+  },
+  "blockers": [
+    "source-level license blocker: 5847/24926 rows (23.5%) are NonCommercial/restricted (scienceqa, reclor) — rejected without policy exception per quality gate 1.2",
+    "source-level license blocker: 3705/24926 rows (14.9%) have unresolved licenses (leetcode_ne, airoboros)"
+  ],
+  "recommendation": "HOLD",
+  "recommendation_rule": "STOP if security flags > 0 OR any sampled record has NC/unresolved license OR conversion success < 80%; HOLD if source-level license audit has NC or unresolved rows (policy decision needed) OR conversion < 100% OR schema pass < 0.99 OR KEEP rate < 0.80 OR duplicate rate > 0.02 OR quality mean < 7; else GO.",
+  "calibration_observations": [
+    "The 1 REJECT (expert_aiml_000085, openplatypus_MATH/PRM-800K_592a8168e393284f) is a terse-but-correct math answer ('Compute \\\\binom{10}{8}' -> '\\\\binom{10}{8}=\\\\binom{10}{2}=45.', 35 chars). The length-based correctness heuristic scores <50-char outputs as 2 -> REJECT. Conservative for expert training (no reasoning chain, verification.status=needs_review); documented rather than tuned during calibration.",
+    "First-100 stream sample is single-sub-source (MATH/PRM-800K, MIT). Full 10K pilot must stratify across sub-sources or apply the per-sub-source license filter first.",
+    "model_generated=True flagged for all 100 sampled records because they are MATH/PRM-800K (model-generated solutions per openai/prm800k README). Other sub-sources remain model_generated=False pending per-source verification."
+  ]
+}

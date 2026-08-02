@@ -1,0 +1,148 @@
+{
+  "report_name": "expert_pilot_sample_calibration_arxiv_v0.1",
+  "phase": "0.5",
+  "source_id": "expert-aiml-001",
+  "source_name": "ArXiv cs.LG / cs.CL / cs.AI / stat.ML",
+  "generated_at": "2026-08-02T13:01:02.176846+00:00",
+  "environment": {
+    "host": "dev-pc WSL2",
+    "venv": ".venv-exec",
+    "python": "3.12.3"
+  },
+  "method": "Calibration only. No full acquisition, no full-text ingestion, no 10K pilot.",
+  "sample": {
+    "target": 12,
+    "retrieved": 12,
+    "selection": "newest submissions per primary category (cs.LG, cs.CL, cs.AI, stat.ML), 3 each, via export.arxiv.org API, primary-category filtered",
+    "category_counts": {
+      "cs.LG": 3,
+      "cs.CL": 3,
+      "cs.AI": 3,
+      "stat.ML": 3
+    },
+    "arxiv_ids": [
+      "2607.28608v1",
+      "2607.28582v1",
+      "2607.28553v1",
+      "2607.28618v1",
+      "2607.28607v1",
+      "2607.28576v1",
+      "2607.28617v1",
+      "2607.28609v1",
+      "2607.28580v1",
+      "2607.28567v1",
+      "2607.28248v1",
+      "2607.28080v1"
+    ],
+    "titles": [
+      "KAISEN: Reproducible Subgroup Fairness Auditing for Clinical Risk Models",
+      "$β$-OPSD: Deriving with Policy Optimization, Training with Self-Distillation",
+      "APO: Unsupervised Atomic Policy Optimization for 3D Structure Prediction of Atomic Systems",
+      "AskChem: Claim-Centered Infrastructure for Chemistry Literature Synthesis",
+      "Inducing language models to assert their own consciousness restores human beliefs and values",
+      "Sample More, Reflect Less: Self-Refine and Reflexion Lose to Repeated Sampling at Equal Token Cost, from 1.5B to 7B",
+      "AISPA: User-Centric System Prompt Auditing for Large Language Model Applications",
+      "OSReward: Instituting Standardized Evaluation for Cross-Platform Computer-Use Reward Models",
+      "DualG-MRAG: Decoupling Macro-Reasoning and Micro-Matching for Multimodal Retrieval-Augmented Generation",
+      "Doubly Robust Functional Representation Learning for Longitudinal Causal Inference with Irregular Histories",
+      "Uncertainty quantification for trustworthy deep learning: Methods and measures",
+      "On a joint simultaneous learning of relevant feature subsets and subspaces in regression-like problems"
+    ]
+  },
+  "conversion": {
+    "attempted": 12,
+    "success": 12,
+    "failed": 0,
+    "failures": []
+  },
+  "schema": {
+    "checked": 12,
+    "passed": 12,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "failures": []
+  },
+  "quality": {
+    "dimension_means": {
+      "correctness": 4.0,
+      "reasoning_depth": 4.833,
+      "explanation_quality": 5.0,
+      "provenance_confidence": 4.0
+    },
+    "quality_score_mean": 8.833,
+    "quality_score_ge7": 12,
+    "gate": {
+      "KEEP": 12,
+      "REVIEW": 0,
+      "REJECT": 0
+    },
+    "gate_distribution": {
+      "KEEP": 1.0,
+      "REVIEW": 0.0,
+      "REJECT": 0.0
+    },
+    "gold_candidates": 12,
+    "scorer": "calibration-heuristic-v0.1",
+    "scoring_method": "Deterministic calibration heuristic (no LLM). correctness: abstract length; reasoning_depth: abstract structure + methodology markers; explanation_quality: abstract length/structure; provenance_confidence: method+evidence+source.url present, capped at 4 (verification.status=needs_review)."
+  },
+  "hygiene": {
+    "duplicate_ids_exact": 0,
+    "near_duplicate_groups": 0,
+    "duplicate_records_count": 0,
+    "duplicate_rate": 0.0,
+    "missing_field_counts": {
+      "id": 0,
+      "domain": 0,
+      "expert_tier": 0,
+      "difficulty": 0,
+      "type": 0,
+      "source.source_id": 0,
+      "source.name": 0,
+      "source.url": 0,
+      "source.license": 0,
+      "source.accessed_at": 0,
+      "license": 0,
+      "attribution": 0,
+      "problem": 0,
+      "solution": 0,
+      "verification.method": 0,
+      "verification.status": 0,
+      "provenance.original_id": 0,
+      "provenance.ingestion_pipeline": 0,
+      "provenance.transformations": 0,
+      "metadata.language": 0,
+      "metadata.quality_score": 0,
+      "metadata.synthetic": 0,
+      "metadata.model_generated": 0,
+      "messages": 0,
+      "created_at": 0,
+      "curated": 0
+    },
+    "malformed_records": 0,
+    "security_flags": [],
+    "local_home_path_observations": {
+      "record_count": 0
+    }
+  },
+  "provenance_completeness": {
+    "checked": 12,
+    "complete": 12,
+    "rate": 1.0
+  },
+  "extraction_feasibility": {
+    "api_available": true,
+    "api_errors": [],
+    "papers_fetched": 12,
+    "abstracts_extracted": 12,
+    "authors_extracted": 12,
+    "retraction_pages_checked": 12,
+    "retraction_pages_marked": 0,
+    "full_text_ingested": 0,
+    "note": "Abstract + metadata extraction only (per plan). Full-text/section extraction NOT performed in calibration; retraction check via abs-page markers (measured).",
+    "license_note": "arXiv API does not expose per-paper license field; source registered with arXiv default non-exclusive license per plan 2.3. Custom per-paper licenses (e.g., CC-BY) not detectable via API metadata — flag for human review if required."
+  },
+  "blockers": [],
+  "recommendation": "GO",
+  "recommendation_rule": "STOP if security flags > 0 OR retraction markers > 0 OR conversion success < 80%; HOLD if conversion < 100% OR schema pass < 0.99 OR KEEP rate < 0.80 OR duplicate rate > 0.02 OR quality mean < 7 OR sample < 10; else GO.",
+  "next_source": "Mathematics (expert-math-002) pending access/license resolution, per calibration plan 2.4"
+}

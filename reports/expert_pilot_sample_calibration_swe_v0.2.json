@@ -1,0 +1,249 @@
+{
+  "report_name": "expert_pilot_sample_calibration_swe_v0.2",
+  "phase": "0.5",
+  "source_id": "expert-swe-001",
+  "source_name": "SWE-bench verified",
+  "generated_at": "2026-08-02T12:29:08.878204+00:00",
+  "environment": {
+    "host": "dev-pc WSL2",
+    "venv": ".venv-exec",
+    "datasets": "5.0.1",
+    "huggingface_hub": "1.26.0",
+    "python": "3.12.3"
+  },
+  "method": "Calibration only. No full acquisition, no dataset modification, no 10K pilot.",
+  "sample": {
+    "requested": 100,
+    "retrieved": 100,
+    "stream_source": "SWE-bench/SWE-bench_Verified (test split, 500 instances)",
+    "instance_ids": [
+      "astropy__astropy-12907",
+      "astropy__astropy-13033",
+      "astropy__astropy-13236",
+      "astropy__astropy-13398",
+      "astropy__astropy-13453",
+      "astropy__astropy-13579",
+      "astropy__astropy-13977",
+      "astropy__astropy-14096",
+      "astropy__astropy-14182",
+      "astropy__astropy-14309",
+      "astropy__astropy-14365",
+      "astropy__astropy-14369",
+      "astropy__astropy-14508",
+      "astropy__astropy-14539",
+      "astropy__astropy-14598",
+      "astropy__astropy-14995",
+      "astropy__astropy-7166",
+      "astropy__astropy-7336",
+      "astropy__astropy-7606",
+      "astropy__astropy-7671",
+      "astropy__astropy-8707",
+      "astropy__astropy-8872",
+      "django__django-10097",
+      "django__django-10554",
+      "django__django-10880",
+      "django__django-10914",
+      "django__django-10973",
+      "django__django-10999",
+      "django__django-11066",
+      "django__django-11087",
+      "django__django-11095",
+      "django__django-11099",
+      "django__django-11119",
+      "django__django-11133",
+      "django__django-11138",
+      "django__django-11141",
+      "django__django-11149",
+      "django__django-11163",
+      "django__django-11179",
+      "django__django-11206",
+      "django__django-11211",
+      "django__django-11239",
+      "django__django-11265",
+      "django__django-11276",
+      "django__django-11292",
+      "django__django-11299",
+      "django__django-11333",
+      "django__django-11400",
+      "django__django-11433",
+      "django__django-11451",
+      "django__django-11477",
+      "django__django-11490",
+      "django__django-11532",
+      "django__django-11551",
+      "django__django-11555",
+      "django__django-11603",
+      "django__django-11728",
+      "django__django-11734",
+      "django__django-11740",
+      "django__django-11749",
+      "django__django-11790",
+      "django__django-11815",
+      "django__django-11820",
+      "django__django-11848",
+      "django__django-11880",
+      "django__django-11885",
+      "django__django-11951",
+      "django__django-11964",
+      "django__django-11999",
+      "django__django-12039",
+      "django__django-12050",
+      "django__django-12125",
+      "django__django-12143",
+      "django__django-12155",
+      "django__django-12193",
+      "django__django-12209",
+      "django__django-12262",
+      "django__django-12273",
+      "django__django-12276",
+      "django__django-12304",
+      "django__django-12308",
+      "django__django-12325",
+      "django__django-12406",
+      "django__django-12419",
+      "django__django-12663",
+      "django__django-12708",
+      "django__django-12713",
+      "django__django-12741",
+      "django__django-12754",
+      "django__django-12774",
+      "django__django-12858",
+      "django__django-12965",
+      "django__django-13012",
+      "django__django-13023",
+      "django__django-13028",
+      "django__django-13033",
+      "django__django-13089",
+      "django__django-13109",
+      "django__django-13112",
+      "django__django-13121"
+    ]
+  },
+  "conversion": {
+    "attempted": 100,
+    "success": 100,
+    "failed": 0,
+    "failures": []
+  },
+  "schema": {
+    "checked": 100,
+    "passed": 100,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "failures": []
+  },
+  "quality": {
+    "dimension_means": {
+      "correctness": 4.97,
+      "reasoning_depth": 4.03,
+      "explanation_quality": 4.07,
+      "provenance_confidence": 5.0
+    },
+    "quality_score_mean": 8.98,
+    "quality_score_ge7": 100,
+    "gate": {
+      "KEEP": 100,
+      "REVIEW": 0,
+      "REJECT": 0
+    },
+    "gate_distribution": {
+      "KEEP": 1.0,
+      "REVIEW": 0.0,
+      "REJECT": 0.0
+    },
+    "gold_candidates": 57,
+    "scorer": "calibration-heuristic-v0.1",
+    "scoring_method": "Deterministic calibration heuristic (no LLM). correctness: gold patch + FAIL_TO_PASS/PASS_TO_PASS evidence; reasoning_depth: problem length + patch size + files; explanation_quality: patch structure/lines/hunks; provenance_confidence: gold_patch method + evidence string."
+  },
+  "hygiene": {
+    "duplicate_ids_exact": 0,
+    "near_duplicate_groups": 0,
+    "duplicate_records_count": 0,
+    "duplicate_rate": 0.0,
+    "missing_field_counts": {
+      "id": 0,
+      "domain": 0,
+      "expert_tier": 0,
+      "difficulty": 0,
+      "type": 0,
+      "source.source_id": 0,
+      "source.name": 0,
+      "source.url": 0,
+      "source.license": 0,
+      "source.accessed_at": 0,
+      "license": 0,
+      "attribution": 0,
+      "problem": 0,
+      "solution": 0,
+      "verification.method": 0,
+      "verification.status": 0,
+      "provenance.original_id": 0,
+      "provenance.ingestion_pipeline": 0,
+      "provenance.transformations": 0,
+      "metadata.language": 0,
+      "metadata.quality_score": 0,
+      "metadata.synthetic": 0,
+      "metadata.model_generated": 0,
+      "messages": 0,
+      "created_at": 0,
+      "curated": 0
+    },
+    "malformed_records": 0,
+    "security_flags": [],
+    "security_scan_note": "Hard-gate scan covers keys, tokens, credential files. Bare /Users/<name>/ paths in tracebacks are observations only (normal bug-report content), not credentials.",
+    "local_home_path_observations": {
+      "record_count": 5,
+      "samples": [
+        {
+          "id": "expert_swe_000007",
+          "original_id": "astropy__astropy-14096",
+          "paths": [
+            "/Users/dstansby/"
+          ]
+        },
+        {
+          "id": "expert_swe_000018",
+          "original_id": "astropy__astropy-7606",
+          "paths": [
+            "/Users/aldcroft/"
+          ]
+        },
+        {
+          "id": "expert_swe_000052",
+          "original_id": "django__django-11532",
+          "paths": [
+            "/Users/chason/"
+          ]
+        },
+        {
+          "id": "expert_swe_000067",
+          "original_id": "django__django-11964",
+          "paths": [
+            "/Users/mikailkocak/"
+          ]
+        },
+        {
+          "id": "expert_swe_000084",
+          "original_id": "django__django-12663",
+          "paths": [
+            "/Users/u/"
+          ]
+        }
+      ]
+    }
+  },
+  "provenance_completeness": {
+    "checked": 100,
+    "complete": 100,
+    "rate": 1.0
+  },
+  "difficulty_distribution": {
+    "3": 54,
+    "4": 9,
+    "2": 37
+  },
+  "blockers": [],
+  "recommendation": "GO",
+  "recommendation_rule": "STOP if security flags > 0 OR license != MIT OR conversion success < 80%; HOLD if conversion success < 100% OR schema pass rate < 0.99 OR KEEP rate < 0.80 OR duplicate rate > 0.02 OR quality score mean < 7; else GO.",
+  "next_source": "Open-Platypus (expert-aiml-002) per calibration plan 2.2"
+}
