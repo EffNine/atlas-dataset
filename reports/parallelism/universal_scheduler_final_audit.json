@@ -1,0 +1,257 @@
+{
+  "schema_version": "1.0",
+  "report": "universal_scheduler_final_audit",
+  "phase": "5E",
+  "title": "Universal Scheduler Final Audit",
+  "date": "2026-08-02T01:37:38Z",
+  "baseline": {
+    "head": "f147a2e45a51febf007eb0a744bb074c3173b06a",
+    "branch": "main",
+    "origin": "f147a2e",
+    "tree": "clean"
+  },
+  "mode": "read-only",
+  "summary": {
+    "status": "complete",
+    "canonical_execution_layer": "scripts/parallel/",
+    "pipelines_migrated": 6,
+    "pipelines_deferred": 3,
+    "blocking_issues": 0,
+    "critical_findings": 0,
+    "non_blocking_gaps": 4,
+    "next_phase": "compression"
+  },
+  "migration_status": {
+    "validation": {"phase": "P1", "status": "migrated", "commit": "2b86c11", "registry": "task_registry_validation.jsonl"},
+    "extraction": {"phase": "P2", "status": "migrated", "commit": "66ca4b1", "registry": "task_registry_extraction.jsonl"},
+    "training_views": {"phase": "P3", "status": "migrated", "commit": "048a2e4", "registry": "task_registry_training_views.jsonl"},
+    "etl": {"phase": "P4", "status": "migrated", "commit": "51750e6", "registry": "task_registry_etl.jsonl"},
+    "downloader": {"phase": "P5B", "status": "migrated", "commit": "4301b74", "registry": "task_registry_acquisition.jsonl"},
+    "acquisition_engine": {"phase": "P5C", "status": "migrated", "commit": "3a68c93", "registry": "task_registry_acquisition.jsonl"},
+    "cleanup": {"phase": "P5D", "status": "done", "commits": ["5746d06", "334aae1", "e0ae64a", "7cf4b5e", "f147a2e"]},
+    "compression": {"phase": "P6", "status": "not_started"},
+    "release": {"phase": "P7", "status": "not_started"},
+    "evaluation": {"phase": "P8", "status": "not_started"}
+  },
+  "pipeline_matrix": [
+    {
+      "id": 1,
+      "pipeline": "validation",
+      "current_executor": "scheduler process pool + ProcessPoolExecutor fallback",
+      "scheduler_integrated": true,
+      "task_model": "file",
+      "task_id_format": "validation:<source>:<filename>",
+      "registry_usage": true,
+      "retry": "max_retries=2",
+      "resume": true,
+      "resource_awareness": "safe_worker_limit",
+      "deterministic_output": "sorted by task_id",
+      "gaps": []
+    },
+    {
+      "id": 2,
+      "pipeline": "extraction",
+      "current_executor": "scheduler process pool + ProcessPoolExecutor fallback",
+      "scheduler_integrated": true,
+      "task_model": "shard",
+      "task_id_format": "extract:{source}:{shard:03d}",
+      "registry_usage": true,
+      "retry": "max_retries=2",
+      "resume": true,
+      "resource_awareness": "safe_worker_limit",
+      "deterministic_output": "sorted by task_id",
+      "gaps": []
+    },
+    {
+      "id": 3,
+      "pipeline": "training_views",
+      "current_executor": "scheduler process pool + ProcessPoolExecutor fallback",
+      "scheduler_integrated": true,
+      "task_model": "file + record-range",
+      "task_id_format": "tv:validate:{start:06d}:{end:06d}",
+      "registry_usage": true,
+      "retry": "max_retries=2",
+      "resume": "inline re-validate",
+      "resource_awareness": "safe_worker_limit",
+      "deterministic_output": "range-ordered by task_id",
+      "gaps": []
+    },
+    {
+      "id": 4,
+      "pipeline": "etl",
+      "current_executor": "scheduler process pool + sequential fallback",
+      "scheduler_integrated": true,
+      "task_model": "source-level",
+      "task_id_format": "etl:{source_id}",
+      "registry_usage": true,
+      "retry": "max_retries=2",
+      "resume": "reload report.json for completed sources",
+      "resource_awareness": "safe_worker_limit",
+      "deterministic_output": "sorted by source_id",
+      "gaps": []
+    },
+    {
+      "id": 5,
+      "pipeline": "downloader",
+      "current_executor": "scheduler thread pool + sequential fallback",
+      "scheduler_integrated": true,
+      "task_model": "source-level",
+      "task_id_format": "download:{source_id}:{url_hash_12}",
+      "registry_usage": true,
+      "retry": "max_retries=2",
+      "resume": true,
+      "resource_awareness": "safe_io_worker_limit (io_worker_cap=8)",
+      "deterministic_output": "sorted by task_id",
+      "gaps": []
+    },
+    {
+      "id": 6,
+      "pipeline": "acquisition_engine",
+      "current_executor": "scheduler process pool + sequential fallback",
+      "scheduler_integrated": true,
+      "task_model": "source-level (pure workers + serialized finalize)",
+      "task_id_format": "acq:engine:{batch_id}:{source_id}",
+      "registry_usage": true,
+      "retry": "max_retries=2",
+      "resume": "registry + lease re-claim (900s)",
+      "resource_awareness": "safe_worker_limit",
+      "deterministic_output": "manifest-order finalize, byte-identical",
+      "gaps": ["generate_knowledge_pack loader intentionally unscheduled (documented)"]
+    },
+    {
+      "id": 7,
+      "pipeline": "compression",
+      "current_executor": "manual ProcessPoolExecutor",
+      "scheduler_integrated": false,
+      "task_model": "file (whole shard)",
+      "task_id_format": "n/a",
+      "registry_usage": false,
+      "retry": false,
+      "resume": "skip-existing output-exists check",
+      "resource_awareness": false,
+      "deterministic_output": "sorted by input name",
+      "gaps": ["no registry", "no retry", "no adaptive workers", "fixed --workers CLI"]
+    },
+    {
+      "id": 8,
+      "pipeline": "release",
+      "current_executor": "manual ProcessPoolExecutor / ThreadPoolExecutor / HF-library managed",
+      "scheduler_integrated": false,
+      "task_model": "category (dedup), section (upload)",
+      "task_id_format": "n/a",
+      "registry_usage": false,
+      "retry": "upload: network backoff only",
+      "resume": "upload: remote-size skip",
+      "resource_awareness": "download uses unified config; dedup/upload fixed CLI",
+      "deterministic_output": "partial",
+      "gaps": ["domain-specific retry/resume", "needs exemption or light migration"]
+    },
+    {
+      "id": 9,
+      "pipeline": "evaluation",
+      "current_executor": "sequential",
+      "scheduler_integrated": false,
+      "task_model": "n/a (no parallelism)",
+      "task_id_format": "n/a",
+      "registry_usage": "BenchmarkRegistry (different domain)",
+      "retry": false,
+      "resume": false,
+      "resource_awareness": false,
+      "deterministic_output": "deterministic + reproducibility hash",
+      "gaps": ["sequential by design; no executor to migrate"]
+    },
+    {
+      "id": 10,
+      "pipeline": "classification",
+      "current_executor": "manual ProcessPoolExecutor + ThreadPoolExecutor source orchestration",
+      "scheduler_integrated": "partial (planner + registry + monitor adopted; not Scheduler.run())",
+      "task_model": "byte-range tasks",
+      "task_id_format": "classify:{source}:{file}~{chunk:04d}",
+      "registry_usage": true,
+      "retry": "registry attempts",
+      "resume": true,
+      "resource_awareness": "partial (stage1/stage2 keys ignored -> auto)",
+      "deterministic_output": "sorted merge by task_id",
+      "gaps": ["drives ProcessPoolExecutor manually", "resolve_worker_count key gap"]
+    }
+  ],
+  "duplicate_infrastructure": {
+    "config_loaders": {
+      "canonical": "scripts/parallel/config.py",
+      "duplicates_found": 0,
+      "migrated_in_5d": ["run_classify_all_v2.py", "batch_classify_v2.py", "download_release.py", "run_extract_all.py", "acquisition_engine/engine.py", "training_view_engine/generator.py"]
+    },
+    "worker_limit_logic": {
+      "canonical": "scripts/parallel/resource.py + parallel.config.resolve_worker_count",
+      "keep": ["parallel/resource.py", "parallel/config.py", "engine.py generate_knowledge_pack"],
+      "migrate": ["release/compress_release.py --workers", "release/dedup_release.py --jobs", "release/upload_huggingface.py --workers"]
+    },
+    "retry_systems": {
+      "canonical": "parallel/scheduler.py + parallel/registry.py",
+      "keep_domain_specific": ["downloader/http_util.py + cache.py", "release/upload_huggingface.py", "automation/failure_recovery.py"],
+      "migrate": ["batch_classify_v2.py manual retry loop"]
+    },
+    "resume_checkpoint": {
+      "canonical": "parallel/registry.py TaskRegistry",
+      "keep": ["acquisition_engine/checkpoint.py (facade)", "upload_huggingface.py _resume_skip", "download_release.py (HF-owned)"],
+      "migrate": ["compress_release.py --skip-existing"]
+    },
+    "task_planning": {
+      "canonical": "parallel/planner.py",
+      "keep": ["batch_classify_v2.py split_single_shard (classification-specific)"]
+    },
+    "registry": {
+      "canonical": "parallel/registry.py TaskRegistry",
+      "keep_different_domain": ["evaluation_engine/registry.py BenchmarkRegistry", "automation/failure_recovery.py RetryManager"]
+    }
+  },
+  "architecture_boundary": {
+    "scripts_parallel_canonical": true,
+    "pipelines_own_business_logic": true,
+    "workers_picklable": true,
+    "task_ids_deterministic": true,
+    "merges_deterministic": true,
+    "retries_no_duplicate_outputs": true,
+    "resource_limits_prevent_overload": true,
+    "findings": [
+      "_backpressure() defined in scheduler.py:208 but never invoked (dead code); bounded submission caps in-flight workers so overload is still prevented",
+      "disk_free() reported by monitor only; never gates submission (acceptable: workloads RAM/CPU-bound)",
+      "classification worker resolution returns auto due to stage1/stage2 key gap (documented 5D)"
+    ]
+  },
+  "resource_awareness": {
+    "ram_safety_margin": "0.8 (safety_margin_ram)",
+    "cpu_worker_limits": "safe_worker_limit caps at CPU cores",
+    "disk_awareness": "disk_free() for reporting only; no admission control",
+    "backpressure": "has_ram_headroom() exists; _backpressure() not wired into run loop",
+    "bounded_submission": true,
+    "large_shard_handling": "byte_range_tasks (classification), record-range (training views), shard (extraction)",
+    "possible_memory_spikes": ["eval_dataset.py load() reads entire JSONL into RAM (R7)", "generate_knowledge_pack loads all curated files (intentional, one-shot)"],
+    "oversized_task_units": ["compression: whole shard per worker (streaming O(1) RAM, but no chunking)", "dedup_release: whole category file per worker"],
+    "dynamic_chunk_sizing": "classification only (target/max/min split config)"
+  },
+  "risks": [
+    {"id": "R1", "risk": "_backpressure() dead code", "severity": "low", "mitigation": "wire into Scheduler.run() submit loop (Phase 6 cleanup)"},
+    {"id": "R2", "risk": "disk_free() not used for admission control", "severity": "low", "mitigation": "document intentional; re-evaluate when compression writes large outputs"},
+    {"id": "R3", "risk": "classification worker resolution returns auto (stage1/stage2 keys ignored)", "severity": "medium", "mitigation": "extend resolve_worker_count key candidates"},
+    {"id": "R4", "risk": "compression/release pipelines have no registry/retry/adaptive workers", "severity": "medium", "mitigation": "Phase 6/7 scope"},
+    {"id": "R5", "risk": "generate_knowledge_pack inline executor bypasses scheduler", "severity": "low", "mitigation": "intentional, documented; re-verify at v2.0"},
+    {"id": "R6", "risk": "test_parallel_stabilization.py 2 pre-existing failures at clean HEAD", "severity": "low", "mitigation": "track separately"},
+    {"id": "R7", "risk": "evaluation in-memory full-JSONL load", "severity": "low-medium", "mitigation": "streaming/chunked eval if full-dataset runs become routine"}
+  ],
+  "recommended_phase_order": [
+    {"phase": "P6", "pipeline": "compression", "task_unit": "file (one shard per task)", "registry_stage": "compression -> task_registry_compression.jsonl", "worker": "compress_task module-level wrapper around _route_shard", "pool": "process", "design_decisions": ["registry stage key naming", "skip-existing vs registry-resume mapping"]},
+    {"phase": "P7", "pipeline": "release tools", "approach": "exemption-by-design doc for network-domain retry/resume; dedup candidate for scheduler", "notes": "download already uses unified config"},
+    {"phase": "P8", "pipeline": "evaluation", "approach": "no executor to migrate; document as intentionally sequential; optional scheduler only if parallel metrics needed"},
+    {"phase": "P6-cleanup", "pipeline": "classification + scheduler internals", "approach": "wire _backpressure, extend resolve_worker_count keys, route batch_classify_v2 adaptive path through Scheduler.run()"}
+  ],
+  "blocking_issues_before_compression": [],
+  "verification": {
+    "architecture_validator": "PASS (155 files, 0 violations; governance report restored)",
+    "json_schema_validation": "PASS (18/18 required keys; pipeline_matrix ids 1..10; all row fields present)",
+    "markdown_completeness": "PASS (8/8 sections; 10/10 pipeline rows; 11-column matrix consistent)",
+    "blocking_issues": 0,
+    "tree_cleanliness": "clean after audit; only reports/parallelism/universal_scheduler_final_audit.{md,json} added"
+  },
+  "generated_by": "Hermes Phase 5E final audit (read-only)"
+}

@@ -1,0 +1,201 @@
+{
+  "schema_version": "1.0",
+  "report": "compression_audit",
+  "phase": "6A",
+  "title": "Compression Pipeline Audit — Universal Scheduler Phase 6A",
+  "date": "2026-08-02",
+  "baseline": "f147a2e",
+  "mode": "audit_only",
+  "summary": {
+    "status": "complete",
+    "pipeline": "scripts/release/compress_release.py",
+    "executor": "ProcessPoolExecutor (manual, CLI workers)",
+    "registry": "none",
+    "retry": "none",
+    "resume": "disk-based --skip-existing only",
+    "resource_awareness": "none",
+    "migration_verdict": "cleanest fit — file-task model, module-level worker, disjoint outputs, no merge step",
+    "blocking_issues": 0,
+    "critical_findings": 0,
+    "medium_findings": 4,
+    "low_findings": 3,
+    "decisions_needed": 4,
+    "next_phase": "6B implementation (awaiting design approval)"
+  },
+  "pipeline_inventory": {
+    "entry_points": [
+      {
+        "path": "scripts/release/compress_release.py",
+        "type": "CLI script",
+        "invoked_by": "manual per docs/huggingface_release_pipeline.md; tests/test_release_pipeline.py (4 compression tests); no production callers"
+      },
+      {
+        "path": "scripts/release/common.py",
+        "type": "shared helper module",
+        "provides": [
+          "CATEGORIES",
+          "DEFAULT_ZSTD_LEVEL",
+          "iter_jsonl",
+          "open_zstd_writer",
+          "count_jsonl_zst",
+          "sha256_file",
+          "utc_now"
+        ]
+      }
+    ],
+    "cli_flags": [
+      {"flag": "--release", "default": "v1.0-RC1", "meaning": "release tag -> output root releases/<release>/dataset/"},
+      {"flag": "--input", "default": "<repo>/raw/generated", "meaning": "directory containing JSONL shards"},
+      {"flag": "--pattern", "default": "*_atlas.jsonl", "meaning": "glob for shard files"},
+      {"flag": "--output", "default": null, "meaning": "explicit release root override"},
+      {"flag": "--workers", "default": 2, "meaning": "raw parallel worker count (old audit said 1 — stale; on-disk default is 2)"},
+      {"flag": "--level", "default": 19, "meaning": "zstd level (1-22)"},
+      {"flag": "--dry-run", "default": false, "meaning": "list shards + preview category, write nothing"},
+      {"flag": "--skip-existing", "default": false, "meaning": "skip shards whose output files exist and decompress OK"}
+    ],
+    "output_artifacts": [
+      "releases/<release>/dataset/<category>/<shard_stem>.jsonl.zst",
+      "releases/<release>/metadata/compression_report.json",
+      "releases/<release>/metadata/statistics.json"
+    ],
+    "exit_codes": {
+      "0": "all outputs verified OK",
+      "1": "any failure",
+      "2": "no shards matched"
+    }
+  },
+  "execution_model": {
+    "worker": {
+      "name": "_route_shard",
+      "module_level": true,
+      "picklable": true,
+      "args_shape": "JSON-safe dict {input_path, out_root, level}",
+      "behavior": [
+        "stream shard line-by-line (iter_jsonl, O(1) memory)",
+        "route each record by rec['category'] (NOT filename — mixed shards exist)",
+        "open per-category zstd writer {out_root}/{cat}/{stem}.jsonl.zst",
+        "unknown category -> errors list, skipped",
+        "close writers, then verify in same worker (count_jsonl_zst + sha256_file)"
+      ],
+      "return_shape": "{input, input_bytes, input_records, by_category, verified, errors, elapsed_s}"
+    },
+    "executor": {
+      "kind": "ProcessPoolExecutor",
+      "workers_source": "raw CLI --workers (default 2)",
+      "sequential_fallback": "workers <= 1 -> sequential loop, same worker fn",
+      "completion": "as_completed then re-sorted by input name",
+      "macos_spawn": "works today (tests run with --workers 2)"
+    },
+    "shard_routing": "record category field, not filename",
+    "parallelization_safety": "each shard writes its own {category}/{stem}.jsonl.zst files; no two workers touch the same output file"
+  },
+  "merge_order_guarantees": {
+    "merge_step": "none — per-category folders populated independently",
+    "report_aggregation": "sorted(results, key=lambda x: x['input']) — shard filename order",
+    "per_shard_category_order": "first-encounter order (deterministic for fixed input)",
+    "zstd_determinism": "single-threaded frames, fixed level -> byte-deterministic for identical input+level",
+    "non_deterministic_fields": ["utc_now", "elapsed_s (report only, not data)"]
+  },
+  "retry_resume": {
+    "retry": "none",
+    "resume": "planner-time disk scan (--skip-existing): skip shard if ANY category output exists AND all found files decompress OK",
+    "resume_failure_modes": [
+      "partial-output shard (crash wrote category A not B) is NOT detected — A's file exists so shard skipped -> silent partial output",
+      "corrupt-but-countable file (count >= 0, wrong records) treated as OK"
+    ]
+  },
+  "integrity": {
+    "in_worker_verification": "decompress + count + sha256 per output file",
+    "failure_handling": "verified[cat].ok False -> failures[]; exit 1",
+    "downstream": "sha256s feed generate_checksums.py / verify_release.py (separate tools, out of scope)"
+  },
+  "resource_usage": {
+    "cpu": "raw CLI int (default 2), no caps, no adaptive sizing",
+    "ram": "O(1) streaming per worker + zstd frame buffers; no RAM-aware limit",
+    "disk": "writes ~1/3 raw input; docs warn ensure free space >= source size; no disk check in code",
+    "backpressure": "none",
+    "config_usage": "reads NO config/parallelism.yaml"
+  },
+  "migration_boundary": {
+    "becomes_scheduler_task": [
+      "one file task per shard; worker compress_task(task) wraps _route_shard verbatim",
+      "worker raises when errors non-empty OR any verified.ok False (scheduler retry needs exception)",
+      "worker resolution via resolve_worker_count('release') / safe_worker_limit(); --workers kept as CLI override"
+    ],
+    "remains_serialized": [
+      "planner: glob + sort shards, --skip-existing disk scan, dry-run listing",
+      "finalize single writer: aggregation sorted by task_id, compression_report.json + statistics.json writes, exit-code decision"
+    ],
+    "registry_state": [
+      "task_id, status, attempt, timestamp, error, record_count telemetry",
+      "task_id MUST embed release: compress:{release}:{shard_stem} — registry is repo-global; bare compress:{shard} collides across releases"
+    ],
+    "cannot_parallelize": "nothing at shard level (disjoint outputs); only report aggregation order must stay deterministic (serialized finalize)"
+  },
+  "scheduler_evaluation": {
+    "config.py": {"verdict": "READY", "note": "resolve_worker_count('release') reads release.compress_workers (DEFAULTS 'auto'; YAML has no release section — verified on disk)"},
+    "resource.py": {"verdict": "READY", "note": "safe_worker_limit fits CPU-bound zstd; disk_free() reporting-only — R2 from 5E, re-evaluate for disk-heavy compression"},
+    "models.py": {"verdict": "READY", "note": "Task/TaskResult fit file tasks; extra={out_root, level}"},
+    "registry.py": {"verdict": "READY", "note": "TaskRegistry(root, 'compression') -> task_registry_compression.jsonl; lease re-claim 900s"},
+    "planner.py": {"verdict": "READY", "note": "file_tasks() -> one Task per shard; task_id source:operation:name matches compress:{release}:{stem}"},
+    "scheduler.py": {"verdict": "READY", "note": "bounded submission, retry <= max_retries, resume-skip, deterministic sort, in-run dedupe; _backpressure() dead-code is scheduler-wide cleanup, out of scope"},
+    "monitor.py": {"verdict": "OPTIONAL", "note": "Monitor writes reports/performance/compression_scheduler_report.json; not required for correctness"}
+  },
+  "findings": [
+    {"id": "F1", "severity": "medium", "finding": "No registry / no task-state resume; --skip-existing is a disk heuristic that can silently accept partial output after crash", "impact": "Migration closes via per-shard task completion + lease re-claim"},
+    {"id": "F2", "severity": "low", "finding": "Verification failure is non-retryable (hard exit 1); worker records ok=False instead of raising", "impact": "Migration: worker raises -> scheduler retry; exit 1 preserved on terminal failure"},
+    {"id": "F3", "severity": "medium", "finding": "Worker count is raw CLI int (default 2), no RAM/CPU caps; uneven shards idle workers", "impact": "resolve_worker_count('release') + safe_worker_limit(); --workers stays as override"},
+    {"id": "F4", "severity": "medium", "finding": "Zero disk-awareness while compression is disk-heavy (docs: keep free space >= source size)", "impact": "Keep --workers 1 guidance; optional pre-flight disk_free() check in finalize (design decision)"},
+    {"id": "F5", "severity": "high_design", "finding": "task_id must embed release tag or global registry collides across releases", "impact": "compress:{release}:{stem} — resolved in design"},
+    {"id": "F6", "severity": "low", "finding": "Registry record_count telemetry: _record_count() looks for record_count/total/classified/processed; worker returns input_records -> 0", "impact": "Add 'total' alias in worker result payload"},
+    {"id": "F7", "severity": "low", "finding": "--skip-existing semantics vs registry resume divergence (file deleted but task completed)", "impact": "Keep flag as planner-time disk check; registry resume additional; verify_release catches missing files downstream"},
+    {"id": "F8", "severity": "info", "finding": "Old atlas_parallelism_audit.md says worker default 1 — stale; on-disk default is 2", "impact": "Document corrected default"}
+  ],
+  "decisions_needed": [
+    {
+      "id": "D1",
+      "question": "Registry stage key",
+      "options": ["compression (-> task_registry_compression.jsonl, per 5E recommendation)", "release (shared with future dedup/upload tasks)"],
+      "recommendation": "compression — isolates from Phase 7 release tools; task_ids already carry operation prefix for future sharing"
+    },
+    {
+      "id": "D2",
+      "question": "--skip-existing mapping",
+      "options": ["keep as planner-time disk check layered on registry resume", "pure registry state"],
+      "recommendation": "keep flag as disk check + registry resume (belt-and-suspenders, preserves today's flag contract)"
+    },
+    {
+      "id": "D3",
+      "question": "Worker cap",
+      "options": ["leave release.compress_workers at 'auto' (safe limit — behavior change from default 2)", "pin concrete value (e.g. 4) in config/parallelism.yaml"],
+      "recommendation": "pin modest default in YAML at implementation time; document ATLAS_WORKERS_RELEASE / --workers for constrained machines"
+    },
+    {
+      "id": "D4",
+      "question": "Failure semantics",
+      "options": ["worker raises on verification mismatch (retryable)", "record-only (today's behavior, exit 1 without retry)"],
+      "recommendation": "worker raises (retryable); exit 1 preserved on terminal failure"
+    }
+  ],
+  "verification": {
+    "mode": "read_only",
+    "git_baseline": "f147a2e clean except two untracked Phase 5E final audit reports (universal_scheduler_final_audit.{md,json}) — pre-existing, untouched",
+    "probes": [
+      {
+        "probe": "resolve_worker_count('release') on-disk",
+        "result": "'auto'; release stage cfg {'compress_workers': 'auto', 'upload_workers': 4}; YAML has no release: section (defaults only)"
+      },
+      {
+        "probe": "call graph grep for compress_release",
+        "result": "no production invoker; only tests/test_release_pipeline.py"
+      },
+      {
+        "probe": "releases/ dir state",
+        "result": "v1.0-RC1, v1.0-RC2, restored — untouched"
+      }
+    ],
+    "dataset_release_hf_changes": "none",
+    "blocking_issues": 0
+  },
+  "generated_by": "Hermes (atlas-scheduler-pipeline-migration skill) — Phase 6A audit only"
+}
