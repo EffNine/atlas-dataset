@@ -1,25 +1,22 @@
 {
   "release": "repository_freeze_v1.0",
-  "timestamp": "2026-08-03T06:52:00+08:00",
+  "timestamp": "2026-08-03T06:53:00+08:00",
   "branch": "main",
-  "commit": "44d84e62cb9a6ba7e42c5a5ff9b4e3a1c9d8f0ab",
-  "origin_commit": "44d84e62cb9a6ba7e42c5a5ff9b4e3a1c9d8f0ab",
+  "commit": "3b2d8f9e5b3c248d788638b5e4d213ef51159968",
+  "origin_commit": "3b2d8f9e5b3c248d788638b5e4d213ef51159968",
   "push": {
     "success": true,
     "to": "https://github.com/EffNine/atlas-dataset.git",
-    "result": "85341d9..44d84e6  main -> main"
+    "result": "44d84e6..3b2d8f9  main -> main"
   },
   "sync": {
     "mac": {
-      "current_commit": "44d84e62cb9a6ba7e42c5a5ff9b4e3a1c9d8f0ab",
+      "current_commit": "3b2d8f9e5b3c248d788638b5e4d213ef51159968",
       "matches_origin": true,
-      "working_tree_clean": false,
-      "uncommitted_files": [
-        "reports/repository_freeze_v1.0.json"
-      ]
+      "working_tree_clean": true
     },
     "dev_pc": {
-      "current_commit": "44d84e62cb9a6ba7e42c5a5ff9b4e3a1c9d8f0ab",
+      "current_commit": "3b2d8f9e5b3c248d788638b5e4d213ef51159968",
       "matches_origin": true,
       "working_tree_clean": false,
       "uncommitted_files": [
@@ -64,14 +61,14 @@
   },
   "machine_consistency": {
     "all_match_origin": false,
-    "mac": "MISMATCH",
+    "mac": "OK",
     "dev_pc": "MISMATCH"
   },
   "verification": {
     "repository_health": "OK",
     "temp_cleanup": "OK",
     "commit_created": true,
-    "commit_hash": "44d84e62cb9a6ba7e42c5a5ff9b4e3a1c9d8f0ab",
+    "commit_hash": "3b2d8f9e5b3c248d788638b5e4d213ef51159968",
     "push_successful": true,
     "branch_up_to_date": {
       "mac": true,
@@ -79,5 +76,5 @@
     }
   },
   "decision": "HOLD",
-  "hold_reason": "Origin, Mac, and Dev-PC all share commit 44d84e6, but neither checked-out tree is clean: Mac has an unstaged repository freeze report, and Dev-PC has extensive uncommitted artifacts. No automatic conflict resolution attempted."
+  "hold_reason": "Dev-PC repository matches origin at commit 3b2d8f9, but its working tree is dirty with uncommitted artifacts. No automatic conflict resolution was attempted."
 }
