@@ -289,21 +289,13 @@ class TrainingViewGenerator:
     # ------------------------------------------------------------------
 
     def _load_view_workers(self) -> int:
-        """Load training view workers from config/parallelism.yaml.
-
-        Falls back to the classification worker count, then 1.
-        """
-        cfg_path = self._root / "config" / "parallelism.yaml"
-        try:
-            import yaml
-            with open(cfg_path, "r") as f:
-                cfg = yaml.safe_load(f) or {}
-            workers = cfg.get("parallelism", {}).get("training_views", {}).get("workers")
-            if workers is None:
-                workers = cfg.get("parallelism", {}).get("classification", {}).get("stage2_shard_workers")
-            return int(workers or 1)
-        except Exception:
-            return 1
+        """Load training view workers from unified config (parallel.config)."""
+        from parallel.config import resolve_worker_count, load_parallelism_config
+        cfg = load_parallelism_config()
+        workers = resolve_worker_count("training_views", cfg)
+        if workers == "auto":
+            workers = resolve_worker_count("classification", cfg)
+        return int(workers) if workers != "auto" and workers > 0 else 1
 
     def _load_curated_records(
         self,

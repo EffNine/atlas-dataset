@@ -25,21 +25,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = ROOT / "scripts"
-CONFIG_PATH = ROOT / "config" / "parallelism.yaml"
 
 SOURCES = [
     "wiki_ai", "wiki_sw", "wiki_sys", "wiki_sci",
     "wiki_biz", "wiki_cre", "wiki_hw",
 ]
 
-
-def load_config() -> dict:
-    try:
-        import yaml
-        with open(CONFIG_PATH, "r") as f:
-            return yaml.safe_load(f) or {}
-    except Exception:
-        return {}
+# Unified config loader — single source of truth (parallel.config)
+from parallel.config import load_parallelism_config, resolve_worker_count  # noqa: E402
 
 
 def extract_one(args: tuple[str, int]) -> tuple[int, int, str]:
@@ -177,9 +170,12 @@ def main() -> int:
                     help="TaskRegistry root dir (default: metadata/pipeline_state)")
     args = ap.parse_args()
 
-    config = load_config()
-    ext = config.get("parallelism", {}).get("extraction", {})
-    shard_workers = args.shard_workers or int(ext.get("shard_workers", 4))
+    cfg = load_parallelism_config()
+    # CLI override > env > YAML > safe default
+    shard_workers = args.shard_workers or resolve_worker_count("extraction", cfg)
+    if shard_workers == "auto":
+        shard_workers = 4
+    ext = cfg.get("parallelism", {}).get("extraction", {})
     shards_per_source = args.shards or int(ext.get("shards_per_source", 41))
 
     sources = SOURCES if args.all else ([args.source] if args.source else [])

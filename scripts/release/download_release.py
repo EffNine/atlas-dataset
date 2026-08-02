@@ -70,17 +70,13 @@ def main(argv: list[str] | None = None) -> int:
         f"  revision : {args.revision or 'main'}"
     )
     # Worker count from unified config (ADR-013); fallback 4.
-    import yaml
-    dl_workers = 4
-    try:
-        cfg_path = REPO_ROOT / "config" / "parallelism.yaml"
-        if cfg_path.exists():
-            cfg = yaml.safe_load(cfg_path.read_text()) or {}
-            dl_workers = int(
-                cfg.get("parallelism", {}).get("acquisition", {}).get("file_workers", 4)
-            )
-    except Exception:
-        pass
+    from parallel.config import resolve_worker_count, load_parallelism_config
+    cfg = load_parallelism_config()
+    dl_workers = resolve_worker_count("acquisition", cfg)
+    if dl_workers == "auto":
+        dl_workers = 4
+    else:
+        dl_workers = int(dl_workers)
     snapshot_download(
         repo_id=args.repo_id,
         repo_type="dataset",

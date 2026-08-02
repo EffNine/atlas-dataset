@@ -124,6 +124,25 @@ def _assert_write_safe(path: Path):
         raise RuntimeError(f"unauthorized write target: {p}")
 
 
+def _load_curated_file(fp: Path) -> list[dict[str, Any]]:
+    """Module-level worker: read all JSONL records from one curated file.
+
+    Lives at module level so it is picklable in process pools (including
+    macOS spawn). Used by ``generate_knowledge_pack`` for parallel curated
+    loading; the worker count comes from ``parallel.config``.
+    """
+    out: list[dict[str, Any]] = []
+    with open(fp, encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if line:
+                try:
+                    out.append(json.loads(line))
+                except json.JSONDecodeError:
+                    pass
+    return out
+
+
 # ---------------------------------------------------------------------------
 # Engine
 # ---------------------------------------------------------------------------
@@ -773,15 +792,11 @@ class AcquisitionEngine:
     # -----------------------------------------------------------------------
 
     def _load_file_workers(self) -> int:
-        """Load acquisition.file_workers from config/parallelism.yaml."""
-        cfg_path = self.root / "config" / "parallelism.yaml"
-        try:
-            import yaml
-            with open(cfg_path, "r") as f:
-                cfg = yaml.safe_load(f) or {}
-            return int(cfg.get("parallelism", {}).get("acquisition", {}).get("file_workers", 1))
-        except Exception:
-            return 1
+        """Load acquisition.file_workers from unified config (parallel.config)."""
+        from parallel.config import resolve_worker_count, load_parallelism_config
+        cfg = load_parallelism_config()
+        workers = resolve_worker_count("acquisition", cfg)
+        return int(workers) if workers != "auto" and workers > 0 else 1
 
     def generate_knowledge_pack(
         self,
@@ -796,6 +811,14 @@ class AcquisitionEngine:
             install_network_block()
 
         # Load records from curated if not provided
+        # NOTE (Phase 5D): this loader intentionally does NOT use the
+        # Universal Scheduler. It is a one-shot in-memory read of curated
+        # JSONL with no resume/retry/checkpoint semantics — a TaskRegistry
+        # entry marking a file "completed" would skip re-reading that file on
+        # a later run even if curated changed, which is wrong for a fresh
+        # knowledge-pack build. Worker count is resolved through the unified
+        # config (parallel.config.resolve_worker_count); the worker is
+        # module-level (_load_curated_file) so it pickles under macOS spawn.
         if source_records is None:
             source_records = []
             curated_dir = self.root / "curated" / "v0.1"
@@ -805,31 +828,13 @@ class AcquisitionEngine:
                 if file_workers > 1 and len(files) > 1:
                     from concurrent.futures import ProcessPoolExecutor
                     print(f"[engine] loading {len(files)} curated files with {file_workers} workers...")
-                    def _load_one(fp):
-                        out = []
-                        with open(fp, encoding="utf-8") as fh:
-                            for line in fh:
-                                line = line.strip()
-                                if line:
-                                    try:
-                                        out.append(json.loads(line))
-                                    except json.JSONDecodeError:
-                                        pass
-                        return out
                     with ProcessPoolExecutor(max_workers=file_workers) as ex:
-                        chunks = list(ex.map(_load_one, files))
+                        chunks = list(ex.map(_load_curated_file, files))
                     for chunk in chunks:
                         source_records.extend(chunk)
                 else:
                     for f in files:
-                        with open(f, encoding="utf-8") as fh:
-                            for line in fh:
-                                line = line.strip()
-                                if line:
-                                    try:
-                                        source_records.append(json.loads(line))
-                                    except json.JSONDecodeError:
-                                        pass
+                        source_records.extend(_load_curated_file(f))
 
         pack_dir = self.root / "knowledge_packs"
         _assert_write_safe(pack_dir)

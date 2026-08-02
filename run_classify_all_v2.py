@@ -16,7 +16,10 @@ PY = sys.executable
 SCRIPT = "scripts/intelligence/batch_classify_v2.py"
 REPO = Path(".")
 OUT_DIR = REPO / "metadata/intelligence"
-CONFIG_PATH = REPO / "config/parallelism.yaml"
+
+# Unified config loader — single source of truth (parallel.config)
+sys.path.insert(0, str(REPO / "scripts"))
+from parallel.config import load_parallelism_config  # noqa: E402
 
 STAGE1 = [
     "wiki_ai", "wiki_sw", "wiki_sys", "wiki_sci",
@@ -37,73 +40,6 @@ STAGE2 = [
 
 V11_CLASSIFIED = OUT_DIR / "unknown_classified_v1.1.jsonl"
 V12_CLASSIFIED = OUT_DIR / "unknown_classified_v1.2.jsonl"
-
-
-def load_parallelism_config() -> dict:
-    """Load parallelism config from YAML file."""
-    try:
-        import yaml
-        with open(CONFIG_PATH, "r") as f:
-            return yaml.safe_load(f) or {}
-    except ImportError:
-        pass
-    
-    # Fallback: parse our specific nested YAML structure by depth
-    root = {}
-    stack = [(root, -1)]  # (container, indent_level)
-    
-    try:
-        with open(CONFIG_PATH, "r") as f:
-            lines = f.readlines()
-    except OSError:
-        return root
-    for raw_line in lines:
-        line = raw_line.rstrip()
-        if not line or line.startswith("#") or line.strip() == "---":
-            continue
-        
-        # Calculate indent
-        indent = len(line) - len(line.lstrip())
-        stripped = line.strip()
-        
-        if ":" not in stripped:
-            continue
-        
-        key, _, value = stripped.partition(":")
-        key = key.strip()
-        value = value.strip()
-        
-        # Pop stack to find parent at correct depth
-        while len(stack) > 1 and stack[-1][1] >= indent:
-            stack.pop()
-        
-        parent = stack[-1][0]
-        
-        if value:
-            # Leaf node
-            parent[key] = _convert_value(value)
-        else:
-            # Section node
-            new_section = {}
-            parent[key] = new_section
-            stack.append((new_section, indent))
-    
-    return root
-
-
-def _convert_value(value: str):
-    """Convert YAML value string to Python type."""
-    if value.lower() in ("true", "yes"):
-        return True
-    elif value.lower() in ("false", "no"):
-        return False
-    try:
-        return int(value)
-    except ValueError:
-        try:
-            return float(value)
-        except ValueError:
-            return value
 
 
 def get_classification_config(config: dict) -> dict:

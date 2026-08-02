@@ -208,15 +208,9 @@ def strict_jsonschema(records: list[dict]) -> list[list[str]]:
     return out
 
 
-def load_parallelism_config() -> dict:
-    """Load unified parallelism config (config/parallelism.yaml)."""
-    cfg_path = ROOT / "config" / "parallelism.yaml"
-    try:
-        import yaml
-        with open(cfg_path, "r") as f:
-            return yaml.safe_load(f) or {}
-    except Exception:
-        return {}
+# NOTE: load_parallelism_config is now in scripts/parallel/config.py.
+# This file imports it to avoid duplicate YAML loader logic.
+from parallel.config import load_parallelism_config  # noqa: E402
 
 
 def validate_one_file(path: Path, strict: bool = False, quiet: bool = False) -> dict:
