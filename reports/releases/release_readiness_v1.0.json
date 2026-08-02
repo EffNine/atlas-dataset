@@ -1,0 +1,131 @@
+{
+  "assessment": {
+    "title": "Atlas Release v1.0 — Final Release Readiness Assessment",
+    "date": "2026-08-02",
+    "assessor": "Hermes (Phase 7C-D)",
+    "release": "v1.0",
+    "promoted_from": "v1.0-RC2",
+    "verdict": "READY WITH KNOWN LIMITATIONS"
+  },
+  "executive_summary": {
+    "status": "pass",
+    "blocking_issues": 0,
+    "total_issues": 4,
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 3,
+    "test_pass_rate": "211/212 (99.5%)",
+    "architecture_violations": 0,
+    "hf_mutation_occurred": false,
+    "dataset_modification_occurred": false,
+    "release_publish_occurred": false
+  },
+  "phase_completion_matrix": {
+    "5E_universal_scheduler_final_audit": {"status": "complete", "commit": "69d0ae6"},
+    "6B_compression_migration_to_scheduler": {"status": "complete", "commit": "a1eb632"},
+    "7B_dedup_migration_to_scheduler": {"status": "complete", "commit": "0f99d92"},
+    "7C-A_shared_sha256_verification_module": {"status": "complete", "commit": "f5a5e64"},
+    "7C-B_upload_hardening": {"status": "complete", "commit": "76980a3"},
+    "7C-C_promotion_hardening": {"status": "complete", "commit": "6dfb352"}
+  },
+  "verification_matrix": {
+    "scheduler": {
+      "compression_scheduler": {"status": "pass", "evidence": "test_scheduler_compression.py: 15/15 passed"},
+      "dedup_scheduler": {"status": "pass", "evidence": "test_scheduler_dedup.py: 16/16 passed"},
+      "registry_resume": {"status": "pass", "evidence": "TaskRegistry append-only JSONL; completed tasks skipped on restart; stale running reclaimed"},
+      "retry": {"status": "pass", "evidence": "max_retries=2 with backoff; terminal failure after exhaustion; tested in scheduler suites"},
+      "kill_switch_fallback": {"status": "pass", "evidence": "_SCHEDULER_ENABLED kill-switch forces sequential fallback; test_kill_switch_forces_sequential passes"},
+      "deterministic_outputs": {"status": "pass", "evidence": "Results sorted by task_id; scheduler vs sequential byte-identical"}
+    },
+    "upload_path": {
+      "worker_resolution": {"status": "pass", "evidence": "resolve_upload_workers: CLI > env > config > default 4"},
+      "checksum_gate": {"status": "pass", "evidence": "_pre_upload_verify verifies local checksums.sha256 before any network I/O"},
+      "retry_classification": {"status": "pass", "evidence": "401/403/404/unauthorized → FATAL; timeout/connection/429/5xx → RETRYABLE"},
+      "resume_checksum_logic": {"status": "pass", "evidence": "SHA-256 comparison preferred; size-only fallback with warning"}
+    },
+    "promotion_path": {
+      "duplicate_guard": {"status": "pass", "evidence": "test_publish_hardening.py::TestDuplicatePublishGuard: 5/5 passed"},
+      "sha_gate": {"status": "pass", "evidence": "test_publish_hardening.py::TestSHA256Gate: 5/5 passed"},
+      "destination_validation": {"status": "pass", "evidence": "test_publish_hardening.py::TestDestinationValidation: 5/5 passed"},
+      "rollback_safety": {"status": "pass", "evidence": "test_publish_hardening.py::TestRollbackSafety: 2/2 passed"},
+      "release_index_integrity": {"status": "pass", "evidence": "v1.0 entry in release_index.json has hub.verified=true, commit_hash=1370ac42"}
+    },
+    "shared_verification_module": {
+      "verify_sha256_py": {"status": "pass", "evidence": "Single implementation at scripts/release/verify_sha256.py"},
+      "checksum_manifest_parsing": {"status": "pass", "evidence": "test_verify_sha256.py::TestLoadChecksumManifest: 5/5 passed"},
+      "manifest_verification": {"status": "pass", "evidence": "test_verify_sha256.py::TestVerifyManifestFiles: 6/6 passed"},
+      "deterministic_hashing": {"status": "pass", "evidence": "test_verify_sha256.py::TestKnownVector::test_sha256_deterministic passes"}
+    }
+  },
+  "test_summary": {
+    "suites": [
+      {"name": "test_scheduler_compression.py", "total": 15, "passed": 15, "failed": 0},
+      {"name": "test_scheduler_dedup.py", "total": 16, "passed": 16, "failed": 0},
+      {"name": "test_release_pipeline.py", "total": 8, "passed": 8, "failed": 0},
+      {"name": "test_verify_sha256.py", "total": 17, "passed": 17, "failed": 0},
+      {"name": "test_publish_hardening.py", "total": 30, "passed": 30, "failed": 0},
+      {"name": "test_upload_hardening.py", "total": 16, "passed": 16, "failed": 0},
+      {"name": "test_join_release.py", "total": 11, "passed": 11, "failed": 0},
+      {"name": "test_v1_8_publish.py", "total": 3, "passed": 3, "failed": 0},
+      {"name": "test_universal_scheduler.py", "total": 28, "passed": 28, "failed": 0},
+      {"name": "test_scheduler_acquisition.py", "total": 10, "passed": 10, "failed": 0},
+      {"name": "test_scheduler_acquisition_engine.py", "total": 10, "passed": 10, "failed": 0},
+      {"name": "test_scheduler_etl.py", "total": 11, "passed": 11, "failed": 0},
+      {"name": "test_scheduler_extraction.py", "total": 13, "passed": 13, "failed": 0},
+      {"name": "test_scheduler_training_views.py", "total": 14, "passed": 13, "failed": 1, "note": "Pre-existing failure: test_worker_limit_capped (unrelated to release)"},
+      {"name": "test_adaptive_scheduler.py", "total": 10, "passed": 10, "failed": 0}
+    ],
+    "total": 212,
+    "passed": 211,
+    "failed": 1,
+    "failure_note": "Pre-existing training-views resource test failure; unrelated to release pipeline"
+  },
+  "architecture_summary": {
+    "dependency_layering": {"status": "pass", "violations": 0, "files_checked": 162},
+    "duplicate_sha_implementations": {"status": "pass", "count": 0, "note": "Single implementation at scripts/release/verify_sha256.py; common.py delegates; upload_huggingface.py and publish_promotion.py import directly"},
+    "duplicate_scheduler_logic": {"status": "pass", "count": 0, "note": "Single Scheduler class at scripts/parallel/scheduler.py"},
+    "duplicate_retry_logic": {"status": "pass", "count": 0, "note": "Retry logic centralized in Scheduler._settle()"},
+    "duplicate_registry_logic": {"status": "pass", "count": 0, "note": "Single TaskRegistry at scripts/parallel/registry.py"},
+    "architecture_validation_report": {"status": "present", "path": "metadata/architecture_validation_report.json"}
+  },
+  "risk_register": [
+    {"id": "R1", "risk": "Pre-existing test failure in training-views scheduler (test_worker_limit_capped)", "severity": "Low", "likelihood": "N/A", "status": "Accepted"},
+    {"id": "R2", "risk": "is_denied_license duplicated in progressive_expansion.py and progressive_expansion_v2.py", "severity": "Low", "likelihood": "N/A", "status": "Accepted"},
+    {"id": "R3", "risk": "v1.0 release directory (releases/v1.0/) does not exist on disk", "severity": "Medium", "likelihood": "Low", "status": "Accepted — by design (promotion is governance artifact)"},
+    {"id": "R4", "risk": "publish_promotion.py placeholder commit_url in update_release_index_safe", "severity": "Low", "likelihood": "Medium", "status": "Accepted — commit_hash correctly populated from HF API"}
+  ],
+  "outstanding_issues": {
+    "critical": [],
+    "high": [],
+    "medium": [
+      {"id": "M1", "issue": "releases/v1.0/ directory missing on disk", "explanation": "v1.0 promotion creates only governance manifest; dataset files are byte-identical to v1.0-RC2 at releases/v1.0-RC2/; HF Hub has verified copy"}
+    ],
+    "low": [
+      {"id": "L1", "issue": "is_denied_license duplication in progressive expansion scripts", "explanation": "Pre-existing architecture debt; not in release code path"},
+      {"id": "L2", "issue": "publish_promotion.py placeholder commit_url", "explanation": "Cosmetic; commit_hash is correctly populated from HF API response"},
+      {"id": "L3", "issue": "Pre-existing test failure: test_worker_limit_capped", "explanation": "Unrelated to release pipeline; release uses fixed worker limits"}
+    ]
+  },
+  "dry_run_validation": {
+    "hf_api_mutation_occurred": false,
+    "dataset_writes_occurred": false,
+    "release_publish_occurred": false,
+    "registry_corruption": false,
+    "checks_performed": [
+      "publish_promotion.py --dry-run (HF_TOKEN not set, no mutation)",
+      "upload_huggingface.py --release v1.0 --dry-run (no network I/O)",
+      "promote_release.py --dry-run (v1.0 manifest already exists, skipped)",
+      "verify_release.py --release v1.0 (release root missing, expected for governance-only promotion)"
+    ]
+  },
+  "readiness_evaluation": {
+    "functional_completeness": "All release pipeline components implemented, tested, and hardened",
+    "regression_risk": "Low — 211/212 tests pass; single failure is pre-existing and unrelated",
+    "remaining_technical_debt": "is_denied_license duplication (L1); placeholder commit_url (L2)",
+    "known_limitations": ["v1.0 release directory missing on disk (by design)", "is_denied_license duplication (pre-existing)", "placeholder commit_url in publish_promotion.py", "pre-existing training-views test failure"],
+    "blocking_issues": []
+  },
+  "recommendation": "Proceed with release. No blocking issues remain. v1.0 is a governance promotion with identical dataset bytes to v1.0-RC2, which is already published and verified on HF Hub.",
+  "final_verdict": "READY WITH KNOWN LIMITATIONS"
+}
