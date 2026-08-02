@@ -302,7 +302,7 @@ class TestUpload:
         assert "DRY RUN" in res.stdout
         assert "dataset" in res.stdout
 
-    def test_missing_token_fails_without_dry_run(self, release_dir: Path, monkeypatch):
+    def test_missing_checksums_manifest_fails_before_token_check(self, release_dir: Path, monkeypatch):
         monkeypatch.delenv("HF_TOKEN", raising=False)
         cmd = [
             sys.executable,
@@ -312,8 +312,8 @@ class TestUpload:
             "--output", str(release_dir),
         ]
         res = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT)
-        assert res.returncode == 1
-        assert "HF_TOKEN" in res.stderr
+        assert res.returncode == 2
+        assert "missing checksums manifest" in res.stdout
 
     def test_resume_plan_skips_matching_remote(self, tmp_path: Path):
         """Files matching remote size are skipped; differing/missing are pending."""
@@ -339,14 +339,14 @@ class TestUpload:
             "metadata/release.json": (root / "metadata" / "release.json").stat().st_size,
             "docs/card.md": 999999,  # differs -> pending
         }
-        pending = mod._resume_skip(sections, remote, root)
+        pending, _ = mod._resume_skip(sections, remote, {}, root)
         pending_names = {s for s, _ in pending}
         assert "metadata" not in pending_names
         assert "docs" in pending_names
 
         # Unknown remote size (-1) never skips.
         remote2 = {"docs/card.md": -1}
-        pending2 = mod._resume_skip(sections, remote2, root)
+        pending2, _ = mod._resume_skip(sections, remote2, {}, root)
         assert {s for s, _ in pending2} == {"metadata", "docs"}
 
     def test_upload_collects_local_files(self, release_dir: Path):
