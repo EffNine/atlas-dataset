@@ -1,0 +1,53 @@
+{
+  "report_name": "expert_pilot_6500_review_summary_v0.1",
+  "phase": "0.5 pilot Phase 1B — AI reviewer calibration (Sonnet 5 plan, executed with hermes/deepseek-v4-flash)",
+  "generated_at": "2026-08-02",
+  "reviewer": "ai-reviewer:hermes/deepseek-v4-flash",
+  "notes": [
+    "Execution followed docs/expert_pilot_6500_sonnet5_review_execution_plan_v0.1.md, but no Anthropic Sonnet 5 API key exists in this environment. Per user direction, the review was executed with the available model (hermes/deepseek-v4-flash via Hermes delegation). Reviewer identity recorded honestly; no fabricated claude-sonnet identity.",
+    "Blind review preserved: subagents read only the blind input file; auto_gate/quality_score were never shown. auto_gate_snapshot attached post-hoc during aggregation from the sample file.",
+    "One subagent transcribed a wrong record_id (expert_aiml_arxiv_1345 -> expert_aiml_arxiv_1273) in slice 55-81; corrected and verified. Note: re-running the R1 extractor from the raw summary reintroduces the typo; the slice file is the corrected artifact.",
+    "All REJECTs are OpenMathInstruct-2 records in the 9-10 quality band: the calibration heuristic over-scored model-generated solutions (wrong expected answers, incoherent derivations) that the reviewer caught."
+  ],
+  "measured": {
+    "records_reviewed": 324,
+    "verdicts": {"KEEP": 306, "REVIEW": 0, "REJECT": 18},
+    "acceptance_rate": 0.9444,
+    "acceptance_rate_pct": 94.44,
+    "go_threshold_pct": 80.0,
+    "hold_threshold_pct": 60.0,
+    "threshold_outcome": "GO (>= 80%)",
+    "agreement_with_auto_gate": {"agreement": 306, "total": 324, "rate": 0.9444},
+    "dimension_means": {
+      "correctness": 3.846,
+      "reasoning_depth": 2.781,
+      "explanation_quality": 3.065,
+      "provenance_confidence": 3.815
+    },
+    "per_source": {
+      "expert-aiml-001": {"KEEP": 150, "REVIEW": 0, "REJECT": 0, "acceptance": 1.0},
+      "expert-math-002": {"KEEP": 131, "REVIEW": 0, "REJECT": 18, "acceptance": 0.879},
+      "expert-swe-001": {"KEEP": 25, "REVIEW": 0, "REJECT": 0, "acceptance": 1.0}
+    },
+    "reject_bands": {"(9, 10)": 18},
+    "boundary_band_5_6_verdicts": {"KEEP": 6},
+    "reviewer_identity": ["ai-reviewer:hermes/deepseek-v4-flash"],
+    "reject_count_by_source": {"expert-math-002": 18}
+  },
+  "decision": {
+    "recommendation": "GO",
+    "basis": "Acceptance rate 94.4% >= 80% threshold (plan section 6). All REJECTs are OpenMathInstruct-2 records with model-generated solutions; ArXiv and SWE-bench acceptance 100%.",
+    "open_items": [
+      "18 OpenMath records REJECTed for correctness (fabricated math, incoherent derivations, wrong expected answers) - exclude from any downstream training view unless re-curated.",
+      "Reviewer model deviated from plan (Sonnet 5 unavailable); documented honestly."
+    ]
+  },
+  "artifacts": {
+    "decisions": "review/expert_pilot_6500_review_decisions_v0.1.jsonl",
+    "sample": "review/expert_pilot_6500_review_sample_v0.1.jsonl",
+    "blind_input": "review/expert_pilot_6500_sonnet5_input_v0.1.jsonl",
+    "assignments": "review/expert_pilot_6500_sonnet5_assignments_v0.1.json",
+    "plan": "docs/expert_pilot_6500_sonnet5_review_execution_plan_v0.1.md",
+    "guideline": "docs/expert_pilot_6500_human_review_guideline_v0.1.md"
+  }
+}
