@@ -1,23 +1,23 @@
 {
   "release": "repository_freeze_v1.0",
-  "timestamp": "2026-08-03T06:53:00+08:00",
+  "timestamp": "2026-08-03T06:55:00+08:00",
   "branch": "main",
-  "commit": "3b2d8f9e5b3c248d788638b5e4d213ef51159968",
-  "origin_commit": "3b2d8f9e5b3c248d788638b5e4d213ef51159968",
+  "commit": "8f27b9e460343757f520cb140cbfb503b08ac40d",
+  "origin_commit": "8f27b9e460343757f520cb140cbfb503b08ac40d",
   "push": {
     "success": true,
     "to": "https://github.com/EffNine/atlas-dataset.git",
-    "result": "44d84e6..3b2d8f9  main -> main"
+    "result": "3b2d8f9..8f27b9e  main -> main"
   },
   "sync": {
     "mac": {
-      "current_commit": "3b2d8f9e5b3c248d788638b5e4d213ef51159968",
+      "current_commit": "8f27b9e460343757f520cb140cbfb503b08ac40d",
       "matches_origin": true,
       "working_tree_clean": true
     },
     "dev_pc": {
-      "current_commit": "3b2d8f9e5b3c248d788638b5e4d213ef51159968",
-      "matches_origin": true,
+      "current_commit": "daf2e25c1e0774152509dfdec242fb1798249121",
+      "matches_origin": false,
       "working_tree_clean": false,
       "uncommitted_files": [
         "atlas/eval/report_generator.py",
@@ -54,7 +54,7 @@
         "scripts/._expert_pipeline",
         "scripts/expert_pipeline/",
         "scripts/phase2b_materialize.py",
-        "tests/._expert_pipeline",
+        "tests/._expert_pilot",
         "tests/expert_pipeline/"
       ]
     }
@@ -68,13 +68,13 @@
     "repository_health": "OK",
     "temp_cleanup": "OK",
     "commit_created": true,
-    "commit_hash": "3b2d8f9e5b3c248d788638b5e4d213ef51159968",
+    "commit_hash": "8f27b9e460343757f520cb140cbfb503b08ac40d",
     "push_successful": true,
     "branch_up_to_date": {
       "mac": true,
-      "dev_pc": true
+      "dev_pc": false
     }
   },
   "decision": "HOLD",
-  "hold_reason": "Dev-PC repository matches origin at commit 3b2d8f9, but its working tree is dirty with uncommitted artifacts. No automatic conflict resolution was attempted."
+  "hold_reason": "Dev-PC repository does not match origin/main: current HEAD=daf2e25 versus origin=8f27b9e, and working tree contains uncommitted artifacts. No automatic conflict resolution was attempted."
 }
