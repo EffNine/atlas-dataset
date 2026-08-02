@@ -1,0 +1,75 @@
+{
+  "phase": "7C-C",
+  "title": "Publish Promotion Hardening",
+  "date": "2026-08-02",
+  "status": "complete",
+  "scope": "scripts/release/publish_promotion.py only",
+  "p1_to_p7_mapping": {
+    "P-1": {
+      "issue": "Commit batch silent-drop risk",
+      "implementation": "One CommitOperationCopy per file in sorted order; each file gets its own create_commit call",
+      "function": "perform_dataset_copy"
+    },
+    "P-2": {
+      "issue": "Duplicate publish guard",
+      "implementation": "Check release_index.json for existing release entry; abort if found",
+      "function": "check_duplicate_publish"
+    },
+    "P-3": {
+      "issue": "Destination validation",
+      "implementation": "Validate source exists, destination path valid, no duplicate destinations, no path collisions before any HF operation",
+      "function": "validate_destinations"
+    },
+    "P-4": {
+      "issue": "SHA256 verification before promotion",
+      "implementation": "Run verify_manifest_files against metadata/checksums.sha256 before any network I/O",
+      "function": "run_sha256_gate"
+    },
+    "P-5": {
+      "issue": "Post-copy verification",
+      "implementation": "After copy: verify destination exists, size matches, SHA256 matches; fail on any mismatch",
+      "function": "post_copy_verify"
+    },
+    "P-6": {
+      "issue": "Rollback safety",
+      "implementation": "If release_index update fails after successful HF copy: emit recovery info, preserve audit log, no destructive cleanup",
+      "function": "update_release_index_safe"
+    },
+    "P-7": {
+      "issue": "Release index integrity",
+      "implementation": "release_index.json updated only after all verification passes; chain hashes preserved from source manifest",
+      "function": "update_release_index_safe"
+    }
+  },
+  "files_changed": [
+    "scripts/release/publish_promotion.py",
+    "tests/test_publish_hardening.py"
+  ],
+  "tests": {
+    "new_test_file": "tests/test_publish_hardening.py",
+    "total_tests": 32,
+    "passed": 32,
+    "failed": 0,
+    "related_tests": {
+      "test_release_pipeline.py": 14,
+      "all_passed": true
+    }
+  },
+  "validator": {
+    "command": "python3 scripts/validate_architecture.py",
+    "result": "PASS",
+    "violations": 0
+  },
+  "verification_probe": {
+    "prefix": "hermes-verify-",
+    "method": "tempfile.mkstemp + os.unlink",
+    "all_checks_passed": true
+  },
+  "explicit_statements": {
+    "no_hf_publish": true,
+    "no_release_promotion": true,
+    "no_dataset_modified": true
+  },
+  "commit": "feat: harden release promotion verification Phase 7C-C",
+  "stop_condition": "STOP after implementation + verification. Awaiting approval for 7C-D."
+}
