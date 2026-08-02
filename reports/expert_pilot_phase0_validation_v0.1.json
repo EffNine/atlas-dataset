@@ -1,0 +1,100 @@
+{
+  "version": "0.1.0",
+  "phase": "Phase 0",
+  "phase_name": "Pre-flight Validation",
+  "generated_at": "2026-08-02",
+  "decision": "HOLD",
+  "blockers": [
+    "expert-math-002 gated access and exact license terms are unverified",
+    "expert-aiml-001 usable record count after extraction is [UNKNOWN]",
+    "expert-swe-002 exact usable record count after filtering and PII stripping is [UNKNOWN]",
+    "expert-aiml-002 exact pilot share is not committed",
+    "exact schema conversion pass rate target is [UNKNOWN]",
+    "exact quality gate pass rate target is [UNKNOWN]",
+    "exact duplicate rate target is [UNKNOWN]",
+    "exact provenance completeness target is [UNKNOWN]"
+  ],
+  "checks": {
+    "manifest_consistency": {
+      "status": "PASS",
+      "notes": [
+        "Manifest source IDs match the eligible VERIFIED/PARTIAL set in expert_source_registry_v0.1.json",
+        "Domains match registry domains",
+        "Domain targets sum to 10,000",
+        "Primary sources have non-zero targets; contingent sources are explicitly marked as 0/contingent"
+      ]
+    },
+    "schema_readiness": {
+      "status": "PASS_WITH_CAVEATS",
+      "notes": [
+        "expert_record_schema_v0.1.md exists and defines required fields",
+        "extraction runbook references schema fields and transformation mapping",
+        "Schema compatibility is documented but not yet exercised on real pilot samples"
+      ]
+    },
+    "quality_pipeline_readiness": {
+      "status": "PASS_WITH_CAVEATS",
+      "notes": [
+        "expert_quality_gate_v0.1.md exists and defines global and domain-specific checks",
+        "expert_evaluation_benchmark_v0.1.md exists and defines evaluation metrics",
+        "Base Atlas quality scoring philosophy is present in repo docs",
+        "Exact numeric thresholds for expert-specific checks are [UNKNOWN] and require calibration"
+      ]
+    },
+    "source_readiness": {
+      "status": "PARTIAL",
+      "sources": [
+        {
+          "source_id": "expert-swe-001",
+          "name": "SWE-bench verified",
+          "domain": "software_engineering",
+          "registry_status": "VERIFIED",
+          "license_state": "MIT",
+          "blockers": []
+        },
+        {
+          "source_id": "expert-swe-002",
+          "name": "StackExchange Code XML dumps",
+          "domain": "software_engineering",
+          "registry_status": "PARTIAL",
+          "license_state": "CC-BY-SA-4.0",
+          "blockers": [
+            "Exact usable record count after filtering and PII stripping is [UNKNOWN]"
+          ]
+        },
+        {
+          "source_id": "expert-aiml-001",
+          "name": "ArXiv cs.LG / cs.CL / cs.AI / stat.ML",
+          "domain": "ai_machine_learning",
+          "registry_status": "VERIFIED",
+          "license_state": "arXiv non-exclusive license",
+          "blockers": [
+            "Usable record count after extraction is [UNKNOWN]"
+          ]
+        },
+        {
+          "source_id": "expert-aiml-002",
+          "name": "Open-Platypus",
+          "domain": "ai_machine_learning",
+          "registry_status": "VERIFIED",
+          "license_state": "Apache-2.0",
+          "blockers": [
+            "Exact pilot share is not committed"
+          ]
+        },
+        {
+          "source_id": "expert-math-002",
+          "name": "OpenMathInstruct-2",
+          "domain": "mathematics",
+          "registry_status": "PARTIAL",
+          "license_state": "MIT claimed but gated; verify on download",
+          "blockers": [
+            "Gated access must be confirmed",
+            "Exact license terms on download are unverified"
+          ]
+        }
+      ]
+    }
+  },
+  "recommendation": "Resolve math-source access/license verification and confirm extraction yields before proceeding to Phase 1."
+}

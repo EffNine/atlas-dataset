@@ -1,0 +1,28 @@
+{
+  "version": "0.1.0",
+  "phase": "Phase 0.5",
+  "phase_name": "Sample Calibration",
+  "source": "expert-swe-001",
+  "source_name": "SWE-bench verified",
+  "domain": "software_engineering",
+  "sample_size_target": 100,
+  "generated_at": "2026-08-02",
+  "source_access_status": "ACCESS_BLOCKED",
+  "license_verification_status": {
+    "license": "MIT",
+    "license_verified": true,
+    "attribution_required": false,
+    "notes": "License is recorded as MIT in expert_source_registry_v0.1.json. Live HF metadata check is blocked by unavailable Python library support in the execution environment."
+  },
+  "sample_access_status": "NOT_ATTEMPTED",
+  "sample_size_obtained": 0,
+  "access_method": null,
+  "dataset_fields": [],
+  "dataset_splits": [],
+  "blockers": [
+    "Local Python environment does not support importing requests/datasets/huggingface_hub for live verification.",
+    "Remote WSL execution path currently fails before library commands can run, so no live dataset metadata or streaming sample could be obtained."
+  ],
+  "recommendation": "HOLD",
+  "next_action": "Use an environment with working Python HF libraries and dataset access to verify source availability and obtain the 100-record calibration sample."
+}

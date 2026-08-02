@@ -1,0 +1,116 @@
+{
+  "version": "0.1.0",
+  "generated_at": "2026-08-02",
+  "scope": "Atlas Expert v1 gap analysis from current classified v1.1 signals and manifest targets",
+  "known_limitations": [
+    "Current expert signal is based only on v1.1 classified sources: tulu3, openwebmath, arxiv, c4.",
+    "Remaining ~6.9M records are not yet classified; domain counts will change after full classification.",
+    "Breakdown by reasoning_type is coarse; deeper subdomain coverage requires source-level audit."
+  ],
+  "domains": {
+    "software_engineering": {
+      "current_classified": 1051857,
+      "current_expert_l4l5": 36593,
+      "expert_tier_target": "E1 60%, E2 30%, E3 10%",
+      "atlas_expert_v1_target": 200000,
+      "gap": 163407,
+      "likely_missing": [
+        "real debugging cases",
+        "code review examples",
+        "system design questions",
+        "distributed systems troubleshooting",
+        "verified issue-to-patch pairs"
+      ]
+    },
+    "ai_machine_learning": {
+      "current_classified": 1852063,
+      "current_expert_l4l5": 36116,
+      "expert_tier_target": "E1 60%, E2 30%, E3 10%",
+      "atlas_expert_v1_target": 150000,
+      "gap": 113884,
+      "likely_missing": [
+        "paper-to-explanation pairs",
+        "ML textbook derivations",
+        "implementation explanations",
+        "experiment analysis",
+        "frontier arXiv summaries"
+      ]
+    },
+    "mathematics": {
+      "current_classified": 0,
+      "current_expert_l4l5": 0,
+      "expert_tier_target": "E1 60%, E2 30%, E3 10%",
+      "atlas_expert_v1_target": 150000,
+      "gap": 150000,
+      "likely_missing": [
+        "olympiad problems",
+        "university competition math",
+        "proof chains",
+        "quantitative reasoning",
+        "advanced calculus/algebra/number theory"
+      ]
+    },
+    "system_engineering": {
+      "current_classified": 21037,
+      "current_expert_l4l5": 2105,
+      "expert_tier_target": "E1 60%, E2 30%, E3 10%",
+      "atlas_expert_v1_target": 100000,
+      "gap": 97895,
+      "likely_missing": [
+        "linux kernel docs",
+        "networking troubleshooting",
+        "OS concepts",
+        "distributed systems",
+        "performance tuning cases"
+      ]
+    },
+    "science": {
+      "current_classified": 1650224,
+      "current_expert_l4l5": 33210,
+      "expert_tier_target": "E1 60%, E2 30%, E3 10%",
+      "atlas_expert_v1_target": 100000,
+      "gap": 66790,
+      "likely_missing": [
+        "graduate-level explanations",
+        "experimental analysis",
+        "research paper Q&A",
+        "domain-specific reasoning chains"
+      ]
+    },
+    "business": {
+      "current_classified": 16877,
+      "current_expert_l4l5": 865,
+      "expert_tier_target": "E1 60%, E2 30%, E3 10%",
+      "atlas_expert_v1_target": 0,
+      "gap": 0,
+      "likely_missing": [],
+      "note": "Deferred for Atlas Expert v1; revisit after core domains are covered."
+    },
+    "creative": {
+      "current_classified": 8252,
+      "current_expert_l4l5": 1042,
+      "expert_tier_target": "E1 60%, E2 30%, E3 10%",
+      "atlas_expert_v1_target": 0,
+      "gap": 0,
+      "likely_missing": [],
+      "note": "Deferred for Atlas Expert v1; revisit after core domains are covered."
+    },
+    "hardware_engineering": {
+      "current_classified": 0,
+      "current_expert_l4l5": 0,
+      "expert_tier_target": "E1 60%, E2 30%, E3 10%",
+      "atlas_expert_v1_target": 0,
+      "gap": 0,
+      "likely_missing": [],
+      "note": "No expert target in v1; keep as future expansion if needed."
+    }
+  },
+  "atlas_expert_v1_total_target": 700000,
+  "priority_order": [
+    "software_engineering",
+    "ai_machine_learning",
+    "mathematics",
+    "system_engineering",
+    "science"
+  ]
+}

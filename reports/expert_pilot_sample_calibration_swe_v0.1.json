@@ -1,0 +1,88 @@
+{
+  "version": "0.1.0",
+  "phase": "Phase 0.5",
+  "phase_name": "Sample Calibration",
+  "source": "expert-swe-001",
+  "source_name": "SWE-bench verified",
+  "domain": "software_engineering",
+  "sample_size": 100,
+  "generated_at": "2026-08-02",
+  "source_availability": {
+    "official_source": "https://huggingface.co/datasets/princeton-nlp/SWE-bench",
+    "availability": "public",
+    "access_status": "PENDING_VERIFICATION",
+    "notes": "Official Hugging Face dataset page exists. Access needs live verification before download or streamed load."
+  },
+  "license_status": {
+    "license": "MIT",
+    "license_verified": true,
+    "attribution_required": false,
+    "notes": "License is recorded as MIT in expert_source_registry_v0.1.json."
+  },
+  "sample_definition": {
+    "target_records": 100,
+    "selection_criteria": [
+      "verified instances only",
+      "complete patch/test evidence",
+      "exclude unresolved or broken instances"
+    ],
+    "source_subset": "verified",
+    "streaming_preferred": true
+  },
+  "transformation": {
+    "schema": "docs/expert_record_schema_v0.1.md",
+    "runbook": "docs/expert_extraction_runbook_v0.1.md",
+    "steps": [
+      "select verified instances with complete evidence",
+      "normalize repo/branch/commit references",
+      "strip or anonymize contributor metadata if present",
+      "map to expert record fields",
+      "assign expert_tier=E2 and difficulty=3 by default when signal absent",
+      "populate verification.method=gold_patch and verification.evidence with FAIL_TO_PASS/PASS_TO_PASS"
+    ]
+  },
+  "validation_checks": {
+    "schema_completeness": {
+      "status": "PASS_WITH_CAVEATS",
+      "notes": [
+        "Schema and runbook are defined and reference-complete.",
+        "Actual per-record schema pass can only be confirmed after sample conversion."
+      ]
+    },
+    "provenance_completeness": {
+      "status": "PENDING_SAMPLE",
+      "notes": [
+        "Provenance fields are defined in schema.",
+        "Completeness rate requires converted sample records."
+      ]
+    },
+    "duplicate_detection": {
+      "status": "PENDING_SAMPLE",
+      "notes": [
+        "Exact and near-duplicate detection are defined.",
+        "Duplicate rate requires converted sample records."
+      ]
+    },
+    "quality_gate_compatibility": {
+      "status": "PASS_WITH_CAVEATS",
+      "notes": [
+        "Quality gate document exists and defines KEEP/REVIEW/REJECT.",
+        "Exact pass-rate thresholds are [UNKNOWN] until calibration."
+      ]
+    }
+  },
+  "metrics": {
+    "schema_pass_rate": "[UNKNOWN]",
+    "quality_gate_pass_rate": "[UNKNOWN]",
+    "duplicate_rate": "[UNKNOWN]",
+    "provenance_completeness": "[UNKNOWN]"
+  },
+  "blockers": [
+    "Live source access/streaming availability needs verification",
+    "Exact sample yield after filtering is [UNKNOWN]",
+    "Actual schema pass rate is [UNKNOWN] until conversion",
+    "Actual quality gate pass rate is [UNKNOWN] until calibration"
+  ],
+  "recommendation": "HOLD",
+  "next_action": "Verify live HF dataset access and run a controlled 100-record SWE-bench verified sample extraction, then rerun validation checks."
+}

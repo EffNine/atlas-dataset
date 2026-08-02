@@ -1,0 +1,197 @@
+{
+  "version": "0.1.0",
+  "generated_at": "2026-08-02",
+  "scope": "Expert source discovery batch 001 for Priority 1 domains: Software Engineering, AI/ML, Mathematics.",
+  "discovery_method": "repo audit + public registry/source page checks; no ingestion performed.",
+  "verification_policy": "Each candidate is evaluated as VERIFIED, PARTIAL, or UNKNOWN. UNKNOWN is used when a required fact could not be confirmed from available evidence.",
+  "domains": {
+    "software_engineering": {
+      "candidates": [
+        {
+          "id": "expert-swe-001",
+          "name": "SWE-bench verified",
+          "official_source": "https://huggingface.co/datasets/princeton-nlp/SWE-bench",
+          "license": "MIT",
+          "license_verified": true,
+          "availability": "public",
+          "approximate_size": "~22k instances",
+          "suitability_for_expert_schema": "high",
+          "status": "VERIFIED",
+          "notes": "Gold issue-to-patch pairs with verification predicates. Aligns with expert schema problem/solution/verification fields."
+        },
+        {
+          "id": "expert-swe-002",
+          "name": "StackExchange Code XML dumps",
+          "official_source": "https://archive.org/details/stackexchange",
+          "license": "CC-BY-SA-4.0",
+          "license_verified": true,
+          "availability": "public",
+          "approximate_size": "large",
+          "suitability_for_expert_schema": "medium",
+          "status": "PARTIAL",
+          "notes": "Official archive exists and license is known, but exact usable record count after filtering and PII stripping is UNKNOWN."
+        },
+        {
+          "id": "expert-swe-003",
+          "name": "GitHub issue-to-solution pairs",
+          "official_source": "[UNKNOWN]",
+          "license": "[UNKNOWN]",
+          "license_verified": false,
+          "availability": "[UNKNOWN]",
+          "approximate_size": "[UNKNOWN]",
+          "suitability_for_expert_schema": "[UNKNOWN]",
+          "status": "UNKNOWN",
+          "notes": "No specific repo or dataset was identified. License and redistribution terms are repo-specific."
+        },
+        {
+          "id": "expert-swe-004",
+          "name": "Code review expert examples",
+          "official_source": "[UNKNOWN]",
+          "license": "[UNKNOWN]",
+          "license_verified": false,
+          "availability": "[UNKNOWN]",
+          "approximate_size": "[UNKNOWN]",
+          "suitability_for_expert_schema": "[UNKNOWN]",
+          "status": "UNKNOWN",
+          "notes": "No confirmed public dataset with redistribution rights was identified."
+        },
+        {
+          "id": "expert-swe-005",
+          "name": "System design Q&A",
+          "official_source": "[UNKNOWN]",
+          "license": "[UNKNOWN]",
+          "license_verified": false,
+          "availability": "[UNKNOWN]",
+          "approximate_size": "[UNKNOWN]",
+          "suitability_for_expert_schema": "[UNKNOWN]",
+          "status": "UNKNOWN",
+          "notes": "No specific source dataset or repository was identified."
+        }
+      ]
+    },
+    "ai_machine_learning": {
+      "candidates": [
+        {
+          "id": "expert-aiml-001",
+          "name": "ArXiv cs.LG / cs.CL / cs.AI / stat.ML",
+          "official_source": "https://arxiv.org/",
+          "license": "arXiv non-exclusive license",
+          "license_verified": true,
+          "availability": "public",
+          "approximate_size": "large",
+          "suitability_for_expert_schema": "high",
+          "status": "VERIFIED",
+          "notes": "Official source and license terms are known. Record-level usable size after extraction is UNKNOWN."
+        },
+        {
+          "id": "expert-aiml-002",
+          "name": "Open-Platypus",
+          "official_source": "https://huggingface.co/datasets/garage-bAInd/Open-Platypus",
+          "license": "Apache-2.0",
+          "license_verified": true,
+          "availability": "public",
+          "approximate_size": "~50k examples",
+          "suitability_for_expert_schema": "high",
+          "status": "VERIFIED",
+          "notes": "Official HF dataset page with permissive license and known size. Some content may be model-generated; needs factual audit."
+        },
+        {
+          "id": "expert-aiml-003",
+          "name": "ML textbook derivations and explanations",
+          "official_source": "[UNKNOWN]",
+          "license": "[UNKNOWN]",
+          "license_verified": false,
+          "availability": "[UNKNOWN]",
+          "approximate_size": "[UNKNOWN]",
+          "suitability_for_expert_schema": "[UNKNOWN]",
+          "status": "UNKNOWN",
+          "notes": "No specific open textbook or course-notes dataset was identified."
+        },
+        {
+          "id": "expert-aiml-004",
+          "name": "Experiment analysis and paper explanation pairs",
+          "official_source": "[UNKNOWN]",
+          "license": "[UNKNOWN]",
+          "license_verified": false,
+          "availability": "[UNKNOWN]",
+          "approximate_size": "[UNKNOWN]",
+          "suitability_for_expert_schema": "[UNKNOWN]",
+          "status": "UNKNOWN",
+          "notes": "No specific dataset with confirmed redistribution rights was identified."
+        }
+      ]
+    },
+    "mathematics": {
+      "candidates": [
+        {
+          "id": "expert-math-001",
+          "name": "AIME / AMC / competition math problems",
+          "official_source": "[UNKNOWN]",
+          "license": "[UNKNOWN]",
+          "license_verified": false,
+          "availability": "[UNKNOWN]",
+          "approximate_size": "[UNKNOWN]",
+          "suitability_for_expert_schema": "[UNKNOWN]",
+          "status": "UNKNOWN",
+          "notes": "Competition problem redistribution rights were not verified."
+        },
+        {
+          "id": "expert-math-002",
+          "name": "OpenMathInstruct-2",
+          "official_source": "https://huggingface.co/datasets/Ai-MO/OpenMathInstruct-2",
+          "license": "MIT, gated; verify on download",
+          "license_verified": "PARTIAL",
+          "availability": "gated",
+          "approximate_size": "~500k examples",
+          "suitability_for_expert_schema": "high",
+          "status": "PARTIAL",
+          "notes": "Official HF page exists and claimed size is large, but gated access and exact license terms require verification before ingestion."
+        },
+        {
+          "id": "expert-math-003",
+          "name": "Proof-Pile / mathematical documents corpus",
+          "official_source": "[UNKNOWN]",
+          "license": "[UNKNOWN]",
+          "license_verified": false,
+          "availability": "[UNKNOWN]",
+          "approximate_size": "[UNKNOWN]",
+          "suitability_for_expert_schema": "[UNKNOWN]",
+          "status": "UNKNOWN",
+          "notes": "No specific redistributable corpus URL or license was identified."
+        },
+        {
+          "id": "expert-math-004",
+          "name": "University-level math reasoning problems",
+          "official_source": "[UNKNOWN]",
+          "license": "[UNKNOWN]",
+          "license_verified": false,
+          "availability": "[UNKNOWN]",
+          "approximate_size": "[UNKNOWN]",
+          "suitability_for_expert_schema": "[UNKNOWN]",
+          "status": "UNKNOWN",
+          "notes": "No specific courseware dataset with confirmed license was identified."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "software_engineering": {
+      "total_candidates": 5,
+      "verified": 1,
+      "partial": 1,
+      "unknown": 3
+    },
+    "ai_machine_learning": {
+      "total_candidates": 4,
+      "verified": 2,
+      "partial": 0,
+      "unknown": 2
+    },
+    "mathematics": {
+      "total_candidates": 4,
+      "verified": 0,
+      "partial": 1,
+      "unknown": 3
+    }
+  }
+}

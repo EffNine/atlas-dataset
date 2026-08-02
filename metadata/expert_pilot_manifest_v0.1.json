@@ -1,0 +1,91 @@
+{
+  "version": "0.1.0",
+  "status": "planned",
+  "pipeline_version": "atlas-expert-v1",
+  "target_records": 10000,
+  "domain_targets": {
+    "software_engineering": 4000,
+    "ai_machine_learning": 3000,
+    "mathematics": 3000
+  },
+  "sources": [
+    {
+      "source_id": "expert-swe-001",
+      "source_name": "SWE-bench verified",
+      "domain": "software_engineering",
+      "target_records": 4000,
+      "current_status": "planned",
+      "license_status": "pending",
+      "extraction_status": "pending",
+      "schema_validation_status": "pending",
+      "quality_gate_status": "pending",
+      "human_review_status": "pending",
+      "notes": "Primary SE source. MIT-licensed verified issue-to-patch pairs. Full acquisition is not started."
+    },
+    {
+      "source_id": "expert-swe-002",
+      "source_name": "StackExchange Code XML dumps",
+      "domain": "software_engineering",
+      "target_records": 0,
+      "current_status": "planned",
+      "license_status": "pending",
+      "extraction_status": "pending",
+      "schema_validation_status": "pending",
+      "quality_gate_status": "pending",
+      "human_review_status": "pending",
+      "notes": "Secondary SE source. Exact pilot share is not committed yet; treat as contingent."
+    },
+    {
+      "source_id": "expert-aiml-001",
+      "source_name": "ArXiv cs.LG / cs.CL / cs.AI / stat.ML",
+      "domain": "ai_machine_learning",
+      "target_records": 3000,
+      "current_status": "planned",
+      "license_status": "pending",
+      "extraction_status": "pending",
+      "schema_validation_status": "pending",
+      "quality_gate_status": "pending",
+      "human_review_status": "pending",
+      "notes": "Primary AI/ML source. arXiv non-exclusive license. Usable record count after extraction is UNKNOWN."
+    },
+    {
+      "source_id": "expert-aiml-002",
+      "source_name": "Open-Platypus",
+      "domain": "ai_machine_learning",
+      "target_records": 0,
+      "current_status": "planned",
+      "license_status": "pending",
+      "extraction_status": "pending",
+      "schema_validation_status": "pending",
+      "quality_gate_status": "pending",
+      "human_review_status": "pending",
+      "notes": "Secondary AI/ML source. Apache-2.0. Exact pilot share is not committed yet; treat as contingent."
+    },
+    {
+      "source_id": "expert-math-002",
+      "source_name": "OpenMathInstruct-2",
+      "domain": "mathematics",
+      "target_records": 3000,
+      "current_status": "planned",
+      "license_status": "pending",
+      "extraction_status": "pending",
+      "schema_validation_status": "pending",
+      "quality_gate_status": "pending",
+      "human_review_status": "pending",
+      "notes": "Primary math source. License is MIT claimed but gated; verify before extraction. Usable record count after extraction is UNKNOWN."
+    }
+  ],
+  "goals": [
+    "Validate source confirmation and license verification workflow",
+    "Measure schema conversion completeness and quality gate pass rates",
+    "Establish duplicate-rate and provenance-completeness baselines",
+    "Produce a human-review sample for calibration",
+    "Make a go/hold/stop decision for the 10K pilot"
+  ],
+  "constraints": [
+    "No full acquisition",
+    "No dataset modification",
+    "No model training",
+    "Unknown facts must remain explicitly marked UNKNOWN"
+  ]
+}
