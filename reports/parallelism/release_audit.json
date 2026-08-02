@@ -1,0 +1,385 @@
+{
+  "schema_version": "1.0",
+  "report": "release_audit",
+  "phase": "7A",
+  "title": "Release Tools Audit — Universal Scheduler Phase 7A",
+  "date": "2026-08-02",
+  "baseline": "a1eb632",
+  "mode": "audit_only",
+  "summary": {
+    "status": "complete",
+    "pipeline": "scripts/release/* (12 tools + common.py)",
+    "executors": [
+      "dedup_release.py: ProcessPoolExecutor (--jobs, default 1)",
+      "upload_huggingface.py: ThreadPoolExecutor (--workers, default 4)",
+      "compress_release.py: ProcessPoolExecutor fallback only (scheduler primary since Phase 6B)"
+    ],
+    "registry": "none (release tools); compress uses task_registry_compression.jsonl (6B)",
+    "retry": "upload: network backoff 3x; download: HF-library managed; all others none",
+    "resume": "upload: remote-size skip; download: HF-library managed; dedup: none (re-run from source)",
+    "resource_awareness": "none for dedup (raw CLI --jobs); upload threads network-bound; download reads acquisition config",
+    "migration_verdict": "dedup -> Universal Scheduler (category tasks, registry dedup stage); upload/publish -> documented exemption-by-design + hardening; join/checksums/verify/promote/index/metadata/download -> keep sequential (documented)",
+    "blocking_issues": 0,
+    "critical_findings": 0,
+    "high_findings": 2,
+    "medium_findings": 5,
+    "low_findings": 3,
+    "info_findings": 3,
+    "decisions_needed": 6,
+    "next_phase": "7B implementation (awaiting design approval)"
+  },
+  "pipeline_inventory": {
+    "entry_points": [
+      {
+        "path": "scripts/release/common.py",
+        "type": "shared helper module",
+        "provides": [
+          "CATEGORIES",
+          "DEFAULT_ZSTD_LEVEL",
+          "iter_jsonl",
+          "open_zstd_writer",
+          "open_zstd_reader",
+          "count_jsonl_zst",
+          "sha256_file",
+          "utc_now",
+          "require_env"
+        ]
+      },
+      {
+        "path": "scripts/release/join_release.py",
+        "type": "CLI script (sequential)",
+        "invoked_by": "manual; tests/test_join_release.py (10 tests); no production callers"
+      },
+      {
+        "path": "scripts/release/audit_duplicates.py",
+        "type": "CLI script (sequential, read-only)",
+        "invoked_by": "manual analysis; no tests"
+      },
+      {
+        "path": "scripts/release/dedup_release.py",
+        "type": "CLI script (ProcessPoolExecutor)",
+        "invoked_by": "manual; produced v1.0-RC2; no tests"
+      },
+      {
+        "path": "scripts/release/compress_release.py",
+        "type": "CLI script (scheduler primary, PPE fallback)",
+        "invoked_by": "manual; tests/test_release_pipeline.py (4); tests/test_scheduler_compression.py (19)"
+      },
+      {
+        "path": "scripts/release/generate_checksums.py",
+        "type": "CLI script (sequential)",
+        "invoked_by": "manual; tests/test_release_pipeline.py (2)"
+      },
+      {
+        "path": "scripts/release/verify_release.py",
+        "type": "CLI script (sequential)",
+        "invoked_by": "manual pre/post upload; tests/test_release_pipeline.py (2)"
+      },
+      {
+        "path": "scripts/release/build_release_metadata.py",
+        "type": "CLI script (sequential)",
+        "invoked_by": "manual; no tests"
+      },
+      {
+        "path": "scripts/release/promote_release.py",
+        "type": "CLI script (sequential, dry-run gate)",
+        "invoked_by": "manual governance; no tests"
+      },
+      {
+        "path": "scripts/release/publish_promotion.py",
+        "type": "CLI script (sequential, 1 commit)",
+        "invoked_by": "manual; no tests"
+      },
+      {
+        "path": "scripts/release/upload_huggingface.py",
+        "type": "CLI script (ThreadPoolExecutor)",
+        "invoked_by": "manual; tests/test_release_pipeline.py (4)"
+      },
+      {
+        "path": "scripts/release/update_release_index.py",
+        "type": "CLI + library",
+        "invoked_by": "manual; called by upload_huggingface.py; tests/test_release_pipeline.py (1)"
+      },
+      {
+        "path": "scripts/release/download_release.py",
+        "type": "CLI script (sequential; HF snapshot_download internally parallel)",
+        "invoked_by": "manual; tests/test_release_pipeline.py (1)"
+      }
+    ],
+    "related_out_of_scope": {
+      "path": "scripts/release_builder/",
+      "note": "v1.8-era bundle builder (build_release) used by e2e_pipeline.py / publish_agent.py / automation_runner.py; no concurrent.futures usage; not the v1.0 release pipeline; inventoried for completeness only"
+    },
+    "release_chain": [
+      "join_release.py -> releases/<rel>/dataset/<cat>/<cat>.jsonl(.zst) [sequential, 3 passes]",
+      "dedup_release.py -> releases/<rel>/dataset/<cat>/<cat>.jsonl.zst + signed manifest [PPE per category]",
+      "generate_checksums.py -> releases/<rel>/metadata/checksums.sha256 [sequential, sorted]",
+      "verify_release.py -> local bundle verification [sequential, 31 checks]",
+      "build_release_metadata.py -> release.json/statistics.json/provenance.json/docs [sequential]",
+      "promote_release.py -> NEW frozen manifest (RC->final), chain signed [sequential, governance]",
+      "publish_promotion.py -> HF server-side copy + metadata/docs upload [sequential, 1 commit]",
+      "upload_huggingface.py -> full HF upload (repo create, resume, verify, index) [TPE per section]",
+      "update_release_index.py -> metadata/release_index.json hub record [sequential, chain-preserving]",
+      "download_release.py -> restore from HF + checksum verify [sequential; HF-managed parallel]"
+    ]
+  },
+  "execution_model": {
+    "join": {
+      "passes": [
+        "pass1: stream approved.jsonl; write full records inline; index review stubs into stub_meta",
+        "pass2: resolve stubs by scanning raw/generated/*_atlas.jsonl (id match -> merge_record)",
+        "pass3: resolve remaining stubs from pilot/curated dirs"
+      ],
+      "shared_state": [
+        "stub_meta dict (first-wins pop semantics)",
+        "written_ids global set (duplicate detection)",
+        "per-category shared writers"
+      ],
+      "parallelization_hazard": "cross-pass stub index + global dedup; high complexity, low value; keep sequential"
+    },
+    "dedup": {
+      "worker": {
+        "name": "dedup_category",
+        "module_level": true,
+        "picklable": true,
+        "args_shape": "(src: Path, dst: Path, cat_stats: dict) — stats returned via passed mutable dict",
+        "behavior": [
+          "stream source .zst (open_zstd_reader)",
+          "keep first occurrence per record ID",
+          "drop subsequent occurrences ONLY when byte-identical (SHA-256 of raw line)",
+          "keep + flag conflicting duplicates (never silently dropped)",
+          "write via open_zstd_writer(dst) -> 'wb' overwrite"
+        ],
+        "executor_wrapper": "dedup_category_worker(src: str, dst: str) -> dict (str args for pool)"
+      },
+      "executor": {
+        "kind": "ProcessPoolExecutor",
+        "workers_source": "raw CLI --jobs (default 1 -> sequential loop)",
+        "task_unit": "category (9 max)",
+        "completion": "as_completed then per-category stats aggregated in submission order",
+        "retry": "none",
+        "resume": "none (re-run from source; completed categories wasted)",
+        "crash_behavior": "partial .zst possible; re-run rewrites from source (idempotent but wasteful)"
+      },
+      "serialized_finalize": [
+        "compute_statistics(dst_dataset) re-reads ALL output (counts/licenses/difficulty/quality/sources)",
+        "build_manifest signs new manifest chained to source chain_hash",
+        "report write + exit-code decision"
+      ]
+    },
+    "checksums_verify": {
+      "generate": "walk release root, sort relative paths, stream SHA-256, never checksum the checksum file, sha256sum format",
+      "verify": "31 checks: structure, zst decompress+count per category, checksums all-match, stats consistency, release metadata parse",
+      "executor": "none (pure sequential, O(1) memory, deterministic order)"
+    },
+    "upload": {
+      "steps": [
+        "collect local files + plan sections (dataset, metadata, docs)",
+        "dry-run plan (no token)",
+        "ensure repo exists (create_repo, --private)",
+        "resume: _remote_sizes via list_repo_files + get_paths_info; _resume_skip keeps files missing or size-mismatched",
+        "upload pending sections via _upload_section_with_retry (one upload_folder commit per section; 3x retry 2s*2^(n-1) backoff)",
+        "ThreadPoolExecutor(max_workers=--workers) over sections (max 3 concurrent)",
+        "_verify_remote: existence + SIZE ONLY (remote sha256 fetched but never compared)",
+        "update_release_index.update_index"
+      ],
+      "gaps": [
+        "verification size-only — same-size corrupted blob passes",
+        "--workers default 4 hardcoded, not wired to release.upload_workers",
+        "get_paths_info with all remote paths, no pagination guard"
+      ]
+    },
+    "publish_promote": {
+      "promote": "governance: source exists, dest NOT exists, status release_candidate/final, chain_hash present; NEW manifest status=final; stats/sources/gates verbatim; sha256-chain-v1; self-verifies signature; refuses write on mismatch; --dry-run writes nothing",
+      "publish": "enumerate remote source files, ONE create_commit with ALL CommitOperationCopy ops + metadata CommitOperationAdd ops, commit, presence verify",
+      "publish_risks": [
+        "batch CommitOperationCopy in one commit has proven silent-drop mode (Phase 5 runbook: one commit per file)",
+        "no destination-existence pre-check -> duplicate-publish risk on re-run",
+        "presence-only verification, not content verification"
+      ]
+    },
+    "download": {
+      "method": "snapshot_download(allow_patterns=[releases/<rel>/*], max_workers from resolve_worker_count('acquisition'), fallback 4)",
+      "verify": "downloaded tree vs its own checksums.sha256 (missing/mismatch/extra)",
+      "retry_resume": "HF-library managed (cache + local_dir)",
+      "quirk": "reads acquisition stage config, not release/download key"
+    },
+    "merge_order_guarantees": {
+      "checksums": "sorted rglob — deterministic",
+      "dedup_report": "per-category in CATEGORIES iteration order (sequential); scheduler must sort by task_id",
+      "manifest_stats": "compute_statistics iterates CATEGORIES — deterministic",
+      "manifest_signing": "json.dumps(sort_keys=True) — deterministic content_hash",
+      "zstd": "single-threaded frames at fixed level — byte-deterministic per file"
+    }
+  },
+  "retry_resume_matrix": {
+    "join": {"retry": false, "resume": false, "note": "hard exit 1 on validation failure (correct: gate)"},
+    "dedup": {"retry": false, "resume": false, "note": "re-run from source; wasted completed categories"},
+    "compress": {"retry": true, "resume": true, "note": "migrated 6B (registry + disk scan)"},
+    "checksums": {"retry": false, "resume": false, "note": "pure; re-run cheap"},
+    "verify": {"retry": false, "resume": false, "note": "pure; re-run cheap"},
+    "build_metadata": {"retry": false, "resume": false, "note": "pure derivation from manifest"},
+    "promote": {"retry": false, "resume": "dry-run gate", "note": "governance; must NOT auto-retry"},
+    "publish": {"retry": false, "resume": false, "note": "network; must NOT auto-retry blindly (duplicate risk)"},
+    "upload": {"retry": "3x backoff", "resume": "remote-size skip", "note": "domain-specific; exemption"},
+    "update_index": {"retry": false, "resume": "idempotent upsert", "note": "single-writer"},
+    "download": {"retry": "HF-managed", "resume": "HF-managed", "note": "library-managed; exemption"}
+  },
+  "resource_usage": {
+    "join": {"cpu": "1 core", "ram": "O(1) streaming + stub index (~1.5M stubs)", "disk": "writes ~22GB", "note": "stub_meta is memory driver"},
+    "dedup": {"cpu": "--jobs (default 1)", "ram": "O(1) streaming + per-category seen dict (~1M ids)", "disk": "rewrites full output (~5GB)", "note": "9 categories; raw CLI worker count"},
+    "checksums": {"cpu": "1 core", "ram": "O(1)", "disk": "read-only walk", "note": "fast"},
+    "verify": {"cpu": "1 core", "ram": "O(1)", "disk": "decompress-heavy", "note": "per-file sequential"},
+    "upload": {"cpu": "threads (network-bound)", "ram": "O(files)", "disk": "read-only", "note": "3 sections; IO cap not used"},
+    "publish": {"cpu": "1 core", "ram": "O(ops)", "disk": "read-only", "note": "HF-side copy"},
+    "download": {"cpu": "HF-managed", "ram": "HF-managed", "disk": "writes full tree", "note": "config read from acquisition"}
+  },
+  "migration_boundary": {
+    "becomes_scheduler_task": [
+      "dedup: one task per category, id dedup:{release}:{cat} (release embedded — repo-global registry)",
+      "dedup worker dedup_task wraps dedup_category verbatim (same worker as old PPE -> byte-identical)",
+      "dedup worker raises on error -> scheduler retry (max_retries=2); terminal failure exits 1",
+      "dedup retry rewrites only that category's output ('wb' overwrite) -> no duplicates",
+      "dedup pool=process (CPU-bound zstd+hash; pure worker -> no SQLite fork hazard on macOS)",
+      "dedup workers from resolve_worker_count('release') with new release.dedup_workers key; --jobs stays as CLI override"
+    ],
+    "remains_serialized": [
+      "join passes 1/2/3 (cross-pass stub index + global dedup + manifest gate)",
+      "dedup finalize: compute_statistics + build_manifest + report + exit code",
+      "generate_checksums / verify_release (pure sequential, deterministic, cheap)",
+      "promote_release (governance single-writer, dry-run gate)",
+      "publish_promotion (network governance, duplicate prevention)",
+      "update_release_index (single-writer, chain-preserving)",
+      "build_release_metadata (derivation from frozen manifest)",
+      "download_release (library-managed resume/retry)"
+    ],
+    "requires_network_retry": [
+      "upload_huggingface (has 3x backoff; keep domain-specific)",
+      "download_release (HF library managed; keep)",
+      "publish_promotion (currently none; if hardened, add idempotent dest-exists check BEFORE retry; prefer per-file commits)"
+    ],
+    "requires_human_approval_gate": [
+      "promote (RC->final): dry-run + explicit user sign-off (skill rule); never a scheduler task",
+      "publish/upload (HF write): docs rule 'never upload before explicit human instruction'; manual CLI only",
+      "dedup (creates new RC + signed manifest): safe to automate; never mutates frozen artifacts; signed manifest is the gate"
+    ],
+    "registry_state": [
+      "task_id, status (pending/running/completed/failed/retry/skipped), attempt, timestamp, error, record_count telemetry",
+      "task_id MUST embed release: dedup:{release}:{cat} — registry is repo-global; bare dedup:{cat} collides across releases",
+      "stage key dedup -> metadata/pipeline_state/task_registry_dedup.jsonl"
+    ],
+    "cannot_parallelize": "dedup categories are disjoint per file but the finalize (stats+manifest) requires ALL categories; join's stub index is cross-pass shared state"
+  },
+  "scheduler_evaluation": {
+    "config.py": {
+      "verdict": "READY (small config addition)",
+      "note": "resolve_worker_count('release') -> 4 today (upload_workers; compress_workers added 6B). Need release.dedup_workers key. Env override ATLAS_WORKERS_RELEASE works."
+    },
+    "resource.py": {
+      "verdict": "READY",
+      "note": "safe_worker_limit() fits CPU-bound zstd+hash dedup; per-task RAM 512MB generous; disk_free() reporting-only (5E R1 — still not wired; dedup rewrites ~5GB)"
+    },
+    "models.py": {
+      "verdict": "READY",
+      "note": "Task/TaskResult fit category tasks; extra={source_dataset, target_dataset, expect_total}"
+    },
+    "registry.py": {
+      "verdict": "READY (stage naming decision D1)",
+      "note": "TaskRegistry(root, 'dedup') -> task_registry_dedup.jsonl; lease re-claim 900s; attempts() from append-only file"
+    },
+    "planner.py": {
+      "verdict": "READY (custom planner)",
+      "note": "file_tasks() could build per-category tasks but id must be dedup:{release}:{cat}; plan inline like plan_compress_tasks for exact id control"
+    },
+    "scheduler.py": {
+      "verdict": "READY",
+      "note": "bounded submission, retry <= max_retries, resume-skip, deterministic sort by task_id, in-run dedupe; pool=process; _backpressure() still dead code (out of scope)"
+    },
+    "monitor.py": {
+      "verdict": "OPTIONAL",
+      "note": "Monitor writes reports/performance/dedup_scheduler_report.json; not required for correctness"
+    }
+  },
+  "findings": [
+    {"id": "F1", "severity": "medium", "finding": "Dedup has PPE but no registry/retry/resume; crash mid-category loses completed categories' work on re-run (rewrites from source)", "impact": "Scheduler adoption (registry + lease + resume) closes this; per-category tasks make re-run incremental"},
+    {"id": "F2", "severity": "medium", "finding": "Dedup worker count is raw CLI --jobs (default 1), no RAM/CPU caps; 9 categories -> sequential by default", "impact": "release.dedup_workers key + resolve_worker_count('release'); --jobs stays as override"},
+    {"id": "F3", "severity": "high", "finding": "Dedup manifest/statistics finalize MUST stay serialized after all category tasks (signed content_hash over complete stats)", "impact": "5C pure workers + serialized finalize; finalize consumes sorted task results, builds stats + manifest exactly as today"},
+    {"id": "F4", "severity": "medium", "finding": "Upload verification is size-only: remote sha256 fetched but never compared; same-size corrupted blob passes", "impact": "Harden _verify_remote to compare local vs remote sha256 (LFS sha256 available via get_paths_info expand)"},
+    {"id": "F5", "severity": "low", "finding": "Upload --workers default 4 hardcoded, not wired to release.upload_workers", "impact": "Wire default via resolve_worker_count('release') (value coincidentally 4 today)"},
+    {"id": "F6", "severity": "high", "finding": "Publish uses one batch commit with many CommitOperationCopy ops — proven silent-drop mode (Phase 5 runbook: one commit per file)", "impact": "Harden: one commit per file (runbook pattern) or verify each copied path post-commit; currently only presence-checked"},
+    {"id": "F7", "severity": "medium", "finding": "Publish has no destination-existence pre-check -> duplicate-publish risk on re-run", "impact": "Check dst in remote before copy (mirror upload's resume skip); skip existing"},
+    {"id": "F8", "severity": "low", "finding": "Publish does not call update_release_index (v1.0 index entry exists — updated manually per promotion runbook)", "impact": "Document; optionally auto-update after verified publish"},
+    {"id": "F9", "severity": "low", "finding": "Download reads acquisition worker config, not a release/download key", "impact": "Cosmetic; leave or add release.download_workers when touched"},
+    {"id": "F10", "severity": "info", "finding": "Join is sequential by design (cross-pass stub index, global dedup, manifest gate) — parallelizing is high-risk/low-value", "impact": "Keep sequential; document in design doc"},
+    {"id": "F11", "severity": "info", "finding": "Checksums/verify/build_metadata are pure sequential functions — no migration value", "impact": "Keep; documented exemption"},
+    {"id": "F12", "severity": "info", "finding": "Promote is correctly sequential + dry-run gated; must never become a scheduler task", "impact": "Keep; documented approval gate"},
+    {"id": "F13", "severity": "medium", "finding": "No test coverage for dedup_release.py, promote_release.py, publish_promotion.py, build_release_metadata.py", "impact": "Add tests/test_scheduler_dedup.py (planning/retry/resume/determinism) + smoke tests for promote/publish dry-run paths in 7B"}
+  ],
+  "decisions_needed": [
+    {
+      "id": "D1",
+      "question": "Registry stage key",
+      "options": ["dedup (-> task_registry_dedup.jsonl, isolates from compression and future upload)", "release (shared stage for all release tools)"],
+      "recommendation": "dedup — per-stage separation keeps each pipeline's state inspectable; task_ids carry operation prefix so a future shared release registry is still possible"
+    },
+    {
+      "id": "D2",
+      "question": "Task unit",
+      "options": ["category-level (9 tasks)", "per-file/shard-level inside category"],
+      "recommendation": "category-level — source is already one .zst per category; splitting inside a category breaks byte-identical dedup (seen dict spans the category)"
+    },
+    {
+      "id": "D3",
+      "question": "Worker config key",
+      "options": ["add release.dedup_workers: 4 to config/parallelism.yaml", "reuse release.upload_workers"],
+      "recommendation": "new key dedup_workers — separate concern, clear logs, env override ATLAS_WORKERS_RELEASE still applies"
+    },
+    {
+      "id": "D4",
+      "question": "Failure semantics",
+      "options": ["worker raises on error (retryable, mirrors compression D4)", "hard exit-1 first-failure (today)"],
+      "recommendation": "raise -> retry; terminal failure after max_retries exits 1 (same final semantics)"
+    },
+    {
+      "id": "D5",
+      "question": "Upload hardening scope (F4/F5)",
+      "options": ["fix _verify_remote sha256 comparison + wire --workers default in same phase as 7B", "defer to later hardening phase"],
+      "recommendation": "include — small, high-value, no scheduler dependency"
+    },
+    {
+      "id": "D6",
+      "question": "Publish hardening scope (F6/F7)",
+      "options": ["design now, implement with explicit approval (touches HF write behavior)", "defer entirely"],
+      "recommendation": "design as part of this design doc but implement only with explicit approval; test in dry-run/list-only mode first"
+    }
+  ],
+  "verification": {
+    "mode": "read_only",
+    "git_baseline": "a1eb632 clean except 4 untracked pre-existing reports (compression_audit.{md,json}, universal_scheduler_final_audit.{md,json}) — untouched by this phase",
+    "probes": [
+      {
+        "probe": "resolve_worker_count('release') on-disk",
+        "result": "4; release stage cfg {'compress_workers': 4, 'upload_workers': 4}; YAML has release: section (added in 6B)"
+      },
+      {
+        "probe": "call graph grep for release tools",
+        "result": "no production invoker of dedup/upload/publish/promote as subprocess; only tests + docs reference them"
+      },
+      {
+        "probe": "releases/ dir state",
+        "result": "v1.0-RC1, v1.0-RC2, restored/v1.0-RC1 — untouched"
+      },
+      {
+        "probe": "metadata/release_index.json",
+        "result": "v1.0-RC2 + v1.0 hub entries present; chain hashes intact"
+      },
+      {
+        "probe": "executor scan in scripts/release/",
+        "result": "dedup_release.py (PPE), upload_huggingface.py (TPE), compress_release.py (PPE fallback only — scheduler primary since 6B); no other concurrent.futures usage"
+      }
+    ],
+    "dataset_release_hf_changes": "none",
+    "blocking_issues": 0
+  },
+  "generated_by": "Hermes (atlas-scheduler-pipeline-migration skill) — Phase 7A audit only"
+}
