@@ -51,3 +51,6 @@ parallelism:
     # the explicit --workers CLI override available.
     compress_workers: 4
     upload_workers: 4
+    # D2 (dedup Phase 7B): fixed dedup worker limit — CLI --jobs > env
+    # ATLAS_WORKERS_RELEASE > this config value (default 4). Never 'auto'.
+    dedup_workers: 4

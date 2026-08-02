@@ -1,0 +1,58 @@
+{
+  "phase": "7B",
+  "title": "Release Scheduler Implementation",
+  "date": "2026-08-02",
+  "status": "COMPLETE",
+  "changed_files": [
+    "config/parallelism.yaml",
+    "scripts/parallel/config.py",
+    "scripts/release/scheduler_tasks.py",
+    "scripts/release/dedup_release.py",
+    "tests/test_scheduler_dedup.py",
+    "reports/parallelism/release_scheduler_phase7b_report.md",
+    "reports/parallelism/release_scheduler_phase7b_report.json"
+  ],
+  "registry_design": {
+    "stage_key": "dedup",
+    "task_id_format": "dedup:<release>:<category>",
+    "registry_file": "task_registry_dedup.jsonl",
+    "resume_behavior": "completed tasks skipped, failed retryable tasks reclaimed",
+    "deterministic_identity": true
+  },
+  "worker_configuration": {
+    "default_workers": 4,
+    "resolution_order": ["CLI --jobs", "env ATLAS_WORKERS_RELEASE", "config release.dedup_workers", "default 4"],
+    "fixed_limit": true,
+    "never_auto": true
+  },
+  "failure_semantics": {
+    "max_retries": 2,
+    "lease_based_stale_reclaim": true,
+    "terminal_failure_exits_nonzero": true,
+    "sequential_fallback_available": true,
+    "kill_switch": "_SCHEDULER_ENABLED = False"
+  },
+  "verification": {
+    "test_scheduler_dedup": {"passed": 22, "failed": 0},
+    "test_scheduler_compression": {"passed": 22, "failed": 0},
+    "test_release_pipeline": {"passed": 11, "failed": 0},
+    "architecture_validator": {"status": "PASS", "violations": 0, "files_checked": 158},
+    "ad_hoc_probe": {
+      "task_id_deterministic": true,
+      "release_isolation": true,
+      "scheduler_execution": true,
+      "registry_stage_dedup": true,
+      "resume_skip": true,
+      "sha256_scheduler_eq_legacy": true,
+      "fallback_byte_identical": true,
+      "no_dataset_release_hf_changes": true,
+      "kill_switch": true,
+      "jobs1_sequential_compatibility": true
+    }
+  },
+  "known_limitations": [
+    "Registry is gitignored (operational state not versioned)",
+    "Kill-switch fallback uses Exception catch on import/run",
+    "Probe used fork start method on macOS; scheduler uses thread pool by default"
+  ]
+}

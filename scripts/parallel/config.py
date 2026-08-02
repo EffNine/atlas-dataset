@@ -44,7 +44,7 @@ DEFAULTS: dict[str, Any] = {
         "acquisition": {"file_workers": 4, "chunk_size": 500},
         "extraction": {"shard_workers": "auto", "shards_per_source": 41},
         "training_views": {"workers": "auto"},
-        "release": {"compress_workers": "auto", "upload_workers": 4},
+        "release": {"compress_workers": "auto", "upload_workers": 4, "dedup_workers": "auto"},
     }
 }
 

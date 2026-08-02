@@ -15,6 +15,12 @@ Produces:
 The v1.0-RC1 manifest, dataset outputs, and intelligence metadata are never
 modified. RC2 chains its release signature to RC1's stored chain_hash.
 
+Execution (Phase 7B): scheduler-primary via the Universal Scheduler
+(stage `dedup`, TaskRegistry resume/retry, release.dedup_workers from
+config/parallelism.yaml). Explicit ``--jobs 1`` and any scheduler failure
+fall back to the legacy executor — output is byte-identical from every
+path because all paths share ``dedup_category``.
+
 Usage:
   .venv-release/bin/python scripts/release/dedup_release.py \
       [--source releases/v1.0-RC1] [--target v1.0-RC2] \
@@ -26,6 +32,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
 import time
 from collections import Counter, defaultdict
@@ -60,6 +67,38 @@ def dedup_category_worker(src: str, dst: str) -> dict[str, Any]:
     cat_stats: dict[str, Any] = {}
     dedup_category(Path(src), Path(dst), cat_stats=cat_stats)
     return cat_stats
+
+
+def _dedup_sequential(
+    jobs: list[tuple[str, Path, Path]],
+) -> tuple[dict[str, Any], dict[str, int]]:
+    """Legacy sequential executor: dedup each category in order.
+
+    Shared by the explicit ``--jobs 1`` path (D4: --jobs 1 must remain the
+    legacy sequential path) and the scheduler's sequential fallback. Output
+    is byte-identical to the scheduler path because both call the same
+    ``dedup_category`` worker in the same order.
+    """
+    per_category: dict[str, Any] = {}
+    totals: dict[str, int] = {
+        "total_in": 0,
+        "total_kept": 0,
+        "total_dropped": 0,
+        "total_conflicts": 0,
+    }
+    for cat, src, dst in jobs:
+        cat_stats: dict[str, Any] = {}
+        dedup_category(src, dst, cat_stats=cat_stats)
+        per_category[cat] = cat_stats
+        totals["total_in"] += cat_stats["kept"] + cat_stats["dropped"]
+        totals["total_kept"] += cat_stats["kept"]
+        totals["total_dropped"] += cat_stats["dropped"]
+        totals["total_conflicts"] += cat_stats["conflicts"]
+        print(
+            f"  [{cat}] kept={cat_stats['kept']:,} dropped={cat_stats['dropped']:,} "
+            f"conflicts={cat_stats['conflicts']}"
+        )
+    return per_category, totals
 
 
 def dedup_category(
@@ -250,9 +289,10 @@ def main(argv: list[str] | None = None) -> int:
                     help="expected kept record total (default: real v1.0-RC2)")
     ap.add_argument("--expect-software", type=int, default=997144,
                     help="expected 02_software_engineering kept count")
-    ap.add_argument("--jobs", type=int, default=1,
-                    help="parallel worker processes (one per category); "
-                         "e.g. --jobs 8 on multi-core machines")
+    ap.add_argument("--jobs", type=int, default=None,
+                    help="parallel worker processes (one per category); unset = "
+                         "scheduler path with release.dedup_workers (config, 4); "
+                         "--jobs 1 = legacy sequential path; N>1 = scheduler with N")
     args = ap.parse_args(argv)
 
     root = Path(args.root)
@@ -290,6 +330,8 @@ def main(argv: list[str] | None = None) -> int:
     total_kept = 0
     total_dropped = 0
     total_conflicts = 0
+    scheduler_failures: list[dict[str, Any]] = []
+    resumed = False
 
     jobs: list[tuple[str, Path, Path]] = []
     for cat in CATEGORIES:
@@ -300,38 +342,80 @@ def main(argv: list[str] | None = None) -> int:
         dst = dst_dataset / cat / f"{cat}.jsonl.zst"
         jobs.append((cat, src, dst))
 
-    if args.jobs > 1:
-        print(f"  parallel: {args.jobs} workers across {len(jobs)} categories")
-        with ProcessPoolExecutor(max_workers=args.jobs) as pool:
-            futures = {
-                pool.submit(dedup_category_worker, str(src), str(dst)): cat
-                for cat, src, dst in jobs
-            }
-            for fut in as_completed(futures):
-                cat = futures[fut]
-                cat_stats = fut.result()
-                per_category[cat] = cat_stats
-                total_in += cat_stats["kept"] + cat_stats["dropped"]
-                total_kept += cat_stats["kept"]
-                total_dropped += cat_stats["dropped"]
-                total_conflicts += cat_stats["conflicts"]
-                print(
-                    f"  [{cat}] kept={cat_stats['kept']:,} dropped={cat_stats['dropped']:,} "
-                    f"conflicts={cat_stats['conflicts']}"
-                )
+    if args.jobs is not None and args.jobs == 1:
+        # D4: explicit --jobs 1 must remain the legacy sequential path
+        # (emergency fallback / byte-comparison safety).
+        per_category, totals = _dedup_sequential(jobs)
+        total_in = totals["total_in"]
+        total_kept = totals["total_kept"]
+        total_dropped = totals["total_dropped"]
+        total_conflicts = totals["total_conflicts"]
     else:
-        for cat, src, dst in jobs:
-            cat_stats: dict[str, Any] = {}
-            dedup_category(src, dst, cat_stats=cat_stats)
-            per_category[cat] = cat_stats
-            total_in += cat_stats["kept"] + cat_stats["dropped"]
-            total_kept += cat_stats["kept"]
-            total_dropped += cat_stats["dropped"]
-            total_conflicts += cat_stats["conflicts"]
-            print(
-                f"  [{cat}] kept={cat_stats['kept']:,} dropped={cat_stats['dropped']:,} "
-                f"conflicts={cat_stats['conflicts']}"
+        try:
+            from scheduler_tasks import run_dedup_scheduler
+
+            # Scheduler path (Phase 7B): TaskRegistry resume + retry +
+            # lease-based recovery, stage `dedup`. ATLAS_REGISTRY_ROOT
+            # redirects the registry (test/ops escape hatch).
+            per_category, totals, skipped, scheduler_failures = run_dedup_scheduler(
+                jobs,
+                args.target,
+                workers=args.jobs if args.jobs else None,
+                registry_root=os.environ.get("ATLAS_REGISTRY_ROOT"),
             )
+            total_in = totals["total_in"]
+            total_kept = totals["total_kept"]
+            total_dropped = totals["total_dropped"]
+            total_conflicts = totals["total_conflicts"]
+            if skipped:
+                resumed = True
+                print(
+                    f"  resume: {skipped} category(ies) already completed (registry)"
+                )
+        except Exception as exc:
+            # Last-resort fallback: the original executor (byte-identical
+            # output — every path shares dedup_category).
+            print(
+                f"[dedup] scheduler unavailable ({exc}); "
+                "falling back to the original executor",
+                file=sys.stderr,
+            )
+            if args.jobs and args.jobs > 1:
+                print(
+                    f"  parallel: {args.jobs} workers across {len(jobs)} categories"
+                )
+                with ProcessPoolExecutor(max_workers=args.jobs) as pool:
+                    futures = {
+                        pool.submit(dedup_category_worker, str(src), str(dst)): cat
+                        for cat, src, dst in jobs
+                    }
+                    for fut in as_completed(futures):
+                        cat = futures[fut]
+                        cat_stats = fut.result()
+                        per_category[cat] = cat_stats
+                        total_in += cat_stats["kept"] + cat_stats["dropped"]
+                        total_kept += cat_stats["kept"]
+                        total_dropped += cat_stats["dropped"]
+                        total_conflicts += cat_stats["conflicts"]
+                        print(
+                            f"  [{cat}] kept={cat_stats['kept']:,} "
+                            f"dropped={cat_stats['dropped']:,} "
+                            f"conflicts={cat_stats['conflicts']}"
+                        )
+            else:
+                per_category, totals = _dedup_sequential(jobs)
+                total_in = totals["total_in"]
+                total_kept = totals["total_kept"]
+                total_dropped = totals["total_dropped"]
+                total_conflicts = totals["total_conflicts"]
+
+    # D3/D4: terminal scheduler failures (after retry exhaustion) exit
+    # non-zero BEFORE finalize — no stats/manifest/report written.
+    if scheduler_failures:
+        print(f"\nFAILURES: {len(scheduler_failures)}")
+        for f in scheduler_failures[:10]:
+            print(f"  {f}")
+        return 1
 
     elapsed = round(time.time() - start, 2)
     print(f"\nTotal: in={total_in:,} kept={total_kept:,} dropped={total_dropped:,} "
@@ -342,19 +426,22 @@ def main(argv: list[str] | None = None) -> int:
     stats_total = stats["total_records"]
 
     # ---- Validation ----
+    # On a resumed run (registry-completed categories skipped), per-category
+    # totals cover only THIS run's completions; the strict disk-truth gates
+    # (expected totals, software count) still gate signing.
     validation = {
         "total_in": total_in,
         "total_kept": total_kept,
         "total_dropped": total_dropped,
         "conflicts": total_conflicts,
-        "stats_total_matches_kept": stats_total == total_kept,
+        "stats_total_matches_kept": stats_total == total_kept or resumed,
         "expected_unique": args.expect_total,
         "expected_software": args.expect_software,
         "software_matches_expected": stats["by_category"].get("02_software_engineering") == args.expect_software,
         "expected_total_matches": stats_total == args.expect_total,
         "all_ok": (
             total_conflicts == 0
-            and stats_total == total_kept
+            and (stats_total == total_kept or resumed)
             and stats_total == args.expect_total
             and stats["by_category"].get("02_software_engineering") == args.expect_software
         ),

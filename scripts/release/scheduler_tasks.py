@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Universal Scheduler integration for release compression (Phase 6B).
+"""Universal Scheduler integration for release steps.
 
 Execution orchestration ONLY — the routing/compression/verification logic
-stays in ``compress_release._route_shard`` (untouched). This module adds:
+stays in ``compress_release._route_shard`` and the dedup logic stays in
+``dedup_release.dedup_category`` (both untouched). This module adds:
 
+Compression (Phase 6B)
 - deterministic task identity: ``compress:<release>:<shard_stem>`` (release
   tag avoids cross-release registry collisions — the registry is repo-global)
 - TaskRegistry checkpoint/resume/retry via the Universal Scheduler
@@ -15,9 +17,24 @@ stays in ``compress_release._route_shard`` (untouched). This module adds:
 - sequential fallback (byte-identical behavior) on any scheduler error
 - ``_SCHEDULER_ENABLED`` kill-switch for tests + operational override
 
-The old executor in ``compress_release.main`` remains the last-resort
-fallback (scheduler_tasks import failure); output is identical from every
-path because all paths share the same ``_route_shard`` worker.
+Dedup (Phase 7B)
+- deterministic task identity: ``dedup:<release>:<category>`` (release tag
+  avoids cross-release registry collisions)
+- TaskRegistry checkpoint/resume/retry via the Universal Scheduler
+  (stage key ``dedup`` ->
+  ``metadata/pipeline_state/task_registry_dedup.jsonl``)
+- fixed worker limit (D2): ``release.dedup_workers = 4``, never auto
+- pure worker + serialized finalize (5C pattern): ``dedup_task`` only calls
+  the existing ``dedup_category`` and returns per-category stats — no
+  manifest/stats/checksum/lifecycle/registry writes in the worker. The
+  driver serializes ``compute_statistics`` + ``build_manifest`` + report
+  after all categories complete.
+- sequential fallback (byte-identical behavior) on any scheduler error
+- ``_SCHEDULER_ENABLED`` kill-switch forces the sequential fallback
+
+The old executors in ``compress_release.main`` / ``dedup_release.main``
+remain the last-resort fallback (scheduler_tasks import failure); output is
+identical from every path because all paths share the same workers.
 """
 
 from __future__ import annotations
@@ -274,3 +291,224 @@ def run_compression_scheduler(
                 )
             )
         return results, disk_skipped, []
+
+
+# ==========================================================================
+# Dedup (Phase 7B)
+# ==========================================================================
+
+# D2: fixed dedup worker limit — never auto-resolve yet.
+_DEFAULT_DEDUP_WORKERS = 4
+
+
+def resolve_dedup_workers(explicit: int | None = None) -> int:
+    """Fixed dedup worker limit (D2).
+
+    Precedence: explicit (CLI ``--jobs``) > env ``ATLAS_WORKERS_RELEASE`` >
+    config ``release.dedup_workers`` (pinned to 4) > fixed default 4.
+    Never returns 'auto' — the scheduler path is not allowed to auto-resolve
+    dedup workers yet. Reads the dedicated ``dedup_workers`` key (not the
+    generic release candidates) so a future divergence from
+    ``compress_workers`` cannot leak across steps.
+    """
+    if explicit is not None and explicit > 0:
+        return explicit
+    try:
+        from parallel.config import env_override, get_stage_config
+
+        env_val = env_override("release")
+        if env_val is not None and env_val > 0:
+            return env_val
+        stage_cfg = get_stage_config("release")
+        val = stage_cfg.get("dedup_workers", "auto")
+        if isinstance(val, int) and val > 0:
+            return val
+        if isinstance(val, str) and val.strip().isdigit():
+            return int(val.strip())
+    except Exception:
+        pass
+    return _DEFAULT_DEDUP_WORKERS
+
+
+def dedup_task_id(release: str, category: str) -> str:
+    """Deterministic task identity: ``dedup:<release>:<category>``.
+
+    The release prefix keeps each release's tasks distinct (a bare
+    ``dedup:<category>`` would collide across releases in the repo-global
+    registry). Within one release the id sorts by category name, which
+    matches ``CATEGORIES`` order and the report's aggregation order.
+    """
+    return f"dedup:{release}:{category}"
+
+
+def plan_dedup_tasks(jobs, release: str) -> list:
+    """One Task per category with deterministic id ``dedup:<release>:<cat>``.
+
+    ``jobs`` is the driver's ``[(category, src_path, dst_path), ...]`` list
+    (already filtered to categories whose source exists — mirrors the
+    legacy loop's SKIP-not-found behavior). Planning is stateless and
+    sorts by category: same inputs -> same task list (same order) -> same
+    task_ids -> registry resume works across restarts.
+    """
+    from parallel.models import Task
+
+    tasks: list = []
+    for cat, src, dst in sorted(jobs, key=lambda j: j[0]):
+        src_p = Path(src)
+        tasks.append(
+            Task(
+                task_id=dedup_task_id(release, cat),
+                source="release",
+                operation="dedup",
+                input=str(src_p),
+                estimated_size_mb=(
+                    src_p.stat().st_size / (1024 * 1024) if src_p.exists() else 0.0
+                ),
+                extra={
+                    "source": str(src_p),
+                    "target": str(dst),
+                    "category": cat,
+                    "release": release,
+                },
+            )
+        )
+    return tasks
+
+
+def dedup_task(task) -> dict[str, Any]:
+    """Universal Scheduler worker: dedup one category.
+
+    Module-level (picklable for process pools). Delegates to
+    ``dedup_release.dedup_category`` verbatim — the SAME worker the original
+    ProcessPoolExecutor / sequential loop dispatched — so output bytes are
+    identical by construction.
+
+    Pure worker (5C pattern): returns the per-category stats dict only; no
+    manifest / stats / checksums / lifecycle / registry-finalize writes.
+    Raises on any error (missing/corrupt source, write failure) so the
+    scheduler records a retry; a terminal failure after ``max_retries`` is
+    surfaced to the caller as a failure entry (exit 1, today's semantics).
+    Each task owns its output file (disjoint per category), so a retry
+    rewrites only that category's output — no duplicate records possible.
+    """
+    from dedup_release import dedup_category
+
+    extra = getattr(task, "extra", {}) or {}
+    cat_stats: dict[str, Any] = {}
+    dedup_category(Path(extra["source"]), Path(extra["target"]), cat_stats=cat_stats)
+    result: dict[str, Any] = {"category": extra["category"], **cat_stats}
+    # Registry telemetry alias (design R7): the monitor reads `total`.
+    result["total"] = result.get("kept", 0)
+    return result
+
+
+def run_dedup_scheduler(
+    jobs,
+    release: str,
+    *,
+    workers: int | None = None,
+    registry_root=None,
+    lease_seconds: int = 900,
+):
+    """Run dedup through the Universal Scheduler.
+
+    Returns ``(per_category, totals, skipped, failures)``:
+      per_category — ``{category: stats}`` for tasks completed in THIS run
+                    (deterministic task_id order == CATEGORIES order)
+      totals       — ``{"total_in", "total_kept", "total_dropped",
+                    "total_conflicts"}`` summed over THIS run's completions
+      skipped      — count of registry-completed tasks skipped (resume)
+      failures     — ``[{"category": <cat>, "errors": [msg]}]`` for terminal
+                    failures (after retry exhaustion)
+
+    Falls back to the legacy sequential loop on any scheduler error. Output
+    from either path is byte-identical; the registry is only written by the
+    scheduler path.
+    """
+    tasks = plan_dedup_tasks(jobs, release)
+    if not tasks:
+        empty_totals = {
+            "total_in": 0,
+            "total_kept": 0,
+            "total_dropped": 0,
+            "total_conflicts": 0,
+        }
+        return {}, empty_totals, 0, []
+
+    if workers is None:
+        workers = resolve_dedup_workers()
+    category_by_id = {t.task_id: t.extra["category"] for t in tasks}
+
+    def _empty_totals() -> dict[str, int]:
+        return {
+            "total_in": 0,
+            "total_kept": 0,
+            "total_dropped": 0,
+            "total_conflicts": 0,
+        }
+
+    try:
+        from parallel.scheduler import Scheduler
+
+        if not _SCHEDULER_ENABLED:
+            raise RuntimeError("scheduler disabled (kill-switch)")
+
+        reg_root = (
+            Path(registry_root)
+            if registry_root
+            else REPO_ROOT / "metadata" / "pipeline_state"
+        )
+        sched = Scheduler(
+            "dedup",
+            registry_root=str(reg_root),
+            workers=workers,
+            pool="process",
+            max_retries=2,
+            lease_seconds=lease_seconds,
+        )
+        print(
+            f"[dedup] scheduler: {len(tasks)} category tasks, "
+            f"{sched.workers} workers"
+        )
+        per_category: dict[str, Any] = {}
+        totals = _empty_totals()
+        failures: list[dict[str, Any]] = []
+        skipped = 0
+        for tr in sched.run(tasks, dedup_task):
+            if tr.status == "completed" and isinstance(tr.result, dict):
+                cat = tr.result.get("category", tr.task_id.rsplit(":", 1)[-1])
+                # Drop the scheduler-only telemetry alias AND the redundant
+                # `category` field (the dict key carries it) so per-category
+                # stats are byte-identical to the legacy executor's stats.
+                per_category[cat] = {
+                    k: v for k, v in tr.result.items()
+                    if k not in ("total", "category")
+                }
+                totals["total_in"] += tr.result.get("kept", 0) + tr.result.get(
+                    "dropped", 0
+                )
+                totals["total_kept"] += tr.result.get("kept", 0)
+                totals["total_dropped"] += tr.result.get("dropped", 0)
+                totals["total_conflicts"] += tr.result.get("conflicts", 0)
+                print(
+                    f"  [{cat}] kept={tr.result.get('kept', 0):,} "
+                    f"dropped={tr.result.get('dropped', 0):,} "
+                    f"conflicts={tr.result.get('conflicts', 0)}"
+                )
+            elif tr.status == "failed":
+                cat = category_by_id.get(tr.task_id, tr.task_id.rsplit(":", 1)[-1])
+                failures.append(
+                    {"category": cat, "errors": [tr.error or "dedup failed"]}
+                )
+            elif tr.status == "skipped":
+                skipped += 1
+        return per_category, totals, skipped, failures
+    except Exception as exc:
+        print(
+            f"[dedup] scheduler unavailable ({exc}); falling back to sequential",
+            file=sys.stderr,
+        )
+        from dedup_release import _dedup_sequential
+
+        per_category, totals = _dedup_sequential(jobs)
+        return per_category, totals, 0, []
