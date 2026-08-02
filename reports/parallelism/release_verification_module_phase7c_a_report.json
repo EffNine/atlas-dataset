@@ -1,0 +1,118 @@
+{
+  "phase": "7C-A",
+  "title": "Release Verification Module Implementation",
+  "date": "2025-08-02",
+  "status": "completed",
+  "files_changed": [
+    {
+      "path": "scripts/release/verify_sha256.py",
+      "action": "added",
+      "description": "Shared SHA256 verification module"
+    },
+    {
+      "path": "tests/test_verify_sha256.py",
+      "action": "added",
+      "description": "18 unit tests for verify_sha256 module"
+    },
+    {
+      "path": "metadata/architecture_validation_report.json",
+      "action": "regenerated",
+      "description": "Post-implementation architecture validation"
+    }
+  ],
+  "design_mapping": {
+    "S-1": {
+      "requirement": "checksums.sha256 generation during release build",
+      "status": "preserved",
+      "note": "generate_checksums.py unchanged"
+    },
+    "S-2": {
+      "requirement": "Shared verify_remote_sha256 function",
+      "status": "implemented",
+      "implementation": "verify_manifest_files() in verify_sha256.py"
+    },
+    "S-3": {
+      "requirement": "Shared should_skip function for resume logic",
+      "status": "implemented",
+      "implementation": "verify_file_sha256() + load_checksum_manifest()"
+    }
+  },
+  "api": {
+    "functions": [
+      "sha256_file(path, chunk_size=1048576) -> str",
+      "load_checksum_manifest(path) -> dict[str, str]",
+      "verify_file_sha256(path, expected_hash) -> tuple[bool, str | None]",
+      "verify_manifest_files(root, manifest) -> VerifyResult"
+    ],
+    "classes": [
+      "ManifestError(Exception)",
+      "VerifyResult(dataclass)"
+    ],
+    "properties": [
+      "deterministic",
+      "streaming_hash_calculation",
+      "no_external_network_dependency",
+      "pure_functions_where_possible"
+    ]
+  },
+  "tests": {
+    "new_tests": {
+      "path": "tests/test_verify_sha256.py",
+      "total": 18,
+      "passed": 18,
+      "failed": 0,
+      "classes": [
+        "TestKnownVector",
+        "TestVerifyFileSha256",
+        "TestLoadChecksumManifest",
+        "TestVerifyManifestFiles",
+        "TestRoundTrip"
+      ]
+    },
+    "related_tests": {
+      "path": "tests/test_release_pipeline.py",
+      "note": "fixture failures due to missing zstandard/parallel module in current env; not regressions from this change"
+    }
+  },
+  "architecture_validator": {
+    "command": "python3 scripts/validate_architecture.py",
+    "result": "PASS",
+    "files_checked": 160,
+    "violations_found": 0,
+    "known_legacy_violations": 4,
+    "report_path": "metadata/architecture_validation_report.json"
+  },
+  "verification": {
+    "module_import": "PASS",
+    "sha256_known_vector": {
+      "input": "b'hermes-verify'",
+      "expected": "c49f1ece243cdf2158fa7e42572b3fd3e49595f48156b2a251034023069f581d",
+      "actual": "c49f1ece243cdf2158fa7e42572b3fd3e49595f48156b2a251034023069f581d",
+      "result": "PASS"
+    },
+    "manifest_validation": {
+      "single_entry": "PASS",
+      "multiple_files": "PASS",
+      "comments_blanks": "PASS",
+      "malformed_line": "PASS",
+      "invalid_hex": "PASS",
+      "case_normalization": "PASS"
+    },
+    "no_release_hf_dataset_changes": true,
+    "tempfile_probe": {
+      "prefix": "hermes-verify-",
+      "cleanup": "PASS"
+    }
+  },
+  "git_diff": {
+    "new_files": [
+      "scripts/release/verify_sha256.py",
+      "tests/test_verify_sha256.py",
+      "reports/parallelism/release_verification_module_phase7c_a_report.md"
+    ],
+    "modified_files": [
+      "metadata/architecture_validation_report.json"
+    ],
+    "forbidden_changes": []
+  }
+}
