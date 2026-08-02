@@ -1,0 +1,142 @@
+{
+  "phase": "7C",
+  "title": "Release Upload & Publish Hardening Audit",
+  "date": "2025-08-02",
+  "status": "design_only",
+  "scope": {
+    "files": [
+      "scripts/release/upload_huggingface.py",
+      "scripts/release/publish_promotion.py"
+    ],
+    "constraints": [
+      "no_code_changes",
+      "no_hf_upload",
+      "no_release_publish",
+      "no_dataset_changes",
+      "stop_after_design"
+    ]
+  },
+  "upload_huggingface": {
+    "worker_model": {
+      "current": "ThreadPoolExecutor over sections, --workers CLI default 4",
+      "config_integrated": false,
+      "config_target": "config.parallelism.yaml → parallelism.release.upload_workers",
+      "finding": "CLI default shadows unified config; no fallback chain"
+    },
+    "retry": {
+      "current": {
+        "max_retries": 3,
+        "backoff_base_s": 2.0,
+        "scope": "whole section",
+        "error_classification": "none — all exceptions retried equally"
+      },
+      "gaps": [
+        "auth and not-found errors exhaust retries unnecessarily",
+        "no per-file checkpoint on section retry",
+        "no circuit breaker for repeated section failures"
+      ]
+    },
+    "resume": {
+      "current": "size-match only — remote file with matching size is skipped",
+      "correct": "skip decision itself is correct for size predicate",
+      "weakness": "sha256 not checked; a same-size corrupted file would be skipped permanently"
+    },
+    "remote_verification": {
+      "current": "collects lfs.sha256 and sha256 but compares size only",
+      "known_issue_confirmed": true,
+      "finding": "docstring claims size+sha256 verification; implementation only checks size"
+    },
+    "checksum_validation": {
+      "current": "none in practice",
+      "proposed": {
+        "source_of_truth": "local checksums.sha256 file built at release time",
+        "prefer": "lfs.sha256 over regular sha256 for LFS files",
+        "compare_before_index_update": true
+      }
+    },
+    "failure_modes": [
+      "network timeout — retried with backoff, acceptable",
+      "partial section upload — retried from start, no file-level checkpoint",
+      "sha256 mismatch — NOT DETECTED",
+      "auth failure — retried 3x then fails"
+    ]
+  },
+  "publish_promotion": {
+    "commit_operation_copy": {
+      "current": "all copy ops in single create_commit call",
+      "known_issue": "HF hub silently drops CommitOperationCopy ops in bulk commits",
+      "compliant_with_skill_pitfall": false
+    },
+    "silent_drop_risks": [
+      "batch commit drops 1+ copies without error",
+      "script exits 1 on missing files but leaves repo in partial state",
+      "no automated retry per dropped file",
+      "no cleanup of failed partial publish"
+    ],
+    "destination_validation": {
+      "current": "presence-only — checks file exists on remote after commit",
+      "gaps": [
+        "no size check",
+        "no sha256 check for copied dataset files",
+        "no sha256 check for added metadata/docs files"
+      ]
+    },
+    "duplicate_publish_prevention": {
+      "current": "none",
+      "risk": "running twice creates duplicate index entries and may error or overwrite"
+    },
+    "rollback": {
+      "current": "none — manual HF deletion required",
+      "proposed": "pre-commit snapshot + post-commit verification gate + documented runbook"
+    },
+    "failure_modes": [
+      "silent copy drop — detected by presence check, but partial state left behind",
+      "duplicate publish — no guard",
+      "sha256 mismatch after copy — NOT DETECTED",
+      "network error — fails immediately, no retry"
+    ]
+  },
+  "sha256_strategy": {
+    "local_manifest": "checksums.sha256 generated during release build, immutable",
+    "resume_predicate": "skip only when size AND sha256 both match",
+    "remote_preference": "lfs.sha256 first, fallback to regular sha256",
+    "no_sha256_policy": "fail loudly — file not properly uploaded as LFS",
+    "verify_before_index_update": true
+  },
+  "requirements": {
+    "upload_huggingface": [
+      {"id": "U-1", "desc": "Use resolve_worker_count from config/parallelism.yaml", "priority": "high"},
+      {"id": "U-2", "desc": "Compare lfs.sha256 against local checksums.sha256 in _verify_remote", "priority": "high"},
+      {"id": "U-3", "desc": "Add sha256 to skip predicate in _resume_skip", "priority": "high"},
+      {"id": "U-4", "desc": "Classify errors: skip retry for auth/not-found/invalid", "priority": "medium"},
+      {"id": "U-5", "desc": "Per-file upload checkpoint before section retry", "priority": "medium"},
+      {"id": "U-6", "desc": "Verify BEFORE updating release_index.json", "priority": "high"}
+    ],
+    "publish_promotion": [
+      {"id": "P-1", "desc": "One create_commit per dataset file", "priority": "high"},
+      {"id": "P-2", "desc": "Pre-publish guard: abort if destination already has files on HF", "priority": "high"},
+      {"id": "P-3", "desc": "Verify copied dataset files: remote lfs.sha256 matches local checksums.sha256", "priority": "high"},
+      {"id": "P-4", "desc": "Verify added metadata/docs: remote sha256 matches local file hash", "priority": "high"},
+      {"id": "P-5", "desc": "Retry loop per dropped copy after single-file commits", "priority": "medium"},
+      {"id": "P-6", "desc": "Document rollback runbook for partial publish scenarios", "priority": "medium"},
+      {"id": "P-7", "desc": "Do not update release_index.json if verification fails", "priority": "high"}
+    ],
+    "shared": [
+      {"id": "S-1", "desc": "checksums.sha256 generation during release build", "priority": "high"},
+      {"id": "S-2", "desc": "Shared verify_remote_sha256 function for both scripts", "priority": "high"},
+      {"id": "S-3", "desc": "Shared should_skip function with size+sha256 predicate", "priority": "high"}
+    ]
+  },
+  "implementation_phasing": {
+    "7C-A": ["S-1", "S-2", "S-3"],
+    "7C-B": ["U-1", "U-2", "U-3", "U-6", "U-4", "U-5"],
+    "7C-C": ["P-1", "P-2", "P-3", "P-4", "P-7", "P-5", "P-6"],
+    "7C-D": ["integration_tests", "dry_run_against_test_repo", "sha256_mismatch_injection"]
+  },
+  "verification": {
+    "json_schema": "validated via probe",
+    "markdown_sections": "validated via probe",
+    "git_diff": "new docs/reports only — no release/HF/dataset changes",
+    "cleanup": "temp files removed after probe"
+  }
+}
