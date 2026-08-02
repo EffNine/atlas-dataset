@@ -2,16 +2,19 @@
 """Upload an Atlas release to Hugging Face Hub (private by default).
 
 Design:
-  - resume: files already on the Hub with matching size are skipped (no
+  - resume: files already on the Hub with matching checksum are skipped (no
     re-upload); interrupted uploads continue where they left off
   - parallel: one ``upload_folder`` per top-level release section
     (dataset/<category>, metadata, docs) submitted as futures
-  - retry: transient failures (5xx / connection) retried with backoff
+  - retry: transient failures (5xx / connection / 429) retried with backoff;
+    fatal errors (401/403/404/bad creds) abort immediately
   - progress: tqdm progress bar over files
   - verification: after upload, every remote file is checked via
     ``get_paths_info`` (size + sha256 where available); fails loudly on any
     mismatch
   - token: read from HF_TOKEN env var only — never hardcoded
+  - pre-upload gate: local release checksums.sha256 is verified before any
+    network I/O starts
 
 Usage:
   export HF_TOKEN=hf_xxx
@@ -26,13 +29,22 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import logging
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from enum import Enum
 from pathlib import Path
 from typing import Any
 
 from common import REPO_ROOT, human_bytes, require_env
+
+from verify_sha256 import (
+    ManifestError,
+    load_checksum_manifest,
+    sha256_file,
+    verify_manifest_files,
+)
 
 DEFAULT_RELEASE = "v1.0-RC1"
 MAX_RETRIES = 3
@@ -41,6 +53,89 @@ BACKOFF_BASE_S = 2.0
 # Top-level sections inside a release that get uploaded.
 RELEASE_SECTIONS = ("dataset", "metadata", "docs")
 
+logger = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------------------------
+# Worker resolution (U-1)
+# ---------------------------------------------------------------------------
+
+def resolve_upload_workers(explicit: int | None = None) -> int:
+    """Resolve upload worker count.
+
+    Precedence:
+      CLI --workers
+      ATLAS_WORKERS_RELEASE
+      config/parallelism.yaml release.upload_workers
+      default 4
+    """
+    if explicit is not None and explicit > 0:
+        return int(explicit)
+    try:
+        from parallel.config import resolve_worker_count
+        resolved = resolve_worker_count("release", explicit=explicit)
+        if isinstance(resolved, int) and resolved > 0:
+            return resolved
+    except Exception:
+        pass
+    return 4
+
+
+# ---------------------------------------------------------------------------
+# Retry classification (U-4)
+# ---------------------------------------------------------------------------
+
+class UploadErrorCategory(Enum):
+    RETRYABLE = "retryable"
+    FATAL = "fatal"
+
+
+def _classify_upload_error(exc: Exception) -> UploadErrorCategory:
+    """Classify an upload exception as retryable or fatal."""
+    msg = str(exc).lower()
+
+    # Authz / authn / not-found -> fatal.
+    fatal_signals = [
+        "401",
+        "403",
+        "404",
+        "unauthorized",
+        "invalid repository",
+        "permission denied",
+        "bad credentials",
+        "not found",
+        "repository not found",
+        "access denied",
+    ]
+    for signal in fatal_signals:
+        if signal in msg:
+            return UploadErrorCategory.FATAL
+
+    # Retryable: timeouts, connection issues, 429, 5xx.
+    retry_signals = [
+        "timeout",
+        "timed out",
+        "connection",
+        "429",
+        "500",
+        "502",
+        "503",
+        "504",
+        "server error",
+        "service unavailable",
+        "too many requests",
+    ]
+    for signal in retry_signals:
+        if signal in msg:
+            return UploadErrorCategory.RETRYABLE
+
+    # Default: retryable for unknown exceptions to preserve existing behavior.
+    return UploadErrorCategory.RETRYABLE
+
+
+# ---------------------------------------------------------------------------
+# Path helpers
+# ---------------------------------------------------------------------------
 
 def _release_root(release: str, output: str | None = None) -> Path:
     if output:
@@ -76,12 +171,15 @@ def _plan_sections(
     return sections
 
 
+# ---------------------------------------------------------------------------
+# Remote metadata helpers
+# ---------------------------------------------------------------------------
+
 def _remote_sizes(api, repo_id: str, token: str) -> dict[str, int]:
     """Return {path_in_repo: size} for every file already on the Hub."""
     try:
         files = api.list_repo_files(repo_id=repo_id, repo_type="dataset", token=token)
     except Exception:
-        # Repo may not exist yet -> treat as empty.
         return {}
     if not files:
         return {}
@@ -96,34 +194,88 @@ def _remote_sizes(api, repo_id: str, token: str) -> dict[str, int]:
             if rpath is not None and size is not None:
                 sizes[rpath] = size
     except Exception:
-        # Fall back to listing only (size unknown -> always re-upload).
         for f in files:
             sizes[f] = -1
     return sizes
 
 
+def _remote_checksums(api, repo_id: str, token: str) -> dict[str, str]:
+    """Return {path_in_repo: sha256_hex} where the Hub exposes it."""
+    try:
+        files = api.list_repo_files(repo_id=repo_id, repo_type="dataset", token=token)
+    except Exception:
+        return {}
+    if not files:
+        return {}
+    checksums: dict[str, str] = {}
+    try:
+        infos = api.get_paths_info(
+            repo_id=repo_id, paths=files, repo_type="dataset", token=token, expand=True
+        )
+        for info in infos:
+            rpath = getattr(info, "path", None)
+            if not rpath:
+                continue
+            lfs = getattr(info, "lfs", None)
+            sha = None
+            if lfs is not None:
+                sha = getattr(lfs, "sha256", None)
+            if sha is None:
+                sha = getattr(info, "sha256", None)
+            if sha:
+                checksums[rpath] = str(sha).lower()
+    except Exception:
+        pass
+    return checksums
+
+
+# ---------------------------------------------------------------------------
+# Resume skip (U-2/U-3): checksum-aware
+# ---------------------------------------------------------------------------
+
 def _resume_skip(
     sections: list[tuple[str, list[Path]]],
     remote_sizes: dict[str, int],
+    remote_checksums: dict[str, str],
     release_root: Path,
-) -> list[tuple[str, list[Path]]]:
-    """Keep only files that are missing or differ in size on the Hub.
+) -> tuple[list[tuple[str, list[Path]]], int]:
+    """Keep only files that are missing or differ on the Hub.
 
-    A file is skipped when the remote entry exists AND has the same size.
-    Size -1 (unknown) never skips — it forces a re-upload.
+    Prefer SHA-256 comparison when remote metadata is available.
+    Fall back to size-only with a warning when remote SHA-256 is unavailable.
     """
     pending: list[tuple[str, list[Path]]] = []
+    size_only_fallback_warnings = 0
     for section, files in sections:
-        missing = [
-            f
-            for f in files
-            if str(f.relative_to(release_root)) not in remote_sizes
-            or remote_sizes.get(str(f.relative_to(release_root)), -1) != f.stat().st_size
-        ]
+        missing: list[Path] = []
+        for f in files:
+            rel = str(f.relative_to(release_root))
+            if rel not in remote_sizes:
+                missing.append(f)
+                continue
+            remote_sha = remote_checksums.get(rel)
+            if remote_sha:
+                try:
+                    local_sha = sha256_file(f).lower()
+                except OSError:
+                    missing.append(f)
+                    continue
+                if local_sha != remote_sha:
+                    missing.append(f)
+                # else: skip upload
+            else:
+                size_only_fallback_warnings += 1
+                if remote_sizes.get(rel, -1) != f.stat().st_size:
+                    missing.append(f)
+                # else: skip upload with warning
         if missing:
             pending.append((section, missing))
-    return pending
+    return pending, size_only_fallback_warnings
 
+
+# ---------------------------------------------------------------------------
+# Upload + retry (U-4)
+# ---------------------------------------------------------------------------
 
 def _upload_section_with_retry(
     api,
@@ -136,12 +288,7 @@ def _upload_section_with_retry(
     commit_message: str,
     dry_run: bool = False,
 ) -> dict[str, Any]:
-    """Upload one section; retry on transient failure.
-
-    Uploads only the section's own folder (release_root/<section>) so the
-    remote repo gets dataset/, metadata/, docs/ at top level — NOT the whole
-    release root nested under each section.
-    """
+    """Upload one section; retry only retryable failures."""
     last_err: Exception | None = None
     section_dir = release_root / section
     for attempt in range(1, MAX_RETRIES + 1):
@@ -170,6 +317,11 @@ def _upload_section_with_retry(
             }
         except Exception as exc:
             last_err = exc
+            category = _classify_upload_error(exc)
+            if category == UploadErrorCategory.FATAL:
+                raise RuntimeError(
+                    f"fatal upload error for section {section}: {exc}"
+                ) from exc
             if attempt < MAX_RETRIES:
                 wait = BACKOFF_BASE_S * (2 ** (attempt - 1))
                 print(
@@ -179,6 +331,10 @@ def _upload_section_with_retry(
                 time.sleep(wait)
     raise RuntimeError(f"upload failed for section {section}: {last_err}")
 
+
+# ---------------------------------------------------------------------------
+# Post-upload verification
+# ---------------------------------------------------------------------------
 
 def _verify_remote(
     api,
@@ -219,6 +375,45 @@ def _verify_remote(
     return ok, problems
 
 
+# ---------------------------------------------------------------------------
+# Pre-upload verification gate (U-5/U-6)
+# ---------------------------------------------------------------------------
+
+def _pre_upload_verify(release_root: Path) -> None:
+    """Verify local release checksums before any network I/O.
+
+    Raises SystemExit on mismatch so no partial upload occurs.
+    """
+    manifest_path = release_root / "metadata" / "checksums.sha256"
+    if not manifest_path.exists():
+        print(
+            "ERROR: pre-upload verification failed: "
+            f"missing checksums manifest: {manifest_path}"
+        )
+        sys.exit(2)
+    try:
+        manifest = load_checksum_manifest(manifest_path)
+    except ManifestError as exc:
+        print(f"ERROR: pre-upload verification failed: {exc}")
+        sys.exit(2)
+    result = verify_manifest_files(release_root, manifest)
+    if not result.ok:
+        print("Release integrity check failed:")
+        for item in result.missing:
+            print(f"  missing  : {item}")
+        for item in result.mismatches:
+            print(f"  mismatch : {item}")
+        for item in result.errors:
+            print(f"  error    : {item}")
+        raise RuntimeError(
+            "Pre-upload verification failed: local release checksums do not match manifest."
+        )
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(
         description="Upload an Atlas release to Hugging Face Hub.",
@@ -231,7 +426,7 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Create the repo private if it does not exist.",
     )
-    ap.add_argument("--workers", type=int, default=4, help="Parallel section uploads.")
+    ap.add_argument("--workers", type=int, default=None, help="Parallel section uploads.")
     ap.add_argument("--dry-run", action="store_true", help="Plan only; no network I/O.")
     ap.add_argument(
         "--commit-message",
@@ -244,6 +439,9 @@ def main(argv: list[str] | None = None) -> int:
         help="Release root (default: <repo>/releases/<release>).",
     )
     args = ap.parse_args(argv)
+
+    workers = resolve_upload_workers(explicit=args.workers)
+    print(f"Resolved upload workers: {workers}")
 
     release_root = _release_root(args.release, args.output)
     local_files = _collect_local_files(release_root)
@@ -266,10 +464,13 @@ def main(argv: list[str] | None = None) -> int:
                 f"{section} ({len(files)} files, "
                 f"{human_bytes(sum(f.stat().st_size for f in files))})"
             )
-        print("\nResume logic: files already on the Hub with matching size are skipped.")
+        print("\nResume logic: files already on the Hub with matching checksum are skipped.")
         print("Verification: all remote files checked post-upload (size + sha256).")
         print("Token source: HF_TOKEN env var.")
         return 0
+
+    # U-5/U-6: pre-upload verification gate
+    _pre_upload_verify(release_root)
 
     token = require_env("HF_TOKEN")
 
@@ -304,10 +505,19 @@ def main(argv: list[str] | None = None) -> int:
 
     # 2. Resume: determine which sections already exist remotely.
     remote_sizes = _remote_sizes(api, args.repo_id, token)
-    pending_sections = _resume_skip(sections, remote_sizes, release_root)
+    remote_checksums = _remote_checksums(api, args.repo_id, token)
+    pending_sections, size_only_warnings = _resume_skip(
+        sections, remote_sizes, remote_checksums, release_root
+    )
     uploaded_names = {s for s, _ in sections} - {s for s, _ in pending_sections}
     for s in sorted(uploaded_names):
         print(f"  section {s}: already complete on Hub — skipping")
+
+    if size_only_warnings:
+        print(
+            f"  WARNING: {size_only_warnings} file(s) skipped using size-only fallback "
+            f"because remote SHA-256 metadata was unavailable."
+        )
 
     if not pending_sections:
         print("Nothing to upload — all sections already on the Hub.")
@@ -315,7 +525,7 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"\nUploading {len(pending_sections)} pending section(s)...")
     results: list[dict[str, Any]] = []
-    if args.workers <= 1:
+    if workers <= 1:
         for section, files in pending_sections:
             results.append(
                 _upload_section_with_retry(
@@ -329,7 +539,7 @@ def main(argv: list[str] | None = None) -> int:
                 )
             )
     else:
-        with ThreadPoolExecutor(max_workers=args.workers) as pool:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
             futures = {
                 pool.submit(
                     _upload_section_with_retry,

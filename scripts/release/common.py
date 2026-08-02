@@ -43,13 +43,12 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+from verify_sha256 import sha256_file as _sha256_file  # noqa: E402
+
+
 def sha256_file(path: Path, chunk_size: int = 1024 * 1024) -> str:
     """SHA-256 of a file, streamed (O(1) memory)."""
-    digest = hashlib.sha256()
-    with path.open("rb") as fh:
-        for chunk in iter(lambda: fh.read(chunk_size), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+    return _sha256_file(path, chunk_size=chunk_size)
 
 
 def iter_jsonl(path: Path) -> Iterator[dict]:

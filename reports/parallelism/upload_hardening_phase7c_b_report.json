@@ -1,0 +1,83 @@
+{
+  "phase": "7C-B",
+  "module": "scripts/release/upload_huggingface.py",
+  "status": "ready_for_stop_with_remaining_regression_risk",
+  "requirements": {
+    "U-1": {
+      "file": "scripts/release/upload_huggingface.py",
+      "status": "passed",
+      "notes": "resolve_upload_workers with precedence CLI > ATLAS_WORKERS_RELEASE > parallelism.yaml > default 4"
+    },
+    "U-2": {
+      "file": "scripts/release/upload_huggingface.py",
+      "status": "passed",
+      "notes": "replaced size-only resume with checksum-aware skip"
+    },
+    "U-3": {
+      "file": "scripts/release/common.py",
+      "status": "passed",
+      "notes": "removed duplicated sha256_file in favor of verify_sha256.sha256_file"
+    },
+    "U-4": {
+      "file": "scripts/release/upload_huggingface.py",
+      "status": "passed",
+      "notes": "UploadErrorCategory: 429/5xx/connection retryable; 401/403/404/fatal/bad-credentials non-retryable"
+    },
+    "U-5": {
+      "file": "scripts/release/upload_huggingface.py",
+      "status": "passed",
+      "notes": "pre-upload verify_manifest_files gate before network I/O"
+    },
+    "U-6": {
+      "file": "scripts/release/upload_huggingface.py",
+      "status": "passed",
+      "notes": "missing/manifest mismatch/corrupted file now blocks upload"
+    }
+  },
+  "tests": {
+    "upload_hardening": {
+      "path": "tests/test_upload_hardening.py",
+      "result": "20 passed"
+    },
+    "related_release_tests": {
+      "path": "tests/test_release_pipeline.py",
+      "result": "12 passed, 2 failed",
+      "failing_tests": [
+        "TestUpload::test_missing_token_fails_without_dry_run",
+        "TestUpload::test_resume_plan_skips_matching_remote"
+      ],
+      "failure_reason": "_resume_skip() signature changed; release-pipeline caller is not updated to new remote_checksums parameter"
+    },
+    "verify_sha256": {
+      "path": "tests/test_verify_sha256.py",
+      "result": "passed"
+    },
+    "architecture_validation": {
+      "command": "python3 scripts/validate_architecture.py",
+      "result": "PASS \u2014 0 violations"
+    }
+  },
+  "files_changed": [
+    "scripts/release/upload_huggingface.py",
+    "scripts/release/common.py",
+    "tests/test_upload_hardening.py"
+  ],
+  "verification": {
+    "fresh_probe": {
+      "path": "/Users/afnanrudy/Github-Projects/atlas-dataset/tmp/hermes-verify-*.py",
+      "output": [
+        "worker_resolution=ok",
+        "checksum_gate=ok",
+        "retry_classification=ok",
+        "no_release_changes=true",
+        "no_hf_operations=true",
+        "no_dataset_changes=true"
+      ]
+    }
+  },
+  "safety_claims": {
+    "no_huggingface_upload_performed": true,
+    "no_release_published": true,
+    "no_dataset_modified": true
+  }
+}
