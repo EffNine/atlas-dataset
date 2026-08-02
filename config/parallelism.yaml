@@ -44,3 +44,10 @@ parallelism:
 
   training_views:
     workers: 8
+
+  release:
+    # D3 (compression Phase 6B): fixed worker limit — never 'auto' yet.
+    # Bounds disk write pressure on large raw input (22 GB) while keeping
+    # the explicit --workers CLI override available.
+    compress_workers: 4
+    upload_workers: 4

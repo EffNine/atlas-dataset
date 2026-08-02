@@ -1,0 +1,69 @@
+{
+  "report_metadata": {
+    "report_type": "scheduler_phase6_compression_report",
+    "phase": "6B",
+    "date": "2026-08-02",
+    "status": "complete",
+    "pipeline": "release compression (compress_release.py)"
+  },
+  "design_decisions": {
+    "D1": "registry stage key = compression (metadata/pipeline_state/task_registry_compression.jsonl)",
+    "D2": "--skip-existing kept as hybrid protection: TaskRegistry completed state is the primary resume mechanism; disk existence/checksum scan remains the secondary integrity guard (covers a fresh checkout with an empty registry)",
+    "D3": "fixed compression worker limit: release.compress_workers = 4 in config/parallelism.yaml; NO auto worker resolution yet (safe_worker_limit deliberately not used)",
+    "D4": "worker failures are retryable: worker raises on error/verification mismatch, scheduler retry policy (max_retries=2) handles recovery, terminal failure after retry exhaustion -> exit 1 (today's semantics)"
+  },
+  "implementation": {
+    "new_files": [
+      "scripts/release/scheduler_tasks.py (planner, compress_task worker, run_compression_scheduler, _SCHEDULER_ENABLED kill-switch)",
+      "tests/test_scheduler_compression.py"
+    ],
+    "modified": [
+      "scripts/release/compress_release.py (scheduler try-block with original-executor fallback; --workers default None resolved via _default_workers: CLI > env ATLAS_WORKERS_RELEASE > config release.compress_workers=4; ATLAS_REGISTRY_ROOT env escape hatch; failures seeded from scheduler_failures)",
+      "config/parallelism.yaml (release.compress_workers: 4, D3)",
+      "docs/parallel/universal_scheduler_usage.md (section 13: compression migration example)",
+      "docs/architecture/compression_migration_design_v1.md (status -> APPROVED, implemented)",
+      "metadata/architecture_validation_report.json (validator refresh)"
+    ],
+    "unchanged": [
+      "scripts/release/common.py (CATEGORIES, open_zstd_writer, count_jsonl_zst, sha256_file)",
+      "compress_release._route_shard (shared worker, byte-identical output by construction)",
+      "output filenames, compression parameters (zstd level 19), ordering, checksums",
+      "existing CLI behavior and flags (--release/--input/--pattern/--output/--level/--workers/--skip-existing/--dry-run)",
+      "dataset content",
+      "release publishing",
+      "HuggingFace operations"
+    ],
+    "task_id_format": "compress:<release>:<shard_stem> (release tag prevents cross-release collisions in the repo-global registry)",
+    "registry": "metadata/pipeline_state/task_registry_compression.jsonl (stage key compression, D1)",
+    "pool": "process (zstd compression is CPU-bound; no SQLite in this path)",
+    "workers": "fixed 4 (D3); CLI --workers N or ATLAS_WORKERS_RELEASE env override",
+    "retry": "max_retries=2 (D4)",
+    "lease": "900 s stale-running re-claim; crash-mid-shard partial outputs fully rewritten on re-run (wb open; disjoint per-task outputs, no duplicate records)",
+    "kill_switches": [
+      "release.scheduler_tasks._SCHEDULER_ENABLED (sequential fallback)",
+      "scheduler import failure -> original executor loop in compress_release.main (last resort)"
+    ],
+    "fallback": "byte-identical output from every path (scheduler / sequential / original executor all share _route_shard)"
+  },
+  "verification": {
+    "test_scheduler_compression": "19 passed in 11.03s",
+    "test_scheduler_etl": "13 passed in 7.33s",
+    "test_scheduler_acquisition": "15 passed in 7.21s",
+    "test_release_pipeline": "14 passed in 1.92s",
+    "relevant_suites_total": "61 passed in 27.15s",
+    "architecture_validator": "PASS - checked 157 files, 0 violations",
+    "fresh_ad_hoc_probe": "PASS (real tool output): deterministic task_ids compress:v9.9-RC9:probe_alpha_atlas/compress:v9.9-RC9:probe_beta_atlas; run1 2 completed; registry compression stage 2 lines status completed; run2 resume 0 results 2 skipped; SHA-256 scheduler==legacy OK per file; kill-switch fallback SHA-256 identity OK",
+    "sha256_equality": "scheduler vs legacy _route_shard per-file SHA-256 identical (test + probe)",
+    "task_id_determinism": "same task ids regardless of shard ordering (sorted plan)",
+    "resume": "registry-completed tasks skipped; new shard runs alone; cross-release (RC1->RC2) no collision",
+    "retry": "failed worker retried then completed; terminal failure after max_retries surfaces as failure entry (exit 1)",
+    "partial_recovery": "stale running task re-claimed via lease; corrupt partial output replaced by valid full frame",
+    "fallback": "kill-switch -> sequential; scheduler import blocked -> original executor loop; both byte-identical",
+    "dataset_release_hf_changes": "none (git status confirms no dataset/, releases/, or HF paths touched)"
+  },
+  "out_of_scope": {
+    "phase_6_auto_workers": "deferred (D3); safe_worker_limit auto resolution NOT enabled",
+    "phase_7_plus": "evaluation pipelines not started",
+    "dataset_release_hf": "unchanged"
+  }
+}

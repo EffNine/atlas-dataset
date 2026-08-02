@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -46,6 +47,27 @@ from common import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _default_workers(explicit: int | None = None) -> int:
+    """Fixed compression worker limit (D3).
+
+    Mirrors ``scheduler_tasks.resolve_compress_workers`` without importing
+    the scheduler — this module must stay importable for the fallback path.
+    Precedence: explicit (CLI) > env ``ATLAS_WORKERS_RELEASE`` > config
+    ``release.compress_workers`` (pinned to 4). Never auto-resolves.
+    """
+    if explicit is not None and explicit > 0:
+        return explicit
+    try:
+        from parallel.config import resolve_worker_count
+
+        resolved = resolve_worker_count("release", explicit=explicit)
+        if isinstance(resolved, int) and resolved > 0:
+            return resolved
+    except Exception:
+        pass
+    return 4
 
 
 def _route_shard(args: dict[str, Any]) -> dict[str, Any]:
@@ -146,8 +168,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument(
         "--workers",
         type=int,
-        default=2,
-        help="Parallel worker processes (keep low on 8GB RAM machines).",
+        default=None,
+        help=(
+            "Parallel worker processes (default: fixed limit from "
+            "config/parallelism.yaml release.compress_workers, currently 4)."
+        ),
     )
     ap.add_argument(
         "--level", type=int, default=DEFAULT_ZSTD_LEVEL, help="zstd level (1-22)."
@@ -175,6 +200,11 @@ def main(argv: list[str] | None = None) -> int:
     if not shards:
         print(f"ERROR: no shards matched {in_dir / args.pattern}")
         return 2
+
+    # D3: fixed compression worker limit — CLI > env > config
+    # (release.compress_workers, pinned to 4). Never auto-resolve yet.
+    if args.workers is None:
+        args.workers = _default_workers()
     print(
         f"Atlas release compression | release={release} | shards={len(shards)} "
         f"| workers={args.workers} | level={args.level} | dry_run={args.dry_run}"
@@ -238,14 +268,38 @@ def main(argv: list[str] | None = None) -> int:
     out_root.mkdir(parents=True, exist_ok=True)
     started = time.time()
     results: list[dict[str, Any]] = []
-    if args.workers <= 1:
-        for t in tasks:
-            results.append(_route_shard(t))
-    else:
-        with ProcessPoolExecutor(max_workers=args.workers) as pool:
-            futures = {pool.submit(_route_shard, t): t for t in tasks}
-            for fut in as_completed(futures):
-                results.append(fut.result())
+    scheduler_failures: list[dict[str, Any]] = []
+    try:
+        from scheduler_tasks import run_compression_scheduler
+
+        # Scheduler path: TaskRegistry resume + retry + lease-based recovery.
+        # ATLAS_REGISTRY_ROOT redirects the registry (test/ops escape hatch).
+        results, skipped, scheduler_failures = run_compression_scheduler(
+            shards, release, out_root, args.level,
+            workers=args.workers,
+            skip_existing=args.skip_existing,
+            registry_root=os.environ.get("ATLAS_REGISTRY_ROOT"),
+        )
+    except Exception as exc:
+        # Last-resort fallback: the original executor (byte-identical output —
+        # both paths share _route_shard).
+        print(
+            f"[compression] scheduler unavailable ({exc}); "
+            "falling back to the original executor",
+            file=sys.stderr,
+        )
+        if args.workers <= 1:
+            for t in tasks:
+                results.append(_route_shard(t))
+        else:
+            with ProcessPoolExecutor(max_workers=args.workers) as pool:
+                futures = {pool.submit(_route_shard, t): t for t in tasks}
+                for fut in as_completed(futures):
+                    results.append(fut.result())
+
+    if not results and not scheduler_failures and skipped:
+        print("Nothing to do — all shards already compressed.")
+        return 0
 
     # Aggregate.
     total_records = 0
@@ -253,7 +307,7 @@ def main(argv: list[str] | None = None) -> int:
     total_out_bytes = 0
     cat_totals: dict[str, int] = {c: 0 for c in CATEGORIES}
     cat_bytes: dict[str, int] = {c: 0 for c in CATEGORIES}
-    failures: list[dict[str, Any]] = []
+    failures: list[dict[str, Any]] = list(scheduler_failures)
     per_file: list[dict[str, Any]] = []
 
     for r in sorted(results, key=lambda x: x["input"]):

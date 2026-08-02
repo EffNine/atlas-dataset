@@ -549,3 +549,80 @@ python scripts/automation_runner.py ...
 # registry: metadata/pipeline_state/task_registry_acquisition.jsonl
 # checkpoint: metadata/engine_checkpoint.json (unchanged shape)
 ```
+
+## 13. Migration example: Release compression (Phase 6B)
+
+`scripts/release/compress_release.py` now runs through the Universal
+Scheduler. Design decisions (Phase 6A, approved):
+
+- **D1** — registry stage key `compression`
+  (`metadata/pipeline_state/task_registry_compression.jsonl`).
+- **D2** — `--skip-existing` kept as a **hybrid protection**: the TaskRegistry
+  `completed` state is the primary resume mechanism; the disk existence /
+  checksum scan is the secondary guard (matters on a fresh checkout with an
+  empty registry).
+- **D3** — fixed worker limit: `release.compress_workers = 4` in
+  `config/parallelism.yaml`. **No auto worker resolution yet.**
+- **D4** — worker failures are retryable: the worker raises on any error or
+  verification mismatch, the scheduler retry policy (`max_retries=2`) handles
+  recovery, and a terminal failure after retry exhaustion returns exit 1
+  (today's semantics).
+
+### Task model
+
+```python
+Task(
+    task_id="compress:v1.0-RC1:wiki_sci_shard0_atlas",  # compress:<release>:<shard_stem>
+    source="compression",
+    operation="compress",
+    input="raw/generated/wiki_sci_shard0_atlas.jsonl",
+    extra={"out_root": "releases/v1.0-RC1", "level": 19, "release": "v1.0-RC1"},
+)
+```
+
+The release tag keeps tasks distinct across releases in the repo-global
+registry (compressing RC2 after RC1 does not get skipped).
+
+### Worker
+
+`release.scheduler_tasks.compress_task` is module-level (picklable) and
+delegates to `compress_release._route_shard` — the **same worker** the old
+`ProcessPoolExecutor` dispatched — so output files, compression parameters,
+ordering, and SHA-256 checksums are **byte-identical** by construction.
+
+### Registry / resume
+
+- Completed tasks are skipped on resume; a new shard appearing between runs
+  runs alone.
+- Stale `running` tasks are re-claimed after the lease (900 s) — a crash
+  mid-shard leaves a partial output, which is fully rewritten on re-run (the
+  worker opens category writers in `wb` mode; no duplicate records possible
+  because each task owns disjoint output files).
+- `--skip-existing` is still honored at plan time (disk scan) before the
+  scheduler sees the shards.
+
+### Resource awareness
+
+- Pool: `process` (zstd compression is CPU-bound). No SQLite in this path.
+- Workers: **fixed** `release.compress_workers = 4` (D3), override with
+  `--workers N` on the CLI or `ATLAS_WORKERS_RELEASE` env. `safe_worker_limit`
+  is intentionally NOT used yet — the D3 decision defers auto resolution.
+
+### Fallback + kill-switch
+
+- Scheduler import failure → the original executor loop in
+  `compress_release.main` (byte-identical output).
+- Scheduler runtime error → sequential fallback inside
+  `run_compression_scheduler` (byte-identical output).
+- `release.scheduler_tasks._SCHEDULER_ENABLED = False` forces the sequential
+  fallback even when the scheduler imports cleanly (tests / ops).
+
+### CLI unchanged
+
+```bash
+.venv-release/bin/python scripts/release/compress_release.py \
+    --release v1.0-RC1 --input raw/generated \
+    --pattern '*_atlas.jsonl' --workers 2 --dry-run
+# registry: metadata/pipeline_state/task_registry_compression.jsonl
+# (override for tests/ops: ATLAS_REGISTRY_ROOT=/path/to/root)
+```
