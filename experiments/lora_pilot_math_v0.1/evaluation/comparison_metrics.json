@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-08-03T22:22:58.038299+00:00",
+  "baseline": {
+    "correctness": 0.6109,
+    "reasoning_quality": 0.6796,
+    "hallucination_rate": 0.3846,
+    "answer_format_consistency": 1.0,
+    "latency_s_mean": 6.5775,
+    "tokens_per_sec_mean": 17.72,
+    "evaluated_examples": 13
+  },
+  "post_training": {
+    "correctness": 0.6538,
+    "reasoning_quality": 0.7085,
+    "hallucination_rate": 0.3077,
+    "answer_format_consistency": 1.0,
+    "latency_s_mean": 3.4123,
+    "tokens_per_sec_mean": 7.85,
+    "evaluated_examples": 13,
+    "total_examples": 13
+  },
+  "delta": {
+    "correctness": 0.0429,
+    "reasoning_quality": 0.0289,
+    "hallucination_rate": -0.0769,
+    "answer_format_consistency": 0.0
+  }
+}

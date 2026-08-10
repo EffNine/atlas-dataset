@@ -91,7 +91,7 @@ Planning assumptions:
   design; if quality gates pass on the pilot, the budget can be raised
   before full training.
 - Storage figures are trivial for a 12GB-GPU workstation and well within
-  the Atlas storage policy (raw shards on dev-pc, curated JSONL in repo).
+   the Atlas storage policy (raw shards on devpc, curated JSONL in repo).
 - "Feasibility" assumes the paused-training gate is lifted by a future
   approval; this document does not lift it.
 

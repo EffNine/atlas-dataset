@@ -1,0 +1,46 @@
+{
+  "experiment_id": "atlas-mixed-pilot-qwen7b-eval-v2",
+  "phase": "T3 canonical baseline (R1/R2)",
+  "objective": "First fully valid baseline under Protocol v2 (reference-free, policy-locked).",
+  "scope": "baseline inference/evaluation only. No LoRA. No training. No dataset/view/release modification.",
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "inference": {
+    "quantization": "4bit_nf4_double_quant",
+    "compute_dtype": "bfloat16",
+    "sampling": "greedy",
+    "do_sample": false,
+    "seed": 42,
+    "budget_rule": "budget_i = min(4096, max(256, 128 + ceil(1.5*N_tokens(ref))))",
+    "budget_fallback": 1024,
+    "stop_sequence": "<|im_end|>",
+    "extraction_rule": "P8-generation-policy-lock v1.0 diff extraction wrapper",
+    "device_map": "auto"
+  },
+  "prompt": {
+    "module": "scripts/evaluation_engine/leakage/prompts.py",
+    "source": "record['problem'] only; canonical_answer never rendered"
+  },
+  "scoring": {
+    "engine": "scripts/evaluation_engine/v2 (QEE v2)",
+    "engine_commit": "99e88e1",
+    "reference": "record['canonical_answer']"
+  },
+  "families": {
+    "math": "evaluation/eval_sets/protocol_v2/math_eval_v2.jsonl",
+    "code": "evaluation/eval_sets/protocol_v2/code_eval_v2.jsonl"
+  },
+  "artifacts": {
+    "run_metadata": "experiments/atlas-mixed-pilot-qwen7b-eval-v2/run_metadata.json",
+    "per_example": {
+      "math": "experiments/atlas-mixed-pilot-qwen7b-eval-v2/per_example_math.jsonl",
+      "code": "experiments/atlas-mixed-pilot-qwen7b-eval-v2/per_example_code.jsonl"
+    },
+    "aggregate": {
+      "math": "experiments/atlas-mixed-pilot-qwen7b-eval-v2/aggregate_math.json",
+      "code": "experiments/atlas-mixed-pilot-qwen7b-eval-v2/aggregate_code.json"
+    },
+    "generation_policy_summary": "experiments/atlas-mixed-pilot-qwen7b-eval-v2/generation_policy_summary.json"
+  },
+  "generated_at": "2026-08-05T17:57:06.008499+00:00"
+}

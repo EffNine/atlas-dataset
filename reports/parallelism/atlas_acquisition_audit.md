@@ -235,7 +235,7 @@ Both workers are **module-level** (picklable) and wrap existing functions — ex
 | **Duplicate acquisition** (same source downloaded twice) | MEDIUM | Deterministic task_id + completed-skip prevents re-download; cache-existence skip already prevents re-put. Verify with a "download then rerun" test. |
 | **License/provenance errors** | MEDIUM | License gate runs inside the worker (unchanged logic); provenance fields (`source_attribution`, `lineage`) written by existing code. Do not reorder gates. |
 | **Migration risk: engine checkpoint semantics drift** | MEDIUM | Keep `CheckpointManager` facade; add a contract test: `resume()` after scheduler run returns identical completed-source sets. |
-| **macOS SQLite fork segfault** (observed Phase 4) | LOW (Mac only) | Downloader uses thread pool (no fork); engine process pool may fall back to sequential on Mac — output identical. dev-pc Linux unaffected. |
+| **macOS SQLite fork segfault** (observed Phase 4) | LOW (Mac only) | Downloader uses thread pool (no fork); engine process pool may fall back to sequential on Mac — output identical. devpc Linux unaffected. |
 | **Network-block safety** | MEDIUM | `install_network_block()` used by engine dry-run; ensure scheduler workers inherit the blocked opener only when intended (tests) — never in real download mode. |
 
 ---

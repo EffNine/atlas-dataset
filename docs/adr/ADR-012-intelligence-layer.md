@@ -50,7 +50,7 @@ Adopt a **versioned, deterministic, append-per-source intelligence layer**.
   reproducibility and for later training-view eligibility gates.
 - Append-per-source + delete gives crash recovery with zero bookkeeping:
   the filesystem itself tracks what is done.
-- Shard-level parallelism fully uses dev-pc's 16 cores without the memory
+- Shard-level parallelism fully uses devpc's 16 cores without the memory
   contention of source-level parallelism.
 - Versioned outputs keep v1.1 and v1.2 comparable and let downstream
   consumers pin a classification version.
@@ -62,7 +62,7 @@ Adopt a **versioned, deterministic, append-per-source intelligence layer**.
 2. **Single monolithic classification pass** — rejected: any crash loses
    everything; no incremental resumption.
 3. **Source-level parallelism** — rejected for the default path: 16 workers
-   × source-sized memory footprint risks OOM on dev-pc; sequential sources
+    × source-sized memory footprint risks OOM on devpc; sequential sources
    with parallel shards is the memory-safe optimum.
 
 ## Consequences

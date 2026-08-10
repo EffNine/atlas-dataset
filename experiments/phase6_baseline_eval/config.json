@@ -1,0 +1,45 @@
+{
+  "experiment_id": "phase6_baseline_eval",
+  "phase": "6.3",
+  "objective": "Baseline QEE v2 evaluation on the Phase 6.2 expanded eval sets.",
+  "scope": "baseline inference/evaluation only. No training, dataset, training-view, or QEE logic change.",
+  "constraints": [
+    "No model training",
+    "No dataset modification",
+    "No training-view modification",
+    "No QEE scoring-logic change",
+    "All outputs under experiments/phase6_baseline_eval/"
+  ],
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "generation": {
+    "max_new_tokens": 512,
+    "sampling": "greedy",
+    "seed": null,
+    "quantization": "4bit_nf4_double_quant",
+    "compute_dtype": "bfloat16"
+  },
+  "eval_sets": {
+    "math": "/mnt/d/atlas-dataset/evaluation/eval_sets/phase6_expansion_v1/math_eval_v1.jsonl",
+    "code": "/mnt/d/atlas-dataset/evaluation/eval_sets/phase6_expansion_v1/code_eval_v1.jsonl"
+  },
+  "scoring": {
+    "engine": "scripts/evaluation_engine/v2 (QEE v2)",
+    "dispatch": "authoritative view_id category",
+    "dimensions": [
+      "accuracy",
+      "completeness",
+      "technical_correctness",
+      "clarity",
+      "usefulness",
+      "originality",
+      "relevance"
+    ]
+  },
+  "artifacts": {
+    "config": "/mnt/d/atlas-dataset/experiments/phase6_baseline_eval/config.json",
+    "baseline": "/mnt/d/atlas-dataset/experiments/phase6_baseline_eval/baseline.json",
+    "per_example": "/mnt/d/atlas-dataset/experiments/phase6_baseline_eval/per_example_results.jsonl",
+    "hardware_info": "/mnt/d/atlas-dataset/experiments/phase6_baseline_eval/hardware_info.json"
+  },
+  "generated_at": "2026-08-04T13:16:34.997821+00:00"
+}

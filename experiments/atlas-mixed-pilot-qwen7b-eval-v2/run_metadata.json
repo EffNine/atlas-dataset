@@ -1,0 +1,55 @@
+{
+  "experiment_id": "atlas-mixed-pilot-qwen7b-eval-v2",
+  "phase": "T3 canonical baseline (R1/R2)",
+  "protocol_version": "v2",
+  "status": "BLOCKED",
+  "started_at": "2026-08-06T13:12:40.168966+00:00",
+  "model": {
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28"
+  },
+  "fingerprint_verified": {
+    "verified": true,
+    "fingerprint_sha256": "2a60c2423e36c683d1be7cec22657fadc478f96435beb3014523d67b46d8863b",
+    "recomputed": "2a60c2423e36c683d1be7cec22657fadc478f96435beb3014523d67b46d8863b",
+    "experiment_id": "atlas-mixed-pilot-qwen7b-eval-v2"
+  },
+  "leak_scan_ids": {
+    "math": "5aaa2681d48c432e718a9accb0fe22bb704140467f5ae77029755d6adc0fd408",
+    "code": "e4c23d578af7505e673f40104cd13c367eaeb7ac53a05e0e8480714cba46e0a1"
+  },
+  "template_version": "qwen2.5-chatml-deterministic-v1",
+  "engine_commit": "99e88e1",
+  "engine_patch": {
+    "id": "RP-001",
+    "reference": "docs/research/robustness_patch_rp001.md",
+    "math_eval_sha256": "ed3e4dc3d9bd439162df320faa58fa945081d78ecf8df9640d91c8dd61fae768",
+    "note": "documented robustness patch (guard bare '=' in extract_final_answer); no scoring/normalization change"
+  },
+  "policy_locks": {
+    "math": {
+      "version": "v1",
+      "family": "math",
+      "system_message_sha256": "784c22463ead24b1d9bcd1e3a8ab77293130c3407958b322cee25cc823a6f22a",
+      "budget_rule": "budget_i = min(4096, max(256, 128 + ceil(1.5 * N_tokens(reference_i))))",
+      "budget_fallback": 1024,
+      "stop_sequence": "<|im_end|>",
+      "template_version": "qwen2.5-chatml-deterministic-v1",
+      "policy_block_sha256": "5305d483cb032106bcb1bb6c658b5a1fccda52d52b58dc6679ebe5e4f3ed53e1"
+    },
+    "code": {
+      "version": "v1",
+      "family": "code",
+      "system_message_sha256": "90bc2fe545222861af4f21e3ec01f4104d85995785bc54c7a6c5fef7df1f2629",
+      "budget_rule": "budget_i = min(4096, max(256, 128 + ceil(1.5 * N_tokens(reference_i))))",
+      "budget_fallback": 1024,
+      "stop_sequence": "<|im_end|>",
+      "template_version": "qwen2.5-chatml-deterministic-v1",
+      "policy_block_sha256": "0f82e6039f065fdbb868310596e8411d5391163282a6f7e967522068c41793a7"
+    }
+  },
+  "families": {},
+  "hold_records": [],
+  "error": "Some modules are dispatched on the CPU or the disk. Make sure you have enough GPU RAM to fit the quantized model. If you want to dispatch the model on the CPU or the disk while keeping these modules in 32-bit, you need to set `llm_int8_enable_fp32_cpu_offload=True` and pass a custom `device_map` to `from_pretrained`. Check https://huggingface.co/docs/transformers/main/en/main_classes/quantization#offload-between-cpu-and-gpu for more details. ",
+  "completed_at": "2026-08-06T13:18:42.277367+00:00"
+}

@@ -120,7 +120,7 @@ Resolution precedence for a worker count:
 4. `safe_worker_limit()` from detected hardware (lowest, but never violated
    — even an explicit count is capped by RAM safety)
 
-Hardware profiles: `ATLAS_PROFILE=dev-pc` or hostname match in
+Hardware profiles: `ATLAS_PROFILE=devpc` or hostname match in
 `hardware_profiles` (see `config.py:HARDWARE_PROFILES`).
 
 ---
@@ -424,7 +424,7 @@ python scripts/automation_runner.py ... extract_agent ...
 `CacheManager` uses SQLite; forking a process that already opened a SQLite
 connection segfaults on macOS (Python 3.9 fork hazard). On macOS the ETL
 scheduler may fall back to the sequential executor — output is identical.
-On dev-pc (Linux) fork+SQLite is safe, so the process pool is used.
+On devpc (Linux) fork+SQLite is safe, so the process pool is used.
 
 ---
 

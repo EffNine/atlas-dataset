@@ -1,0 +1,239 @@
+{
+  "experiment_id": "lora_pilot_math_v0.1",
+  "sprint": "5B.3",
+  "evaluation_id": "expanded_math_eval_v2",
+  "status": "COMPLETE",
+  "generated_at": "2026-08-08T04:11:08.748007+00:00",
+  "hardware": {
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 5070",
+    "vram_total_mib": 11773.06,
+    "torch_version": "2.13.0+cu130",
+    "cuda_version": "13.0"
+  },
+  "protocol_v2": {
+    "readiness_verdict": "READY",
+    "eval_set": "math_eval_v2",
+    "n_records": 100,
+    "checksum": "16288500568c4dc161beaf55d557709519ab5d41eea0aeddd01c5fc735989056",
+    "certificate_sha256": "a3072bac2de625a9"
+  },
+  "adapter": {
+    "label": "adapter",
+    "correctness": {
+      "mean": 0.7017,
+      "std": 0.458303,
+      "min": 0.0,
+      "max": 1.0,
+      "n": 100
+    },
+    "reasoning_quality": {
+      "mean": 0.7407,
+      "std": 0.313906,
+      "min": 0.26,
+      "max": 0.945,
+      "n": 100
+    },
+    "hallucination_rate": {
+      "mean": 0.3,
+      "std": 0.460566,
+      "min": 0.0,
+      "max": 1.0,
+      "n": 100
+    },
+    "answer_format_consistency": {
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0,
+      "n": 100
+    },
+    "evaluated_examples": 100,
+    "total_examples": 100,
+    "truncated_count": 93,
+    "truncation_rate": 0.93,
+    "stop_reason_counts": {
+      "max_length": 93,
+      "eos": 7
+    },
+    "method_counts": {
+      "number": 50,
+      "unparsable": 30,
+      "numeric_sampling": 20
+    }
+  },
+  "baseline": {
+    "label": "baseline",
+    "correctness": {
+      "mean": 0.6205,
+      "std": 0.487215,
+      "min": 0.0,
+      "max": 1.0,
+      "n": 100
+    },
+    "reasoning_quality": {
+      "mean": 0.685,
+      "std": 0.333733,
+      "min": 0.26,
+      "max": 0.945,
+      "n": 100
+    },
+    "hallucination_rate": {
+      "mean": 0.38,
+      "std": 0.487832,
+      "min": 0.0,
+      "max": 1.0,
+      "n": 100
+    },
+    "answer_format_consistency": {
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0,
+      "n": 100
+    },
+    "evaluated_examples": 100,
+    "total_examples": 100,
+    "truncated_count": 75,
+    "truncation_rate": 0.75,
+    "stop_reason_counts": {
+      "max_length": 75,
+      "eos": 25
+    },
+    "method_counts": {
+      "robust(delim_residue)": 1,
+      "number": 39,
+      "unparsable": 38,
+      "numeric_sampling": 15,
+      "robust(text_commands)": 7
+    }
+  },
+  "delta": {
+    "correctness": 0.0812,
+    "reasoning_quality": 0.0557,
+    "hallucination_rate": -0.08,
+    "format_consistency": 0.0
+  },
+  "statistical_comparison": {
+    "n_baseline": 100,
+    "n_adapter": 100,
+    "t_test_statistic": 1.2134,
+    "t_test_p_value_two_tailed": 0.224958,
+    "cohens_d": 0.1716,
+    "interpretation": "not statistically significant (p >= 0.05)",
+    "effect_size_interpretation": [
+      "small"
+    ]
+  },
+  "per_example_counts": {
+    "improved": 18,
+    "regressed": 10,
+    "unchanged": 72,
+    "total": 100
+  },
+  "by_difficulty": {
+    "3": {
+      "n": 16,
+      "baseline_mean": 0.6875,
+      "adapter_mean": 0.625,
+      "mean_delta": -0.0625
+    },
+    "2": {
+      "n": 82,
+      "baseline_mean": 0.6104,
+      "adapter_mean": 0.7094,
+      "mean_delta": 0.099
+    },
+    "4": {
+      "n": 2,
+      "baseline_mean": 0.5,
+      "adapter_mean": 1.0,
+      "mean_delta": 0.5
+    }
+  },
+  "by_subdomain": {
+    "math": {
+      "n": 100,
+      "baseline_mean": 0.6205,
+      "adapter_mean": 0.7017,
+      "mean_delta": 0.0812
+    }
+  },
+  "failure_analysis": {
+    "records_below_0.4_correctness": 10,
+    "largest_regressions": [
+      {
+        "record_id": "expert_math_000221",
+        "delta": -1.0,
+        "baseline": 1.0,
+        "adapter": 0.0
+      },
+      {
+        "record_id": "expert_math_000732",
+        "delta": -1.0,
+        "baseline": 1.0,
+        "adapter": 0.0
+      },
+      {
+        "record_id": "expert_math_001177",
+        "delta": -1.0,
+        "baseline": 1.0,
+        "adapter": 0.0
+      },
+      {
+        "record_id": "expert_math_001199",
+        "delta": -1.0,
+        "baseline": 1.0,
+        "adapter": 0.0
+      },
+      {
+        "record_id": "expert_math_001362",
+        "delta": -1.0,
+        "baseline": 1.0,
+        "adapter": 0.0
+      }
+    ],
+    "biggest_gains": [
+      {
+        "record_id": "expert_math_000512",
+        "delta": 1.0,
+        "baseline": 0.0,
+        "adapter": 1.0
+      },
+      {
+        "record_id": "expert_math_000513",
+        "delta": 1.0,
+        "baseline": 0.0,
+        "adapter": 1.0
+      },
+      {
+        "record_id": "expert_math_000788",
+        "delta": 1.0,
+        "baseline": 0.0,
+        "adapter": 1.0
+      },
+      {
+        "record_id": "expert_math_000831",
+        "delta": 1.0,
+        "baseline": 0.0,
+        "adapter": 1.0
+      },
+      {
+        "record_id": "expert_math_000900",
+        "delta": 1.0,
+        "baseline": 0.0,
+        "adapter": 1.0
+      }
+    ]
+  },
+  "truncation_rate": 0.93,
+  "stop_reason_counts": {
+    "max_length": 93,
+    "eos": 7
+  },
+  "method_counts": {
+    "number": 50,
+    "unparsable": 30,
+    "numeric_sampling": 20
+  }
+}

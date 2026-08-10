@@ -1,0 +1,51 @@
+{
+  "math": {
+    "pool": 3000,
+    "eligible_non_train": 2865,
+    "existing_eval": 13,
+    "selected": 100,
+    "difficulty": {
+      "3": 16,
+      "2": 82,
+      "4": 2
+    },
+    "category": {
+      "mathematics": 100
+    },
+    "verification": {
+      "needs_review": 100
+    },
+    "review": {
+      "null": 87,
+      "KEEP": 13
+    },
+    "prov_ok": 100
+  },
+  "code": {
+    "pool": 500,
+    "eligible_non_train": 478,
+    "existing_eval": 2,
+    "selected": 100,
+    "difficulty": {
+      "4": 10,
+      "2": 37,
+      "3": 51,
+      "5": 2
+    },
+    "category": {
+      "bug fixing": 48,
+      "code review": 15,
+      "debugging": 20,
+      "algorithm reasoning": 10,
+      "refactoring": 7
+    },
+    "verification": {
+      "verified": 100
+    },
+    "review": {
+      "null": 98,
+      "KEEP": 2
+    },
+    "prov_ok": 100
+  }
+}

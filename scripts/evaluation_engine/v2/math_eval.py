@@ -44,6 +44,7 @@ from .normalize import (
     NUMBER_WORDS,
     normalize_math,
     normalize_text,
+    robust_normalize_cascade,
     spoken_to_symbolic,
     token_set_similarity,
 )
@@ -239,9 +240,9 @@ def values_close(a, b) -> bool:
         return False
 
 
-def expressions_equivalent(ref_expr: str, cand_expr: str,
-                           min_samples: int = 3) -> tuple[bool, str, int]:
-    """Check whether two expressions are numerically equivalent.
+def _try_equivalent(ref_expr: str, cand_expr: str,
+                    min_samples: int = 3) -> tuple[bool, str, int]:
+    """Core equivalence check between two expressions.
 
     Returns (equivalent, method, n_valid_samples).
     """
@@ -257,8 +258,6 @@ def expressions_equivalent(ref_expr: str, cand_expr: str,
             return False, "number_missing", 0
         return (values_close(float(rn), float(cn)), "number", 1)
 
-    # At least one side is an expression. Both sides must still be evaluable
-    # (a constant like pi or a plain number is fine) for sampling to work.
     if not (r.parseable and c.parseable):
         return False, "unparsable", 0
     if r.is_number and c.parsed is None:
@@ -280,6 +279,32 @@ def expressions_equivalent(ref_expr: str, cand_expr: str,
     if ok < min_samples:
         return False, "insufficient_samples", ok
     return True, "numeric_sampling", ok
+
+
+def expressions_equivalent(ref_expr: str, cand_expr: str,
+                           min_samples: int = 3) -> tuple[bool, str, int]:
+    """Check whether two expressions are numerically equivalent.
+
+    Returns (equivalent, method, n_valid_samples).
+
+    RP-002: After the initial parse attempt fails, a robustness cascade of
+    purely syntactic normalizations is tried on the candidate only. These
+    transforms are safe: they only affect inputs that were previously
+    unparsable and leave every previously-scored input byte-identical.
+    """
+    eq, method, n = _try_equivalent(ref_expr, cand_expr, min_samples)
+    if eq:
+        return eq, method, n
+
+    # RP-002: robustness cascade — only applied when initial parse fails.
+    for name, cand_norm in robust_normalize_cascade(cand_expr):
+        if cand_norm == cand_expr:
+            continue
+        eq, method, n = _try_equivalent(ref_expr, cand_norm, min_samples)
+        if eq:
+            return True, f"robust({name})", n
+
+    return False, "unparsable", 0
 
 
 def _boxed_blocks(text: str) -> list[str]:
@@ -358,7 +383,10 @@ def extract_final_answer(text: str) -> str:
     eq_positions = [m.start() for m in re.finditer(r"(?<![<>=!])=(?!=)", text)]
     if eq_positions:
         rhs = text[eq_positions[-1] + 1:]
-        rhs = rhs.splitlines()[0].strip().rstrip(".,;")
+        # RP-001: guard empty RHS (text ending in a bare '='); previously this
+        # raised IndexError from splitlines()[0]. Scoring is unchanged for all
+        # non-empty RHS (the ``if rhs`` below now simply falls through).
+        rhs = rhs.splitlines()[0].strip().rstrip(".,;") if rhs else ""
         if rhs:
             return rhs
 

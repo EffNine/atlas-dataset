@@ -1,0 +1,40 @@
+{
+  "eval_set_id": "math_eval_v2",
+  "version": "v2",
+  "family": "math",
+  "derived_from": {
+    "eval_set_id": "phase6-math-eval-v1",
+    "version": "v1",
+    "n_records": 100,
+    "dir": "evaluation/eval_sets/phase6_expansion_v1"
+  },
+  "n_records": 100,
+  "n_clean": 100,
+  "n_held": 0,
+  "held_record_ids": [],
+  "leak_guard_holds": [],
+  "derivation": {
+    "script": "scripts/evaluation_engine/build_eval_v2.py",
+    "build_version": "v1",
+    "method": "deterministic; canonical_answer byte-equal copy of v1 solution; verified equal to source gold",
+    "canonical_answer_present": 100,
+    "canonical_answer_non_empty": 100,
+    "canonical_answer_verified_equal_solution": 100,
+    "messages_user_only": 100,
+    "leak_guard_pass": 100,
+    "prompt_sha256_recorded": 100
+  },
+  "provenance": {
+    "original_id_present": 100,
+    "record_ids_match_v1": 100,
+    "release": "expert-pilot-6500-v0.1"
+  },
+  "checksum": {
+    "algorithm": "SHA-256",
+    "records": "16288500568c4dc161beaf55d557709519ab5d41eea0aeddd01c5fc735989056"
+  },
+  "files": {
+    "eval_jsonl": "evaluation/eval_sets/protocol_v2/math_eval_v2.jsonl",
+    "manifest": "evaluation/eval_sets/protocol_v2/math_eval_v2_manifest.json"
+  }
+}

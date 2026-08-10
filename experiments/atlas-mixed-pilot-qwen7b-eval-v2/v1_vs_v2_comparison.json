@@ -1,0 +1,899 @@
+{
+  "artifact": "atlas-protocol-v2-vs-v1-baseline-comparison",
+  "scope": "PROTOCOL-EFFECTS ONLY; not a performance comparison. v1 is deprecated (100% reference-in-prompt leakage per protocol_audit_reference_leakage.md).",
+  "families": {
+    "math": {
+      "family": "math",
+      "n_shared": 100,
+      "classification_counts": {
+        "unchanged": 55,
+        "regressed": 38,
+        "improved": 7
+      },
+      "mean_delta_correctness": -0.3072,
+      "v1_agg_correctness": 0.0,
+      "note": "deltas are PROTOCOL-EFFECT measurements, not performance; v1 baseline is deprecated (100% reference leakage)"
+    },
+    "code": {
+      "family": "code",
+      "n_shared": 99,
+      "classification_counts": {
+        "improved": 6,
+        "unchanged": 61,
+        "regressed": 32
+      },
+      "mean_delta_correctness": -0.2151,
+      "v1_agg_correctness": 0.0,
+      "note": "deltas are PROTOCOL-EFFECT measurements, not performance; v1 baseline is deprecated (100% reference leakage)"
+    }
+  },
+  "code_extraction_adjusted": {
+    "family": "code",
+    "n": 99,
+    "note": "v1 predictions rescored through the v2 diff-extraction+QEE pipeline to separate prompt-policy from extraction-policy effects; frozen v1 predictions, no re-inference",
+    "mean_v1_raw": 0.2239,
+    "mean_v1_extraction_adjusted": 0.2266,
+    "mean_v2_reference_free": 0.0089,
+    "v1_patch_emission_rate": 0.3737,
+    "per_record": [
+      {
+        "record_id": "expert_swe_000003",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.1293,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000005",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000009",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000012",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000018",
+        "v1_raw_correctness": 0.8,
+        "v1_extraction_adjusted_correctness": 0.8,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 491
+      },
+      {
+        "record_id": "expert_swe_000022",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000025",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000029",
+        "v1_raw_correctness": 0.6667,
+        "v1_extraction_adjusted_correctness": 0.6667,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000034",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000035",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000045",
+        "v1_raw_correctness": 0.3333,
+        "v1_extraction_adjusted_correctness": 0.3333,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000051",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 492
+      },
+      {
+        "record_id": "expert_swe_000052",
+        "v1_raw_correctness": 0.1111,
+        "v1_extraction_adjusted_correctness": 0.1111,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000054",
+        "v1_raw_correctness": 0.75,
+        "v1_extraction_adjusted_correctness": 0.75,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 483
+      },
+      {
+        "record_id": "expert_swe_000058",
+        "v1_raw_correctness": 0.1333,
+        "v1_extraction_adjusted_correctness": 0.1333,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000064",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 405
+      },
+      {
+        "record_id": "expert_swe_000065",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0256,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000085",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000091",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 459
+      },
+      {
+        "record_id": "expert_swe_000095",
+        "v1_raw_correctness": 0.7692,
+        "v1_extraction_adjusted_correctness": 0.7692,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000101",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000109",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000110",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000114",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 469
+      },
+      {
+        "record_id": "expert_swe_000115",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000120",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000123",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000131",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000133",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000134",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000138",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000159",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000160",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000166",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.16,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000171",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000190",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 452
+      },
+      {
+        "record_id": "expert_swe_000198",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000202",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000203",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000215",
+        "v1_raw_correctness": 0.3333,
+        "v1_extraction_adjusted_correctness": 0.3333,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 488
+      },
+      {
+        "record_id": "expert_swe_000218",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 440
+      },
+      {
+        "record_id": "expert_swe_000224",
+        "v1_raw_correctness": 0.8,
+        "v1_extraction_adjusted_correctness": 0.8,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000233",
+        "v1_raw_correctness": 0.6667,
+        "v1_extraction_adjusted_correctness": 0.6667,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000236",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0526,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000238",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000239",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 504
+      },
+      {
+        "record_id": "expert_swe_000241",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.125,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000246",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000251",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000261",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.087,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000262",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000265",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000266",
+        "v1_raw_correctness": 0.2667,
+        "v1_extraction_adjusted_correctness": 0.5333,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000275",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000279",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000287",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.1333,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000289",
+        "v1_raw_correctness": 0.6667,
+        "v1_extraction_adjusted_correctness": 0.6667,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 341
+      },
+      {
+        "record_id": "expert_swe_000297",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000299",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000304",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 404
+      },
+      {
+        "record_id": "expert_swe_000308",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000316",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000321",
+        "v1_raw_correctness": 0.5714,
+        "v1_extraction_adjusted_correctness": 0.5714,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000322",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000328",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 457
+      },
+      {
+        "record_id": "expert_swe_000332",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000336",
+        "v1_raw_correctness": 1.0,
+        "v1_extraction_adjusted_correctness": 1.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000339",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000344",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000345",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000351",
+        "v1_raw_correctness": 0.5455,
+        "v1_extraction_adjusted_correctness": 0.5455,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000355",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000360",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000362",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.1667,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000366",
+        "v1_raw_correctness": 0.6667,
+        "v1_extraction_adjusted_correctness": 0.6667,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 483
+      },
+      {
+        "record_id": "expert_swe_000367",
+        "v1_raw_correctness": 0.1667,
+        "v1_extraction_adjusted_correctness": 0.1667,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000378",
+        "v1_raw_correctness": 0.6667,
+        "v1_extraction_adjusted_correctness": 0.6667,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000380",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000390",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000391",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000394",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000407",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000409",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000424",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000428",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000436",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000440",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000441",
+        "v1_raw_correctness": 0.1307,
+        "v1_extraction_adjusted_correctness": 0.1307,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000445",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 343
+      },
+      {
+        "record_id": "expert_swe_000456",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 460
+      },
+      {
+        "record_id": "expert_swe_000457",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000463",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000466",
+        "v1_raw_correctness": 0.125,
+        "v1_extraction_adjusted_correctness": 0.125,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": true,
+        "v1_tokens": 406
+      },
+      {
+        "record_id": "expert_swe_000474",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000477",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000480",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000483",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      },
+      {
+        "record_id": "expert_swe_000488",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 493
+      },
+      {
+        "record_id": "expert_swe_000496",
+        "v1_raw_correctness": 0.0,
+        "v1_extraction_adjusted_correctness": 0.0,
+        "v2_reference_free_correctness": 0.0,
+        "v1_patch_emitted": false,
+        "v1_tokens": 512
+      }
+    ]
+  },
+  "v1_baseline_aggregates": {
+    "math": {
+      "correctness": 0.7779,
+      "reasoning_quality": 0.793,
+      "hallucination_rate": 0.22,
+      "answer_format_consistency": 1.0,
+      "latency_s_mean": 12.0596,
+      "tokens_per_sec_mean": 17.42,
+      "evaluated_examples": 100,
+      "total_examples": 100
+    },
+    "code": {
+      "correctness": 0.2217,
+      "reasoning_quality": 0.4169,
+      "hallucination_rate": 0.76,
+      "answer_format_consistency": 1.0,
+      "latency_s_mean": 27.5448,
+      "tokens_per_sec_mean": 18.15,
+      "evaluated_examples": 100,
+      "total_examples": 100
+    }
+  },
+  "v2_baseline_aggregates": {
+    "math": {
+      "family": "math",
+      "evaluated_examples": 100,
+      "total_examples": 100,
+      "correctness": 0.4707,
+      "reasoning_quality": 0.5826,
+      "hallucination_rate": 0.54,
+      "answer_format_consistency": 1.0,
+      "patch_emission_rate": null,
+      "format_distribution": {
+        "math": 100
+      },
+      "truncation_rate": 0.41,
+      "stop_reason_counts": {
+        "eos": 59,
+        "max_length": 41
+      },
+      "tokens_mean": 461.76,
+      "tokens_median": 406.0,
+      "budget_fallback_used": 1
+    },
+    "code": {
+      "family": "code",
+      "evaluated_examples": 99,
+      "total_examples": 99,
+      "correctness": 0.0089,
+      "reasoning_quality": 0.2711,
+      "hallucination_rate": 1.0,
+      "answer_format_consistency": 1.0,
+      "patch_emission_rate": 1.0,
+      "format_distribution": {
+        "patch": 99
+      },
+      "truncation_rate": 0.0303,
+      "stop_reason_counts": {
+        "eos": 96,
+        "max_length": 3
+      },
+      "tokens_mean": 187.55,
+      "tokens_median": 151.0,
+      "budget_fallback_used": 0
+    }
+  }
+}

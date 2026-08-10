@@ -89,7 +89,7 @@ run the validator + test suite; violations fail the build.
 |------|--------|
 | Do not touch dataset contents | ✅ No `raw/` or `curated/` writes |
 | Do not modify release manifests | ✅ Manifests untouched |
-| Do not interrupt v1.2 classification | ✅ dev-pc run `proc_fdfbb2298091` untouched |
+| Do not interrupt v1.2 classification | ✅ devpc run `proc_fdfbb2298091` untouched |
 | No Hugging Face operations | ✅ None |
 | No release promotion | ✅ None |
 | No feature implementation beyond stabilization | ✅ Only fixes found by tests |

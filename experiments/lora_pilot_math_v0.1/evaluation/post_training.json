@@ -1,40 +1,44 @@
 {
   "experiment_id": "lora_pilot_math_v0.1",
+  "phase": "5B.2",
   "evaluation_id": "post_training",
-  "status": "pending",
+  "status": "COMPLETE",
   "model": "LORA_ADAPTER",
   "model_id": "Qwen/Qwen2.5-7B-Instruct",
-  "adapter_path": "experiments/lora_pilot_math_v0.1/checkpoints",
+  "adapter_path": "/home/afnan/workspace/atlas-dataset/experiments/lora_pilot_math_v0.1/checkpoints",
+  "hardware": {
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 5070",
+    "vram_total_mib": 11773.06,
+    "torch_version": "2.13.0+cu130",
+    "cuda_version": "13.0"
+  },
+  "generated_at": "2026-08-08T02:07:17.820568+00:00",
+  "inference_config": {
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "adapter": "/home/afnan/workspace/atlas-dataset/experiments/lora_pilot_math_v0.1/checkpoints",
+    "quantization": "4bit_nf4_double_quant",
+    "max_new_tokens": 256,
+    "sampling": "greedy"
+  },
+  "scoring": {
+    "engine": "scripts/evaluation_engine/v2 (QEE v2)",
+    "dispatch": "authoritative training-view category: math"
+  },
   "dataset": {
     "training_view_id": "math_300m_v0.1",
-    "source_id": "expert-math-002",
-    "source_name": "OpenMathInstruct-2",
-    "license": "CC-BY-4.0",
-    "eval_jsonl": "output/training_views/math_300m_v0.1/eval.jsonl",
-    "eval_sha256": "60b1e078b019c2b815ffd5b55078b914f36baf6a6463db8beeee2b4ce8a28123",
-    "record_counts": {
-      "train": 117,
-      "eval": 13,
-      "total": 130
-    }
+    "eval_jsonl": "/home/afnan/workspace/atlas-dataset/output/training_views/math_300m_v0.1/eval.jsonl",
+    "n_records": 13
   },
-  "post_training_metrics": {
-    "correctness": null,
-    "reasoning_quality": null,
-    "hallucination_rate": null,
-    "answer_format_consistency": null,
-    "evaluated_examples": null,
-    "note": "Post-training evaluation is pending because pilot training has not run due to missing CUDA runtime."
+  "aggregate": {
+    "correctness": 0.9231,
+    "reasoning_quality": 0.8923,
+    "hallucination_rate": 0.0769,
+    "answer_format_consistency": 1.0,
+    "latency_s_mean": 2.0169,
+    "tokens_per_sec_mean": 17.72,
+    "evaluated_examples": 13,
+    "total_examples": 13
   },
-  "comparison": {
-    "baseline_evaluation": "experiments/lora_pilot_math_v0.1/evaluation/baseline.json",
-    "post_training_evaluation": "experiments/lora_pilot_math_v0.1/evaluation/post_training.json",
-    "delta_correctness": null,
-    "delta_reasoning_quality": null,
-    "delta_hallucination_rate": null,
-    "delta_answer_format_consistency": null
-  },
-  "hardware": {
-    "required": "NVIDIA GeForce RTX 5070 12GB"
-  }
+  "total_examples": 13
 }

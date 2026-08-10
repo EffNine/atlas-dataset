@@ -1,0 +1,62 @@
+{
+  "eval_set_id": "phase6-math-eval-v1",
+  "version": "v1",
+  "generated_at": "2026-08-04T00:00:00Z",
+  "family": "math",
+  "view_id": "math-300m",
+  "source_pool": "expert-pilot-6500-v0.1",
+  "source_pool_size": 3000,
+  "n_target": 100,
+  "n_records": 100,
+  "old_size": 13,
+  "split": {
+    "method": "deterministic_sha256",
+    "selection_seed": "phase6.2-eval-expansion-v1",
+    "train_seed": "phase2b-materialization-v0.1",
+    "train_disjoint": true,
+    "train_ids_excluded": 117,
+    "existing_eval_included": [
+      "expert_math_000125",
+      "expert_math_000281",
+      "expert_math_000831",
+      "expert_math_000900",
+      "expert_math_000961",
+      "expert_math_001421",
+      "expert_math_001505",
+      "expert_math_001802",
+      "expert_math_002168",
+      "expert_math_002660",
+      "expert_math_002701",
+      "expert_math_002953",
+      "expert_math_002995"
+    ]
+  },
+  "category_balance": {
+    "by_difficulty": {
+      "2": 82,
+      "3": 16,
+      "4": 2
+    },
+    "by_category": {
+      "mathematics": 100
+    }
+  },
+  "provenance": {
+    "original_id_present": 100,
+    "release": "expert-pilot-6500-v0.1"
+  },
+  "verification": {
+    "needs_review": 100
+  },
+  "review_verdicts": {
+    "KEEP": 13,
+    "None": 87
+  },
+  "checksum": {
+    "algorithm": "SHA-256",
+    "records": "3591b31ffdf73f9b994abaaee631f76b9188939330356a0e3c37ccfe1b92758a"
+  },
+  "files": {
+    "eval_jsonl": "/mnt/d/atlas-dataset/evaluation/eval_sets/phase6_expansion_v1/math_eval_v1.jsonl"
+  }
+}

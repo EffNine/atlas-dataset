@@ -187,8 +187,8 @@ No pipeline chooses its own worker count anymore; the scheduler does.
 
 ```json
 {
-  "worker_id": "dev-pc-w1",
-  "host": "dev-pc",
+  "worker_id": "devpc-w1",
+  "host": "devpc",
   "capacity": 2,
   "memory_limit_mb": 12288,
   "cpu_limit": 8
@@ -253,14 +253,14 @@ parallelism:
 
 ## 5. Hardware Profiles
 
-### 5.1 Developer PC (dev-pc, WSL2 Ubuntu-24.04)
+### 5.1 Developer PC (devpc, Ubuntu-24.04 bare metal)
 
 ```yaml
 hardware_profiles:
-  dev-pc:
+  devpc:
     cpu_cores: 16
     ram_mb: 30720
-    gpu: "RTX 5070 (no driver, unusable)"
+    gpu: "RTX 5070 12GB"
     disk_gb: 420
     per_task_ram_mb: 512
     safe_workers: 16        # = min(16 cores, 30720×0.8/512)
@@ -284,7 +284,7 @@ hardware_profiles:
 ```
 
 - Runs orchestration, git, review tooling — NOT heavy pipeline stages.
-- All heavy work dispatched to dev-pc over SSH/Tailscale.
+- All heavy work dispatched to devpc over SSH/Tailscale.
 
 ### 5.3 Future: multi-node worker
 
@@ -304,7 +304,7 @@ hardware_profiles:
 
 1. `ATLAS_PROFILE` env var (if set).
 2. `--profile` CLI flag (if set).
-3. Hostname match in `hardware_profiles` (e.g. `dev-pc`).
+3. Hostname match in `hardware_profiles` (e.g. `devpc`).
 4. Fallback: auto-detect via `resource.py` (no YAML needed).
 
 ---
@@ -362,9 +362,9 @@ hardware_profiles:
 ```
 Mac controller (orchestration, review, git)
       |
-      |  SSH / Tailscale (dev-pc has Tailscale-ready network)
+       |  SSH / Tailscale (devpc reachable via Tailscale)
       v
-dev-pc workers (WSL2, 16C/30GB)     future: GPU nodes (A100 etc.)
+devpc workers (Ubuntu-24.04, 16C/30GB)    future: GPU nodes (A100 etc.)
       |                                    |
       +------------ shared TaskRegistry ---+
               (NFS / object store / SQLite)
@@ -380,8 +380,8 @@ dev-pc workers (WSL2, 16C/30GB)     future: GPU nodes (A100 etc.)
    with the controller (host, capacity, resources) — Worker model already
    supports it.
 4. **Stage-to-host pinning** — `worker_group → host` mapping in config
-   (e.g. classification → dev-pc, evaluation → GPU node).
-5. **Tailscale** — control-plane (Mac) reaches dev-pc over the mesh;
+    (e.g. classification → devpc, evaluation → GPU node).
+5. **Tailscale** — control-plane (Mac) reaches devpc over the mesh;
    no port-forwarding changes needed for SSH-driven dispatch.
 
 ---
@@ -395,7 +395,7 @@ dev-pc workers (WSL2, 16C/30GB)     future: GPU nodes (A100 etc.)
 | All long jobs resumable | Every stage ≥ MEDIUM bottleneck gets a TaskRegistry entry; `resume` is the default CLI behavior |
 | No duplicate processing | Deterministic task_ids + registry skip |
 | No RAM explosion | 0.8 RAM cap + per-task RAM estimate; backpressure on memory pressure |
-| Predictable throughput | Monitor reports records/s per stage; classification target ≥ 600 rec/s sustained on dev-pc; validation target: full v1.2 (9.3M records) < 30 min with 8 workers |
+| Predictable throughput | Monitor reports records/s per stage; classification target ≥ 600 rec/s sustained on devpc; validation target: full v1.2 (9.3M records) < 30 min with 8 workers |
 
 ---
 

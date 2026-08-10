@@ -1,0 +1,79 @@
+{
+  "documented_phase5b": {
+    "source": "docs/evaluation/qee_human_alignment_report.md",
+    "date": "2026-07-28",
+    "qee_mean": 9.0,
+    "human_mean": 6.86,
+    "mean_bias": 2.14,
+    "exact_agree": 0.0,
+    "within1_agree": 0.02,
+    "rmse": 2.177,
+    "false_approvals": 16,
+    "note": "QEE assigned 9 to all 100 matched records at Phase 5B."
+  },
+  "before_v1": {
+    "auto_mean": 7.69,
+    "human_mean": 6.86,
+    "mean_bias": 0.83,
+    "mae": 0.83,
+    "rmse": 0.975,
+    "exact_agree": 0.23,
+    "within1_agree": 0.94,
+    "pearson_r": 0.344,
+    "spearman_rho": 0.349,
+    "false_approvals": 16,
+    "false_rejections": 0,
+    "auto_distribution": {
+      "7": 32,
+      "8": 67,
+      "9": 1
+    },
+    "distinct_auto_scores": 3
+  },
+  "after_v2_raw": {
+    "auto_mean": 7.07,
+    "human_mean": 6.86,
+    "mean_bias": 0.21,
+    "mae": 0.33,
+    "rmse": 0.592,
+    "exact_agree": 0.68,
+    "within1_agree": 0.99,
+    "pearson_r": 0.209,
+    "spearman_rho": 0.209,
+    "false_approvals": 12,
+    "false_rejections": 4,
+    "auto_distribution": {
+      "6": 8,
+      "7": 77,
+      "8": 15
+    },
+    "distinct_auto_scores": 3
+  },
+  "after_v2_loo_calibrated": {
+    "auto_mean": 7.0,
+    "human_mean": 6.86,
+    "mean_bias": 0.14,
+    "mae": 0.18,
+    "rmse": 0.424,
+    "exact_agree": 0.82,
+    "within1_agree": 1.0,
+    "pearson_r": null,
+    "spearman_rho": null,
+    "false_approvals": 16,
+    "false_rejections": 0,
+    "auto_distribution": {
+      "7": 100
+    },
+    "distinct_auto_scores": 1
+  },
+  "calibration_fit": {
+    "slope": 0.1251,
+    "intercept": 0.567,
+    "note": "full-sample fit; for deployment re-validate on fresh human review before enabling an automated gate"
+  },
+  "calibration_interpretation": "fitted slope 0.125 is near-flat on n=100 reviewed records: the sample is underpowered for a reliable linear calibration. Do not use the calibrated mapping for automated gating; re-fit on a larger, less noisy human review set (Phase 5C) and keep human approval mandatory.",
+  "record_count": 100,
+  "engine_v1": "scripts/quality_score.py",
+  "engine_v2": "scripts/evaluation_engine/v2/",
+  "reviewer_filter": "AR"
+}

@@ -1,0 +1,86 @@
+{
+  "experiment_id": "lora_pilot_math_m2_v0.1",
+  "phase": "5B.4",
+  "status": "COMPLETED",
+  "pre_training": {
+    "git_commit": "d1fb9310c37d5e119327f3baa45f89cab2d4c5b0",
+    "git_short": "d1fb931",
+    "train_jsonl_sha256": "472d632614d97a3d5fc2d36b005ae1d434a6a0ebdefd271ed1b77b1e8b49abe7",
+    "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28"
+  },
+  "config": {
+    "experiment_id": "lora_pilot_math_m2_v0.1",
+    "phase": "5B.4",
+    "training_view_id": "math_m2_v0.1",
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "quantization": {
+      "load_in_4bit": true,
+      "bnb_4bit_use_double_quant": true,
+      "bnb_4bit_quant_type": "nf4",
+      "bnb_4bit_compute_dtype": "bfloat16"
+    },
+    "lora": {
+      "r": 8,
+      "lora_alpha": 16,
+      "lora_dropout": 0.05,
+      "bias": "none",
+      "task_type": "CAUSAL_LM",
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ]
+    },
+    "training": {
+      "seed": 42,
+      "max_seq_length": 256,
+      "max_steps": 60,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 8,
+      "effective_batch_size": 8,
+      "learning_rate": 0.0002,
+      "weight_decay": 0.01,
+      "lr_scheduler_type": "cosine",
+      "warmup_ratio": 0.03,
+      "optim": "paged_adamw_8bit",
+      "max_grad_norm": 1.0,
+      "bf16": true,
+      "gradient_checkpointing": true
+    }
+  },
+  "comparison_to_m1": {
+    "m1_training_records": 117,
+    "m2_training_records": 131,
+    "record_increase": 14,
+    "hyperparameters_identical": true,
+    "notes": "M2 uses all 131 eligible math KEEP records vs M1's 117. 13 of the 14 extra records overlap with protocol_v2 eval set (math_eval_v2). M1 has zero eval overlap.",
+    "eval_overlap": {
+      "m1_overlap_count": 0,
+      "m2_overlap_count": 13,
+      "m2_overlap_record_ids": ["expert_math_000125", "expert_math_000281", "expert_math_000831", "expert_math_000900", "expert_math_000961", "expert_math_001421", "expert_math_001505", "expert_math_001802", "expert_math_002168", "expert_math_002660", "expert_math_002701", "expert_math_002953", "expert_math_002995"],
+      "m2_extra_not_in_eval": ["expert_math_000761"]
+    }
+  },
+  "trainable_parameters": 20185088,
+  "trainable_percent": 0.2643,
+  "training_metrics": {
+    "steps": 60,
+    "examples_consumed": 480,
+    "final_loss": 0.2296,
+    "min_loss": 0.19631,
+    "peak_mem_allocated_mib": 8595.4,
+    "last_mem_allocated_mib": 5556.7,
+    "last_mem_reserved_mib": 8914.0,
+    "throughput_tps_mean": 1037.33,
+    "wall_time_s": 109.613
+  },
+  "files": {
+    "step_metrics": "/home/afnan/workspace/atlas-dataset/experiments/lora_pilot_math_m2_v0.1/training_log/step_metrics.csv",
+    "adapter": "/home/afnan/workspace/atlas-dataset/experiments/lora_pilot_math_m2_v0.1/checkpoints"
+  },
+  "generated_at": "2026-08-08T15:35:25.088758+00:00"
+}

@@ -1,0 +1,56 @@
+{
+  "eval_set_id": "phase6-code-eval-v1",
+  "version": "v1",
+  "generated_at": "2026-08-04T00:00:00Z",
+  "family": "code",
+  "view_id": "code-300m",
+  "source_pool": "expert-pilot-6500-v0.1",
+  "source_pool_size": 500,
+  "n_target": 100,
+  "n_records": 100,
+  "old_size": 2,
+  "split": {
+    "method": "deterministic_sha256",
+    "selection_seed": "phase6.2-eval-expansion-v1",
+    "train_seed": "phase2b-materialization-v0.1",
+    "train_disjoint": true,
+    "train_ids_excluded": 22,
+    "existing_eval_included": [
+      "expert_swe_000299",
+      "expert_swe_000366"
+    ]
+  },
+  "category_balance": {
+    "by_difficulty": {
+      "2": 37,
+      "3": 51,
+      "4": 10,
+      "5": 2
+    },
+    "by_category": {
+      "algorithm reasoning": 10,
+      "bug fixing": 48,
+      "code review": 15,
+      "debugging": 20,
+      "refactoring": 7
+    }
+  },
+  "provenance": {
+    "original_id_present": 100,
+    "release": "expert-pilot-6500-v0.1"
+  },
+  "verification": {
+    "verified": 100
+  },
+  "review_verdicts": {
+    "KEEP": 2,
+    "None": 98
+  },
+  "checksum": {
+    "algorithm": "SHA-256",
+    "records": "8ff09120446b5c87f94b2acde6aefb29255015be0bb8c3d23c05e900457c4c67"
+  },
+  "files": {
+    "eval_jsonl": "/mnt/d/atlas-dataset/evaluation/eval_sets/phase6_expansion_v1/code_eval_v1.jsonl"
+  }
+}

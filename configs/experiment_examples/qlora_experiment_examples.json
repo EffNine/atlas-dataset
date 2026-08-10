@@ -1,0 +1,165 @@
+{
+  "_comment": "Atlas QLoRA Experiment Framework — Configuration Examples",
+  "_version": "0.1.0",
+  "_description": "Example configurations for the experiment_framework package. Each example shows the canonical structure required by the Atlas Research Protocol v1.0.",
+  "examples": {
+    "math_pilot": {
+      "description": "Phase 5B.1 math QLoRA pilot — the validated baseline configuration",
+      "config": {
+        "experiment_id": "atlas-math-pilot-qwen7b-lora-v1",
+        "phase": "5B.1",
+        "training_view_id": "math_300m_v0.1",
+        "base_model": "Qwen/Qwen2.5-7B-Instruct",
+        "quantization": {
+          "load_in_4bit": true,
+          "bnb_4bit_use_double_quant": true,
+          "bnb_4bit_quant_type": "nf4",
+          "bnb_4bit_compute_dtype": "bfloat16"
+        },
+        "lora": {
+          "r": 8,
+          "lora_alpha": 16,
+          "lora_dropout": 0.05,
+          "bias": "none",
+          "task_type": "CAUSAL_LM",
+          "target_modules": [
+            "q_proj", "k_proj", "v_proj", "o_proj",
+            "gate_proj", "up_proj", "down_proj"
+          ]
+        },
+        "training": {
+          "seed": 42,
+          "max_seq_length": 1024,
+          "max_steps": 60,
+          "per_device_train_batch_size": 1,
+          "gradient_accumulation_steps": 8,
+          "learning_rate": 0.0002,
+          "weight_decay": 0.01,
+          "lr_scheduler_type": "cosine",
+          "warmup_ratio": 0.03,
+          "optim": "paged_adamw_8bit",
+          "max_grad_norm": 1.0,
+          "bf16": true,
+          "gradient_checkpointing": true
+        }
+      },
+      "expected_artifacts": [
+        "config.json",
+        "pre_run_metadata.json",
+        "training_log.json",
+        "training_log/step_metrics.csv",
+        "checkpoints/adapter_config.json",
+        "checkpoints/adapter_model.safetensors",
+        "evaluation/post_training.json",
+        "evaluation/post_training_per_example.jsonl",
+        "evaluation/adapter_metadata.json",
+        "evaluation/comparison_metrics.json"
+      ]
+    },
+    "math_small_transfer": {
+      "description": "Phase 8 P8-A cross-domain transfer: Math trained → Code evaluated",
+      "config": {
+        "experiment_id": "atlas-math-small-qwen7b-lora-transfer-v1",
+        "phase": "8",
+        "sprint": "P8-A",
+        "direction": "Math -> Code",
+        "training_view_id": "P8A_math_train",
+        "base_model": "Qwen/Qwen2.5-7B-Instruct",
+        "quantization": {
+          "load_in_4bit": true,
+          "bnb_4bit_use_double_quant": true,
+          "bnb_4bit_quant_type": "nf4",
+          "bnb_4bit_compute_dtype": "bfloat16"
+        },
+        "lora": {
+          "r": 8,
+          "lora_alpha": 16,
+          "lora_dropout": 0.05,
+          "bias": "none",
+          "task_type": "CAUSAL_LM",
+          "target_modules": [
+            "q_proj", "k_proj", "v_proj", "o_proj",
+            "gate_proj", "up_proj", "down_proj"
+          ]
+        },
+        "training": {
+          "seed": 42,
+          "max_seq_length": 1024,
+          "max_steps": 60,
+          "per_device_train_batch_size": 1,
+          "gradient_accumulation_steps": 8,
+          "learning_rate": 0.0002,
+          "weight_decay": 0.01,
+          "lr_scheduler_type": "cosine",
+          "warmup_ratio": 0.03,
+          "optim": "paged_adamw_8bit",
+          "max_grad_norm": 1.0,
+          "bf16": true,
+          "gradient_checkpointing": true
+        }
+      },
+      "dataset_manifest": {
+        "training_subset": "experiments/phase8_transfer/subsets/P8A_math_train.jsonl",
+        "n_training_records": 400,
+        "train_jsonl_sha256": "55e15fda53c16a9c10dc6de23e5ead069c97bbb730fb5a43b55bf1c453b6bbc0",
+        "target_eval_split": "evaluation/eval_sets/phase6_expansion_v1/code_eval_v1.jsonl",
+        "target_eval_n": 100,
+        "target_eval_jsonl_sha256": "37b9c42a9b6aa514f602ad0d90e1d4c9ec243625d6f34774c41066de6fdf6b1b"
+      },
+      "evaluation_manifest": {
+        "eval_split_id": "code_eval_v1",
+        "engine": "QEE v2",
+        "engine_commit": "99e88e1",
+        "baseline_experiment_id": "phase6_baseline_eval",
+        "evaluation_scope": "code_eval_v1 ONLY (N=100)"
+      },
+      "expected_artifacts": [
+        "config.json",
+        "experiment_manifest.json",
+        "pre_run_metadata.json",
+        "training_log.json",
+        "training_log/step_metrics.csv",
+        "checkpoints/adapter_config.json",
+        "checkpoints/adapter_model.safetensors",
+        "evaluation/post_training.json",
+        "evaluation/post_training_per_example.jsonl",
+        "evaluation/adapter_metadata.json",
+        "analysis/p8a_transfer_analysis.json",
+        "analysis/p8a_per_example_deltas.jsonl"
+      ]
+    },
+    "baseline_eval": {
+      "description": "Baseline evaluation experiment (inference-only, no training)",
+      "config": {
+        "experiment_id": "atlas-mixed-pilot-qwen7b-eval-v2",
+        "phase": "T3 canonical baseline (R1/R2)",
+        "objective": "First fully valid baseline under Protocol v2",
+        "scope": "baseline inference/evaluation only. No LoRA. No training.",
+        "base_model": "Qwen/Qwen2.5-7B-Instruct",
+        "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+        "inference": {
+          "quantization": "4bit_nf4_double_quant",
+          "compute_dtype": "bfloat16",
+          "sampling": "greedy",
+          "do_sample": false,
+          "seed": 42,
+          "max_new_tokens": 512,
+          "device_map": "auto"
+        },
+        "families": {
+          "math": "evaluation/eval_sets/protocol_v2/math_eval_v2.jsonl",
+          "code": "evaluation/eval_sets/protocol_v2/code_eval_v2.jsonl"
+        }
+      },
+      "expected_artifacts": [
+        "config.json",
+        "run_metadata.json",
+        "per_example_math.jsonl",
+        "per_example_code.jsonl",
+        "aggregate_math.json",
+        "aggregate_code.json",
+        "generation_policy_summary.json"
+      ]
+    }
+  }
+}

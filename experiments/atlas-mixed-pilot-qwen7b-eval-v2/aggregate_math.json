@@ -1,0 +1,50 @@
+{
+  "aggregate": {
+    "family": "math",
+    "evaluated_examples": 100,
+    "total_examples": 100,
+    "correctness": 0.4707,
+    "reasoning_quality": 0.5826,
+    "hallucination_rate": 0.54,
+    "answer_format_consistency": 1.0,
+    "patch_emission_rate": null,
+    "format_distribution": {
+      "math": 100
+    },
+    "truncation_rate": 0.41,
+    "stop_reason_counts": {
+      "eos": 59,
+      "max_length": 41
+    },
+    "tokens_mean": 461.76,
+    "tokens_median": 406.0,
+    "budget_fallback_used": 1
+  },
+  "gpol": {
+    "family": "math",
+    "gate": "G-POL",
+    "checks": {
+      "truncation_rate_le_0.05": false,
+      "majority_stop_is_eos": true,
+      "determinism_spot_check": true
+    },
+    "pass": false,
+    "note": "gate failure -> capability conclusions HOLD; policy covariates reported, never interpreted as capability"
+  },
+  "spot_check": {
+    "family": "math",
+    "sample_size": 3,
+    "all_identical": true,
+    "matches": [
+      true,
+      true,
+      true
+    ],
+    "sample_record_ids": [
+      "expert_math_000021",
+      "expert_math_000033",
+      "expert_math_000046"
+    ],
+    "note": "two greedy generations within one process on a fixed sample"
+  }
+}

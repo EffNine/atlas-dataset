@@ -1,0 +1,61 @@
+{
+  "experiment_id": "atlas-math-small-qwen7b-lora-transfer-v1",
+  "phase": "8",
+  "sprint": "P8-A.2",
+  "eval_split": "evaluation/eval_sets/phase6_expansion_v1/code_eval_v1.jsonl",
+  "n": 100,
+  "note": "Characterization of EXISTING frozen per-example predictions. The eval prompt template rendered the record messages, which include the gold assistant solution, then added an empty assistant turn (reference-in-prompt).",
+  "baseline": {
+    "label": "baseline",
+    "n": 100,
+    "max_new_tokens": 512,
+    "kinds": {
+      "code_tokens": 1,
+      "fence_only": 1,
+      "fenced_code": 61,
+      "patch": 37
+    },
+    "patch_emission_rate": 0.37,
+    "prose_rate": 0.0,
+    "fenced_code_rate": 0.62,
+    "token_length": {
+      "mean": 499.9,
+      "median": 512.0,
+      "min": 341,
+      "max": 512
+    },
+    "truncation_rate": 0.81,
+    "truncated_count": 81,
+    "stop_reason": {
+      "eos": 19,
+      "max_length": 81
+    }
+  },
+  "post_training": {
+    "label": "post_training",
+    "n": 100,
+    "max_new_tokens": 512,
+    "kinds": {
+      "code_tokens": 11,
+      "fence_only": 4,
+      "fenced_code": 49,
+      "patch": 27,
+      "pure_prose": 9
+    },
+    "patch_emission_rate": 0.27,
+    "prose_rate": 0.09,
+    "fenced_code_rate": 0.53,
+    "token_length": {
+      "mean": 326.2,
+      "median": 308.0,
+      "min": 111,
+      "max": 512
+    },
+    "truncation_rate": 0.14,
+    "truncated_count": 14,
+    "stop_reason": {
+      "eos": 86,
+      "max_length": 14
+    }
+  }
+}

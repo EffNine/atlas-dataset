@@ -315,6 +315,25 @@ model is a config edit — never a data migration:
 
 ---
 
+## AI Agent Quick Start
+
+> **This section is mandatory reading before making changes.**
+
+### Before making changes
+1. Read `AGENTS.md`.
+2. Read `PROJECT_STATE.md`.
+3. Read the latest reports under `docs/reports/` and evaluation docs under `docs/evaluation/`.
+4. Understand the current phase and whether any release/review gates are blocked.
+5. Do not modify frozen assets without approval.
+
+### Rules to preserve
+- Never modify `raw/`, `curated/`, `review_queue/`, or `training_views/` directly.
+- Never bypass human approval before release.
+- Never invent metrics, URLs, authors, licenses, or external facts.
+- If runtime/hardware is unavailable, create explicit HOLD artifacts with null metrics and real blocker notes.
+
+---
+
 ## Versioning
 
 | Version | Status | Notes |

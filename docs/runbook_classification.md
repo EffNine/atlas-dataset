@@ -4,7 +4,7 @@
 **Owner**: Atlas Platform Team
 **Last updated**: 2026-08-01
 **Applies to**: `run_classify_all_v2.py` + `scripts/intelligence/batch_classify_v2.py`
-**Target machine**: dev-pc (WSL2 Ubuntu-24.04, 16 CPUs, 30GB RAM, 8GB swap)
+**Target machine**: devpc (Ubuntu-24.04 bare metal, 16 CPUs, 30GB RAM, 8GB swap)
 
 ---
 
@@ -56,36 +56,30 @@ classification_summary_v1.2.json  +  difficulty_distribution_v1.2.json
 
 ## 3. Required Environment
 
-### 3.1 Target machine (dev-pc)
+### 3.1 Target machine (devpc)
 
 | Item | Value |
 |------|-------|
-| OS | Ubuntu-24.04 (WSL2) |
+| OS | Ubuntu-24.04 (bare metal) |
 | Repo path | `/mnt/d/atlas-dataset` |
 | Python | `.venv-release/bin/python` (Python 3.11+, has pyyaml) |
-| CPUs | 16 (WSL config: 16 processors) |
-| RAM | 30GB (WSL config) |
+| CPUs | 16 |
+| RAM | 30GB |
 | Swap | 8GB |
 | GitHub auth | `gh` CLI v2.45.0, user `EffNine` |
-| HF auth | `hf` CLI (` .venv-release/bin/hf`), user `EffNine` |
-
-**WSL config check** (already applied — verify if unsure):
-```bash
-cat /mnt/c/Users/<user>/.wslconfig
-# Expected: processors=16, memory=30GB, swap=8GB
-```
+| HF auth | `hf` CLI (`.venv-release/bin/hf`), user `EffNine` |
 
 ### 3.2 Control machine (Mac)
 
-- SSH alias `dev-pc` must resolve to the Windows host.
-- Commands wrap WSL: `ssh dev-pc "wsl -d Ubuntu-24.04 bash -lc '...'"`
-- No API tokens are passed over SSH — dev-pc has persistent gh/hf auth.
+- SSH alias `devpc` resolves to `100.103.161.46` (Tailscale).
+- devpc is a native Ubuntu box — no WSL wrapping needed.
+- No API tokens are passed over SSH — devpc has persistent gh/hf auth.
 - Script transfer uses **base64** (never heredoc over SSH — quoting breaks).
 
 ```bash
-# Transfer a local script to dev-pc safely:
+# Transfer a local script to devpc safely:
 python3 -c "from pathlib import Path; import base64; print(base64.b64encode(Path('LOCAL').read_bytes()).decode())" \
-  | ssh dev-pc "wsl -d Ubuntu-24.04 bash -lc 'cd /mnt/d/atlas-dataset && base64 -d > REMOTE && python3 REMOTE'"
+  | ssh devpc "cd /mnt/d/atlas-dataset && base64 -d > REMOTE && python3 REMOTE"
 ```
 
 ### 3.3 Repo requirements
@@ -102,20 +96,20 @@ python3 -c "from pathlib import Path; import base64; print(base64.b64encode(Path
 ## 4. Initial Setup (first run on a fresh machine)
 
 ```bash
-# 1. Clone / sync the repo (dev-pc)
-ssh dev-pc "wsl -d Ubuntu-24.04 bash -lc 'cd /mnt/d && git clone https://github.com/EffNine/atlas-dataset.git && cd atlas-dataset && git checkout main && git pull'"
+# 1. Clone / sync the repo (devpc)
+ssh devpc "cd /mnt/d && [ -d atlas-dataset ] && cd atlas-dataset && git checkout main && git pull || git clone https://github.com/EffNine/atlas-dataset.git && cd atlas-dataset && git checkout main"
 
 # 2. Create the release venv (if not present)
-ssh dev-pc "wsl -d Ubuntu-24.04 bash -lc 'cd /mnt/d/atlas-dataset && python3 -m venv .venv-release && .venv-release/bin/pip install -q pyyaml'"
+ssh devpc "cd /mnt/d/atlas-dataset && [ -d .venv-release ] || (python3 -m venv .venv-release && .venv-release/bin/pip install -q pyyaml)"
 
 # 3. Verify config parses
-ssh dev-pc "wsl -d Ubuntu-24.04 bash -lc 'cd /mnt/d/atlas-dataset && .venv-release/bin/python -c \"import yaml; print(yaml.safe_load(open(\"config/parallelism.yaml\")))\"'"
+ssh devpc "cd /mnt/d/atlas-dataset && .venv-release/bin/python -c 'import yaml; print(yaml.safe_load(open(\"config/parallelism.yaml\")))'"
 
 # 4. Verify raw shards are present (count per source)
-ssh dev-pc "wsl -d Ubuntu-24.04 bash -lc 'cd /mnt/d/atlas-dataset && ls raw/generated/wiki_ai_shard*_atlas.jsonl | wc -l'"
+ssh devpc "cd /mnt/d/atlas-dataset && ls raw/generated/wiki_ai_shard*_atlas.jsonl | wc -l"
 
 # 5. Dry-run the batch classifier to confirm source discovery
-ssh dev-pc "wsl -d Ubuntu-24.04 bash -lc 'cd /mnt/d/atlas-dataset && .venv-release/bin/python scripts/intelligence/batch_classify_v2.py --dry-run'"
+ssh devpc "cd /mnt/d/atlas-dataset && .venv-release/bin/python scripts/intelligence/batch_classify_v2.py --dry-run"
 ```
 
 **Expected**: dry-run lists all source groups (wiki_* + Stage 2), no errors.
@@ -127,8 +121,8 @@ ssh dev-pc "wsl -d Ubuntu-24.04 bash -lc 'cd /mnt/d/atlas-dataset && .venv-relea
 ### 5.1 Full run (all sources)
 
 ```bash
-# On dev-pc (or via ssh from Mac):
-ssh dev-pc "wsl -d Ubuntu-24.04 bash -lc 'cd /mnt/d/atlas-dataset && export PYTHONUNBUFFERED=1 && .venv-release/bin/python run_classify_all_v2.py 2>&1'"
+# On devpc (or via ssh from Mac):
+ssh devpc "cd /mnt/d/atlas-dataset && export PYTHONUNBUFFERED=1 && .venv-release/bin/python run_classify_all_v2.py 2>&1"
 ```
 
 - Stage 1: `wiki_ai wiki_sw wiki_sys wiki_sci wiki_biz wiki_cre wiki_hw`
@@ -186,7 +180,7 @@ ls -la /mnt/d/atlas-dataset/metadata/intelligence/classified_*.jsonl 2>/dev/null
 
 # 3. If a classified_<source>.jsonl exists but was NOT appended (crash before append):
 #    Either rerun the runner (it will append it), or append manually:
-ssh dev-pc "wsl -d Ubuntu-24.04 bash -lc 'cd /mnt/d/atlas-dataset && .venv-release/bin/python -c \"from pathlib import Path; import shutil, json; v12=Path(\"metadata/intelligence/unknown_classified_v1.2.jsonl\"); src=Path(\"metadata/intelligence/classified_wiki_sys.jsonl\"); n=0; 
+ssh devpc "cd /mnt/d/atlas-dataset && .venv-release/bin/python -c \"from pathlib import Path; import shutil, json; v12=Path(\"metadata/intelligence/unknown_classified_v1.2.jsonl\"); src=Path(\"metadata/intelligence/classified_wiki_sys.jsonl\"); n=0; 
 with open(src) as i, open(v12,\"a\") as o:
     [o.write(l) for l in i if l.strip() and (n:=n+1)]
 print(f\"appended {n} records\")\"'"
@@ -333,7 +327,7 @@ parallelism:
 
 **Skipped automatically (v1.1 sources)**: `tulu3`, `openwebmath`, `arxiv_*`, `c4`.
 
-### 8.3 Rates (observed on dev-pc)
+### 8.3 Rates (observed on devpc)
 
 | Config | Aggregate rate | Notes |
 |--------|---------------|-------|
@@ -376,7 +370,7 @@ memory pressure — reduce `stage2_shard_workers` to 8 and retry.
 
 ```bash
 # Remove leftover temp dirs from crashed runs
-ssh dev-pc "wsl -d Ubuntu-24.04 bash -lc 'cd /mnt/d/atlas-dataset && rm -rf metadata/intelligence/_tmp && mkdir -p metadata/intelligence/_tmp'"
+ssh devpc "cd /mnt/d/atlas-dataset && rm -rf metadata/intelligence/_tmp && mkdir -p metadata/intelligence/_tmp"
 
 # Remove per-source outputs that were already appended (verify first!)
 # ls metadata/intelligence/classified_*.jsonl  # review
@@ -478,7 +472,7 @@ Fix: find the failing source in logs, fix the root cause, resume with
 7. **Log long runs to a file** (`logs/classify_v12.log`) so the SSH session
    can drop without killing the job.
 8. **Backup before destructive cleanup** — `cp` a file before dedup/delete.
-9. **Respect resource headroom** — dev-pc is dedicated; do not run concurrent
+9. **Respect resource headroom** — devpc is dedicated; do not run concurrent
    Windows workloads during classification/model training.
 10. **After a crash**, the order is always: inspect → verify → fix tool →
     resume with skip list → verify again.

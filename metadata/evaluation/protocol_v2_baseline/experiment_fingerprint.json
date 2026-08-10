@@ -1,0 +1,51 @@
+{
+  "fingerprint_version": "v1",
+  "experiment_id": "atlas-mixed-pilot-qwen7b-eval-v2",
+  "fingerprint_sha256": "2a60c2423e36c683d1be7cec22657fadc478f96435beb3014523d67b46d8863b",
+  "input_block": {
+    "fingerprint_version": "v1",
+    "experiment_id": "atlas-mixed-pilot-qwen7b-eval-v2",
+    "phase": "T3 canonical baseline (R1/R2)",
+    "protocol_version": "v2",
+    "scope": "eval",
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "template_version": "qwen2.5-chatml-deterministic-v1",
+    "engine_commit": "99e88e1",
+    "engine_path": "scripts/evaluation_engine/v2",
+    "eval_sets": {
+      "math": {
+        "eval_set_id": "math_eval_v2",
+        "n_clean": 100,
+        "n_held": 0,
+        "checksum": "16288500568c4dc161beaf55d557709519ab5d41eea0aeddd01c5fc735989056",
+        "leak_scan_id": "5aaa2681d48c432e718a9accb0fe22bb704140467f5ae77029755d6adc0fd408"
+      },
+      "code": {
+        "eval_set_id": "code_eval_v2",
+        "n_clean": 99,
+        "n_held": 1,
+        "checksum": "2623831df432d90dbfec552aa092708c150bed38948ed1fcd8bc60a4ad71edff",
+        "leak_scan_id": "e4c23d578af7505e673f40104cd13c367eaeb7ac53a05e0e8480714cba46e0a1"
+      }
+    },
+    "policy_locks": {
+      "math": "5305d483cb032106bcb1bb6c658b5a1fccda52d52b58dc6679ebe5e4f3ed53e1",
+      "code": "0f82e6039f065fdbb868310596e8411d5391163282a6f7e967522068c41793a7"
+    },
+    "inference_config": {
+      "quantization": "4bit_nf4_double_quant",
+      "compute_dtype": "bfloat16",
+      "sampling": "greedy",
+      "do_sample": false,
+      "seed": 42,
+      "budget_rule": "budget_i = min(4096, max(256, 128 + ceil(1.5 * N_tokens(reference_i))))",
+      "budget_fallback": 1024,
+      "stop_sequence": "<|im_end|>",
+      "extraction_rule": "P8-generation-policy-lock v1.0 diff extraction wrapper",
+      "device_map": "auto"
+    }
+  },
+  "note": "sha256 over the sorted canonical input block; identical inputs yield the same fingerprint. Recorded in the T3 run metadata and re-verified by the runner before generation.",
+  "generated_at": "2026-08-05T15:33:34.944811+00:00"
+}

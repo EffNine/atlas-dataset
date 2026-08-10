@@ -1,0 +1,721 @@
+{
+  "analysis_version": "2",
+  "families": {
+    "math": {
+      "n": 100,
+      "n_eos": 59,
+      "n_truncated": 41,
+      "truncation_rate": 0.41,
+      "chars_per_token_ref_est": 2.791,
+      "budget_recompute_match_f0": 0.99,
+      "tokens_generated": {
+        "mean": 461.76,
+        "median": 403.5,
+        "p90": 778,
+        "max": 1005
+      },
+      "budget_applied": {
+        "mean": 571.88,
+        "median": 499.5,
+        "min": 256,
+        "max": 1619
+      },
+      "prompt_chars": {
+        "mean": 410.1,
+        "median": 376.0,
+        "max": 1564
+      },
+      "ref_chars": {
+        "mean": 813.3,
+        "median": 661.5,
+        "max": 3123
+      },
+      "ref_tokens_nt": {
+        "mean": 295.6,
+        "median": 247.5,
+        "max": 994
+      },
+      "corr_tokens_gen_vs_ref_tokens": 0.851,
+      "corr_tokens_gen_vs_prompt_tokens": -0.017,
+      "regress_tokens_gen_on_ref": {
+        "slope": 0.8872,
+        "intercept": 145.12,
+        "r2": 0.724,
+        "n": 59
+      },
+      "regress_tokens_gen_on_prompt": {
+        "slope": -0.0887,
+        "intercept": 452.36,
+        "r2": 0.0,
+        "n": 59
+      },
+      "gen_per_ref_token_eos": {
+        "mean": 1.48,
+        "p90": 2.017,
+        "max": 2.494
+      },
+      "truncated_budget_distribution": {
+        "budget=256": 1,
+        "budget=275": 1,
+        "budget=305": 1,
+        "budget=308": 1,
+        "budget=310": 1,
+        "budget=320": 1,
+        "budget=331": 1,
+        "budget=338": 1,
+        "budget=340": 1,
+        "budget=346": 1,
+        "budget=349": 2,
+        "budget=361": 1,
+        "budget=367": 2,
+        "budget=371": 1,
+        "budget=406": 1,
+        "budget=413": 1,
+        "budget=419": 1,
+        "budget=427": 1,
+        "budget=443": 1,
+        "budget=470": 1,
+        "budget=478": 1,
+        "budget=484": 1,
+        "budget=497": 1,
+        "budget=502": 1,
+        "budget=509": 1,
+        "budget=515": 1,
+        "budget=560": 1,
+        "budget=571": 1,
+        "budget=578": 1,
+        "budget=623": 1,
+        "budget=644": 1,
+        "budget=674": 1,
+        "budget=719": 1,
+        "budget=758": 1,
+        "budget=778": 1,
+        "budget=788": 1,
+        "budget=815": 1,
+        "budget=926": 1,
+        "budget=973": 1
+      },
+      "histogram_prompt_chars": {
+        "0-200": 0,
+        "200-400": 60,
+        "400-600": 33,
+        "600-900": 5,
+        "900-1500": 1,
+        "1500-3000": 1,
+        "3000+": 0
+      },
+      "histogram_ref_chars": {
+        "0-300": 9,
+        "300-600": 34,
+        "600-1000": 34,
+        "1000-1500": 14,
+        "1500-2500": 6,
+        "2500-4000": 3,
+        "4000+": 0
+      },
+      "histogram_tokens_generated": {
+        "0-128": 0,
+        "128-256": 11,
+        "256-384": 36,
+        "384-512": 22,
+        "512-768": 19,
+        "768-1024": 12,
+        "1024+": 0
+      },
+      "truncation_by_prompt_chars": {
+        "200-400": {
+          "n": 60,
+          "truncated": 26,
+          "truncation_rate": 0.433
+        },
+        "400-600": {
+          "n": 33,
+          "truncated": 12,
+          "truncation_rate": 0.364
+        },
+        "600-900": {
+          "n": 5,
+          "truncated": 2,
+          "truncation_rate": 0.4
+        },
+        "900-1500": {
+          "n": 1,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "1500-3000": {
+          "n": 1,
+          "truncated": 1,
+          "truncation_rate": 1.0
+        },
+        "3000+": null
+      },
+      "truncation_by_ref_chars": {
+        "0-300": {
+          "n": 9,
+          "truncated": 5,
+          "truncation_rate": 0.556
+        },
+        "300-600": {
+          "n": 34,
+          "truncated": 19,
+          "truncation_rate": 0.559
+        },
+        "600-1000": {
+          "n": 34,
+          "truncated": 11,
+          "truncation_rate": 0.324
+        },
+        "1000-1500": {
+          "n": 14,
+          "truncated": 6,
+          "truncation_rate": 0.429
+        },
+        "1500-2500": {
+          "n": 6,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "2500-4000": {
+          "n": 3,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "4000+": null
+      },
+      "truncation_by_ref_tokens": {
+        "85-170": {
+          "n": 29,
+          "truncated": 16,
+          "truncation_rate": 0.552
+        },
+        "170-256": {
+          "n": 24,
+          "truncated": 11,
+          "truncation_rate": 0.458
+        },
+        "256-400": {
+          "n": 25,
+          "truncated": 8,
+          "truncation_rate": 0.32
+        },
+        "400-700": {
+          "n": 17,
+          "truncated": 6,
+          "truncation_rate": 0.353
+        },
+        "700-1100": {
+          "n": 5,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "1100+": null
+      },
+      "candidates": {
+        "F0 current 128/1.5/256": {
+          "params": [
+            128,
+            1.5,
+            256,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 571.6,
+          "median_budget": 499.5,
+          "p95_budget": 1142,
+          "max_budget": 1619,
+          "total_tokens_ceiling": 57162,
+          "total_vs_f0": 1.0,
+          "guaranteed_coverage": 0.59,
+          "predicted_recovered_truncated": 0,
+          "predicted_residual_truncation": 0.41
+        },
+        "F1 alpha 3.0 128/3.0/256": {
+          "params": [
+            128,
+            3.0,
+            256,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 1014.8,
+          "median_budget": 870.5,
+          "p95_budget": 2156,
+          "max_budget": 3110,
+          "total_tokens_ceiling": 101480,
+          "total_vs_f0": 1.775,
+          "guaranteed_coverage": 0.59,
+          "predicted_recovered_truncated": 41,
+          "predicted_residual_truncation": 0.0
+        },
+        "F2 floor 512 512/3.0/512": {
+          "params": [
+            512,
+            3.0,
+            512,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 1398.8,
+          "median_budget": 1254.5,
+          "p95_budget": 2540,
+          "max_budget": 3494,
+          "total_tokens_ceiling": 139880,
+          "total_vs_f0": 2.447,
+          "guaranteed_coverage": 0.59,
+          "predicted_recovered_truncated": 41,
+          "predicted_residual_truncation": 0.0
+        },
+        "F3 base 300 300/3.0/300": {
+          "params": [
+            300,
+            3.0,
+            300,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 1186.8,
+          "median_budget": 1042.5,
+          "p95_budget": 2328,
+          "max_budget": 3282,
+          "total_tokens_ceiling": 118680,
+          "total_vs_f0": 2.076,
+          "guaranteed_coverage": 0.59,
+          "predicted_recovered_truncated": 41,
+          "predicted_residual_truncation": 0.0
+        },
+        "F4 base 256 256/3.0/256": {
+          "params": [
+            256,
+            3.0,
+            256,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 1142.8,
+          "median_budget": 998.5,
+          "p95_budget": 2284,
+          "max_budget": 3238,
+          "total_tokens_ceiling": 114280,
+          "total_vs_f0": 1.999,
+          "guaranteed_coverage": 0.59,
+          "predicted_recovered_truncated": 41,
+          "predicted_residual_truncation": 0.0
+        },
+        "F5 alpha 4.0 128/4.0/256": {
+          "params": [
+            128,
+            4.0,
+            256,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 1310.3,
+          "median_budget": 1118.0,
+          "p95_budget": 2832,
+          "max_budget": 4096,
+          "total_tokens_ceiling": 131032,
+          "total_vs_f0": 2.292,
+          "guaranteed_coverage": 0.59,
+          "predicted_recovered_truncated": 41,
+          "predicted_residual_truncation": 0.0
+        },
+        "F6 hybrid 256/2.0 max": {
+          "params": [
+            256,
+            2.0,
+            256,
+            4096
+          ],
+          "mode": "hybrid",
+          "mean_budget": 872.2,
+          "median_budget": 757.0,
+          "p95_budget": 1608,
+          "max_budget": 2244,
+          "total_tokens_ceiling": 87220,
+          "total_vs_f0": 1.526,
+          "guaranteed_coverage": 0.59,
+          "predicted_recovered_truncated": 41,
+          "predicted_residual_truncation": 0.0
+        },
+        "F7 flat 1024": {
+          "params": [
+            1024,
+            0.0,
+            1024,
+            4096
+          ],
+          "mode": "flat",
+          "mean_budget": 1024,
+          "median_budget": 1024.0,
+          "p95_budget": 1024,
+          "max_budget": 1024,
+          "total_tokens_ceiling": 102400,
+          "total_vs_f0": 1.791,
+          "guaranteed_coverage": 0.59,
+          "predicted_recovered_truncated": 41,
+          "predicted_residual_truncation": 0.0
+        },
+        "F8 prompt 128/1.5/256": {
+          "params": [
+            128,
+            1.5,
+            256,
+            4096
+          ],
+          "mode": "prompt",
+          "mean_budget": 349.5,
+          "median_budget": 331.0,
+          "p95_budget": 457,
+          "max_budget": 970,
+          "total_tokens_ceiling": 34948,
+          "total_vs_f0": 0.611,
+          "guaranteed_coverage": 0.26,
+          "predicted_recovered_truncated": 4,
+          "predicted_residual_truncation": 0.37
+        }
+      }
+    },
+    "code": {
+      "n": 99,
+      "n_eos": 96,
+      "n_truncated": 3,
+      "truncation_rate": 0.0303,
+      "chars_per_token_ref_est": 3.946,
+      "budget_recompute_match_f0": 1.0,
+      "tokens_generated": {
+        "mean": 187.55,
+        "median": 151,
+        "p90": 300,
+        "max": 978
+      },
+      "budget_applied": {
+        "mean": 787.92,
+        "median": 518,
+        "min": 265,
+        "max": 4096
+      },
+      "prompt_chars": {
+        "mean": 2562.4,
+        "median": 1758,
+        "max": 23221
+      },
+      "ref_chars": {
+        "mean": 1869.6,
+        "median": 1015,
+        "max": 14547
+      },
+      "ref_tokens_nt": {
+        "mean": 439.8,
+        "median": 260,
+        "max": 2645
+      },
+      "corr_tokens_gen_vs_ref_tokens": 0.529,
+      "corr_tokens_gen_vs_prompt_tokens": 0.054,
+      "regress_tokens_gen_on_ref": {
+        "slope": 0.1303,
+        "intercept": 122.25,
+        "r2": 0.28,
+        "n": 96
+      },
+      "regress_tokens_gen_on_prompt": {
+        "slope": 0.0109,
+        "intercept": 173.53,
+        "r2": 0.003,
+        "n": 96
+      },
+      "gen_per_ref_token_eos": {
+        "mean": 0.68,
+        "p90": 1.159,
+        "max": 2.356
+      },
+      "truncated_budget_distribution": {
+        "budget=350": 1,
+        "budget=364": 1,
+        "budget=518": 1
+      },
+      "histogram_prompt_chars": {
+        "0-200": 0,
+        "200-400": 0,
+        "400-600": 0,
+        "600-900": 5,
+        "900-1500": 28,
+        "1500-3000": 40,
+        "3000+": 26
+      },
+      "histogram_ref_chars": {
+        "0-300": 1,
+        "300-600": 17,
+        "600-1000": 30,
+        "1000-1500": 19,
+        "1500-2500": 17,
+        "2500-4000": 6,
+        "4000+": 9
+      },
+      "histogram_tokens_generated": {
+        "0-128": 24,
+        "128-256": 63,
+        "256-384": 7,
+        "384-512": 1,
+        "512-768": 2,
+        "768-1024": 2,
+        "1024+": 0
+      },
+      "truncation_by_prompt_chars": {
+        "600-900": {
+          "n": 5,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "900-1500": {
+          "n": 28,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "1500-3000": {
+          "n": 40,
+          "truncated": 2,
+          "truncation_rate": 0.05
+        },
+        "3000+": {
+          "n": 26,
+          "truncated": 1,
+          "truncation_rate": 0.038
+        }
+      },
+      "truncation_by_ref_chars": {
+        "0-300": {
+          "n": 1,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "300-600": {
+          "n": 17,
+          "truncated": 1,
+          "truncation_rate": 0.059
+        },
+        "600-1000": {
+          "n": 30,
+          "truncated": 1,
+          "truncation_rate": 0.033
+        },
+        "1000-1500": {
+          "n": 19,
+          "truncated": 1,
+          "truncation_rate": 0.053
+        },
+        "1500-2500": {
+          "n": 17,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "2500-4000": {
+          "n": 6,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "4000+": {
+          "n": 9,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        }
+      },
+      "truncation_by_ref_tokens": {
+        "85-170": {
+          "n": 26,
+          "truncated": 2,
+          "truncation_rate": 0.077
+        },
+        "170-256": {
+          "n": 23,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "256-400": {
+          "n": 20,
+          "truncated": 1,
+          "truncation_rate": 0.05
+        },
+        "400-700": {
+          "n": 19,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "700-1100": {
+          "n": 4,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        },
+        "1100+": {
+          "n": 7,
+          "truncated": 0,
+          "truncation_rate": 0.0
+        }
+      },
+      "candidates": {
+        "F0 current 128/1.5/256": {
+          "params": [
+            128,
+            1.5,
+            256,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 787.9,
+          "median_budget": 518,
+          "p95_budget": 3055,
+          "max_budget": 4096,
+          "total_tokens_ceiling": 78004,
+          "total_vs_f0": 1.0,
+          "guaranteed_coverage": 0.9697,
+          "predicted_recovered_truncated": 0,
+          "predicted_residual_truncation": 0.0303
+        },
+        "F1 alpha 3.0 128/3.0/256": {
+          "params": [
+            128,
+            3.0,
+            256,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 1256.5,
+          "median_budget": 908,
+          "p95_budget": 4096,
+          "max_budget": 4096,
+          "total_tokens_ceiling": 124392,
+          "total_vs_f0": 1.595,
+          "guaranteed_coverage": 0.9697,
+          "predicted_recovered_truncated": 3,
+          "predicted_residual_truncation": 0.0
+        },
+        "F2 floor 512 512/3.0/512": {
+          "params": [
+            512,
+            3.0,
+            512,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 1617.2,
+          "median_budget": 1292,
+          "p95_budget": 4096,
+          "max_budget": 4096,
+          "total_tokens_ceiling": 160104,
+          "total_vs_f0": 2.053,
+          "guaranteed_coverage": 0.9697,
+          "predicted_recovered_truncated": 3,
+          "predicted_residual_truncation": 0.0
+        },
+        "F3 base 300 300/3.0/300": {
+          "params": [
+            300,
+            3.0,
+            300,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 1418.1,
+          "median_budget": 1080,
+          "p95_budget": 4096,
+          "max_budget": 4096,
+          "total_tokens_ceiling": 140388,
+          "total_vs_f0": 1.8,
+          "guaranteed_coverage": 0.9697,
+          "predicted_recovered_truncated": 3,
+          "predicted_residual_truncation": 0.0
+        },
+        "F4 base 256 256/3.0/256": {
+          "params": [
+            256,
+            3.0,
+            256,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 1376.7,
+          "median_budget": 1036,
+          "p95_budget": 4096,
+          "max_budget": 4096,
+          "total_tokens_ceiling": 136296,
+          "total_vs_f0": 1.747,
+          "guaranteed_coverage": 0.9697,
+          "predicted_recovered_truncated": 3,
+          "predicted_residual_truncation": 0.0
+        },
+        "F5 alpha 4.0 128/4.0/256": {
+          "params": [
+            128,
+            4.0,
+            256,
+            4096
+          ],
+          "mode": "ref",
+          "mean_budget": 1538.5,
+          "median_budget": 1168,
+          "p95_budget": 4096,
+          "max_budget": 4096,
+          "total_tokens_ceiling": 152316,
+          "total_vs_f0": 1.953,
+          "guaranteed_coverage": 0.9697,
+          "predicted_recovered_truncated": 3,
+          "predicted_residual_truncation": 0.0
+        },
+        "F6 hybrid 256/2.0 max": {
+          "params": [
+            256,
+            2.0,
+            256,
+            4096
+          ],
+          "mode": "hybrid",
+          "mean_budget": 1685.1,
+          "median_budget": 1364,
+          "p95_budget": 4096,
+          "max_budget": 4096,
+          "total_tokens_ceiling": 166822,
+          "total_vs_f0": 2.139,
+          "guaranteed_coverage": 0.9697,
+          "predicted_recovered_truncated": 3,
+          "predicted_residual_truncation": 0.0
+        },
+        "F7 flat 1024": {
+          "params": [
+            1024,
+            0.0,
+            1024,
+            4096
+          ],
+          "mode": "flat",
+          "mean_budget": 1024,
+          "median_budget": 1024,
+          "p95_budget": 1024,
+          "max_budget": 1024,
+          "total_tokens_ceiling": 101376,
+          "total_vs_f0": 1.3,
+          "guaranteed_coverage": 0.9697,
+          "predicted_recovered_truncated": 3,
+          "predicted_residual_truncation": 0.0
+        },
+        "F8 prompt 128/1.5/256": {
+          "params": [
+            128,
+            1.5,
+            256,
+            4096
+          ],
+          "mode": "prompt",
+          "mean_budget": 1054.1,
+          "median_budget": 797,
+          "p95_budget": 2303,
+          "max_budget": 4096,
+          "total_tokens_ceiling": 104352,
+          "total_vs_f0": 1.338,
+          "guaranteed_coverage": 0.9596,
+          "predicted_recovered_truncated": 3,
+          "predicted_residual_truncation": 0.0
+        }
+      }
+    }
+  }
+}

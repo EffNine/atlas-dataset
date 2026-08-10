@@ -1,0 +1,45 @@
+{
+  "experiment_id": "lora_environment_check",
+  "phase": "5B.0",
+  "objective": "Validate the RTX 5070 CUDA environment for a future QLoRA LoRA pilot.",
+  "scope": "environment validation only. No full QLoRA training, no dataset/view/release changes.",
+  "constraints": [
+    "No full training",
+    "No dataset modification",
+    "No training-view modification",
+    "No release artifact changes",
+    "All outputs under experiments/lora_environment_check/"
+  ],
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "quantization": {
+    "load_in_4bit": true,
+    "bnb_4bit_use_double_quant": true,
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_compute_dtype": "bfloat16"
+  },
+  "lora_check": {
+    "r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "bias": "none",
+    "task_type": "CAUSAL_LM",
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "lr_probe": 0.0002,
+    "optimizer_probe": "AdamW (LoRA params only)"
+  },
+  "validation": [
+    "forward_pass",
+    "backward_pass",
+    "gradient_step",
+    "adapter_save_load"
+  ],
+  "generated_at": "2026-08-03T15:37:11.345477+00:00"
+}

@@ -1,0 +1,1212 @@
+{
+  "layer": "L3",
+  "audit_tool": "scripts/evaluation_engine/leakage/audit.py",
+  "per_example_file": "/Users/afnanrudy/Github-Projects/atlas-dataset/metadata/evaluation/protocol_v2_validation/per_example_code_eval_v2.jsonl",
+  "eval_file": "/Users/afnanrudy/Github-Projects/atlas-dataset/evaluation/eval_sets/protocol_v2/code_eval_v2.jsonl",
+  "family": "code",
+  "n_records": 99,
+  "n_pass": 99,
+  "n_fail": 0,
+  "leak_pass_rate": 1.0,
+  "fail_closed": true,
+  "policy_lock": {
+    "version": "v1",
+    "family": "code",
+    "system_message_sha256": "90bc2fe545222861af4f21e3ec01f4104d85995785bc54c7a6c5fef7df1f2629",
+    "budget_rule": "budget_i = min(4096, max(256, 128 + ceil(1.5 * N_tokens(reference_i))))",
+    "budget_fallback": 1024,
+    "stop_sequence": "<|im_end|>",
+    "template_version": "qwen2.5-chatml-deterministic-v1",
+    "policy_block_sha256": "0f82e6039f065fdbb868310596e8411d5391163282a6f7e967522068c41793a7"
+  },
+  "records": [
+    {
+      "record_id": "expert_swe_000003",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000005",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000009",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000012",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000018",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000022",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000025",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000029",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000034",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000035",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000045",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000051",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000052",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000054",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000058",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000064",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000065",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000085",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000091",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000095",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000101",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000109",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000110",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000114",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000115",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000120",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000123",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000131",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000133",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000134",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000138",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000159",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000160",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000166",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000171",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000190",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000198",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000202",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000203",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000215",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000218",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000224",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000233",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000236",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000238",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000239",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000241",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000246",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000251",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000261",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000262",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000265",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000266",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000275",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000279",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000287",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000289",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000297",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000299",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000304",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000308",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000316",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000321",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000322",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000328",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000332",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000336",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000339",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000344",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000345",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000351",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000355",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000360",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000362",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000366",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000367",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000378",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000380",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000390",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000391",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000394",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000407",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000409",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000424",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000428",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000436",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000440",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000441",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000445",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000456",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000457",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000463",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000466",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000474",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000477",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000480",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000483",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000488",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_swe_000496",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    }
+  ]
+}

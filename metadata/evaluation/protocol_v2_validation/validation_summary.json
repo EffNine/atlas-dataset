@@ -1,0 +1,125 @@
+{
+  "validation_version": "v1",
+  "template_version": "qwen2.5-chatml-deterministic-v1",
+  "generated_at": "2026-08-05T15:22:07.340450+00:00",
+  "families": {
+    "math": {
+      "family": "math",
+      "eval_set_id": "math_eval_v2",
+      "n_records": 100,
+      "n_pass": 100,
+      "n_fail": 0,
+      "pass_rate": 1.0,
+      "leak_scan": {
+        "leak_scan_id": "5aaa2681d48c432e718a9accb0fe22bb704140467f5ae77029755d6adc0fd408",
+        "leak_pass_rate": 1.0,
+        "fail_closed": true
+      },
+      "runtime_guard": {
+        "leakage_guard_pass": true,
+        "no_canonical_answer_in_prompt": true
+      },
+      "post_hoc_audit": {
+        "leak_pass_rate": 1.0,
+        "fail_closed": true
+      },
+      "prompt_hash_reproducible": true,
+      "guard_controls": {
+        "leaked_positive_control": {
+          "expert_math_000021": true,
+          "expert_math_000033": true,
+          "expert_math_000046": true
+        },
+        "clean_negative_control": {
+          "expert_math_000021": true,
+          "expert_math_000033": true,
+          "expert_math_000046": true
+        }
+      },
+      "held": {
+        "n_held": 0,
+        "record_ids": [],
+        "reasons": [],
+        "guard_confirmed_hold": true
+      },
+      "artifact_reproducibility": {
+        "content_checksum_matches_manifest": true,
+        "content_checksum": "16288500568c4dc161beaf55d557709519ab5d41eea0aeddd01c5fc735989056",
+        "manifest_checksum": "16288500568c4dc161beaf55d557709519ab5d41eea0aeddd01c5fc735989056"
+      },
+      "files": {
+        "per_example": "metadata/evaluation/protocol_v2_validation/per_example_math_eval_v2.jsonl",
+        "leak_scan": "metadata/evaluation/protocol_v2_validation/leak_scan_math_eval_v2.json",
+        "audit": "metadata/evaluation/protocol_v2_validation/audit_math_eval_v2.json"
+      },
+      "leak_details": []
+    },
+    "code": {
+      "family": "code",
+      "eval_set_id": "code_eval_v2",
+      "n_records": 99,
+      "n_pass": 99,
+      "n_fail": 0,
+      "pass_rate": 1.0,
+      "leak_scan": {
+        "leak_scan_id": "e4c23d578af7505e673f40104cd13c367eaeb7ac53a05e0e8480714cba46e0a1",
+        "leak_pass_rate": 1.0,
+        "fail_closed": true
+      },
+      "runtime_guard": {
+        "leakage_guard_pass": true,
+        "no_canonical_answer_in_prompt": true
+      },
+      "post_hoc_audit": {
+        "leak_pass_rate": 1.0,
+        "fail_closed": true
+      },
+      "prompt_hash_reproducible": true,
+      "guard_controls": {
+        "leaked_positive_control": {
+          "expert_swe_000003": true,
+          "expert_swe_000005": true,
+          "expert_swe_000009": true
+        },
+        "clean_negative_control": {
+          "expert_swe_000003": true,
+          "expert_swe_000005": true,
+          "expert_swe_000009": true
+        }
+      },
+      "held": {
+        "n_held": 1,
+        "record_ids": [
+          "expert_swe_000375"
+        ],
+        "reasons": [
+          "[guard] expert_swe_000375: reference fingerprint 'return pd.DataFrame(data' found in prompt"
+        ],
+        "guard_confirmed_hold": true
+      },
+      "artifact_reproducibility": {
+        "content_checksum_matches_manifest": true,
+        "content_checksum": "2623831df432d90dbfec552aa092708c150bed38948ed1fcd8bc60a4ad71edff",
+        "manifest_checksum": "2623831df432d90dbfec552aa092708c150bed38948ed1fcd8bc60a4ad71edff"
+      },
+      "files": {
+        "per_example": "metadata/evaluation/protocol_v2_validation/per_example_code_eval_v2.jsonl",
+        "leak_scan": "metadata/evaluation/protocol_v2_validation/leak_scan_code_eval_v2.json",
+        "audit": "metadata/evaluation/protocol_v2_validation/audit_code_eval_v2.json"
+      },
+      "leak_details": []
+    }
+  },
+  "rebuild_determinism": {
+    "rebuild_exit_code": 0,
+    "byte_identical": true,
+    "files": [
+      "code_eval_v2.jsonl",
+      "code_eval_v2_held.jsonl",
+      "math_eval_v2.jsonl"
+    ],
+    "stderr_tail": []
+  },
+  "overall_pass": true,
+  "status": "COMPLETED"
+}

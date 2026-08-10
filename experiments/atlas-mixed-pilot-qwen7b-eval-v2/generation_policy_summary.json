@@ -1,0 +1,60 @@
+{
+  "experiment_id": "atlas-mixed-pilot-qwen7b-eval-v2",
+  "families": {
+    "math": {
+      "gpol": {
+        "family": "math",
+        "gate": "G-POL",
+        "checks": {
+          "truncation_rate_le_0.05": false,
+          "majority_stop_is_eos": true,
+          "determinism_spot_check": true
+        },
+        "pass": false,
+        "note": "gate failure -> capability conclusions HOLD; policy covariates reported, never interpreted as capability"
+      },
+      "aggregate_policy_covariates": {
+        "patch_emission_rate": null,
+        "format_distribution": {
+          "math": 100
+        },
+        "truncation_rate": 0.41,
+        "stop_reason_counts": {
+          "eos": 59,
+          "max_length": 41
+        },
+        "tokens_mean": 461.76,
+        "tokens_median": 406.0,
+        "budget_fallback_used": 1
+      }
+    },
+    "code": {
+      "gpol": {
+        "family": "code",
+        "gate": "G-POL",
+        "checks": {
+          "patch_emission_rate_ge_0.90": true,
+          "truncation_rate_le_0.05": true,
+          "majority_stop_is_eos": true,
+          "determinism_spot_check": true
+        },
+        "pass": true,
+        "note": "gate failure -> capability conclusions HOLD; policy covariates reported, never interpreted as capability"
+      },
+      "aggregate_policy_covariates": {
+        "patch_emission_rate": 1.0,
+        "format_distribution": {
+          "patch": 99
+        },
+        "truncation_rate": 0.0303,
+        "stop_reason_counts": {
+          "eos": 96,
+          "max_length": 3
+        },
+        "tokens_mean": 187.55,
+        "tokens_median": 151.0,
+        "budget_fallback_used": 0
+      }
+    }
+  }
+}

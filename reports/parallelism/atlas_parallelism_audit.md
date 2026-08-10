@@ -416,4 +416,4 @@ Resource awareness legend: `NONE` = no monitoring, `DISK` = disk checks,
 3. Extraction and classification are the best multi-machine candidates
    (CPU-heavy, byte-splittable). Validation and training views follow.
 4. Add `worker_group` → host mapping in config to pin stages to machines
-   (dev-pc 16C/30GB for classification; Mac control-plane for orchestration).
+    (devpc 16C/30GB for classification; Mac control-plane for orchestration).

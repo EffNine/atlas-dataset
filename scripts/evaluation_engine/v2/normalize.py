@@ -122,13 +122,42 @@ _PERCENT_RE = re.compile(r"(?<=\d)\s*%")
 
 # Unit tokens removed for dimensionless numeric comparison. Applied after
 # numbers are isolated so "5 meters" == "5 m" == "5".
+# RP-002.3: extended with known unit words from the math metric audit.
 _UNIT_WORDS = re.compile(
     r"\b(?:seconds?|sec|meters?|metres?|m|kilometers?|kms?|centimeters?"
-    r"|cms?|millimeters?|mms?|degrees?|deg|radians?|rad|hundredths?)\b",
+    r"|cms?|millimeters?|mms?|degrees?|deg|radians?|rad|hundredths?"
+    r"|hours?|minutes?|days?|pages?|inches?|feet|gallons?|people|stones?)"
+    r"\b",
     re.I,
 )
 # Degree / prime symbols -> stripped (degrees normalized to plain numbers).
 _DEGREE_SYMBOLS = re.compile(r"[°˚º]")
+
+# RP-002.1: Pattern to strip entire \text{...} / \mathrm{...} / etc. families
+# (human-text scaffolding that makes the candidate unparsable).
+_LATEX_TEXT_COMMANDS = re.compile(
+    r"\\(?:text|mathrm|mathbf|mathit|textrm|textup|operatorname|mbox|textnormal)"
+    r"\s*\{[^{}]*\}",
+)
+
+# RP-002.2: Stray backslash before a non-letter / non-brace character.
+# E.g. \$2880 -> 2880 (after $ is already stripped).
+_STRAY_BACKSLASH = re.compile(r"\\(?![A-Za-z{])")
+
+# RP-002.5: LaTeX operator aliases that the frozen parser cannot handle.
+_LATEX_OPERATOR_ALIASES = [
+    (re.compile(r"\\cdot\b"), "*"),
+    (re.compile(r"\\times\b"), "*"),
+    (re.compile(r"\\ast\b"), "*"),
+    (re.compile(r"\\div\b"), "/"),
+]
+
+# RP-002.5: Alternative fraction commands -> \frac so the frozen expander
+# can act on them.
+_FRAC_ALIAS = re.compile(r"\\(?:dfrac|tfrac|cfrac)\b")
+
+# RP-002: Unescape escaped braces and LaTeX line breaks.
+_UNESCAPE_BRACES = re.compile(r"\\(.)")
 
 STOPWORDS = frozenset(
     """
@@ -233,6 +262,97 @@ def normalize_math(text: str) -> str:
     out = out.replace("{", "(").replace("}", ")")
     out = WHITESPACE_RE.sub("", out)
     return out
+
+
+def _strip_text_commands(text: str) -> str:
+    """RP-002.1: Strip \\text{...} / \\mathrm{...} / etc. braced content.
+
+    Removes the entire command + its braced human-text content so that
+    "6 \\text{ hours}" -> "6" instead of "6 { hours}" which is unparsable.
+    """
+    return _LATEX_TEXT_COMMANDS.sub("", text)
+
+
+def _strip_delim_residue(text: str) -> str:
+    """RP-002.2: Remove delimiter residue and stray backslash characters.
+
+    After this transform, sequences like ``\\$2880 \\]`` become ``2880 ``
+    instead of leaving unparsable ``$2880 ]`` residue.
+    """
+    out = text
+    out = out.replace("\\(", "").replace("\\)", "")
+    out = out.replace("\\[", "").replace("\\]", "")
+    out = re.sub(r"\$", "", out)
+    out = out.replace("\\left.", "").replace("\\right.", "")
+    out = _STRAY_BACKSLASH.sub("", out)
+    return out
+
+
+def _strip_trailing_units(text: str) -> str:
+    """RP-002.3: Strip known trailing unit words after a number.
+
+    Conservative: only full-word units from the approved list. The loose
+    "strip any trailing letters" variant is rejected (it would change 5x -> 5).
+    """
+    return _UNIT_WORDS.sub(" ", text)
+
+
+def _split_equation(text: str) -> str:
+    """RP-002.4: If the candidate is an equation A = B, keep B.
+
+    The frozen parser cannot evaluate an expression containing '='.
+    Only affects strings that contain '=' and were previously unparsable.
+    """
+    parts = re.split(r"(?<![<>=!])=(?!=)", text)
+    if len(parts) > 1:
+        return parts[-1].strip()
+    return text
+
+
+def _operator_aliases(text: str) -> str:
+    """RP-002.5: Map LaTeX operator tokens to ASCII equivalents."""
+    out = text
+    for pat, repl in _LATEX_OPERATOR_ALIASES:
+        out = pat.sub(repl, out)
+    return out
+
+
+def _frac_aliases(text: str) -> str:
+    """RP-002.5: Map \\dfrac/\\tfrac/\\cfrac -> \\frac."""
+    return _FRAC_ALIAS.sub(r"\\frac", text)
+
+
+def _unescape_braces(text: str) -> str:
+    """RP-002.5: Unescape \\{ -> (, \\} -> ), \\\\ -> empty."""
+    out = text.replace("\\{", "(").replace("\\}", ")")
+    out = out.replace("\\\\", "")
+    return out
+
+
+def robust_normalize_cascade(text: str):
+    """Yield progressively-normalized candidates (cumulative transforms).
+
+    Each yielded value is the result of applying all transforms up to and
+    including the named step. The first yield is the original text (no
+    transform). Designed for the robustness cascade: only applied when the
+    candidate is initially unparsable.
+    """
+    out = text
+    yield "none", out
+    out = _strip_text_commands(out)
+    yield "text_commands", out
+    out = _strip_delim_residue(out)
+    yield "delim_residue", out
+    out = _operator_aliases(out)
+    yield "operator_aliases", out
+    out = _frac_aliases(out)
+    yield "frac_aliases", out
+    out = _unescape_braces(out)
+    yield "escapes", out
+    out = _strip_trailing_units(out)
+    yield "trailing_units", out
+    out = _split_equation(out)
+    yield "split_equation", out
 
 
 def content_tokens(text: str) -> list[str]:

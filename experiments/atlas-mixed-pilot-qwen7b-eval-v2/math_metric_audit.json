@@ -1,0 +1,592 @@
+{
+  "scope": "math failures on math_eval_v2 (frozen v2 baseline), read-only audit",
+  "n_failed": 54,
+  "n_unparsable": 39,
+  "clusters": {
+    "syntactic_recoverable": {
+      "n": 6,
+      "by_transform": {
+        "text_commands": 3,
+        "delim_residue": 1,
+        "unit_residue": 1,
+        "operator_aliases": 0,
+        "frac_aliases": 0,
+        "escapes": 0,
+        "split_equals": 1,
+        "none": 0
+      }
+    },
+    "extraction_target_gap": {
+      "n": 6
+    },
+    "truncated_incomplete": {
+      "n": 24
+    },
+    "genuine_wrong_answer": {
+      "n": 3
+    }
+  },
+  "records": [
+    {
+      "record_id": "expert_math_000021",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "2880",
+      "candidate": "\\$2880 \\]",
+      "recovered": {
+        "transform": "delim_residue",
+        "method": "number"
+      },
+      "hunter": null,
+      "truncated": false,
+      "cluster": "syntactic_recoverable"
+    },
+    {
+      "record_id": "expert_math_000033",
+      "method": "number",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_000046",
+      "method": "number",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_000221",
+      "method": "unparsable",
+      "correctness": 0.125,
+      "reference": "6",
+      "candidate": "6 \\text{ hours} \\]",
+      "recovered": {
+        "transform": "text_commands",
+        "method": "number"
+      },
+      "hunter": null,
+      "truncated": false,
+      "cluster": "syntactic_recoverable"
+    },
+    {
+      "record_id": "expert_math_000254",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "\\frac{15}{13}",
+      "candidate": "\\frac{C}{13}",
+      "recovered": null,
+      "hunter": null,
+      "truncated": false,
+      "cluster": "genuine_wrong_answer"
+    },
+    {
+      "record_id": "expert_math_000287",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "8\\pi",
+      "candidate": "4 - \\sqrt{\\frac{65}{2}} \\]",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_000328",
+      "method": "number",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_000448",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "30",
+      "candidate": "** The detour will add 15 minutes to the total travel time",
+      "recovered": null,
+      "hunter": null,
+      "truncated": false,
+      "cluster": "genuine_wrong_answer"
+    },
+    {
+      "record_id": "expert_math_000477",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "(0, \\infty)",
+      "candidate": "1}^{\\infty} \\frac{1}{n^2}\\) converges",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_000512",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "8",
+      "candidate": "\\frac{123",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_000514",
+      "method": "number",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_000602",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "[-\\frac{\\pi}{2}, \\frac{\\pi}{2}]",
+      "candidate": "[0, \\pi/2]",
+      "recovered": null,
+      "hunter": null,
+      "truncated": false,
+      "cluster": "genuine_wrong_answer"
+    },
+    {
+      "record_id": "expert_math_000706",
+      "method": "number",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_000708",
+      "method": "number",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_000732",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "0",
+      "candidate": "\\frac{2(-3",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_000764",
+      "method": "unparsable",
+      "correctness": 0.0625,
+      "reference": "5",
+      "candidate": "** Max dropped 5 more stones than Maya",
+      "recovered": null,
+      "hunter": {
+        "transform": "none",
+        "source": "5 \\).",
+        "method": "number"
+      },
+      "truncated": false,
+      "cluster": "extraction_target_gap"
+    },
+    {
+      "record_id": "expert_math_000788",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "9",
+      "candidate": "\\frac{17 - \\sqrt{505}}{6}\\). We need to check which of these solutions satisfy \\(x > 1\\)",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_000831",
+      "method": "numeric_sampling",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_000849",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "2\\sqrt{11}",
+      "candidate": "\\sqrt",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_000900",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "(-3, 0)",
+      "candidate": "\\frac{",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_000989",
+      "method": "unparsable",
+      "correctness": 0.0455,
+      "reference": "7",
+      "candidate": "Benjamin can fill 7 boxes with the eggs from his ducks",
+      "recovered": null,
+      "hunter": {
+        "transform": "none",
+        "source": "7",
+        "method": "number"
+      },
+      "truncated": false,
+      "cluster": "extraction_target_gap"
+    },
+    {
+      "record_id": "expert_math_001000",
+      "method": "numeric_sampling",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_001177",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "100",
+      "candidate": "f\\left(\\frac{x}{5}\\right)",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_001286",
+      "method": "number",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_001305",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "49",
+      "candidate": "\\begin{pmatrix}",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_001535",
+      "method": "number",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_001600",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "0",
+      "candidate": "e^2 \\implies \\ln(8) \\approx 2.079 \\neq e^2 \\approx 7.389",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_001779",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "27",
+      "candidate": "4 (\\mathbf{v} \\cdot \\mathbf{w}) + 3 (\\mathbf{v}",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_001783",
+      "method": "numeric_sampling",
+      "correctness": 0.125,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_001802",
+      "method": "unparsable",
+      "correctness": 0.0333,
+      "reference": "\\sqrt{3}",
+      "candidate": "\\frac{1}{\\sqrt{3}} \\), the maximum value of \\( |x| + |y| + |z| \\) is indeed \\( \\sqrt{3}",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_001907",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "18",
+      "candidate": "17 \\text{ days}\\) to reach 17 feet",
+      "recovered": null,
+      "hunter": {
+        "transform": "none",
+        "source": "18",
+        "method": "number"
+      },
+      "truncated": false,
+      "cluster": "extraction_target_gap"
+    },
+    {
+      "record_id": "expert_math_001920",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "6561",
+      "candidate": "from the first step as the base for the next exponentiation**: Calculate \\(81^2\\)",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_001951",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "1, \\frac{-1 + \\sqrt{5}}{2}, \\frac{-1 - \\sqrt{5}}{2}",
+      "candidate": "0\\) has one real root and two complex conjugate roots. The real root can be found using numerical methods or approximations",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_001969",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "4",
+      "candidate": "\\frac{16}{80 - f}",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_001983",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "3",
+      "candidate": "1 \\) and found they are not solutions. We need to find the exact root numerically or through more advanced methods",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_002074",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "5",
+      "candidate": "from 25:",
+      "recovered": null,
+      "hunter": {
+        "transform": "none",
+        "source": "5",
+        "method": "number"
+      },
+      "truncated": false,
+      "cluster": "extraction_target_gap"
+    },
+    {
+      "record_id": "expert_math_002131",
+      "method": "unparsable",
+      "correctness": 0.125,
+      "reference": "8",
+      "candidate": "8 \\text{ hours} \\]",
+      "recovered": {
+        "transform": "text_commands",
+        "method": "number"
+      },
+      "hunter": null,
+      "truncated": false,
+      "cluster": "syntactic_recoverable"
+    },
+    {
+      "record_id": "expert_math_002179",
+      "method": "unparsable",
+      "correctness": 0.05,
+      "reference": "3",
+      "candidate": "3 \\). Since \\( a > 0 \\), the parabola",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_002203",
+      "method": "number",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_002244",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "36\\%",
+      "candidate": "\\sqrt[3]{2",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_002388",
+      "method": "unparsable",
+      "correctness": 0.1667,
+      "reference": "64",
+      "candidate": "64 \\) inches",
+      "recovered": {
+        "transform": "unit_residue",
+        "method": "number"
+      },
+      "hunter": null,
+      "truncated": false,
+      "cluster": "syntactic_recoverable"
+    },
+    {
+      "record_id": "expert_math_002426",
+      "method": "unparsable",
+      "correctness": 0.1,
+      "reference": "\\frac{404}{81}",
+      "candidate": "\\frac{405}{81} - \\frac{1}{81} = \\frac{404}{81}",
+      "recovered": {
+        "transform": "split_equals",
+        "method": "numeric_sampling"
+      },
+      "hunter": null,
+      "truncated": true,
+      "cluster": "syntactic_recoverable"
+    },
+    {
+      "record_id": "expert_math_002558",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "14",
+      "candidate": "1 \\): There is exactly one way to put each item into its own bin",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_002566",
+      "method": "unparsable",
+      "correctness": 0.1667,
+      "reference": "150",
+      "candidate": "150 \\text{ pages}",
+      "recovered": {
+        "transform": "text_commands",
+        "method": "number"
+      },
+      "hunter": null,
+      "truncated": false,
+      "cluster": "syntactic_recoverable"
+    },
+    {
+      "record_id": "expert_math_002578",
+      "method": "number",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_002660",
+      "method": "numeric_sampling",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_002706",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "8",
+      "candidate": "\\frac{\\text{Sum of x-coordinates of octahed",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_002722",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "75^\\circ",
+      "candidate": "60^\\circ\\), and \\(\\angle BAC\\) is an exterior angle to \\(\\angle EAC\\) in the context of the trapezoid, we can use the fact that the sum of the angles in triangle \\(AEC\\) is \\(180^\\circ\\)",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_002731",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "9",
+      "candidate": "The smallest number that appears in both lists is **",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_002780",
+      "method": "number",
+      "correctness": 0.0,
+      "cluster": "parsed_wrong_or_partial"
+    },
+    {
+      "record_id": "expert_math_002819",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "\\frac{25}{4}",
+      "candidate": "\\frac{20}{4} + \\frac{5",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_002942",
+      "method": "unparsable",
+      "correctness": 0.0,
+      "reference": "[4\\sqrt{2}, 8\\sqrt{2}]",
+      "candidate": "\\frac{2\\pi r^3}{3} \\]",
+      "recovered": null,
+      "hunter": null,
+      "truncated": true,
+      "cluster": "truncated_incomplete"
+    },
+    {
+      "record_id": "expert_math_002981",
+      "method": "unparsable",
+      "correctness": 0.0333,
+      "reference": "204",
+      "candidate": "** After 2 hours, there will be 204 gallons of water left in the tank",
+      "recovered": null,
+      "hunter": {
+        "transform": "text_commands",
+        "source": "204 \\text{ gallons} \\).",
+        "method": "number"
+      },
+      "truncated": false,
+      "cluster": "extraction_target_gap"
+    },
+    {
+      "record_id": "expert_math_002995",
+      "method": "unparsable",
+      "correctness": 0.0417,
+      "reference": "22",
+      "candidate": "There were 22 people exploring the exhibits at the start of Alex's shift",
+      "recovered": null,
+      "hunter": {
+        "transform": "none",
+        "source": "22 \\]",
+        "method": "number"
+      },
+      "truncated": false,
+      "cluster": "extraction_target_gap"
+    }
+  ]
+}

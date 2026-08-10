@@ -1,0 +1,74 @@
+{
+  "experiment": "P8-A",
+  "experiment_id": "atlas-math-small-qwen7b-lora-transfer-v1",
+  "phase": "8",
+  "objective": "Deterministic math training subset for the P8-A (Math -> Code) cross-domain transfer experiment.",
+  "selection": {
+    "method": "sha256(seed:record_id) sorted ascending, first N",
+    "seed": "phase8-transfer-v1",
+    "n_target": 400,
+    "n_selected": 400,
+    "record_id_field": "id",
+    "source_pool": "expert-pilot-6500-v0.1 (expert-math-002)",
+    "pool_size": 3000,
+    "eligible_size": 2882
+  },
+  "eligibility_exclusions": {
+    "reject_reviewed": 18,
+    "math_eval_v1": 100,
+    "code_eval_v1": 0,
+    "tv_eval": 13
+  },
+  "frozen_inputs": {
+    "source_jsonl": "tmp/expert_pilot_6500_records_v0.1.jsonl",
+    "review_jsonl": "review/expert_pilot_6500_review_decisions_v0.1.jsonl",
+    "math_eval_v1": "evaluation/eval_sets/phase6_expansion_v1/math_eval_v1.jsonl",
+    "code_eval_v1": "evaluation/eval_sets/phase6_expansion_v1/code_eval_v1.jsonl",
+    "tv_eval": "output/training_views/math_300m_v0.1/eval.jsonl"
+  },
+  "checksum": {
+    "algorithm": "SHA-256",
+    "raw_file_sha256": "55e15fda53c16a9c10dc6de23e5ead069c97bbb730fb5a43b55bf1c453b6bbc0",
+    "records_sha256": "d31af8214f0573dc8183e173d0379e835bf40a0ab6d0702a7a1d047a647ee9af"
+  },
+  "audit": {
+    "leakage": {
+      "math_eval_v1_overlap": [],
+      "code_eval_v1_overlap": [],
+      "tv_eval_overlap": [],
+      "clean": true
+    },
+    "duplicates": {
+      "duplicate_record_ids": {},
+      "duplicate_original_ids": {}
+    },
+    "distributions": {
+      "difficulty": {
+        "2": 335,
+        "3": 63,
+        "4": 2
+      },
+      "domain": {
+        "mathematics": 400
+      },
+      "expert_tier": {
+        "E2": 400
+      },
+      "license": {
+        "CC-BY-4.0": 400
+      },
+      "review_verdict": {
+        "KEEP": 19,
+        "NONE": 381
+      }
+    },
+    "provenance": {
+      "original_id_present": 400,
+      "original_id_total": 400,
+      "source_id": "expert-math-002"
+    }
+  },
+  "git_commit": "99e88e1",
+  "generated_at": "2026-08-05T00:00:00Z",
+  "note": "Staged under experiments/phase8_transfer/subsets/ only. Frozen datasets, training views, and the QEE engine are NOT modified."
+}

@@ -1,0 +1,166 @@
+{
+  "phase": "7.1",
+  "note": "CORRECTED pre-flight audit; READ-ONLY on sources. M1 rebuilt from the phase7-scale-v1 ordering (Phase 7.1 correction) so M1 ⊂ M2 ⊂ M3. Staged subset copies are audit artifacts under experiments/phase7_scale/ (not frozen views).",
+  "selection": {
+    "seed": "phase7-scale-v1",
+    "method": "sha256(seed:record_id) sorted",
+    "m1_source": "phase7-scale-v1 first 117 (rebuilt)",
+    "m2_m3_eligible": 2882
+  },
+  "eval_exclusions": {
+    "math_eval_v1": [
+      "expert_math_000021",
+      "expert_math_000033",
+      "expert_math_000046",
+      "expert_math_000057",
+      "expert_math_000125",
+      "expert_math_000185",
+      "expert_math_000221",
+      "expert_math_000254",
+      "expert_math_000281",
+      "expert_math_000287",
+      "..."
+    ],
+    "tv_eval": [
+      "expert_math_000125",
+      "expert_math_000281",
+      "expert_math_000831",
+      "expert_math_000900",
+      "expert_math_000961",
+      "expert_math_001421",
+      "expert_math_001505",
+      "expert_math_001802",
+      "expert_math_002168",
+      "expert_math_002660",
+      "expert_math_002701",
+      "expert_math_002953",
+      "expert_math_002995"
+    ]
+  },
+  "nesting": {
+    "M1_in_M2": true,
+    "M1_in_M3": true,
+    "M2_in_M3": true,
+    "M1_not_in_M2_count": 0,
+    "M2_not_in_M3_count": 0
+  },
+  "subsets": {
+    "M1": {
+      "subset": "M1",
+      "n": 117,
+      "category_distribution": {
+        "mathematics": 117
+      },
+      "difficulty_distribution": {
+        "2": 98,
+        "3": 16,
+        "4": 3
+      },
+      "expert_tier_distribution": {
+        "E2": 117
+      },
+      "provenance": {
+        "source_ids": {
+          "expert-math-002": 117
+        },
+        "licenses": {
+          "CC-BY-4.0": 117
+        },
+        "original_id_present": 117,
+        "original_id_total": 117
+      },
+      "duplicates": {
+        "duplicate_record_ids": {},
+        "duplicate_original_ids": {}
+      },
+      "leakage": {
+        "eval_v1_overlap": [],
+        "tv_eval_overlap": [],
+        "clean": true
+      },
+      "checksum": {
+        "records_sha256": "219dbaf20f52a90cb43faf2f6350e5a3efb4b99d13869e97f605dd365ad55678",
+        "raw_file_sha256": "2dad9e241c3fa1684767ba6f88572d697cba9b641454e7a1afa1faf5f854a451"
+      },
+      "staged_path": "/mnt/d/atlas-dataset/experiments/phase7_scale/subsets/M1_math_train.jsonl"
+    },
+    "M2": {
+      "subset": "M2",
+      "n": 500,
+      "category_distribution": {
+        "mathematics": 500
+      },
+      "difficulty_distribution": {
+        "2": 407,
+        "3": 85,
+        "4": 8
+      },
+      "expert_tier_distribution": {
+        "E2": 500
+      },
+      "provenance": {
+        "source_ids": {
+          "expert-math-002": 500
+        },
+        "licenses": {
+          "CC-BY-4.0": 500
+        },
+        "original_id_present": 500,
+        "original_id_total": 500
+      },
+      "duplicates": {
+        "duplicate_record_ids": {},
+        "duplicate_original_ids": {}
+      },
+      "leakage": {
+        "eval_v1_overlap": [],
+        "tv_eval_overlap": [],
+        "clean": true
+      },
+      "checksum": {
+        "records_sha256": "24b5f1e0318b0809560b89f1082db70a0ff4bf506e281e1d738cfbb499bda867",
+        "raw_file_sha256": "ba0f1c84eaeb2f4bc4f06c2793891fffba72e73b91611e22a17d1f4f1e8904cd"
+      },
+      "staged_path": "/mnt/d/atlas-dataset/experiments/phase7_scale/subsets/M2_math_train.jsonl"
+    },
+    "M3": {
+      "subset": "M3",
+      "n": 1000,
+      "category_distribution": {
+        "mathematics": 1000
+      },
+      "difficulty_distribution": {
+        "2": 816,
+        "3": 164,
+        "4": 20
+      },
+      "expert_tier_distribution": {
+        "E2": 1000
+      },
+      "provenance": {
+        "source_ids": {
+          "expert-math-002": 1000
+        },
+        "licenses": {
+          "CC-BY-4.0": 1000
+        },
+        "original_id_present": 1000,
+        "original_id_total": 1000
+      },
+      "duplicates": {
+        "duplicate_record_ids": {},
+        "duplicate_original_ids": {}
+      },
+      "leakage": {
+        "eval_v1_overlap": [],
+        "tv_eval_overlap": [],
+        "clean": true
+      },
+      "checksum": {
+        "records_sha256": "a1b54810602795ca3a332cab47a27e6b6f2d452534eaef2c292ae2b38a3071e6",
+        "raw_file_sha256": "c1bddd4c566da11b9a694fd29bb7d288bf0bd7e6e247a7bf6aae5b07b1dec3af"
+      },
+      "staged_path": "/mnt/d/atlas-dataset/experiments/phase7_scale/subsets/M3_math_train.jsonl"
+    }
+  }
+}

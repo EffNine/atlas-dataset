@@ -1,0 +1,1224 @@
+{
+  "layer": "L3",
+  "audit_tool": "scripts/evaluation_engine/leakage/audit.py",
+  "per_example_file": "/Users/afnanrudy/Github-Projects/atlas-dataset/metadata/evaluation/protocol_v2_validation/per_example_math_eval_v2.jsonl",
+  "eval_file": "/Users/afnanrudy/Github-Projects/atlas-dataset/evaluation/eval_sets/protocol_v2/math_eval_v2.jsonl",
+  "family": "math",
+  "n_records": 100,
+  "n_pass": 100,
+  "n_fail": 0,
+  "leak_pass_rate": 1.0,
+  "fail_closed": true,
+  "policy_lock": {
+    "version": "v1",
+    "family": "math",
+    "system_message_sha256": "784c22463ead24b1d9bcd1e3a8ab77293130c3407958b322cee25cc823a6f22a",
+    "budget_rule": "budget_i = min(4096, max(256, 128 + ceil(1.5 * N_tokens(reference_i))))",
+    "budget_fallback": 1024,
+    "stop_sequence": "<|im_end|>",
+    "template_version": "qwen2.5-chatml-deterministic-v1",
+    "policy_block_sha256": "5305d483cb032106bcb1bb6c658b5a1fccda52d52b58dc6679ebe5e4f3ed53e1"
+  },
+  "records": [
+    {
+      "record_id": "expert_math_000021",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000033",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000046",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000057",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000125",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000185",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000221",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000254",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000281",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000287",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000288",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000328",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000448",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000477",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000512",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000513",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000514",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000524",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000561",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000602",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000706",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000708",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000732",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000764",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000788",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000831",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000849",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000900",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000905",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000937",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000961",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_000989",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001000",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001177",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001199",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001224",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001277",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001286",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001296",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001305",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001362",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001421",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001433",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001452",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001478",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001505",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001519",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001535",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001600",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001712",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001731",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001779",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001783",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001802",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001820",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001839",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001907",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001920",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001951",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001969",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_001983",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002074",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002131",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002137",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002168",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002179",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002203",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002244",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002286",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002346",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002350",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002362",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002371",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002375",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002388",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002413",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002426",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002450",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002558",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002566",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002578",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002598",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002660",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002677",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002689",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002701",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002706",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002722",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002731",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002747",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002775",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002780",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002819",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002844",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002932",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002942",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002953",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002956",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002981",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    },
+    {
+      "record_id": "expert_math_002995",
+      "checks": {
+        "record_id_match": true,
+        "policy_block_match": true,
+        "canonical_answer_sha256_reproducible": true,
+        "prompt_sha256_reproducible": true,
+        "reference_absence": true
+      },
+      "errors": [],
+      "audit_verdict": "pass"
+    }
+  ]
+}

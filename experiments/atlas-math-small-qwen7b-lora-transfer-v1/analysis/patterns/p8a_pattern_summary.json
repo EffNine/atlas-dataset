@@ -1,0 +1,110 @@
+{
+  "n": 100,
+  "category_summary": {
+    "algorithm reasoning": {
+      "n": 10,
+      "baseline_correctness": 0.2667,
+      "post_correctness": 0.4,
+      "delta": 0.1333,
+      "improved": 3,
+      "regressed": 2,
+      "unchanged": 5
+    },
+    "bug fixing": {
+      "n": 48,
+      "baseline_correctness": 0.2408,
+      "post_correctness": 0.2351,
+      "delta": -0.0056,
+      "improved": 12,
+      "regressed": 11,
+      "unchanged": 25
+    },
+    "code review": {
+      "n": 15,
+      "baseline_correctness": 0.1393,
+      "post_correctness": 0.1235,
+      "delta": -0.0157,
+      "improved": 3,
+      "regressed": 5,
+      "unchanged": 7
+    },
+    "debugging": {
+      "n": 20,
+      "baseline_correctness": 0.1762,
+      "post_correctness": 0.1,
+      "delta": -0.0762,
+      "improved": 1,
+      "regressed": 5,
+      "unchanged": 14
+    },
+    "refactoring": {
+      "n": 7,
+      "baseline_correctness": 0.3333,
+      "post_correctness": 0.4586,
+      "delta": 0.1253,
+      "improved": 3,
+      "regressed": 1,
+      "unchanged": 3
+    }
+  },
+  "global": {
+    "candidate_is_patch": {
+      "false": 73,
+      "true": 27
+    },
+    "base_candidate_is_patch": {
+      "false": 63,
+      "true": 37
+    }
+  },
+  "regressions": [
+    "expert_swe_000018",
+    "expert_swe_000029",
+    "expert_swe_000051",
+    "expert_swe_000052",
+    "expert_swe_000054",
+    "expert_swe_000058",
+    "expert_swe_000085",
+    "expert_swe_000091",
+    "expert_swe_000095",
+    "expert_swe_000101",
+    "expert_swe_000114",
+    "expert_swe_000160",
+    "expert_swe_000215",
+    "expert_swe_000224",
+    "expert_swe_000233",
+    "expert_swe_000251",
+    "expert_swe_000266",
+    "expert_swe_000275",
+    "expert_swe_000308",
+    "expert_swe_000336",
+    "expert_swe_000367",
+    "expert_swe_000378",
+    "expert_swe_000441",
+    "expert_swe_000466"
+  ],
+  "improvements": [
+    "expert_swe_000045",
+    "expert_swe_000064",
+    "expert_swe_000120",
+    "expert_swe_000131",
+    "expert_swe_000133",
+    "expert_swe_000166",
+    "expert_swe_000239",
+    "expert_swe_000246",
+    "expert_swe_000287",
+    "expert_swe_000289",
+    "expert_swe_000316",
+    "expert_swe_000321",
+    "expert_swe_000322",
+    "expert_swe_000351",
+    "expert_swe_000362",
+    "expert_swe_000366",
+    "expert_swe_000391",
+    "expert_swe_000394",
+    "expert_swe_000409",
+    "expert_swe_000424",
+    "expert_swe_000456",
+    "expert_swe_000488"
+  ]
+}

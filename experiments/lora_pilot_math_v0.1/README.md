@@ -40,7 +40,7 @@ depend on running this experiment on the CUDA box.
 
 ## Reproducibility
 To rerun:
-1. Use a CUDA Linux/WSL2 environment with RTX 5070.
+1. Use a CUDA Linux environment with RTX 5070.
 2. Install exact package versions into a clean venv.
 3. Verify dataset checksums in `config.json`.
 4. Run baseline evaluation.

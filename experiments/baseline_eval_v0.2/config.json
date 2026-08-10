@@ -1,0 +1,58 @@
+{
+  "experiment_id": "baseline_eval_v0.2",
+  "phase": "5A.3",
+  "objective": "Official pre-LoRA baseline re-evaluated with the QEE v2 correctness engine.",
+  "scope": "baseline inference/evaluation only. No LoRA training. No dataset/view/release modification.",
+  "constraints": [
+    "No model training",
+    "No dataset modification",
+    "No training-view modification",
+    "No release artifact changes",
+    "All outputs under experiments/baseline_eval_v0.2/"
+  ],
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "same_as_v0.1": {
+    "base_model": true,
+    "evaluation_samples": true,
+    "generation_config": true,
+    "dataset_views": true,
+    "hardware": true
+  },
+  "generation": {
+    "max_new_tokens": 256,
+    "sampling": "greedy",
+    "seed": null,
+    "quantization": "4bit_nf4_double_quant",
+    "compute_dtype": "bfloat16"
+  },
+  "training_views": {
+    "root": "/mnt/d/atlas-dataset/output/training_views",
+    "views": [
+      "code_300m_v0.1",
+      "math_300m_v0.1",
+      "aiml_300m_v0.1"
+    ],
+    "read_only": true
+  },
+  "scoring": {
+    "engine": "scripts/evaluation_engine/v2 (QEE v2)",
+    "replaces": "quality_score.py QEE v1 lexical/substring heuristics",
+    "dimensions": [
+      "accuracy",
+      "completeness",
+      "technical_correctness",
+      "clarity",
+      "usefulness",
+      "originality",
+      "relevance"
+    ]
+  },
+  "artifacts": {
+    "config": "/mnt/d/atlas-dataset/experiments/baseline_eval_v0.2/config.json",
+    "baseline_v2": "/mnt/d/atlas-dataset/experiments/baseline_eval_v0.2/baseline_v2.json",
+    "per_example": "/mnt/d/atlas-dataset/experiments/baseline_eval_v0.2/per_example_results.jsonl",
+    "hardware_info": "/mnt/d/atlas-dataset/experiments/baseline_eval_v0.2/hardware_info.json",
+    "comparison_report": "/mnt/d/atlas-dataset/experiments/baseline_eval_v0.2/comparison_report.md"
+  },
+  "generated_at": "2026-08-03T15:09:41.653823+00:00"
+}

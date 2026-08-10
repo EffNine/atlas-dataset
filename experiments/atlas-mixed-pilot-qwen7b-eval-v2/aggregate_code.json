@@ -1,0 +1,51 @@
+{
+  "aggregate": {
+    "family": "code",
+    "evaluated_examples": 99,
+    "total_examples": 99,
+    "correctness": 0.0089,
+    "reasoning_quality": 0.2711,
+    "hallucination_rate": 1.0,
+    "answer_format_consistency": 1.0,
+    "patch_emission_rate": 1.0,
+    "format_distribution": {
+      "patch": 99
+    },
+    "truncation_rate": 0.0303,
+    "stop_reason_counts": {
+      "eos": 96,
+      "max_length": 3
+    },
+    "tokens_mean": 187.55,
+    "tokens_median": 151.0,
+    "budget_fallback_used": 0
+  },
+  "gpol": {
+    "family": "code",
+    "gate": "G-POL",
+    "checks": {
+      "patch_emission_rate_ge_0.90": true,
+      "truncation_rate_le_0.05": true,
+      "majority_stop_is_eos": true,
+      "determinism_spot_check": true
+    },
+    "pass": true,
+    "note": "gate failure -> capability conclusions HOLD; policy covariates reported, never interpreted as capability"
+  },
+  "spot_check": {
+    "family": "code",
+    "sample_size": 3,
+    "all_identical": true,
+    "matches": [
+      true,
+      true,
+      true
+    ],
+    "sample_record_ids": [
+      "expert_swe_000003",
+      "expert_swe_000005",
+      "expert_swe_000009"
+    ],
+    "note": "two greedy generations within one process on a fixed sample"
+  }
+}

@@ -309,7 +309,7 @@ parallelism:
 Fewer workers (2) to stay within 8GB; smaller tasks (256MB) so each worker
 holds one in memory at a time.
 
-### 11.3 Example: dev-pc (16 cores, 30GB RAM)
+### 11.3 Example: devpc (16 cores, 30GB RAM)
 
 ```yaml
 parallelism:

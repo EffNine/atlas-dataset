@@ -1,0 +1,86 @@
+{
+  "experiment_id": "lora_pilot_math_m2prime_v0.1",
+  "phase": "5B.7",
+  "status": "COMPLETED",
+  "pre_training": {
+    "git_commit": "d1fb9310c37d5e119327f3baa45f89cab2d4c5b0",
+    "git_short": "d1fb931",
+    "train_jsonl_sha256": "7dfa81114f4096286415a672830f6ff334cc95066080fd9f5267e86d0e413dda",
+    "approved_train_sha256": "7dfa81114f4096286415a672830f6ff334cc95066080fd9f5267e86d0e413dda",
+    "checksum_match": true,
+    "n_records": 118,
+    "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28"
+  },
+  "config": {
+    "experiment_id": "lora_pilot_math_m2prime_v0.1",
+    "phase": "5B.7",
+    "training_view_id": "math_m2prime_v0.1",
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "quantization": {
+      "load_in_4bit": true,
+      "bnb_4bit_use_double_quant": true,
+      "bnb_4bit_quant_type": "nf4",
+      "bnb_4bit_compute_dtype": "bfloat16"
+    },
+    "lora": {
+      "r": 8,
+      "lora_alpha": 16,
+      "lora_dropout": 0.05,
+      "bias": "none",
+      "task_type": "CAUSAL_LM",
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ]
+    },
+    "training": {
+      "seed": 42,
+      "max_seq_length": 256,
+      "max_steps": 60,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 8,
+      "effective_batch_size": 8,
+      "learning_rate": 0.0002,
+      "weight_decay": 0.01,
+      "lr_scheduler_type": "cosine",
+      "warmup_ratio": 0.03,
+      "optim": "paged_adamw_8bit",
+      "max_grad_norm": 1.0,
+      "bf16": true,
+      "gradient_checkpointing": true
+    }
+  },
+  "comparison_to_m1": {
+    "m1_training_records": 117,
+    "m2prime_training_records": 118,
+    "record_increase": 1,
+    "m2prime_only_record": "expert_math_000761",
+    "hyperparameters_identical": true,
+    "eval_overlap_m1": 0,
+    "eval_overlap_m2prime": 0,
+    "notes": "M2' = M1 + 1 record. Zero eval leakage by construction."
+  },
+  "trainable_parameters": 20185088,
+  "trainable_percent": 0.2643,
+  "training_metrics": {
+    "steps": 60,
+    "examples_consumed": 480,
+    "final_loss": 0.17043,
+    "min_loss": 0.15857,
+    "peak_mem_allocated_mib": 8595.4,
+    "last_mem_allocated_mib": 5556.7,
+    "last_mem_reserved_mib": 8916.0,
+    "throughput_tps_mean": 1038.02,
+    "wall_time_s": 109.453
+  },
+  "files": {
+    "step_metrics": "/home/afnan/workspace/atlas-dataset/experiments/lora_pilot_math_m2prime_v0.1/training_log/step_metrics.csv",
+    "adapter": "/home/afnan/workspace/atlas-dataset/experiments/lora_pilot_math_m2prime_v0.1/checkpoints"
+  },
+  "generated_at": "2026-08-09T02:20:56.366861+00:00"
+}

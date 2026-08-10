@@ -1,0 +1,75 @@
+{
+  "experiment_id": "lora_pilot_math_v0.1",
+  "phase": "5B.2",
+  "status": "COMPLETED",
+  "pre_training": {
+    "git_commit": "d1fb9310c37d5e119327f3baa45f89cab2d4c5b0",
+    "git_short": "d1fb931",
+    "train_jsonl_sha256": "6aecc2a754c1a4aec941a9dbb59136445cf04175a0ae02c158e86acd4e4a4572",
+    "approved_train_sha256": "6aecc2a754c1a4aec941a9dbb59136445cf04175a0ae02c158e86acd4e4a4572",
+    "checksum_match": true,
+    "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28"
+  },
+  "config": {
+    "experiment_id": "lora_pilot_math_v0.1",
+    "phase": "5B.2",
+    "training_view_id": "math_300m_v0.1",
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "quantization": {
+      "load_in_4bit": true,
+      "bnb_4bit_use_double_quant": true,
+      "bnb_4bit_quant_type": "nf4",
+      "bnb_4bit_compute_dtype": "bfloat16"
+    },
+    "lora": {
+      "r": 8,
+      "lora_alpha": 16,
+      "lora_dropout": 0.05,
+      "bias": "none",
+      "task_type": "CAUSAL_LM",
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ]
+    },
+    "training": {
+      "seed": 42,
+      "max_seq_length": 256,
+      "max_steps": 60,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 8,
+      "effective_batch_size": 8,
+      "learning_rate": 0.0002,
+      "weight_decay": 0.01,
+      "lr_scheduler_type": "cosine",
+      "warmup_ratio": 0.03,
+      "optim": "paged_adamw_8bit",
+      "max_grad_norm": 1.0,
+      "bf16": true,
+      "gradient_checkpointing": true
+    }
+  },
+  "trainable_parameters": 20185088,
+  "trainable_percent": 0.2643,
+  "training_metrics": {
+    "steps": 60,
+    "examples_consumed": 480,
+    "final_loss": 0.25298,
+    "min_loss": 0.15809,
+    "peak_mem_allocated_mib": 8624.4,
+    "last_mem_allocated_mib": 5597.3,
+    "last_mem_reserved_mib": 10528.0,
+    "throughput_tps_mean": 1035.34,
+    "wall_time_s": 109.746
+  },
+  "files": {
+    "step_metrics": "/home/afnan/workspace/atlas-dataset/experiments/lora_pilot_math_v0.1/training_log/step_metrics.csv",
+    "adapter": "/home/afnan/workspace/atlas-dataset/experiments/lora_pilot_math_v0.1/checkpoints"
+  },
+  "generated_at": "2026-08-08T02:05:59.838114+00:00"
+}

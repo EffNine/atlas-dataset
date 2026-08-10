@@ -18,7 +18,7 @@ stages were single-threaded:
   machine when a single source dominated the work.
 - Worker counts were hardcoded per script, drifting between stages.
 
-Measured on dev-pc: single-worker classification ran ~120–150 records/sec;
+Measured on devpc: single-worker classification ran ~120–150 records/sec;
 4 workers ~430–500; 8 workers ~600–700. Hardcoded counts meant tuning one
 stage did not propagate anywhere else.
 

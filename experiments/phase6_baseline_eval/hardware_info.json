@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-08-04T13:16:34.999982+00:00",
+  "host": "dev-pc (WSL2 Ubuntu-24.04)",
+  "gpu": {
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 5070",
+    "vram_total_mib": 12226.56,
+    "torch_version": "2.13.0+cu130",
+    "cuda_version": "13.0",
+    "peak_vram_allocated_mib": 6424.02,
+    "peak_vram_reserved_mib": 7318.0
+  },
+  "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+  "venv": ".venv-eval",
+  "packages": {
+    "torch": "2.13.0+cu130",
+    "transformers": "5.14.1",
+    "accelerate": "1.14.0",
+    "bitsandbytes": "0.50.0"
+  }
+}

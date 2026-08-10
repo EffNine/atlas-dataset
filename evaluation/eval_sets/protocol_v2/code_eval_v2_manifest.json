@@ -1,0 +1,48 @@
+{
+  "eval_set_id": "code_eval_v2",
+  "version": "v2",
+  "family": "code",
+  "derived_from": {
+    "eval_set_id": "phase6-code-eval-v1",
+    "version": "v1",
+    "n_records": 100,
+    "dir": "evaluation/eval_sets/phase6_expansion_v1"
+  },
+  "n_records": 99,
+  "n_clean": 99,
+  "n_held": 1,
+  "held_record_ids": [
+    "expert_swe_000375"
+  ],
+  "leak_guard_holds": [
+    {
+      "record_id": "expert_swe_000375",
+      "reason": "[guard] expert_swe_000375: reference fingerprint 'return pd.DataFrame(data' found in prompt"
+    }
+  ],
+  "derivation": {
+    "script": "scripts/evaluation_engine/build_eval_v2.py",
+    "build_version": "v1",
+    "method": "deterministic; canonical_answer byte-equal copy of v1 solution; verified equal to source gold",
+    "canonical_answer_present": 99,
+    "canonical_answer_non_empty": 99,
+    "canonical_answer_verified_equal_solution": 99,
+    "messages_user_only": 99,
+    "leak_guard_pass": 99,
+    "prompt_sha256_recorded": 99
+  },
+  "provenance": {
+    "original_id_present": 99,
+    "record_ids_match_v1": 99,
+    "release": "expert-pilot-6500-v0.1"
+  },
+  "checksum": {
+    "algorithm": "SHA-256",
+    "records": "2623831df432d90dbfec552aa092708c150bed38948ed1fcd8bc60a4ad71edff"
+  },
+  "files": {
+    "eval_jsonl": "evaluation/eval_sets/protocol_v2/code_eval_v2.jsonl",
+    "manifest": "evaluation/eval_sets/protocol_v2/code_eval_v2_manifest.json",
+    "held_jsonl": "evaluation/eval_sets/protocol_v2/code_eval_v2_held.jsonl"
+  }
+}

@@ -15,7 +15,7 @@ All thresholds from `docs/specialist_10k_pilot_extraction_plan_v0.1.md`
 schema conversion, quality gate, provenance, difficulty assignment, and
 E1/E2/E3 classification end-to-end at 6,500-record scale.
 
-## Artifacts (checksum-verified, byte-identical on dev-pc and Mac)
+## Artifacts (checksum-verified, byte-identical on devpc and Mac)
 
 | Artifact | Path | SHA-256 |
 |----------|------|---------|

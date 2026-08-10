@@ -1,0 +1,70 @@
+{
+  "experiment_id": "atlas-math-small-qwen7b-lora-transfer-v1",
+  "phase": "8",
+  "sprint": "P8-A",
+  "direction": "Math -> Code",
+  "research_question": "RQ1: Does math-domain instruction tuning improve code evaluation performance?",
+  "hypothesis": "QLoRA training on the Atlas math domain yields positive cross-domain transfer to the code domain (delta_cross^{M->C} >= +0.05) with improved per-example count exceeding regressed count on code_eval_v1.",
+  "expected_outcome": "Positive / neutral / negative transfer classified per research protocol v1.1 section 8.3; transfer ratio TR_{M->C} when in-domain gain is positive, otherwise N/A (HOLD).",
+  "dataset": {
+    "training_subset": "experiments/phase8_transfer/subsets/P8A_math_train.jsonl",
+    "n_training_records": 400,
+    "train_jsonl_sha256": "55e15fda53c16a9c10dc6de23e5ead069c97bbb730fb5a43b55bf1c453b6bbc0",
+    "train_records_sha256": "d31af8214f0573dc8183e173d0379e835bf40a0ab6d0702a7a1d047a647ee9af",
+    "selection_seed": "phase8-transfer-v1",
+    "selection_method": "ascending sha256(seed:record_id), first 400 eligible math records",
+    "leakage_audit_clean": true,
+    "target_eval_split": "evaluation/eval_sets/phase6_expansion_v1/code_eval_v1.jsonl",
+    "target_eval_n": 100,
+    "target_eval_jsonl_sha256": "37b9c42a9b6aa514f602ad0d90e1d4c9ec243625d6f34774c41066de6fdf6b1b",
+    "target_eval_records_sha256": "8ff09120446b5c87f94b2acde6aefb29255015be0bb8c3d23c05e900457c4c67"
+  },
+  "model": {
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28"
+  },
+  "evaluator": {
+    "engine": "scripts/evaluation_engine/v2",
+    "version": "QEE v2",
+    "commit": "99e88e1345c8e08092e9e63b44013f8f7086f3bb",
+    "commit_short": "99e88e1",
+    "frozen": true,
+    "patches": ["Phase 5A.4 nested-brace extraction", "Phase 6.4 percentage/unit/format"]
+  },
+  "git": {
+    "commit": "99e88e1345c8e08092e9e63b44013f8f7086f3bb",
+    "commit_short": "99e88e1",
+    "parent": "d1fb931",
+    "qee_v2_committed": true
+  },
+  "seed": 42,
+  "approval_status": "APPROVED",
+  "approval_note": "P8-A training + code_eval_v1 evaluation authorized by mission directive 2026-08-05. P8-B is NOT authorized; wait for architecture review.",
+  "training_config": {
+    "quantization": "NF4 4-bit + double quant, bf16 compute",
+    "lora": {"r": 8, "lora_alpha": 16, "lora_dropout": 0.05, "bias": "none"},
+    "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    "optim": "paged_adamw_8bit",
+    "lr": 2e-4,
+    "schedule": "cosine",
+    "warmup_ratio": 0.03,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "max_seq_length": 1024,
+    "max_steps": 60,
+    "weight_decay": 0.01,
+    "max_grad_norm": 1.0,
+    "bf16": true,
+    "gradient_checkpointing": true
+  },
+  "evaluation_scope": "code_eval_v1 ONLY (N=100), frozen QEE v2. In-domain math evaluation is out of scope; transfer ratio TR_{M->C} is reported N/A (HOLD) because delta_in^M cannot be measured without math evaluation.",
+  "baseline": {
+    "experiment": "experiments/phase6_baseline_eval",
+    "same_split": true,
+    "code_correctness": 0.2217,
+    "evaluated_n": 100,
+    "engine": "QEE v2",
+    "note": "Baseline recorded on the exact code_eval_v1 split with the same inference config (greedy, NF4+bf16)."
+  },
+  "generated_at": "2026-08-05T00:00:00Z"
+}

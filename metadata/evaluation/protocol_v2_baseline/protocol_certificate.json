@@ -1,0 +1,141 @@
+{
+  "artifact": "atlas-protocol-v2-readiness-certificate",
+  "certificate_version": "v1",
+  "protocol_version": "v2",
+  "governing_docs": [
+    "docs/research/protocol_v2_transition.md",
+    "docs/research/protocol_v2_validation_report.md",
+    "docs/research/p8_generation_policy.md"
+  ],
+  "template_version": "qwen2.5-chatml-deterministic-v1",
+  "prompt_builder": {
+    "module": "scripts/evaluation_engine/leakage/prompts.py",
+    "content_sha256": "73ca2349cf75e8f4aac3609ccef9c642550f69cb288aee47f355c962fd12839f",
+    "git_tracked": false,
+    "note": "shared module (rule P4); not yet committed in this working tree"
+  },
+  "engine": {
+    "path": "scripts/evaluation_engine/v2",
+    "git_commit": "99e88e1",
+    "git_commit_full": "99e88e1345c8e08092e9e63b44013f8f7086f3bb",
+    "git_tracked": true,
+    "note": "QEE v2 frozen; reference argument supplied from canonical_answer"
+  },
+  "policy_locks": {
+    "math": {
+      "version": "v1",
+      "family": "math",
+      "system_message_sha256": "784c22463ead24b1d9bcd1e3a8ab77293130c3407958b322cee25cc823a6f22a",
+      "budget_rule": "budget_i = min(4096, max(256, 128 + ceil(1.5 * N_tokens(reference_i))))",
+      "budget_fallback": 1024,
+      "stop_sequence": "<|im_end|>",
+      "template_version": "qwen2.5-chatml-deterministic-v1",
+      "policy_block_sha256": "5305d483cb032106bcb1bb6c658b5a1fccda52d52b58dc6679ebe5e4f3ed53e1"
+    },
+    "code": {
+      "version": "v1",
+      "family": "code",
+      "system_message_sha256": "90bc2fe545222861af4f21e3ec01f4104d85995785bc54c7a6c5fef7df1f2629",
+      "budget_rule": "budget_i = min(4096, max(256, 128 + ceil(1.5 * N_tokens(reference_i))))",
+      "budget_fallback": 1024,
+      "stop_sequence": "<|im_end|>",
+      "template_version": "qwen2.5-chatml-deterministic-v1",
+      "policy_block_sha256": "0f82e6039f065fdbb868310596e8411d5391163282a6f7e967522068c41793a7"
+    }
+  },
+  "eval_sets": {
+    "math": {
+      "eval_set_id": "math_eval_v2",
+      "family": "math",
+      "n_clean": 100,
+      "n_held": 0,
+      "held_record_ids": [],
+      "checksum": "16288500568c4dc161beaf55d557709519ab5d41eea0aeddd01c5fc735989056",
+      "manifest_checksum": "16288500568c4dc161beaf55d557709519ab5d41eea0aeddd01c5fc735989056",
+      "checksum_matches_manifest": true,
+      "canonical_answer_present": 100,
+      "canonical_answer_sha256_present": 100,
+      "prompt_sha256_present": 100,
+      "messages_user_only": 100,
+      "manifest": "evaluation/eval_sets/protocol_v2/math_eval_v2_manifest.json",
+      "leak_scan_id": "5aaa2681d48c432e718a9accb0fe22bb704140467f5ae77029755d6adc0fd408",
+      "leak_pass_rate": 1.0,
+      "scan_fail_closed": true
+    },
+    "code": {
+      "eval_set_id": "code_eval_v2",
+      "family": "code",
+      "n_clean": 99,
+      "n_held": 1,
+      "held_record_ids": [
+        "expert_swe_000375"
+      ],
+      "checksum": "2623831df432d90dbfec552aa092708c150bed38948ed1fcd8bc60a4ad71edff",
+      "manifest_checksum": "2623831df432d90dbfec552aa092708c150bed38948ed1fcd8bc60a4ad71edff",
+      "checksum_matches_manifest": true,
+      "canonical_answer_present": 99,
+      "canonical_answer_sha256_present": 99,
+      "prompt_sha256_present": 99,
+      "messages_user_only": 99,
+      "manifest": "evaluation/eval_sets/protocol_v2/code_eval_v2_manifest.json",
+      "leak_scan_id": "e4c23d578af7505e673f40104cd13c367eaeb7ac53a05e0e8480714cba46e0a1",
+      "leak_pass_rate": 1.0,
+      "scan_fail_closed": true
+    }
+  },
+  "leakage_guards": {
+    "L1_static_scan": "PASS",
+    "L1_scan_ids_reproduced_from_validation": true,
+    "L2_runtime_guard": "PASS",
+    "L3_post_hoc_audit": "PASS",
+    "validation_summary_status": "COMPLETED",
+    "guard_controls": {
+      "math": {
+        "leaked_positive_control": {
+          "expert_math_000021": true,
+          "expert_math_000033": true,
+          "expert_math_000046": true
+        },
+        "clean_negative_control": {
+          "expert_math_000021": true,
+          "expert_math_000033": true,
+          "expert_math_000046": true
+        }
+      },
+      "code": {
+        "leaked_positive_control": {
+          "expert_swe_000003": true,
+          "expert_swe_000005": true,
+          "expert_swe_000009": true
+        },
+        "clean_negative_control": {
+          "expert_swe_000003": true,
+          "expert_swe_000005": true,
+          "expert_swe_000009": true
+        }
+      }
+    },
+    "held_fail_closed": {
+      "math": {
+        "n_held": 0,
+        "record_ids": [],
+        "reasons": [],
+        "guard_confirmed_hold": true
+      },
+      "code": {
+        "n_held": 1,
+        "record_ids": [
+          "expert_swe_000375"
+        ],
+        "reasons": [
+          "[guard] expert_swe_000375: reference fingerprint 'return pd.DataFrame(data' found in prompt"
+        ],
+        "guard_confirmed_hold": true
+      }
+    }
+  },
+  "readiness_verdict": "READY",
+  "fail_closed_rule": "any unverifiable item -> HOLD with null metrics; baseline inference may not proceed unless verdict is READY",
+  "issued_at": "2026-08-05T15:33:34.944226+00:00",
+  "certificate_sha256": "a3072bac2de625a91aa39a0c612cd58bf49456c6d8e4815ff6e5f1f5cd0d86a1"
+}

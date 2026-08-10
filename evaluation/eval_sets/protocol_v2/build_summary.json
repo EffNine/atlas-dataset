@@ -1,0 +1,28 @@
+{
+  "math": {
+    "family": "math",
+    "eval_set_id": "math_eval_v2",
+    "n_records": 100,
+    "n_held": 0,
+    "held_record_ids": [],
+    "canonical_answer_present": 100,
+    "messages_user_only": 100,
+    "record_ids_match_v1": 100,
+    "checksum": "16288500568c4dc161beaf55d557709519ab5d41eea0aeddd01c5fc735989056",
+    "manifest": "evaluation/eval_sets/protocol_v2/math_eval_v2_manifest.json"
+  },
+  "code": {
+    "family": "code",
+    "eval_set_id": "code_eval_v2",
+    "n_records": 99,
+    "n_held": 1,
+    "held_record_ids": [
+      "expert_swe_000375"
+    ],
+    "canonical_answer_present": 99,
+    "messages_user_only": 99,
+    "record_ids_match_v1": 99,
+    "checksum": "2623831df432d90dbfec552aa092708c150bed38948ed1fcd8bc60a4ad71edff",
+    "manifest": "evaluation/eval_sets/protocol_v2/code_eval_v2_manifest.json"
+  }
+}
