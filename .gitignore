@@ -81,3 +81,10 @@ metadata/releases/*
 # Intelligence Layer ephemeral artifacts (regenerable per release)
 metadata/intelligence/_tmp/
 metadata/intelligence/unknown_classified_v*.jsonl
+
+# Large model checkpoints (regenerable from training)
+*.safetensors
+experiments/*/checkpoints/
+# Generated evaluation results (large jsonl)
+experiments/*/*/evaluation/**/*_results.jsonl
+experiments/*/*/evaluation/expanded_*/*.jsonl
