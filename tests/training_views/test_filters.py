@@ -6,10 +6,10 @@ from __future__ import annotations
 import pytest
 
 ROOT = pytest.importorskip("pathlib").Path(__file__).resolve().parents[2]
-SCRIPTS = ROOT / "scripts"
+SRC = ROOT / "src"
 import sys
 
-sys.path.insert(0, str(SCRIPTS))
+sys.path.insert(0, str(SRC))
 
 from atlas_training.training_views.filters import LicenseFilter, QualityFilter, DifficultyFilter, DomainFilter, ProvenanceFilter, TrainingViewFilters  # noqa: E402
 

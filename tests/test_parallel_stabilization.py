@@ -146,12 +146,13 @@ def test_load_parallelism_config_get_classification():
 
 
 def test_malformed_config_falls_back(tmp_path: Path):
-    """A missing config must return {} without crashing (both yaml and fallback)."""
+    """A missing config must return defaults without crashing (both yaml and fallback)."""
     ns = _exec_runner()
     ns["CONFIG_PATH"] = tmp_path / "missing.yaml"
     cfg = ns["load_parallelism_config"]()
     assert isinstance(cfg, dict)
-    assert cfg == {}
+    assert "parallelism" in cfg
+    assert "hardware_profiles" in cfg
 
 
 def test_malformed_config_garbage_yaml_falls_back(tmp_path: Path):
