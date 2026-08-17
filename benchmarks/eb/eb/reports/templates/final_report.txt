@@ -1,0 +1,24 @@
+EFFNINE BENCHMARK
+────────────────────────────────
+Model       {model}
+Base        {base_model}
+Version     {benchmark_version}
+Runs        {runs}
+
+EB SCORE
+{eb_score} ± {error_percent}%
+
+────────────────────────────────
+CAPABILITY
+{capabilities}
+
+────────────────────────────────
+STABILITY
+Error              {error_percent}%
+Status             {stability}
+
+────────────────────────────────
+BASELINE
+Base Model         1000
+{model:<20} {eb_score}
+Improvement        {improvement_percent}%

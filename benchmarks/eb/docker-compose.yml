@@ -1,0 +1,7 @@
+services:
+  eb-runner:
+    build: .
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+    command: python -m eb.cli --help

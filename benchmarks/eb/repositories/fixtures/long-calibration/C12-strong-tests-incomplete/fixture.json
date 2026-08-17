@@ -1,0 +1,70 @@
+{
+  "id": "C12-strong-tests-incomplete",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 120.0,
+  "expected_base_state": {
+    "files": ["calculator.py", "tests/test_calculator.py"],
+    "initial_state": "empty_project"
+  },
+  "stages": [
+    {
+      "id": "inspect",
+      "name": "Inspect",
+      "order": 0,
+      "objective": "Understand full requirements",
+      "prompt": "Inspect the repository and read the comprehensive test suite.",
+      "expected_artifacts": [],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "write_tests",
+      "name": "Write Comprehensive Tests",
+      "order": 1,
+      "objective": "Write thorough test suite first",
+      "prompt": "Write comprehensive tests in tests/test_calculator.py covering add, subtract, multiply, divide, and edge cases.",
+      "expected_artifacts": ["tests/test_calculator.py"],
+      "dependencies": ["inspect"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "implement_partial",
+      "name": "Implement Partially",
+      "order": 2,
+      "objective": "Implement only some functions",
+      "prompt": "Implement calculator.py with only add and subtract. Leave multiply and divide unimplemented.",
+      "expected_artifacts": ["calculator.py"],
+      "dependencies": ["write_tests"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "test",
+      "name": "Run Tests",
+      "order": 3,
+      "objective": "Run comprehensive tests — expect failures for missing functions",
+      "prompt": "Run the test suite.",
+      "expected_artifacts": [],
+      "terminal": true,
+      "dependencies": ["implement_partial"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": [
+      {"type": "contains", "value": "passed"}
+    ]
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L3",
+    "capabilities": ["CODE", "TEST"],
+    "calibration_scenario": "C12",
+    "intended_quality": "strong_tests_incomplete_impl",
+    "description": "Strong comprehensive tests exist but implementation is incomplete (missing multiply, divide). Test quality high, completeness/correctness lower. PARTIAL expected."
+  }
+}

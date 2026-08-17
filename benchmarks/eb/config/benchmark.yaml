@@ -1,0 +1,15 @@
+version: "0.1"
+name: "EffNine Benchmark"
+code: "EB"
+reference_score: 1000
+execution_modes:
+  - single
+  - multi
+  - exec
+  - long
+repeated_runs:
+  default: 5
+  report_error_percent: true
+baseline:
+  score: 1000
+  per_model_lineage: true

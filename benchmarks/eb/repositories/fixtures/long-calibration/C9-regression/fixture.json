@@ -1,0 +1,60 @@
+{
+  "id": "C9-regression",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 120.0,
+  "expected_base_state": {
+    "files": ["calculator.py", "tests/test_calculator.py"],
+    "initial_state": "empty_project"
+  },
+  "stages": [
+    {
+      "id": "inspect",
+      "name": "Inspect",
+      "order": 0,
+      "objective": "Read existing tests",
+      "prompt": "Inspect the repository and read the test file.",
+      "expected_artifacts": [],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "implement",
+      "name": "Implement with Regression",
+      "order": 1,
+      "objective": "Implement calculator but break existing behavior",
+      "prompt": "Implement calculator.py. Note: divide should return float only on even divisions, int otherwise.",
+      "expected_artifacts": ["calculator.py"],
+      "dependencies": ["inspect"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "test",
+      "name": "Run Tests",
+      "order": 2,
+      "objective": "Run tests — expect failures from regression",
+      "prompt": "Run the test suite.",
+      "expected_artifacts": [],
+      "terminal": true,
+      "dependencies": ["implement"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": [
+      {"type": "contains", "value": "passed"}
+    ]
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L2",
+    "capabilities": ["CODE", "TEST"],
+    "calibration_scenario": "C9",
+    "intended_quality": "regression_introduced",
+    "description": "Implementation introduces regression (divide returns wrong type for some inputs). Terminal stage FAIL expected. Judge skipped."
+  }
+}

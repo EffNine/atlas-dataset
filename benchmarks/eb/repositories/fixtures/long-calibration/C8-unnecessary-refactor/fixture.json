@@ -1,0 +1,60 @@
+{
+  "id": "C8-unnecessary-refactor",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 120.0,
+  "expected_base_state": {
+    "files": ["calculator.py", "tests/test_calculator.py"],
+    "initial_state": "empty_project"
+  },
+  "stages": [
+    {
+      "id": "inspect",
+      "name": "Inspect",
+      "order": 0,
+      "objective": "Understand requirements",
+      "prompt": "Inspect the repository.",
+      "expected_artifacts": [],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "refactor",
+      "name": "Over-Engineer Implementation",
+      "order": 1,
+      "objective": "Create unnecessarily complex implementation",
+      "prompt": "Implement calculator.py using a class-based factory pattern with dependency injection, even though simple functions would suffice.",
+      "expected_artifacts": ["calculator.py"],
+      "dependencies": ["inspect"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "test",
+      "name": "Run Tests",
+      "order": 2,
+      "objective": "Verify tests pass",
+      "prompt": "Run the test suite.",
+      "expected_artifacts": [],
+      "terminal": true,
+      "dependencies": ["refactor"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": [
+      {"type": "contains", "value": "passed"}
+    ]
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L2",
+    "capabilities": ["CODE", "TEST"],
+    "calibration_scenario": "C8",
+    "intended_quality": "unnecessary_refactor",
+    "description": "All stages succeed but implementation is over-engineered. Correctness high, implementation_quality and regression_safety reduced."
+  }
+}

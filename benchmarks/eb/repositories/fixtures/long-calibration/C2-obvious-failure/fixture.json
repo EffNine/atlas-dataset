@@ -1,0 +1,60 @@
+{
+  "id": "C2-obvious-failure",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 120.0,
+  "expected_base_state": {
+    "files": ["calculator.py", "tests/test_calculator.py"],
+    "initial_state": "empty_project"
+  },
+  "stages": [
+    {
+      "id": "inspect",
+      "name": "Inspect Project",
+      "order": 0,
+      "objective": "Understand requirements",
+      "prompt": "Inspect the repository at /workspace.",
+      "expected_artifacts": [],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "implement",
+      "name": "Implement Calculator",
+      "order": 1,
+      "objective": "Implement calculator module",
+      "prompt": "Implement calculator.py with add, subtract, multiply, divide functions.",
+      "expected_artifacts": ["calculator.py"],
+      "dependencies": ["inspect"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "test",
+      "name": "Run Tests",
+      "order": 2,
+      "objective": "Verify all tests pass",
+      "prompt": "Run the test suite and report results.",
+      "expected_artifacts": [],
+      "terminal": true,
+      "dependencies": ["implement"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": [
+      {"type": "contains", "value": "passed"}
+    ]
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L2",
+    "capabilities": ["CODE", "TEST"],
+    "calibration_scenario": "C2",
+    "intended_quality": "obvious_failure",
+    "description": "Terminal stage fails. Deterministic FAIL expected. Judge must be skipped."
+  }
+}

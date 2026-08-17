@@ -1,0 +1,27 @@
+gateway:
+  provider: conductor
+  base_url_env: EB_JUDGE_BASE_URL
+  api_key_env: EB_JUDGE_API_KEY
+
+routing:
+  mode: auto
+  min_judges: 2
+  preferred_judges: 3
+  diversity: preferred
+  max_judge_disagreement_percent: 15
+
+retry:
+  max_retries: 2
+  timeout_s: 120
+
+# Explicit capability profiles for known models (optional override)
+# Profiles not listed here are derived from gateway metadata + probes.
+profiles:
+  # Example:
+  # "conductor/model-x":
+  #   reasoning: 0.9
+  #   coding: 0.8
+  #   planning: 0.7
+  #   instruction_following: 0.8
+  #   long_context: 0.6
+  #   factual_analysis: 0.7

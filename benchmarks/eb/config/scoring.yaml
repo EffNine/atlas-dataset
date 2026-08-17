@@ -1,0 +1,15 @@
+scoring:
+  reference_score: 1000
+  normalization: base_model_lineage
+  stability:
+    error_percent_formula: "stddev / mean * 100"
+    labels:
+      excellent: "<1%"
+      stable: "1-2%"
+      moderate: "2-5%"
+      high_variance: "5-10%"
+      unstable: ">10%"
+  authority_order:
+    - deterministic
+    - rubric
+    - ai_judge

@@ -1,0 +1,1388 @@
+{
+  "calibration_version": "v1.0",
+  "rubric_version": "8E.1",
+  "judge_model": "auto",
+  "provider": null,
+  "model_version": null,
+  "prompt_version": null,
+  "temperature": 0.0,
+  "evaluation_timestamp": "2026-08-17T11:15:11.620105+00:00",
+  "live_judge": "NOT_AVAILABLE",
+  "overall": {
+    "reference_samples": 1,
+    "judge_samples": 0,
+    "comparable_samples": 0,
+    "mae": null,
+    "agreement_rate": null,
+    "low_agreement_count": 0
+  },
+  "dimension_analysis": {
+    "correctness": {
+      "dimension": "correctness",
+      "sample_count": 0,
+      "mae": null,
+      "agreement_count": 0,
+      "agreement_rate": null
+    },
+    "completeness": {
+      "dimension": "completeness",
+      "sample_count": 0,
+      "mae": null,
+      "agreement_count": 0,
+      "agreement_rate": null
+    },
+    "requirement_adherence": {
+      "dimension": "requirement_adherence",
+      "sample_count": 0,
+      "mae": null,
+      "agreement_count": 0,
+      "agreement_rate": null
+    },
+    "implementation_quality": {
+      "dimension": "implementation_quality",
+      "sample_count": 0,
+      "mae": null,
+      "agreement_count": 0,
+      "agreement_rate": null
+    },
+    "test_quality": {
+      "dimension": "test_quality",
+      "sample_count": 0,
+      "mae": null,
+      "agreement_count": 0,
+      "agreement_rate": null
+    },
+    "regression_safety": {
+      "dimension": "regression_safety",
+      "sample_count": 0,
+      "mae": null,
+      "agreement_count": 0,
+      "agreement_rate": null
+    },
+    "adaptation_quality": {
+      "dimension": "adaptation_quality",
+      "sample_count": 0,
+      "mae": null,
+      "agreement_count": 0,
+      "agreement_rate": null
+    },
+    "final_delivery_quality": {
+      "dimension": "final_delivery_quality",
+      "sample_count": 0,
+      "mae": null,
+      "agreement_count": 0,
+      "agreement_rate": null
+    }
+  },
+  "fixture_analysis": {
+    "C1-obvious-success": {
+      "fixture_id": "C1-obvious-success",
+      "fixture_hash": "70b769ab054ac8e4",
+      "outcome": "PASS",
+      "judge_eligible": true,
+      "reference_available": true,
+      "reference_status": "deterministic_reference",
+      "judge_quality": null,
+      "reference_quality": 0.9625,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": 0.95,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "completeness": {
+          "reference_score": 1.0,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": 1.0,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": 0.9,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": 0.9,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": 1.0,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": 1.0,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": 0.95,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        }
+      },
+      "comparison_status": "NO_JUDGE_OUTPUT",
+      "metadata": {
+        "fixture_id": "C1-obvious-success",
+        "fixture_hash": "70b769ab054ac8e4",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.619995+00:00",
+        "judge_confidence": null
+      }
+    },
+    "C2-obvious-failure": {
+      "fixture_id": "C2-obvious-failure",
+      "fixture_hash": "ec45fd05047b6f83",
+      "outcome": "FAIL",
+      "judge_eligible": false,
+      "reference_available": false,
+      "reference_status": "deterministic_reference",
+      "judge_quality": null,
+      "reference_quality": null,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "completeness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        }
+      },
+      "comparison_status": "NOT_AVAILABLE",
+      "metadata": {
+        "fixture_id": "C2-obvious-failure",
+        "fixture_hash": "ec45fd05047b6f83",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.620022+00:00",
+        "judge_confidence": null
+      }
+    },
+    "C3-partial-impl": {
+      "fixture_id": "C3-partial-impl",
+      "fixture_hash": "6a05ba347a984aa1",
+      "outcome": "PARTIAL",
+      "judge_eligible": true,
+      "reference_available": false,
+      "reference_status": "expert_review_required",
+      "judge_quality": null,
+      "reference_quality": null,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "completeness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        }
+      },
+      "comparison_status": "NOT_AVAILABLE",
+      "metadata": {
+        "fixture_id": "C3-partial-impl",
+        "fixture_hash": "6a05ba347a984aa1",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.620035+00:00",
+        "judge_confidence": null
+      }
+    },
+    "C4-correct-poor-quality": {
+      "fixture_id": "C4-correct-poor-quality",
+      "fixture_hash": "b9f468d55dbca65c",
+      "outcome": "PASS",
+      "judge_eligible": true,
+      "reference_available": false,
+      "reference_status": "expert_review_required",
+      "judge_quality": null,
+      "reference_quality": null,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "completeness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        }
+      },
+      "comparison_status": "NOT_AVAILABLE",
+      "metadata": {
+        "fixture_id": "C4-correct-poor-quality",
+        "fixture_hash": "b9f468d55dbca65c",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.620042+00:00",
+        "judge_confidence": null
+      }
+    },
+    "C5-high-quality": {
+      "fixture_id": "C5-high-quality",
+      "fixture_hash": "fe70218d8a969e98",
+      "outcome": "PASS",
+      "judge_eligible": true,
+      "reference_available": false,
+      "reference_status": "expert_review_required",
+      "judge_quality": null,
+      "reference_quality": null,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "completeness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        }
+      },
+      "comparison_status": "NOT_AVAILABLE",
+      "metadata": {
+        "fixture_id": "C5-high-quality",
+        "fixture_hash": "fe70218d8a969e98",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.620049+00:00",
+        "judge_confidence": null
+      }
+    },
+    "C6-req-change-correct": {
+      "fixture_id": "C6-req-change-correct",
+      "fixture_hash": "66c2f2eb59662f90",
+      "outcome": "PASS",
+      "judge_eligible": true,
+      "reference_available": false,
+      "reference_status": "expert_review_required",
+      "judge_quality": null,
+      "reference_quality": null,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "completeness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        }
+      },
+      "comparison_status": "NOT_AVAILABLE",
+      "metadata": {
+        "fixture_id": "C6-req-change-correct",
+        "fixture_hash": "66c2f2eb59662f90",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.620055+00:00",
+        "judge_confidence": null
+      }
+    },
+    "C7-req-change-ignored": {
+      "fixture_id": "C7-req-change-ignored",
+      "fixture_hash": "706f6f306bad4327",
+      "outcome": "FAIL",
+      "judge_eligible": false,
+      "reference_available": false,
+      "reference_status": "deterministic_reference",
+      "judge_quality": null,
+      "reference_quality": null,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "completeness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_REFERENCE"
+          ]
+        }
+      },
+      "comparison_status": "NOT_AVAILABLE",
+      "metadata": {
+        "fixture_id": "C7-req-change-ignored",
+        "fixture_hash": "706f6f306bad4327",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.620062+00:00",
+        "judge_confidence": null
+      }
+    },
+    "C8-unnecessary-refactor": {
+      "fixture_id": "C8-unnecessary-refactor",
+      "fixture_hash": "c3b6436bc50a310e",
+      "outcome": "PASS",
+      "judge_eligible": true,
+      "reference_available": false,
+      "reference_status": "expert_review_required",
+      "judge_quality": null,
+      "reference_quality": null,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "completeness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        }
+      },
+      "comparison_status": "NOT_AVAILABLE",
+      "metadata": {
+        "fixture_id": "C8-unnecessary-refactor",
+        "fixture_hash": "c3b6436bc50a310e",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.620069+00:00",
+        "judge_confidence": null
+      }
+    },
+    "C9-regression": {
+      "fixture_id": "C9-regression",
+      "fixture_hash": "cb55d1aeb7072e75",
+      "outcome": "FAIL",
+      "judge_eligible": false,
+      "reference_available": false,
+      "reference_status": "deterministic_reference",
+      "judge_quality": null,
+      "reference_quality": null,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "completeness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        }
+      },
+      "comparison_status": "NOT_AVAILABLE",
+      "metadata": {
+        "fixture_id": "C9-regression",
+        "fixture_hash": "cb55d1aeb7072e75",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.620076+00:00",
+        "judge_confidence": null
+      }
+    },
+    "C10-tests-overfit": {
+      "fixture_id": "C10-tests-overfit",
+      "fixture_hash": "50365d81b02500d4",
+      "outcome": "PASS",
+      "judge_eligible": true,
+      "reference_available": false,
+      "reference_status": "expert_review_required",
+      "judge_quality": null,
+      "reference_quality": null,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "completeness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        }
+      },
+      "comparison_status": "NOT_AVAILABLE",
+      "metadata": {
+        "fixture_id": "C10-tests-overfit",
+        "fixture_hash": "50365d81b02500d4",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.620086+00:00",
+        "judge_confidence": null
+      }
+    },
+    "C11-weak-tests": {
+      "fixture_id": "C11-weak-tests",
+      "fixture_hash": "b85fa73b955e66c2",
+      "outcome": "PASS",
+      "judge_eligible": true,
+      "reference_available": false,
+      "reference_status": "expert_review_required",
+      "judge_quality": null,
+      "reference_quality": null,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "completeness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        }
+      },
+      "comparison_status": "NOT_AVAILABLE",
+      "metadata": {
+        "fixture_id": "C11-weak-tests",
+        "fixture_hash": "b85fa73b955e66c2",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.620095+00:00",
+        "judge_confidence": null
+      }
+    },
+    "C12-strong-tests-incomplete": {
+      "fixture_id": "C12-strong-tests-incomplete",
+      "fixture_hash": "7da12b6cfda995c8",
+      "outcome": "PARTIAL",
+      "judge_eligible": true,
+      "reference_available": false,
+      "reference_status": "expert_review_required",
+      "judge_quality": null,
+      "reference_quality": null,
+      "absolute_error": null,
+      "low_agreement": false,
+      "flags": [],
+      "dimension_agreements": {
+        "correctness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "completeness": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "requirement_adherence": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "implementation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "test_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "regression_safety": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "adaptation_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        },
+        "final_delivery_quality": {
+          "reference_score": null,
+          "judge_score": null,
+          "absolute_error": null,
+          "comparison_status": "NOT_AVAILABLE",
+          "confidence": null,
+          "flags": [
+            "NO_JUDGE_SCORE"
+          ]
+        }
+      },
+      "comparison_status": "NOT_AVAILABLE",
+      "metadata": {
+        "fixture_id": "C12-strong-tests-incomplete",
+        "fixture_hash": "7da12b6cfda995c8",
+        "calibration_version": "v1.0",
+        "rubric_version": "8E.1",
+        "judge_model": "auto",
+        "provider": null,
+        "model_version": null,
+        "prompt_version": null,
+        "temperature": 0.0,
+        "evaluation_timestamp": "2026-08-17T11:15:11.620100+00:00",
+        "judge_confidence": null
+      }
+    }
+  },
+  "report_hash": "30cd1da714b1e190"
+}

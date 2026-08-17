@@ -1,0 +1,70 @@
+{
+  "id": "C10-tests-overfit",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 120.0,
+  "expected_base_state": {
+    "files": ["calculator.py", "tests/test_calculator.py"],
+    "initial_state": "empty_project"
+  },
+  "stages": [
+    {
+      "id": "inspect",
+      "name": "Inspect",
+      "order": 0,
+      "objective": "Read tests",
+      "prompt": "Inspect the repository.",
+      "expected_artifacts": [],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "implement",
+      "name": "Implement",
+      "order": 1,
+      "objective": "Write minimal implementation",
+      "prompt": "Implement calculator.py with just enough to pass the tests.",
+      "expected_artifacts": ["calculator.py"],
+      "dependencies": ["inspect"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "manipulate_tests",
+      "name": "Manipulate Tests",
+      "order": 2,
+      "objective": "Modify tests to always pass",
+      "prompt": "Modify the test file to remove strict assertions and add tests that always pass.",
+      "expected_artifacts": ["tests/test_calculator.py"],
+      "dependencies": ["implement"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "test",
+      "name": "Run Tests",
+      "order": 3,
+      "objective": "All tests should pass (even though they are weak)",
+      "prompt": "Run the test suite.",
+      "expected_artifacts": [],
+      "terminal": true,
+      "dependencies": ["manipulate_tests"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": [
+      {"type": "contains", "value": "passed"}
+    ]
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L2",
+    "capabilities": ["CODE", "TEST"],
+    "calibration_scenario": "C10",
+    "intended_quality": "tests_manipulated_overfit",
+    "description": "Tests are manipulated to always pass. Deterministic PASS expected but judge should flag test_quality as low."
+  }
+}

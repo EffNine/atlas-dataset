@@ -1,0 +1,70 @@
+{
+  "id": "C11-weak-tests",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 120.0,
+  "expected_base_state": {
+    "files": ["calculator.py", "tests/test_calculator.py"],
+    "initial_state": "empty_project"
+  },
+  "stages": [
+    {
+      "id": "inspect",
+      "name": "Inspect",
+      "order": 0,
+      "objective": "Read existing tests",
+      "prompt": "Inspect the repository.",
+      "expected_artifacts": [],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "implement",
+      "name": "Implement Calculator",
+      "order": 1,
+      "objective": "Implement full calculator",
+      "prompt": "Implement calculator.py with add, subtract, multiply, divide including error handling.",
+      "expected_artifacts": ["calculator.py"],
+      "dependencies": ["inspect"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "write_tests",
+      "name": "Write Weak Tests",
+      "order": 2,
+      "objective": "Write only minimal tests",
+      "prompt": "Write a single test that checks only the add function. Do not test other functions or edge cases.",
+      "expected_artifacts": ["tests/test_calculator.py"],
+      "dependencies": ["implement"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "test",
+      "name": "Run Tests",
+      "order": 3,
+      "objective": "Run the weak test suite",
+      "prompt": "Run the test suite.",
+      "expected_artifacts": [],
+      "terminal": true,
+      "dependencies": ["write_tests"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": [
+      {"type": "contains", "value": "passed"}
+    ]
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L2",
+    "capabilities": ["CODE", "TEST"],
+    "calibration_scenario": "C11",
+    "intended_quality": "correct_implementation_weak_tests",
+    "description": "Implementation is correct but tests are weak (only tests add()). Correctness high, test_quality low."
+  }
+}

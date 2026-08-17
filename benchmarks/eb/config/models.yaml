@@ -1,0 +1,38 @@
+models:
+  - name: atan-v1
+    type: local
+    purpose: software_engineering
+    base_model: Qwen2.5-7B-Instruct
+    backend: transformers
+    model_path: "${EB_LOCAL_MODEL_PATH}"
+    env_var_key: EB_API_KEY
+
+  - name: qwen-local
+    type: local
+    purpose: software_engineering
+    base_model: Qwen2.5-7B-Instruct
+    backend: transformers
+    model_path: "/path/to/qwen2.5-7b-instruct"
+    env_var_key: EB_API_KEY
+
+  - name: qwen-api
+    type: openai_compatible
+    purpose: software_engineering
+    base_model: Qwen2.5-7B-Instruct
+    base_url: "http://localhost:8000/v1"
+    api_key_env: EB_API_KEY
+    timeout_s: 120
+
+  - name: deepseek-api
+    type: openai_compatible
+    purpose: software_engineering
+    base_model: DeepSeek-Coder
+    base_url: "https://api.deepseek.com/v1"
+    api_key_env: DEEPSEEK_API_KEY
+    timeout_s: 120
+
+future_models:
+  - name: Mira-v1
+    type: visual
+    purpose: ui_tui_design
+    status: planned

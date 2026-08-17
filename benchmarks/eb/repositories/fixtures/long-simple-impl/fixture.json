@@ -1,0 +1,78 @@
+{
+  "id": "long-simple-impl",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 120.0,
+  "expected_base_state": {
+    "files": ["calculator.py", "tests/test_calculator.py"],
+    "initial_state": "empty_project"
+  },
+  "stages": [
+    {
+      "id": "inspect",
+      "name": "Inspect Project",
+      "order": 0,
+      "objective": "Understand the existing project structure and requirements",
+      "prompt": "Inspect the repository at /workspace. List all files and read the test file to understand what functionality is expected. Report the project structure and what needs to be implemented.",
+      "expected_artifacts": [],
+      "evaluation_criteria": [
+        {"id": "structure_identified", "type": "contains", "value": "calculator"}
+      ],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "implement",
+      "name": "Implement Calculator",
+      "order": 1,
+      "objective": "Implement the calculator module based on test expectations",
+      "prompt": "Implement the calculator.py module with add, subtract, multiply, and divide functions that pass all tests in tests/test_calculator.py. Write the complete implementation.",
+      "expected_artifacts": ["calculator.py"],
+      "expected_state": {
+        "files_exist": ["calculator.py"],
+        "functions_present": ["add", "subtract", "multiply", "divide"]
+      },
+      "evaluation_criteria": [
+        {"id": "has_implementation", "type": "contains", "value": "def add"},
+        {"id": "has_subtract", "type": "contains", "value": "def subtract"},
+        {"id": "has_multiply", "type": "contains", "value": "def multiply"},
+        {"id": "has_divide", "type": "contains", "value": "def divide"}
+      ],
+      "dependencies": ["inspect"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "test",
+      "name": "Run Tests",
+      "order": 2,
+      "objective": "Verify all tests pass with the implementation",
+      "prompt": "Run the test suite with: python -m pytest tests/ -q. Report the results including pass/fail counts and any failures.",
+      "expected_artifacts": [],
+      "expected_state": {
+        "test_command": "python -m pytest tests/ -q",
+        "expected_exit_code": 0
+      },
+      "evaluation_criteria": [
+        {"id": "tests_passed", "type": "contains", "value": "passed"}
+      ],
+      "terminal": true,
+      "dependencies": ["implement"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": [
+      {"type": "contains", "value": "passed"}
+    ]
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L2",
+    "capabilities": ["CODE", "TEST"],
+    "description": "Simple multi-stage implementation: inspect -> implement -> test"
+  }
+}

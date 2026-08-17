@@ -1,0 +1,57 @@
+{
+  "id": "long-final-delivery",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 180.0,
+  "expected_base_state": {
+    "files": ["service.py", "tests/test_service.py"],
+    "initial_state": "skeleton"
+  },
+  "stages": [
+    {
+      "id": "implement",
+      "name": "Implement Service",
+      "order": 0,
+      "objective": "Implement a basic HTTP service skeleton",
+      "prompt": "Implement service.py with a DataService class that has get_data() returning {'status': 'ok'} and is_healthy() returning True.",
+      "expected_artifacts": ["service.py"],
+      "evaluation_criteria": [
+        {"id": "has_class", "type": "contains", "value": "class DataService"},
+        {"id": "has_get_data", "type": "contains", "value": "def get_data"},
+        {"id": "has_is_healthy", "type": "contains", "value": "def is_healthy"}
+      ],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "test",
+      "name": "Run Tests",
+      "order": 1,
+      "objective": "Verify the implementation passes tests",
+      "prompt": "Run the test suite: python -m pytest tests/ -q. Report the results.",
+      "expected_artifacts": [],
+      "evaluation_criteria": [
+        {"id": "tests_passed", "type": "contains", "value": "passed"}
+      ],
+      "terminal": true,
+      "dependencies": ["implement"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": [
+      {"type": "contains", "value": "passed"},
+      {"type": "contains", "value": "DataService"}
+    ]
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L2",
+    "capabilities": ["CODE", "TEST"],
+    "description": "Final delivery gate: implementation + verification"
+  }
+}

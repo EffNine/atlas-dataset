@@ -1,0 +1,60 @@
+{
+  "id": "C4-correct-poor-quality",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 120.0,
+  "expected_base_state": {
+    "files": ["calculator.py", "tests/test_calculator.py"],
+    "initial_state": "empty_project"
+  },
+  "stages": [
+    {
+      "id": "inspect",
+      "name": "Inspect",
+      "order": 0,
+      "objective": "Read tests",
+      "prompt": "Inspect the repository.",
+      "expected_artifacts": [],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "implement",
+      "name": "Implement",
+      "order": 1,
+      "objective": "Write working but poor-quality implementation",
+      "prompt": "Implement calculator.py. Make it work.",
+      "expected_artifacts": ["calculator.py"],
+      "dependencies": ["inspect"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "test",
+      "name": "Test",
+      "order": 2,
+      "objective": "Run tests",
+      "prompt": "Run tests.",
+      "expected_artifacts": [],
+      "terminal": true,
+      "dependencies": ["implement"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": [
+      {"type": "contains", "value": "passed"}
+    ]
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L2",
+    "capabilities": ["CODE", "TEST"],
+    "calibration_scenario": "C4",
+    "intended_quality": "technically_correct_poor_quality",
+    "description": "All stages succeed but implementation is bare-bones (no error handling, no docstrings). Deterministic PASS expected, but judge should score implementation_quality low."
+  }
+}

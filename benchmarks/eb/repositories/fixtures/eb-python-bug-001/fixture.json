@@ -1,0 +1,21 @@
+{
+  "id": "eb-python-bug-001",
+  "version": "1.0",
+  "language": "python",
+  "framework": "pytest",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "pytest -q",
+  "lint_command": null,
+  "typecheck_command": null,
+  "timeout": 60.0,
+  "expected_base_state": {
+    "files": ["parser.py", "test_parser.py"],
+    "known_bug": "parser.py has an off-by-one error in split_records()"
+  },
+  "metadata": {
+    "description": "Fix the off-by-one bug in the CSV parser's split_records method.",
+    "difficulty": "L2",
+    "category": "debug"
+  }
+}

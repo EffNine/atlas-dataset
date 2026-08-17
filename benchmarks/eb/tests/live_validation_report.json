@@ -1,0 +1,97 @@
+[
+  {
+    "test": "docker_live_8tasks_max2",
+    "backend": "docker",
+    "total_tasks": 8,
+    "max_concurrent": 2,
+    "completed": 8,
+    "failed": 0,
+    "ordering_correct": true,
+    "duration_s": 40.9,
+    "active_sandboxes_after": 0,
+    "remaining_checkpoint_dirs": 0,
+    "all_passed": true
+  },
+  {
+    "test": "peak_concurrency",
+    "max_concurrent_setting": 2,
+    "peak_active_tasks": 2,
+    "duration_s": 30.93,
+    "all_passed": true
+  },
+  {
+    "test": "sandbox_id_uniqueness",
+    "total_tasks": 4,
+    "all_success": true,
+    "no_orphaned_sandboxes": true,
+    "active_after_completion": 0,
+    "all_passed": true
+  },
+  {
+    "test": "workspace_isolation",
+    "total_tasks": 2,
+    "all_success": true,
+    "task_ids": [
+      "EB-ISOL-A",
+      "EB-ISOL-B"
+    ],
+    "statuses": [
+      "SUCCESS",
+      "SUCCESS"
+    ],
+    "all_passed": true
+  },
+  {
+    "test": "checkpoint_isolation",
+    "total_tasks": 3,
+    "remaining_checkpoint_dirs": 0,
+    "task_checkpoint_paths": [
+      "/tmp/eb-live-test-v4uu8wrc/outputs/checkpoints/ckpt-test-001/EB-CKPT-000",
+      "/tmp/eb-live-test-v4uu8wrc/outputs/checkpoints/ckpt-test-001/EB-CKPT-001",
+      "/tmp/eb-live-test-v4uu8wrc/outputs/checkpoints/ckpt-test-001/EB-CKPT-002"
+    ],
+    "all_passed": true
+  },
+  {
+    "test": "failure_isolation",
+    "total_tasks": 4,
+    "all_present": true,
+    "ordering_correct": true,
+    "A_success": true,
+    "B_error": true,
+    "C_success": true,
+    "D_success": true,
+    "duration_s": 20.63,
+    "active_sandboxes_after": 0,
+    "all_passed": true
+  },
+  {
+    "test": "cleanup_on_timeout",
+    "total_tasks": 2,
+    "duration_s": 15.33,
+    "active_sandboxes_after": 0,
+    "all_passed": true
+  },
+  {
+    "test": "empty_batch",
+    "results_count": 0,
+    "all_passed": true
+  },
+  {
+    "test": "invalid_max_concurrent",
+    "errors": [],
+    "all_passed": true
+  },
+  {
+    "test": "backward_compatibility",
+    "total_tasks": 4,
+    "duration_s": 41.0,
+    "all_passed": true
+  },
+  {
+    "test": "opensandbox_live",
+    "skipped": true,
+    "reason": "EB_OPENSANDBOX_BASE_URL and EB_OPENSANDBOX_API_KEY not set",
+    "all_passed": true
+  }
+]

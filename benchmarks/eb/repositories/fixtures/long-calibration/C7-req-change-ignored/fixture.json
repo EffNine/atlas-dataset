@@ -1,0 +1,74 @@
+{
+  "id": "C7-req-change-ignored",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 120.0,
+  "expected_base_state": {
+    "files": ["calculator.py", "tests/test_calculator.py"],
+    "initial_state": "empty_project"
+  },
+  "stages": [
+    {
+      "id": "inspect",
+      "name": "Inspect",
+      "order": 0,
+      "objective": "Understand requirements",
+      "prompt": "Inspect the repository.",
+      "expected_artifacts": [],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "implement_v1",
+      "name": "Implement V1",
+      "order": 1,
+      "objective": "Implement basic calculator",
+      "prompt": "Implement calculator.py with add and subtract.",
+      "expected_artifacts": ["calculator.py"],
+      "dependencies": ["inspect"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "requirement_change",
+      "name": "Adapt to New Requirements",
+      "order": 2,
+      "objective": "Add multiply and divide",
+      "prompt": "Update calculator.py to also include multiply and divide.",
+      "expected_artifacts": ["calculator.py"],
+      "requirement_change": {
+        "from": "calculator with add and subtract only",
+        "to": "calculator with add, subtract, multiply, and divide"
+      },
+      "dependencies": ["implement_v1"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "test",
+      "name": "Run Tests",
+      "order": 3,
+      "objective": "Verify all tests pass",
+      "prompt": "Run the full test suite.",
+      "expected_artifacts": [],
+      "terminal": true,
+      "dependencies": ["requirement_change"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": [
+      {"type": "contains", "value": "passed"}
+    ]
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L3",
+    "capabilities": ["CODE", "TEST"],
+    "calibration_scenario": "C7",
+    "intended_quality": "requirement_change_ignored",
+    "description": "Requirement change present but next stage does not adapt (still has old tests). Deterministic/evidence penalty expected."
+  }
+}

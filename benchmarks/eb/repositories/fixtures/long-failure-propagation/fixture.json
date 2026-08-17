@@ -1,0 +1,61 @@
+{
+  "id": "long-failure-propagation",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 120.0,
+  "expected_base_state": {
+    "files": ["utils.py", "tests/test_utils.py"],
+    "initial_state": "empty"
+  },
+  "stages": [
+    {
+      "id": "implement",
+      "name": "Implement Utils",
+      "order": 0,
+      "objective": "Implement basic utility functions",
+      "prompt": "Implement utils.py with a validate_email function that checks if an email contains '@' and '.'. Return True if valid, False otherwise.",
+      "expected_artifacts": ["utils.py"],
+      "evaluation_criteria": [
+        {"id": "has_validate_email", "type": "contains", "value": "def validate_email"}
+      ],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "intentional_failure",
+      "name": "Intentional Failure Stage",
+      "order": 1,
+      "objective": "This stage is designed to fail",
+      "prompt": "This is a deliberate failure stage. Report that you cannot complete this task because it is intentionally designed to fail.",
+      "expected_artifacts": [],
+      "evaluation_criteria": [],
+      "dependencies": ["implement"],
+      "failure_mode": "abort",
+      "terminal": true
+    },
+    {
+      "id": "should_not_execute",
+      "name": "Should Not Execute",
+      "order": 2,
+      "objective": "This stage should never run",
+      "prompt": "This stage should not execute because the previous stage failed.",
+      "expected_artifacts": [],
+      "evaluation_criteria": [],
+      "dependencies": ["intentional_failure"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": []
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L1",
+    "capabilities": ["CODE"],
+    "description": "Failure propagation: stage 2 fails, stage 3 should not execute"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "id": "C3-partial-impl",
+  "version": "1.0",
+  "language": "python",
+  "framework": "",
+  "image": "python:3.11-slim",
+  "source_path": "source",
+  "test_command": "python -m pytest tests/ -q",
+  "timeout": 120.0,
+  "expected_base_state": {
+    "files": ["calculator.py", "tests/test_calculator.py"],
+    "initial_state": "empty_project"
+  },
+  "stages": [
+    {
+      "id": "inspect",
+      "name": "Inspect Project",
+      "order": 0,
+      "objective": "Understand requirements",
+      "prompt": "Inspect the repository.",
+      "expected_artifacts": [],
+      "dependencies": [],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "implement_add",
+      "name": "Implement Add Only",
+      "order": 1,
+      "objective": "Implement only the add function",
+      "prompt": "Implement only the add function in calculator.py.",
+      "expected_artifacts": ["calculator.py"],
+      "dependencies": ["inspect"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "implement_rest",
+      "name": "Implement Remaining Functions",
+      "order": 2,
+      "objective": "Implement subtract, multiply, divide",
+      "prompt": "Implement subtract, multiply, and divide functions.",
+      "expected_artifacts": ["calculator.py"],
+      "dependencies": ["implement_add"],
+      "failure_mode": "abort"
+    },
+    {
+      "id": "test",
+      "name": "Run Tests",
+      "order": 3,
+      "objective": "Verify all tests pass",
+      "prompt": "Run the test suite.",
+      "expected_artifacts": [],
+      "terminal": true,
+      "dependencies": ["implement_rest"],
+      "failure_mode": "abort"
+    }
+  ],
+  "delivery_criteria": {
+    "checks": [
+      {"type": "contains", "value": "passed"}
+    ]
+  },
+  "metadata": {
+    "category": "engineering",
+    "difficulty": "L2",
+    "capabilities": ["CODE", "TEST"],
+    "calibration_scenario": "C3",
+    "intended_quality": "partial_implementation",
+    "description": "Stage 3 fails (only add implemented, other functions missing). PARTIAL outcome expected."
+  }
+}
