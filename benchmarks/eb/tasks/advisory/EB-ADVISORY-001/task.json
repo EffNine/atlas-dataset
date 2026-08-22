@@ -1,0 +1,31 @@
+{
+  "id": "EB-ADVISORY-001",
+  "version": "1.0",
+  "category": "advisory",
+  "mode": "SINGLE",
+  "difficulty": "L3",
+  "capabilities": [
+    "ADVISORY"
+  ],
+  "tags": [],
+  "prompt": "A team is choosing between SQL and NoSQL for a new social media platform. What factors should they consider? Provide specific recommendations based on the workload characteristics.",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "RUBRIC",
+    "evaluators": [
+      {
+        "type": "rubric",
+        "parameters": {
+          "criteria": [
+            "factor_analysis",
+            "recommendations"
+          ]
+        }
+      }
+    ]
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

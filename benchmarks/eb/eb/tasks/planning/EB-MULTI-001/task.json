@@ -1,0 +1,27 @@
+{
+  "id": "EB-MULTI-001",
+  "version": "1.0",
+  "category": "planning",
+  "mode": "MULTI",
+  "difficulty": "L3",
+  "capabilities": [
+    "PLAN",
+    "ARCH"
+  ],
+  "tags": [],
+  "prompt": "Design a message queue architecture for order processing. Then add real-time inventory updates. Then add support for order cancellation with compensation.",
+  "context": {
+    "turns": 3
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "EB-LONG-004",
+  "version": "1.0",
+  "category": "long_horizon",
+  "mode": "LONG",
+  "difficulty": "L5",
+  "capabilities": [
+    "LONG",
+    "CODE",
+    "TEST",
+    "PLAN"
+  ],
+  "tags": [],
+  "prompt": "Implement an app with initial requirements, then handle a requirement change mid-implementation.",
+  "context": {
+    "repository": "long-requirement-change",
+    "delivery_criteria": {
+      "checks": [
+        {
+          "type": "contains",
+          "value": "reset"
+        }
+      ]
+    }
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "EB-JUDGMENT-001",
+  "version": "1.0",
+  "category": "judgment",
+  "mode": "SINGLE",
+  "difficulty": "L3",
+  "capabilities": [
+    "JUDGMENT"
+  ],
+  "tags": [],
+  "prompt": "Evaluate the following code review comment: This function is too long and should be broken into smaller functions. Is this advice always appropriate? When might it be counterproductive?",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

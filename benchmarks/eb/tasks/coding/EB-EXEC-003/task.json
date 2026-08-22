@@ -1,0 +1,27 @@
+{
+  "id": "EB-EXEC-003",
+  "version": "1.0",
+  "category": "coding",
+  "mode": "EXEC",
+  "difficulty": "L3",
+  "capabilities": [
+    "CODE",
+    "TEST"
+  ],
+  "tags": [],
+  "prompt": "Implement a DataService class in /workspace/source/service.py with get_data() and is_healthy() methods.",
+  "context": {
+    "repository_id": "long-final-delivery"
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

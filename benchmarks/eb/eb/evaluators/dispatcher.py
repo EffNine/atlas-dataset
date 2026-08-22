@@ -64,6 +64,7 @@ class EvaluatorDispatcher:
         from .evidence import EvidenceEvaluator
         from .rubric import RubricEvaluator
         from .judge import JudgeEvaluator
+        from .long_horizon import LongHorizonEvaluator
 
         # Ensure core evaluators are registered
         for ev_cls in (ExactEvaluator, CodeEvaluator, EvidenceEvaluator, RubricEvaluator):
@@ -74,6 +75,10 @@ class EvaluatorDispatcher:
         # Register judge evaluator if not already present
         if "judge" not in self._registry:
             self.register(JudgeEvaluator())
+
+        # Register long_horizon evaluator if not already present
+        if "long_horizon" not in self._registry:
+            self.register(LongHorizonEvaluator())
 
         if evaluator_specs is None:
             # Use explicit evaluator specs from task config if available
@@ -141,6 +146,7 @@ class EvaluatorDispatcher:
         from .evidence import EvidenceEvaluator
         from .rubric import RubricEvaluator
         from .judge import JudgeEvaluator
+        from .long_horizon import LongHorizonEvaluator
 
         known: dict[str, type[Evaluator]] = {
             "exact": ExactEvaluator,
@@ -148,6 +154,7 @@ class EvaluatorDispatcher:
             "evidence": EvidenceEvaluator,
             "rubric": RubricEvaluator,
             "judge": JudgeEvaluator,
+            "long_horizon": LongHorizonEvaluator,
         }
         cls = known.get(name)
         if cls is not None:

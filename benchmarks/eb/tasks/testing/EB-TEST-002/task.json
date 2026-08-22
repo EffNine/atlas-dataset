@@ -1,0 +1,31 @@
+{
+  "id": "EB-TEST-002",
+  "version": "1.0",
+  "category": "testing",
+  "mode": "SINGLE",
+  "difficulty": "L3",
+  "capabilities": [
+    "TEST"
+  ],
+  "tags": [],
+  "prompt": "Describe a testing strategy for a payment processing service. What types of tests would you write and why?",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "RUBRIC",
+    "evaluators": [
+      {
+        "type": "rubric",
+        "parameters": {
+          "criteria": [
+            "strategy_completeness",
+            "justification"
+          ]
+        }
+      }
+    ]
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

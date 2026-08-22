@@ -1,0 +1,32 @@
+{
+  "id": "EB-PLAN-001",
+  "version": "1.0",
+  "category": "planning",
+  "mode": "SINGLE",
+  "difficulty": "L3",
+  "capabilities": [
+    "PLAN"
+  ],
+  "tags": [],
+  "prompt": "You need to migrate a monolithic application to microservices. Describe your migration strategy, including how you would handle data migration, API compatibility, and incremental rollout.",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "RUBRIC",
+    "evaluators": [
+      {
+        "type": "rubric",
+        "parameters": {
+          "criteria": [
+            "strategy",
+            "data_migration",
+            "rollout"
+          ]
+        }
+      }
+    ]
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

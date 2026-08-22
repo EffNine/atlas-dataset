@@ -1,0 +1,24 @@
+{
+  "id": "EB-CODE-001",
+  "version": "1.0",
+  "category": "coding",
+  "mode": "SINGLE",
+  "difficulty": "L1",
+  "capabilities": [
+    "CODE"
+  ],
+  "tags": [],
+  "prompt": "Write a Python function flatten_nested_list that takes a nested list of arbitrary depth and returns a flat list containing all elements.",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

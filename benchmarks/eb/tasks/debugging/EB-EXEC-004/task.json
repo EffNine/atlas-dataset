@@ -1,0 +1,27 @@
+{
+  "id": "EB-EXEC-004",
+  "version": "1.0",
+  "category": "debugging",
+  "mode": "EXEC",
+  "difficulty": "L3",
+  "capabilities": [
+    "DEBUG",
+    "CODE"
+  ],
+  "tags": [],
+  "prompt": "Implement a Counter class in /workspace/source/app.py with increment() and get_value() methods.",
+  "context": {
+    "repository_id": "long-requirement-change"
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

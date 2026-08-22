@@ -1,0 +1,26 @@
+{
+  "id": "EB-MULTI-003",
+  "version": "1.0",
+  "category": "coding",
+  "mode": "MULTI",
+  "difficulty": "L2",
+  "capabilities": [
+    "CODE"
+  ],
+  "tags": [],
+  "prompt": "Write a recursive Fibonacci function. Then optimize with memoization. Then convert to iterative.",
+  "context": {
+    "turns": 3
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

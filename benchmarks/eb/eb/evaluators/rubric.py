@@ -85,11 +85,18 @@ class RubricEvaluator(Evaluator):
         pending_criteria: list[str] = []
 
         for criterion in criteria:
-            crit_name = criterion.get("id", criterion.get("name", "unknown"))
-            crit_weight = float(criterion.get("weight", weights.get(crit_name, 1.0)))
-            crit_score = criterion.get("score")  # Reference/manual score
-            crit_check = criterion.get("check")   # Deterministic check spec
-            crit_requires_judge = bool(criterion.get("requires_judge", False))
+            if isinstance(criterion, str):
+                crit_name = criterion
+                crit_weight = float(weights.get(crit_name, 1.0))
+                crit_score = None
+                crit_check = None
+                crit_requires_judge = False
+            else:
+                crit_name = criterion.get("id", criterion.get("name", "unknown"))
+                crit_weight = float(criterion.get("weight", weights.get(crit_name, 1.0)))
+                crit_score = criterion.get("score")  # Reference/manual score
+                crit_check = criterion.get("check")   # Deterministic check spec
+                crit_requires_judge = bool(criterion.get("requires_judge", False))
 
             total_weight += crit_weight
 

@@ -1,0 +1,31 @@
+{
+  "id": "EB-JUDGMENT-002",
+  "version": "1.0",
+  "category": "judgment",
+  "mode": "SINGLE",
+  "difficulty": "L4",
+  "capabilities": [
+    "JUDGMENT"
+  ],
+  "tags": [],
+  "prompt": "A junior developer submitted a PR that works correctly but uses an unusual pattern. The code is functional but hard to read. How would you handle the review?",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "RUBRIC",
+    "evaluators": [
+      {
+        "type": "rubric",
+        "parameters": {
+          "criteria": [
+            "approach",
+            "communication"
+          ]
+        }
+      }
+    ]
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

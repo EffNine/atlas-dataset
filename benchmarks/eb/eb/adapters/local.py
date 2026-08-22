@@ -114,6 +114,12 @@ class _TransformersBackend:
 
         import torch
 
+        # Move inputs to the same device as the model
+        model_device = next(self._model.parameters()).device
+        if model_device.type == "cuda":
+            input_ids = input_ids.to("cuda")
+            attention_mask = attention_mask.to("cuda")
+
         gen_kwargs: dict[str, Any] = {
             "input_ids": input_ids,
             "attention_mask": attention_mask,
@@ -135,8 +141,25 @@ class _TransformersBackend:
         with torch.no_grad():
             outputs = self._model.generate(**gen_kwargs)
 
-        generated_ids = outputs[0][input_ids.shape[-1]:]
-        text = self._tokenizer.decode(generated_ids, skip_special_tokens=True)
+        # Handle empty generation gracefully — some models (especially with
+        # LoRA wrappers or NF4 quantization) may return zero new tokens and
+        # trigger internal reshape operations that fail on empty tensors.
+        try:
+            generated_ids = outputs[0][input_ids.shape[-1]:]
+        except (IndexError, RuntimeError) as e:
+            # Model returned fewer tokens than input; treat as empty response
+            generated_ids = torch.empty(0, dtype=input_ids.dtype, device=input_ids.device)
+
+        if generated_ids.numel() == 0:
+            return "", {
+                "prompt_tokens": len(input_ids[0]),
+                "completion_tokens": 0,
+            }
+
+        try:
+            text = self._tokenizer.decode(generated_ids, skip_special_tokens=True)
+        except Exception:
+            text = ""
 
         return text, {
             "prompt_tokens": len(input_ids[0]),
@@ -217,7 +240,24 @@ class LocalModelAdapter(ModelAdapter):
         self._ensure_backend()
 
         settings = request.inference_settings or self._inference_settings
-        prompt_text = request.prompt
+
+        # Convert messages to prompt if messages are provided (for multi-turn
+        # EXEC/MULTI tasks). Otherwise use the prompt directly (SINGLE/LONG).
+        if request.messages:
+            try:
+                # Ensure backend is loaded so tokenizer is available
+                self._backend_instance.load()
+                prompt_text = self._backend_instance._tokenizer.apply_chat_template(
+                    request.messages,
+                    tokenize=False,
+                    add_generation_prompt=True,
+                )
+            except Exception as e:
+                raise RuntimeError(
+                    f"Failed to apply chat template for {len(request.messages)} message(s): {e}"
+                ) from e
+        else:
+            prompt_text = request.prompt
 
         start = __import__("time").time()
         try:

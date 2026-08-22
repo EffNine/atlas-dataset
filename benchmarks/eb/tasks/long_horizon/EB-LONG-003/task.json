@@ -1,0 +1,51 @@
+{
+  "id": "EB-LONG-003",
+  "version": "1.0",
+  "category": "long_horizon",
+  "mode": "LONG",
+  "difficulty": "L5",
+  "capabilities": [
+    "LONG",
+    "CODE",
+    "TEST",
+    "PLAN"
+  ],
+  "tags": [],
+  "prompt": "Implement error handling utilities, write tests, then handle failure propagation across multiple modules.",
+  "context": {
+    "repository": "long-failure-propagation",
+    "delivery_criteria": {
+      "checks": [
+        {"type": "contains", "value": "error"}
+      ]
+    },
+    "stages": [
+      {
+        "id": "stage1",
+        "name": "Implement Error Handling",
+        "prompt": "Implement error handling utilities in errors.py with try_error, catch_error functions."
+      },
+      {
+        "id": "stage2",
+        "name": "Write Tests",
+        "prompt": "Write tests for the error handling utilities."
+      },
+      {
+        "id": "stage3",
+        "name": "Handle Failure Propagation",
+        "prompt": "Implement failure propagation across modules - if one module fails, the error should propagate correctly."
+      }
+    ]
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

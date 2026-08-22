@@ -1,0 +1,50 @@
+{
+  "id": "EB-LONG-002",
+  "version": "1.0",
+  "category": "long_horizon",
+  "mode": "LONG",
+  "difficulty": "L4",
+  "capabilities": [
+    "LONG",
+    "CODE",
+    "TEST"
+  ],
+  "tags": [],
+  "prompt": "Implement a data service with health checks, add tests, then handle a requirement change to add caching.",
+  "context": {
+    "repository": "long-final-delivery",
+    "delivery_criteria": {
+      "checks": [
+        {"type": "contains", "value": "ok"}
+      ]
+    },
+    "stages": [
+      {
+        "id": "stage1",
+        "name": "Implement Service",
+        "prompt": "Implement service.py with a DataService class that has get_data() returning {'status': 'ok'} and is_healthy() returning True."
+      },
+      {
+        "id": "stage2",
+        "name": "Write Tests",
+        "prompt": "Write tests in tests/test_service.py that verify both methods."
+      },
+      {
+        "id": "stage3",
+        "name": "Add Caching",
+        "prompt": "Add a simple in-memory cache to DataService.get_data() that caches results for 60 seconds."
+      }
+    ]
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

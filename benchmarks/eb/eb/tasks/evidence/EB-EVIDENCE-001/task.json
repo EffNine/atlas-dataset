@@ -1,0 +1,24 @@
+{
+  "id": "EB-EVIDENCE-001",
+  "version": "1.0",
+  "category": "evidence",
+  "mode": "SINGLE",
+  "difficulty": "L2",
+  "capabilities": [
+    "EVIDENCE"
+  ],
+  "tags": [],
+  "prompt": "Given the following test output from a CI pipeline, identify what failed and provide evidence-based analysis: pytest results: 45 passed, 3 failed, 2 errors. The failures are in test_payment_processing.py and test_user_auth.py.",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

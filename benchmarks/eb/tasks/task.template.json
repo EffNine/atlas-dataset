@@ -1,0 +1,13 @@
+{
+  "id": "EB-ARCH-001",
+  "version": "1.0",
+  "category": "architecture",
+  "mode": "single",
+  "difficulty": "L4",
+  "capabilities": ["system_design", "tradeoff_reasoning"],
+  "prompt": "",
+  "context": {},
+  "evaluation": {"type": "hybrid"},
+  "expected_behavior": [],
+  "metadata": {"source": "original"}
+}

@@ -1,0 +1,33 @@
+{
+  "id": "EB-ARCH-002",
+  "version": "1.0",
+  "category": "architecture",
+  "mode": "SINGLE",
+  "difficulty": "L4",
+  "capabilities": [
+    "ARCH",
+    "PLAN"
+  ],
+  "tags": [],
+  "prompt": "You are designing a microservice architecture for an e-commerce platform. The system must handle 10K RPS during flash sales. Describe your service decomposition, data consistency approach, and failure handling strategy.",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "RUBRIC",
+    "evaluators": [
+      {
+        "type": "rubric",
+        "parameters": {
+          "criteria": [
+            "scalability",
+            "consistency",
+            "failure_handling"
+          ]
+        }
+      }
+    ]
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

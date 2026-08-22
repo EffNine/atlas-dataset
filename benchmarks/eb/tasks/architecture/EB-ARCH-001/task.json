@@ -1,0 +1,32 @@
+{
+  "id": "EB-ARCH-001",
+  "version": "1.0",
+  "category": "architecture",
+  "mode": "SINGLE",
+  "difficulty": "L3",
+  "capabilities": [
+    "ARCH"
+  ],
+  "tags": [],
+  "prompt": "Design a distributed cache invalidation strategy for a multi-region deployment. Describe the trade-offs between consistency and latency.",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "RUBRIC",
+    "evaluators": [
+      {
+        "type": "rubric",
+        "parameters": {
+          "criteria": [
+            "technical_accuracy",
+            "tradeoff_analysis",
+            "clarity"
+          ]
+        }
+      }
+    ]
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

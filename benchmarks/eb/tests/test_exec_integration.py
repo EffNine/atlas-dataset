@@ -42,7 +42,7 @@ def _make_mock_adapter_for_exec(responses: list[str]) -> ModelAdapter:
 
 def _setup_synthetic_fixture(tmp_path: Path) -> str:
     """Create a minimal synthetic repository fixture for testing."""
-    fixtures_root = tmp_path / "repositories"
+    fixtures_root = tmp_path / "repositories" / "fixtures"
     fixture_dir = fixtures_root / "synthetic-fix-001"
     fixture_dir.mkdir(parents=True)
 

@@ -44,7 +44,7 @@ from typing import Any
 from ..adapters.base import ModelAdapter, ModelRequest
 from ..core.checkpoint import CheckpointLoadError, CheckpointV1
 from ..core.schema import StageData, StageResult, Task, TaskResult
-from ..core.types import ExecutionMode
+from ..core.types import EvaluatorStatus, ExecutionMode
 from ..evaluators.dispatcher import EvaluatorDispatcher
 from ..paths import repositories_dir
 from ..sandbox.manager import SandboxManager
@@ -599,9 +599,20 @@ class LongHorizonRunner:
             if sr.score is not None:
                 all_scores.append(sr.score)
 
+        # Invoke LongHorizonEvaluator for the final LONG assessment
+        from ..evaluators.long_horizon import LongHorizonEvaluator
+        lh_eval = LongHorizonEvaluator()
+        lh_result = lh_eval.evaluate(task, result)
+        all_eval_results.append(lh_result)
+
         result.evaluator_results = all_eval_results
 
-        if all_scores:
+        # Use LongHorizonEvaluator score if available, otherwise fall back to stage averages
+        if lh_result.score is not None:
+            result.raw_task_score = lh_result.score
+            if lh_result.status in (EvaluatorStatus.PASS.value, EvaluatorStatus.PARTIAL.value, EvaluatorStatus.FAIL.value):
+                result.long_outcome = lh_result.status
+        elif all_scores:
             result.raw_task_score = sum(all_scores) / len(all_scores)
         elif result.raw_task_score is None:
             result.raw_task_score = 0.0

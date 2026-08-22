@@ -94,6 +94,11 @@ class DockerSandbox(Sandbox):
 
         try:
             docker_client = self._docker_client
+            # Mount workspace as a writable volume so copy_in/exec work
+            # even when rootfs is read-only.  Do NOT expose GPUs: normal
+            # EXEC/LONG tasks are CPU-only sandbox work.
+            workspace_bind = tempfile.mkdtemp(prefix=f"eb-workspace-{sandbox_id}-")
+
             # Build host config from policy
             host_config = docker_client.api.create_host_config(
                 read_only=policy.read_only_root,
@@ -101,14 +106,8 @@ class DockerSandbox(Sandbox):
                 nano_cpus=int(policy.cpu_limit * 1e9) if policy.cpu_limit else None,
                 pids_limit=policy.pids_limit or 256,
                 network_mode="none" if not policy.network_enabled else "default",
+                binds={workspace_bind: {"bind": policy.workspace_path, "mode": "rw"}},
             )
-
-            # IMPORTANT: Never mount Docker socket
-            binds: dict[str, Any] = {}
-
-            # Mount workspace as a volume
-            workspace_bind = tempfile.mkdtemp(prefix=f"eb-workspace-{sandbox_id}-")
-            binds[workspace_bind] = {"bind": policy.workspace_path, "mode": "rw"}
 
             container_obj = docker_client.api.create_container(
                 image=container["image"],
@@ -116,7 +115,7 @@ class DockerSandbox(Sandbox):
                 detach=True,
                 working_dir=policy.workspace_path,
                 host_config=host_config,
-                volumes=binds,
+                volumes=[policy.workspace_path],
                 environment={k: os.environ.get(k, "") for k in policy.allowed_env if os.environ.get(k)},
                 labels={"eb_sandbox": "true"},
             )
@@ -226,19 +225,17 @@ class DockerSandbox(Sandbox):
             raise ValueError(f"Unknown sandbox: {sandbox_id}")
 
         container = self._containers[sandbox_id]
-        policy = container["policy"]
 
         if not source.exists():
             raise FileNotFoundError(f"Source not found: {source}")
 
         try:
-            docker_client = self._docker_client
-            docker_container = docker_client.containers.get(container["docker_id"])
+            docker_container = self._docker_client.containers.get(container["docker_id"])
 
-            # Read source content
+            import io
+            import tarfile
+
             if source.is_dir():
-                import tarfile
-                import io
                 buf = io.BytesIO()
                 with tarfile.open(fileobj=buf, mode="w") as tar:
                     for fpath in sorted(source.rglob("*")):
@@ -246,20 +243,24 @@ class DockerSandbox(Sandbox):
                         tar.add(fpath, arcname=str(arcname))
                 buf.seek(0)
                 tar_data = buf.read()
+                # Ensure destination directory exists inside the container
+                dest_dir = dest_path if dest_path.endswith("/") else dest_path + "/"
+                docker_container.exec_run(["mkdir", "-p", dest_dir], demux=True)
+                docker_container.put_archive(dest_dir, tar_data)
             else:
                 tar_data = source.read_bytes()
-                import io as _io
-                import tarfile as _tf
-                buf = _io.BytesIO()
-                with _tf.open(fileobj=buf, mode="w") as tar:
-                    info = _tf.TarInfo(name=dest_path.split("/")[-1])
+                buf = io.BytesIO()
+                with tarfile.open(fileobj=buf, mode="w") as tar:
+                    info = tarfile.TarInfo(name=dest_path.split("/")[-1])
                     info.size = len(tar_data)
-                    tar.addfile(info, _io.BytesIO(tar_data))
+                    tar.addfile(info, io.BytesIO(tar_data))
                 buf.seek(0)
                 tar_data = buf.read()
-
-            dest_dir = policy.workspace_path + "/" + "/".join(dest_path.split("/")[:-1]) or policy.workspace_path
-            docker_container.put_archive(dest_dir, tar_data)
+                # Always copy into the workspace to avoid read-only rootfs issues
+                dest_dir = dest_path if dest_path.startswith("/") else f"{container['policy'].workspace_path}/{dest_path}"
+                dest_dir = dest_dir.rsplit("/", 1)[0] or "/"
+                docker_container.exec_run(["mkdir", "-p", dest_dir], demux=True)
+                docker_container.put_archive(dest_dir, tar_data)
         except Exception as e:
             raise RuntimeError(f"Failed to copy into sandbox {sandbox_id}: {e}") from e
 

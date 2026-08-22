@@ -1,0 +1,50 @@
+{
+  "id": "EB-LONG-001",
+  "version": "1.0",
+  "category": "long_horizon",
+  "mode": "LONG",
+  "difficulty": "L4",
+  "capabilities": [
+    "LONG",
+    "CODE",
+    "TEST"
+  ],
+  "tags": [],
+  "prompt": "Implement a complete Python utility library with validation functions, then extend with testing, then handle requirement changes.",
+  "context": {
+    "repository": "long-simple-impl",
+    "delivery_criteria": {
+      "checks": [
+        {"type": "contains", "value": "True"}
+      ]
+    },
+    "stages": [
+      {
+        "id": "stage1",
+        "name": "Implement Utils",
+        "prompt": "Implement utils.py with a validate_email function that checks if an email contains '@' and '.'. Return True if valid, False otherwise."
+      },
+      {
+        "id": "stage2",
+        "name": "Write Tests",
+        "prompt": "Write tests in tests/test_utils.py that verify the validate_email function works correctly for valid emails, invalid emails, and edge cases."
+      },
+      {
+        "id": "stage3",
+        "name": "Run Tests",
+        "prompt": "Run the tests and report the results."
+      }
+    ]
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

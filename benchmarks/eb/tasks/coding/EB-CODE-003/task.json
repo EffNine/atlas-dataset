@@ -1,0 +1,32 @@
+{
+  "id": "EB-CODE-003",
+  "version": "1.0",
+  "category": "coding",
+  "mode": "SINGLE",
+  "difficulty": "L3",
+  "capabilities": [
+    "CODE"
+  ],
+  "tags": [],
+  "prompt": "Write a Python decorator retry that retries a function call up to N times with exponential backoff. The decorator should accept max_retries and base_delay parameters.",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [
+      {
+        "type": "code",
+        "parameters": {
+          "expected_patterns": [
+            "retry",
+            "decorator",
+            "exponential"
+          ]
+        }
+      }
+    ]
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

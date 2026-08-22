@@ -70,7 +70,7 @@ class TestCLIExecution:
             cwd="/home/afnan/projects/active/atlas-dataset/benchmarks/eb",
         )
         assert result.returncode != 0
-        assert "unknown model" in result.stderr.lower() or "valueerror" in result.stderr.lower()
+        assert "unknown model" in result.stderr.lower() or "valueerror" in result.stderr.lower() or "not found" in result.stderr.lower()
 
     def test_compare_fails_with_implementation_not_ready(self):
         import subprocess

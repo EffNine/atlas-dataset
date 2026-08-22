@@ -170,6 +170,64 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+# ---------------------------------------------------------------------------
+# Preflight model identity check
+# ---------------------------------------------------------------------------
+
+
+def _preflight_model_identity(model_name: str) -> None:
+    """Verify that the requested model resolves to a valid, loadable model.
+
+    Reads the model config, inspects config.json on disk, attempts a light
+    load via AutoConfig, and prints the verified identity.  Exits on failure
+    so that a benchmark never runs against the wrong model.
+    """
+    from .adapters.factory import get_factory
+    from .paths import config_dir
+    import json as _json
+    import os as _os
+
+    factory = get_factory()
+    config = factory.get_model_config(model_name)
+    if config is None:
+        _error(f"Model {model_name!r} not found in {config_dir() / 'models.yaml'}")
+
+    model_path = config.get("model_path")
+    if not model_path:
+        model_path = _os.environ.get("EB_LOCAL_MODEL_PATH")
+    if not model_path:
+        _error(f"No model_path for {model_name!r} and EB_LOCAL_MODEL_PATH is unset")
+
+    config_json = _os.path.join(model_path, "config.json")
+    if not _os.path.isfile(config_json):
+        _error(f"config.json not found at {config_json}")
+
+    with open(config_json, encoding="utf-8") as f:
+        model_cfg = _json.load(f)
+
+    arch = model_cfg.get("architectures", ["unknown"])
+    mtype = model_cfg.get("model_type", "unknown")
+    dtype = model_cfg.get("dtype", "unknown")
+    quant = model_cfg.get("quantization_config")
+    quant_str = f" quant={quant.get('quant_method')}" if quant else ""
+
+    print(f"EB PREFLIGHT: model={model_name}")
+    print(f"  path         = {model_path}")
+    print(f"  architecture = {arch}")
+    print(f"  model_type   = {mtype}")
+    print(f"  dtype        = {dtype}{quant_str}")
+
+    try:
+        from transformers import AutoConfig
+        AutoConfig.from_pretrained(model_path, trust_remote_code=True)
+        print("  config_load  = OK")
+    except Exception as e:
+        print(f"  config_load  = FAILED: {e}", file=sys.stderr)
+        _error(f"Model config validation failed for {model_name!r}: {e}")
+
+    print()
+
+
 # ---- Command handlers ----
 
 
@@ -194,6 +252,9 @@ def _cmd_run(args: argparse.Namespace) -> None:
         print()
     except Exception as e:
         print(f"EB WARNING: env validation issue: {e}", file=sys.stderr)
+
+    # Preflight: verify model identity before launching the run.
+    _preflight_model_identity(args.model)
 
     orchestrator = RunOrchestrator(
         model_name=args.model,

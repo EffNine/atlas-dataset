@@ -1,0 +1,51 @@
+{
+  "id": "EB-LONG-004",
+  "version": "1.0",
+  "category": "long_horizon",
+  "mode": "LONG",
+  "difficulty": "L5",
+  "capabilities": [
+    "LONG",
+    "CODE",
+    "TEST",
+    "PLAN"
+  ],
+  "tags": [],
+  "prompt": "Implement an app with initial requirements, then handle a requirement change mid-implementation.",
+  "context": {
+    "repository": "long-requirement-change",
+    "delivery_criteria": {
+      "checks": [
+        {"type": "contains", "value": "reset"}
+      ]
+    },
+    "stages": [
+      {
+        "id": "stage1",
+        "name": "Implement Counter",
+        "prompt": "Implement app.py with a Counter class that has increment() and get_value() methods. The counter starts at 0."
+      },
+      {
+        "id": "stage2",
+        "name": "Write Tests",
+        "prompt": "Write tests in tests/test_app.py that verify the Counter works."
+      },
+      {
+        "id": "stage3",
+        "name": "Requirement Change",
+        "prompt": "Add a reset() method to the Counter class that resets the value to 0."
+      }
+    ]
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

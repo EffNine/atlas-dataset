@@ -1,0 +1,27 @@
+{
+  "id": "EB-EXEC-001",
+  "version": "1.0",
+  "category": "debugging",
+  "mode": "EXEC",
+  "difficulty": "L2",
+  "capabilities": [
+    "DEBUG",
+    "CODE"
+  ],
+  "tags": [],
+  "prompt": "Fix the off-by-one bug in the CSV parser split_records method in /workspace/source/parser.py. The bug causes the last field to be dropped when parsing CSV lines.",
+  "context": {
+    "repository": "eb-python-bug-001"
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

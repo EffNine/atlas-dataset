@@ -2,9 +2,9 @@ models:
   - name: atan-v1
     type: local
     purpose: software_engineering
-    base_model: Qwen2.5-7B-Instruct
+    base_model: Qwen3-8B
     backend: transformers
-    model_path: "${EB_LOCAL_MODEL_PATH}"
+    model_path: "/home/afnan/projects/models/atan-v1-merged"
     env_var_key: EB_API_KEY
 
   - name: qwen-local
@@ -12,7 +12,7 @@ models:
     purpose: software_engineering
     base_model: Qwen2.5-7B-Instruct
     backend: transformers
-    model_path: "/path/to/qwen2.5-7b-instruct"
+    model_path: "/home/afnan/projects/models/huggingface/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28"
     env_var_key: EB_API_KEY
 
   - name: qwen-api

@@ -1,0 +1,24 @@
+{
+  "id": "EB-MYENG-001",
+  "version": "1.0",
+  "category": "myeng",
+  "mode": "SINGLE",
+  "difficulty": "L2",
+  "capabilities": [
+    "MYENG"
+  ],
+  "tags": [],
+  "prompt": "What are the key considerations for building software systems in the Malaysian market context? Consider regulatory requirements, language diversity, and infrastructure characteristics.",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

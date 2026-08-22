@@ -134,7 +134,8 @@ class RepositoryFixture:
 
     def compute_hash(self, fixtures_root: Path) -> str:
         """Compute SHA-256 of the fixture source directory contents."""
-        fixture_dir = fixtures_root / self.fixture_id
+        # Fixtures are stored under repositories/fixtures/<fixture_id>/
+        fixture_dir = fixtures_root / "fixtures" / self.fixture_id
         h = hashlib.sha256()
         for fpath in sorted(fixture_dir.rglob("*")):
             if fpath.is_file() and "/.git/" not in str(fpath):
@@ -190,11 +191,11 @@ def _async_run(coro: Any) -> Any:
     # If not actually a coroutine (e.g. mocked), return directly
     if not inspect.iscoroutine(coro) and not asyncio.isfuture(coro):
         return coro
-    try:
-        return asyncio.run(coro)
-    except RuntimeError:
-        loop = asyncio.get_event_loop()
-        return loop.run_until_complete(coro)
+    # asyncio.run() creates and manages its own event loop.
+    # If it fails, the coroutine is consumed and cannot be retried.
+    # We catch the error and re-raise it rather than attempting to
+    # reuse the consumed coroutine with a manual loop.
+    return asyncio.run(coro)
 
 
 class RepositoryRunner(Runner):
@@ -422,7 +423,8 @@ class RepositoryRunner(Runner):
     def _load_fixture(self, repository_id: str) -> RepositoryFixture | None:
         """Load a repository fixture by ID."""
         fixtures_root = repositories_dir()
-        fixture_dir = fixtures_root / repository_id
+        # Fixtures are stored under repositories/fixtures/<fixture_id>/
+        fixture_dir = fixtures_root / "fixtures" / repository_id
         manifest_path = fixture_dir / "fixture.json"
         if not manifest_path.exists():
             return None
@@ -436,7 +438,8 @@ class RepositoryRunner(Runner):
     def _create_workspace_copy(self, fixture: RepositoryFixture) -> Path | None:
         """Create a clean temporary copy of the fixture for this run."""
         fixtures_root = repositories_dir()
-        source_dir = fixtures_root / fixture.fixture_id
+        # Fixtures are stored under repositories/fixtures/<fixture_id>/
+        source_dir = fixtures_root / "fixtures" / fixture.fixture_id
         if not source_dir.exists():
             return None
 

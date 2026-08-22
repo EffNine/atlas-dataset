@@ -1,0 +1,32 @@
+{
+  "id": "EB-PLAN-002",
+  "version": "1.0",
+  "category": "planning",
+  "mode": "SINGLE",
+  "difficulty": "L2",
+  "capabilities": [
+    "PLAN"
+  ],
+  "tags": [],
+  "prompt": "Plan the implementation of a rate limiter for an API gateway. Describe the algorithm, data structures, and deployment considerations.",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "RUBRIC",
+    "evaluators": [
+      {
+        "type": "rubric",
+        "parameters": {
+          "criteria": [
+            "algorithm",
+            "data_structures",
+            "deployment"
+          ]
+        }
+      }
+    ]
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

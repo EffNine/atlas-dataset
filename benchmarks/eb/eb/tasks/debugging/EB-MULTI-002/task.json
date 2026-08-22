@@ -1,0 +1,27 @@
+{
+  "id": "EB-MULTI-002",
+  "version": "1.0",
+  "category": "debugging",
+  "mode": "MULTI",
+  "difficulty": "L3",
+  "capabilities": [
+    "DEBUG",
+    "CODE"
+  ],
+  "tags": [],
+  "prompt": "Identify the bug in a Python factorial function. Then fix it and add unit tests. Then refactor to use memoization.",
+  "context": {
+    "turns": 3
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

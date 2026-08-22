@@ -1,0 +1,24 @@
+{
+  "id": "EB-CODE-002",
+  "version": "1.0",
+  "category": "coding",
+  "mode": "SINGLE",
+  "difficulty": "L2",
+  "capabilities": [
+    "CODE"
+  ],
+  "tags": [],
+  "prompt": "Implement a Python context manager temp_directory that creates a temporary directory, yields its path, and cleans it up on exit. Handle exceptions properly.",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

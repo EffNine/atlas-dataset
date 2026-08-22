@@ -1,0 +1,36 @@
+{
+  "id": "EB-LONG-001",
+  "version": "1.0",
+  "category": "long_horizon",
+  "mode": "LONG",
+  "difficulty": "L4",
+  "capabilities": [
+    "LONG",
+    "CODE",
+    "TEST"
+  ],
+  "tags": [],
+  "prompt": "Implement a complete Python utility library with validation functions, then extend with testing, then handle requirement changes.",
+  "context": {
+    "repository": "long-simple-impl",
+    "delivery_criteria": {
+      "checks": [
+        {
+          "type": "contains",
+          "value": "True"
+        }
+      ]
+    }
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

@@ -57,8 +57,9 @@ class TestRepositoryFixtureSchema:
 
 class TestFixtureHash:
     def test_compute_hash(self, tmp_path: Path):
-        fixture_dir = tmp_path / "hash-test-001"
-        fixture_dir.mkdir()
+        # Fixtures live under repositories/fixtures/<id>/
+        fixture_dir = tmp_path / "fixtures" / "hash-test-001"
+        fixture_dir.mkdir(parents=True)
         (fixture_dir / "fixture.json").write_text(json.dumps({"id": "hash-test-001"}))
         src = fixture_dir / "source"
         src.mkdir()
@@ -71,8 +72,8 @@ class TestFixtureHash:
         assert fixture.fixture_hash == h
 
     def test_hash_is_deterministic(self, tmp_path: Path):
-        fixture_dir = tmp_path / "det-test-001"
-        fixture_dir.mkdir()
+        fixture_dir = tmp_path / "fixtures" / "det-test-001"
+        fixture_dir.mkdir(parents=True)
         (fixture_dir / "fixture.json").write_text(json.dumps({"id": "det-test-001"}))
         src = fixture_dir / "source"
         src.mkdir()
@@ -84,8 +85,8 @@ class TestFixtureHash:
         assert h1 == h2
 
     def test_hash_changes_on_modification(self, tmp_path: Path):
-        fixture_dir = tmp_path / "mod-test-001"
-        fixture_dir.mkdir()
+        fixture_dir = tmp_path / "fixtures" / "mod-test-001"
+        fixture_dir.mkdir(parents=True)
         (fixture_dir / "fixture.json").write_text(json.dumps({"id": "mod-test-001"}))
         src = fixture_dir / "source"
         src.mkdir()
@@ -99,8 +100,8 @@ class TestFixtureHash:
         assert h1 != h2
 
     def test_git_files_excluded(self, tmp_path: Path):
-        fixture_dir = tmp_path / "git-test-001"
-        fixture_dir.mkdir()
+        fixture_dir = tmp_path / "fixtures" / "git-test-001"
+        fixture_dir.mkdir(parents=True)
         (fixture_dir / "fixture.json").write_text(json.dumps({"id": "git-test-001"}))
         src = fixture_dir / "source"
         src.mkdir()

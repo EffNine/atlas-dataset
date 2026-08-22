@@ -1,0 +1,31 @@
+{
+  "id": "EB-DEBUG-002",
+  "version": "1.0",
+  "category": "debugging",
+  "mode": "SINGLE",
+  "difficulty": "L3",
+  "capabilities": [
+    "DEBUG"
+  ],
+  "tags": [],
+  "prompt": "Given this Python code snippet that implements a LRU cache using a dict and a doubly-linked list, identify any race conditions or memory leaks in a multi-threaded context.",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "RUBRIC",
+    "evaluators": [
+      {
+        "type": "rubric",
+        "parameters": {
+          "criteria": [
+            "race_condition_detection",
+            "memory_leak_detection"
+          ]
+        }
+      }
+    ]
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

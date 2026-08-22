@@ -1,0 +1,24 @@
+{
+  "id": "EB-UNDERSTAND-002",
+  "version": "1.0",
+  "category": "understanding",
+  "mode": "SINGLE",
+  "difficulty": "L3",
+  "capabilities": [
+    "UNDERSTAND"
+  ],
+  "tags": [],
+  "prompt": "Describe how consensus algorithms like Raft work in distributed systems. What are the key roles and how does leader election work?",
+  "context": {},
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}

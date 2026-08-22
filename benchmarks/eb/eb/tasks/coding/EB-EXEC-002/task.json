@@ -1,0 +1,26 @@
+{
+  "id": "EB-EXEC-002",
+  "version": "1.0",
+  "category": "coding",
+  "mode": "EXEC",
+  "difficulty": "L2",
+  "capabilities": [
+    "CODE"
+  ],
+  "tags": [],
+  "prompt": "Implement a validate_email function in /workspace/source/utils.py that checks if an email contains @ and . returning True if valid False otherwise.",
+  "context": {
+    "repository": "long-simple-impl"
+  },
+  "evaluation": {
+    "primary_mode": "DETERMINISTIC",
+    "evaluators": [],
+    "aggregation": {
+      "strategy": "single_authoritative"
+    }
+  },
+  "partition": "development",
+  "metadata": {
+    "source": "original"
+  }
+}
