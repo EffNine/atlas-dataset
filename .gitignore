@@ -1,5 +1,12 @@
 # Atlas Dataset - git ignore rules
 
+# Secrets and credentials
+# Global rule: never commit .env files or credential stores.
+.env
+.env.*
+!.env.example
+!.env.example.*
+
 # Large raw artifacts must NOT be committed to git.
 # Track them via Git LFS or external storage instead.
 raw/external/*
@@ -88,3 +95,26 @@ experiments/*/checkpoints/
 # Generated evaluation results (large jsonl)
 experiments/*/*/evaluation/**/*_results.jsonl
 experiments/*/*/evaluation/expanded_*/*.jsonl
+
+# Local AI-agent tool state (never commit)
+.codebro/
+.opencode/
+
+# Additional local virtualenvs
+.venv-nemotron-nano/
+
+# Regenerable caches
+unsloth_compiled_cache/
+metadata/_training_cache/
+*.egg-info/
+
+# Bulk raw acquisition data (17-22GB; manifests and reports live in
+# metadata/ and reports/ and ARE tracked)
+raw/p0/
+raw/p1/
+
+# Local training run artifacts (checkpoints etc.)
+artifacts/
+
+# Pilot training-data slices (bulk JSONL, regenerable from pipeline)
+pilot/
