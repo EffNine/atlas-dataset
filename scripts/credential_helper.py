@@ -44,7 +44,7 @@ def check_credential() -> dict:
     return {
         "configured": bool(token),
         "env_var": _REQUIRED_ENV,
-        "token_prefix": (token[:8] + "..." if len(token) > 8 else "[short]"),
+        "token_present": len(token) > 0,
     }
 
 
@@ -53,4 +53,4 @@ if __name__ == "__main__":
     print(f"Credential check: configured={status['configured']}")
     if not status["configured"]:
         sys.exit(1)
-    print(f"Token present (prefix: {status['token_prefix']})")
+    print("Token present in environment (value masked for security)")

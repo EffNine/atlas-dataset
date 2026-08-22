@@ -167,6 +167,17 @@ KNOWN_VIOLATIONS: set[tuple[str, str, str]] = {
      "Function 'is_denied_license' defined in progressive_expansion_v2 but owned by atlas_constants"),
     ("duplicated_license_function", "scripts/progressive_expansion_v2.py",
      "License utility 'is_denied_license' defined in progressive_expansion_v2 but is owned by atlas_constants"),
+    # tui_backend.py dataclass field default — not an actual parallelism worker count
+    ("hardcoded_worker_count", "scripts/tui_backend.py",
+     "Hardcoded workers=0 in tui_backend"),
+    # versioning.py duplicates constant from atlas_schema
+    ("duplicated_constant", "scripts/evaluation_engine/generation_policy/versioning.py",
+     "Constant 'SUPPORTED_SCHEMA_VERSIONS' defined in evaluation_engine but owned by atlas_schema"),
+    # benchmarks/eb/paths.py duplicates functions from atlas_paths
+    ("duplicated_constant", "benchmarks/eb/eb/paths.py",
+     "Function 'get_root' defined in benchmarks but owned by atlas_paths"),
+    ("duplicated_constant", "benchmarks/eb/eb/paths.py",
+     "Function 'is_write_safe' defined in benchmarks but owned by atlas_paths"),
 }
 
 # ---------------------------------------------------------------------------

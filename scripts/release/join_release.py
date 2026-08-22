@@ -148,8 +148,9 @@ class ReleaseJoiner:
         cat_dir = self.output_dir / category
         cat_dir.mkdir(parents=True, exist_ok=True)
         if self.output_format == "zst":
-            return open_zstd_writer(cat_dir / f"{category}.jsonl.zst")
-        return (cat_dir / f"{category}.jsonl").open("w", encoding="utf-8")
+            # Write to temp file first, then rename for atomicity
+            return open_zstd_writer(cat_dir / f"{category}.jsonl.zst.tmp")
+        return (cat_dir / f"{category}.jsonl.tmp").open("w", encoding="utf-8")
 
     def _write(self, category: str, rec: dict) -> None:
         if category not in CATEGORIES:
@@ -177,6 +178,16 @@ class ReleaseJoiner:
             except Exception:
                 pass
         self.writers.clear()
+
+    def finalize(self) -> None:
+        """Atomically rename temp files to final output."""
+        for cat_dir in self.output_dir.iterdir():
+            if not cat_dir.is_dir():
+                continue
+            for tmp_file in cat_dir.glob("*.tmp"):
+                final_file = tmp_file.with_suffix(tmp_file.suffix.replace(".tmp", ""))
+                if tmp_file.exists():
+                    tmp_file.rename(final_file)
 
     # -- pass 1: approved.jsonl ----------------------------------------
 
@@ -338,6 +349,7 @@ def main(argv: list[str] | None = None) -> int:
     joiner.resolve_from_pilot(pilot_dirs)
     print(f"  joined from pilot : {joiner.joined_from_pilot:,}")
     joiner.close()
+    joiner.finalize()  # Atomically rename temp files to final output
 
     elapsed = time.time() - started
     validation = joiner.validate()

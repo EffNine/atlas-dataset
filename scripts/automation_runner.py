@@ -50,6 +50,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import textwrap
 from datetime import datetime, timezone
@@ -60,6 +61,27 @@ from typing import Any, NoReturn
 _HERE = Path(__file__).resolve().parent
 if str(_HERE) not in sys.path:
     sys.path.insert(0, str(_HERE))
+
+# Pipeline ID validation — prevent path traversal attacks
+_PIPELINE_ID_PATTERN = re.compile(r'^[a-zA-Z0-9_-]{1,128}$')
+
+
+def validate_pipeline_id(pipeline_id: str) -> str:
+    """Validate and sanitize pipeline ID.
+
+    Raises ValueError if the ID contains path traversal characters or is invalid.
+    """
+    if not pipeline_id:
+        raise ValueError("Pipeline ID cannot be empty")
+    if not _PIPELINE_ID_PATTERN.match(pipeline_id):
+        raise ValueError(
+            f"Invalid pipeline ID: '{pipeline_id}'. "
+            "Must be 1-128 alphanumeric characters, underscores, or hyphens."
+        )
+    # Double-check no path separators slipped through
+    if '/' in pipeline_id or '\\' in pipeline_id or '..' in pipeline_id:
+        raise ValueError(f"Pipeline ID contains path traversal characters: {pipeline_id!r}")
+    return pipeline_id
 
 from automation.state_machine import _STATE_INDEX, PipelineState, StateMachine
 from automation.approval_gate import ApprovalGate, ApproverRole
@@ -275,6 +297,11 @@ def cmd_run(args: argparse.Namespace) -> dict[str, Any]:
 
     Returns a dict suitable for JSON serialisation.
     """
+    try:
+        args.pipeline_id = validate_pipeline_id(args.pipeline_id)
+    except ValueError as e:
+        return _error_result(f"Invalid pipeline ID: {e}")
+
     root = Path(args.root) if args.root else _get_root()
     config: dict[str, Any] = {}
     if args.config:
@@ -316,6 +343,11 @@ def cmd_status(args: argparse.Namespace) -> dict[str, Any]:
 
     Reads state machine + approval gate state. Read-only.
     """
+    try:
+        args.pipeline_id = validate_pipeline_id(args.pipeline_id)
+    except ValueError as e:
+        return _error_result(f"Invalid pipeline ID: {e}")
+
     root = Path(args.root) if args.root else _get_root()
     sm = _build_state_machine(args.pipeline_id, root)
     gate = _build_approval_gate(root)
@@ -355,6 +387,11 @@ def cmd_request_approval(args: argparse.Namespace) -> dict[str, Any]:
     Does NOT run agents — only creates the approval request record
     so the pipeline can be blocked at WAITING_HUMAN_APPROVAL.
     """
+    try:
+        args.pipeline_id = validate_pipeline_id(args.pipeline_id)
+    except ValueError as e:
+        return _error_result(f"Invalid pipeline ID: {e}")
+
     root = Path(args.root) if args.root else _get_root()
     orch = _build_orchestrator(args.pipeline_id, root)
     role = ApproverRole(args.role) if args.role else ApproverRole.REVIEWER
@@ -402,6 +439,11 @@ def cmd_approve(args: argparse.Namespace) -> dict[str, Any]:
     If the pipeline is at WAITING_HUMAN_APPROVAL, the runner attempts
     to advance it through to RELEASED via PipelineOrchestrator.approve_release().
     """
+    try:
+        args.pipeline_id = validate_pipeline_id(args.pipeline_id)
+    except ValueError as e:
+        return _error_result(f"Invalid pipeline ID: {e}")
+
     root = Path(args.root) if args.root else _get_root()
     orch = _build_orchestrator(args.pipeline_id, root)
     role = ApproverRole(args.role) if args.role else ApproverRole.REVIEWER
@@ -438,6 +480,11 @@ def cmd_approve(args: argparse.Namespace) -> dict[str, Any]:
 
 def cmd_deny(args: argparse.Namespace) -> dict[str, Any]:
     """Deny a pipeline release."""
+    try:
+        args.pipeline_id = validate_pipeline_id(args.pipeline_id)
+    except ValueError as e:
+        return _error_result(f"Invalid pipeline ID: {e}")
+
     root = Path(args.root) if args.root else _get_root()
     orch = _build_orchestrator(args.pipeline_id, root)
     role = ApproverRole(args.role) if args.role else ApproverRole.REVIEWER
@@ -596,6 +643,56 @@ def cmd_rescind(args: argparse.Namespace) -> dict[str, Any]:
             f"No approval request found for pipeline "
             f"'{args.pipeline_id}'. Nothing to rescind."
         ),
+    }
+
+
+def cmd_cancel(args: argparse.Namespace) -> dict[str, Any]:
+    """Cancel a running pipeline by transitioning to CANCELLED state.
+
+    This is a state-machine operation: it records the cancellation
+    transition and persists it. It does NOT kill running processes —
+    any in-flight worker processes must terminate on their own.
+    """
+    root = Path(args.root) if args.root else _get_root()
+    sm = _build_state_machine(args.pipeline_id, root)
+
+    current = sm.current_state
+    if current == PipelineState.CANCELLED:
+        return {
+            "command": "cancel",
+            "pipeline_id": args.pipeline_id,
+            "cancelled": False,
+            "message": f"Pipeline '{args.pipeline_id}' is already CANCELLED.",
+        }
+
+    if current == PipelineState.RELEASED:
+        return {
+            "command": "cancel",
+            "pipeline_id": args.pipeline_id,
+            "cancelled": False,
+            "message": f"Pipeline '{args.pipeline_id}' has already been released. Cannot cancel.",
+        }
+
+    ok = sm.transition_to(
+        PipelineState.CANCELLED,
+        triggered_by="automation_runner",
+        reason=args.reason or "Pipeline cancelled via CLI",
+    )
+    if not ok:
+        return {
+            "command": "cancel",
+            "pipeline_id": args.pipeline_id,
+            "cancelled": False,
+            "error": sm.error,
+            "message": f"Cannot cancel pipeline '{args.pipeline_id}': {sm.error}",
+        }
+
+    return {
+        "command": "cancel",
+        "pipeline_id": args.pipeline_id,
+        "cancelled": True,
+        "previous_state": current.value,
+        "message": f"Pipeline '{args.pipeline_id}' cancelled. State: CANCELLED.",
     }
 
 
@@ -1150,6 +1247,17 @@ def build_parser() -> argparse.ArgumentParser:
     )
     release_parser.add_argument("--pipeline-id", required=True)
     release_parser.set_defaults(func=cmd_release)
+
+    # ── cancel ───────────────────────────────────────────────────────
+    cancel_parser = subparsers.add_parser(
+        "cancel",
+        help="Cancel a running pipeline (transition to CANCELLED).",
+    )
+    cancel_parser.add_argument("--pipeline-id", required=True,
+                               help="Pipeline identifier to cancel.")
+    cancel_parser.add_argument("--reason", default="",
+                               help="Reason for cancellation.")
+    cancel_parser.set_defaults(func=cmd_cancel)
 
     # ── rescind ──────────────────────────────────────────────────────
     rescind_parser = subparsers.add_parser(

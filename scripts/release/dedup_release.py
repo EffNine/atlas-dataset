@@ -51,6 +51,46 @@ from common import (
 DEDUP_GATE = "lossless-dedup-v1: keep first occurrence per ID; drop only byte-identical (SHA-256 of raw line)"
 
 
+def verify_human_review_gate(root: Path) -> dict[str, Any]:
+    """Verify human review gate against actual evidence.
+
+    Returns dict with:
+      - passed: bool
+      - approved_count: int
+      - pending_count: int
+      - evidence_path: str (path to approved.jsonl if exists)
+      - error: str (if any)
+    """
+    approved_path = root / "review_queue" / "approved.jsonl"
+    result = {
+        "passed": False,
+        "approved_count": 0,
+        "pending_count": 0,
+        "evidence_path": str(approved_path),
+        "error": None,
+    }
+
+    if not approved_path.exists():
+        result["error"] = "approved.jsonl does not exist"
+        return result
+
+    # Count approved records
+    approved_count = 0
+    with open(approved_path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                try:
+                    json.loads(line)
+                    approved_count += 1
+                except json.JSONDecodeError:
+                    pass
+
+    result["approved_count"] = approved_count
+    result["passed"] = approved_count > 0
+    return result
+
+
 def sha256(text: bytes) -> str:
     return hashlib.sha256(text).hexdigest()
 
@@ -204,10 +244,26 @@ def build_manifest(
     previous_manifest: dict[str, Any],
     stats: dict[str, Any],
     total_records: int,
+    root: Path | None = None,
 ) -> dict[str, Any]:
     """Build the RC2 manifest and sign it (sha256-chain-v1)."""
     prev_chain = previous_manifest["release_signature"]["chain_hash"]
     now = utc_now()
+
+    # Verify human review gate against evidence
+    review_gate = {"passed": False, "approved": 0, "rejected": 0, "checked_at": now, "error": "No evidence found"}
+    if root:
+        review_check = verify_human_review_gate(root)
+        if review_check["passed"]:
+            review_gate = {
+                "passed": True,
+                "approved": review_check["approved_count"],
+                "rejected": 0,
+                "checked_at": now,
+                "evidence_path": review_check["evidence_path"],
+            }
+        else:
+            review_gate["error"] = review_check["error"]
 
     manifest: dict[str, Any] = {
         "release_version": release_version,
@@ -238,12 +294,7 @@ def build_manifest(
                 "passed": True,
                 "checked_at": now,
             },
-            "human_review_gate": {
-                "passed": True,
-                "approved": total_records,
-                "rejected": 0,
-                "checked_at": now,
-            },
+            "human_review_gate": review_gate,
             "dedup_gate": {
                 "passed": True,
                 "checked_at": now,

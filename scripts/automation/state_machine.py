@@ -43,6 +43,7 @@ class PipelineState(str, Enum):
     READY_FOR_RELEASE = "READY_FOR_RELEASE"
     RELEASE_REJECTED = "RELEASE_REJECTED"
     RELEASED = "RELEASED"
+    CANCELLED = "CANCELLED"
 
     def __str__(self) -> str:
         return self.value
@@ -62,6 +63,7 @@ STATE_ORDER: list[PipelineState] = [
     PipelineState.READY_FOR_RELEASE,
     PipelineState.RELEASE_REJECTED,
     PipelineState.FAILED,
+    PipelineState.CANCELLED,
     PipelineState.RELEASED,
 ]
 
@@ -72,24 +74,32 @@ _STATE_INDEX = {s: i for i, s in enumerate(STATE_ORDER)}
 VALID_TRANSITIONS: frozenset[tuple[PipelineState, PipelineState]] = frozenset({
     (PipelineState.INGESTED, PipelineState.QUALITY_CHECK),
     (PipelineState.INGESTED, PipelineState.FAILED),
+    (PipelineState.INGESTED, PipelineState.CANCELLED),
     (PipelineState.QUALITY_CHECK, PipelineState.PROVENANCE_CHECK),
     (PipelineState.QUALITY_CHECK, PipelineState.FAILED),
+    (PipelineState.QUALITY_CHECK, PipelineState.CANCELLED),
     (PipelineState.PROVENANCE_CHECK, PipelineState.CONTENT_REVISION),
     (PipelineState.PROVENANCE_CHECK, PipelineState.FAILED),
+    (PipelineState.PROVENANCE_CHECK, PipelineState.CANCELLED),
     (PipelineState.CONTENT_REVISION, PipelineState.VALIDATION),
     (PipelineState.CONTENT_REVISION, PipelineState.FAILED),
+    (PipelineState.CONTENT_REVISION, PipelineState.CANCELLED),
     (PipelineState.VALIDATION, PipelineState.WAITING_HUMAN_APPROVAL),
     (PipelineState.VALIDATION, PipelineState.FAILED),
+    (PipelineState.VALIDATION, PipelineState.CANCELLED),
     (PipelineState.WAITING_HUMAN_APPROVAL, PipelineState.READY_FOR_RELEASE),
     (PipelineState.WAITING_HUMAN_APPROVAL, PipelineState.RELEASE_REJECTED),
     (PipelineState.WAITING_HUMAN_APPROVAL, PipelineState.FAILED),
+    (PipelineState.WAITING_HUMAN_APPROVAL, PipelineState.CANCELLED),
     (PipelineState.READY_FOR_RELEASE, PipelineState.RELEASED),
     (PipelineState.READY_FOR_RELEASE, PipelineState.FAILED),
+    (PipelineState.READY_FOR_RELEASE, PipelineState.CANCELLED),
     (PipelineState.FAILED, PipelineState.INGESTED),
     (PipelineState.FAILED, PipelineState.QUALITY_CHECK),
     (PipelineState.FAILED, PipelineState.PROVENANCE_CHECK),
     (PipelineState.FAILED, PipelineState.CONTENT_REVISION),
     (PipelineState.FAILED, PipelineState.VALIDATION),
+    # Cancellation is terminal — no transitions out
 })
 
 
@@ -309,6 +319,7 @@ class StateMachine:
         return self._current_state in (
             PipelineState.RELEASED,
             PipelineState.RELEASE_REJECTED,
+            PipelineState.CANCELLED,
         )
 
     def is_blocked(self) -> bool:

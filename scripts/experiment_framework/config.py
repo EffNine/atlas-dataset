@@ -29,7 +29,7 @@ EXPERIMENT_NAME_PATTERN = re.compile(
     ])
     + r")-("
     + "|".join([
-        "qwen7b", "llama8b", "deepseek8b", "mistral7b", "gemma7b",
+        "qwen7b", "llama8b", "deepseek8b", "mistral7b", "gemma7b", "nemotron8b",
     ])
     + r")-("
     + "|".join([
@@ -40,7 +40,7 @@ EXPERIMENT_NAME_PATTERN = re.compile(
 
 VALID_FAMILIES: frozenset[str] = frozenset(["math", "code", "aiml", "mixed"])
 VALID_TIERS: frozenset[str] = frozenset(["pilot", "small", "medium", "large", "prod"])
-VALID_TARGETS: frozenset[str] = frozenset(["qwen7b", "llama8b", "deepseek8b", "mistral7b", "gemma7b"])
+VALID_TARGETS: frozenset[str] = frozenset(["qwen7b", "llama8b", "deepseek8b", "mistral7b", "gemma7b", "nemotron8b"])
 VALID_SCOPES: frozenset[str] = frozenset(["base", "lora", "full", "hp", "scale", "transfer", "eval"])
 
 # ---------------------------------------------------------------------------
@@ -342,6 +342,7 @@ class ExperimentConfig:
             "deepseek8b": "deepseek-ai/DeepSeek-Coder-6.7B-Instruct",
             "mistral7b": "mistralai/Mistral-7B-Instruct-v0.3",
             "gemma7b": "google/gemma-2-9b-it",
+            "nemotron8b": "nvidia/Nemotron-Orchestrator-8B",
         }
         expected_model = supported_models.get(self.target)
         if expected_model and self.base_model != expected_model:

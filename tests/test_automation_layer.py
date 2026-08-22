@@ -126,19 +126,20 @@ def test_valid_transition_leaves_no_error():
 
 
 def test_transition_from_states_are_mutually_exclusive():
-    """Each non-terminal state now has FAILED as an additional valid target.
+    """Each non-terminal state now has FAILED and CANCELLED as additional valid targets.
     Forward transitions remain mutually exclusive.
-    WAITING_HUMAN_APPROVAL has 3 targets (READY_FOR_RELEASE, RELEASE_REJECTED, FAILED).
+    WAITING_HUMAN_APPROVAL has 4 targets (READY_FOR_RELEASE, RELEASE_REJECTED, FAILED, CANCELLED).
     FAILED has 5 targets (INGESTED, QUALITY_CHECK, PROVENANCE_CHECK, CONTENT_REVISION, VALIDATION)."""
     for from_state in STATE_ORDER:
-        if from_state in (PipelineState.RELEASED, PipelineState.RELEASE_REJECTED):
+        if from_state in (PipelineState.RELEASED, PipelineState.RELEASE_REJECTED, PipelineState.CANCELLED):
             continue  # terminal — no targets
         targets = [t[1] for t in VALID_TRANSITIONS if t[0] == from_state]
         if from_state == PipelineState.WAITING_HUMAN_APPROVAL:
-            assert len(targets) == 3, (
-                f"{from_state} should have 3 valid targets, got {targets}"
+            assert len(targets) == 4, (
+                f"{from_state} should have 4 valid targets, got {targets}"
             )
             assert PipelineState.FAILED in targets
+            assert PipelineState.CANCELLED in targets
         elif from_state == PipelineState.FAILED:
             assert len(targets) == 5, (
                 f"FAILED should have exactly 5 valid targets, got {targets}"
@@ -149,12 +150,13 @@ def test_transition_from_states_are_mutually_exclusive():
             assert PipelineState.CONTENT_REVISION in targets
             assert PipelineState.VALIDATION in targets
         else:
-            # Each non-terminal, non-WAITING, non-FAILED state has 2 targets:
-            # its natural forward progression + FAILED
-            assert len(targets) == 2, (
-                f"{from_state} should have 2 valid targets (forward + FAILED), got {targets}"
+            # Each non-terminal, non-WAITING, non-FAILED state has 3 targets:
+            # its natural forward progression + FAILED + CANCELLED
+            assert len(targets) == 3, (
+                f"{from_state} should have 3 valid targets (forward + FAILED + CANCELLED), got {targets}"
             )
             assert PipelineState.FAILED in targets
+            assert PipelineState.CANCELLED in targets
 
 
 def test_released_is_terminal():
@@ -882,7 +884,7 @@ def test_orchestrator_request_approval():
 
 def test_all_states_in_valid_transitions():
     """Every non-terminal state appears as a source in VALID_TRANSITIONS."""
-    terminal_states = {PipelineState.RELEASED, PipelineState.RELEASE_REJECTED}
+    terminal_states = {PipelineState.RELEASED, PipelineState.RELEASE_REJECTED, PipelineState.CANCELLED}
     for state in STATE_ORDER:
         if state in terminal_states:
             continue
@@ -896,14 +898,15 @@ def test_state_order_is_complete():
 
 
 def test_valid_transitions_counts():
-    """There are 20 valid transitions: 8 forward, 7 state→FAILED, 5 FAILED→X."""
-    forward = 8  # original forward-only transitions
-    to_failed = 7  # each non-terminal, non-FAILED state → FAILED
-    from_failed = 5  # FAILED → INGESTED, QUALITY_CHECK, PROVENANCE_CHECK, CONTENT_REVISION, VALIDATION
-    expected = forward + to_failed + from_failed
+    """There are 27 valid transitions: 8 original forward, 7 to FAILED, 7 to CANCELLED, 5 from FAILED."""
+    original_forward = 8
+    to_failed = 7
+    to_cancelled = 7
+    from_failed = 5
+    expected = original_forward + to_failed + to_cancelled + from_failed
     assert len(VALID_TRANSITIONS) == expected, (
-        f"Expected {expected} transitions ({forward} forward + {to_failed} to FAILED + "
-        f"{from_failed} from FAILED), got {len(VALID_TRANSITIONS)}"
+        f"Expected {expected} transitions ({original_forward} forward + {to_failed} to FAILED + "
+        f"{to_cancelled} to CANCELLED + {from_failed} from FAILED), got {len(VALID_TRANSITIONS)}"
     )
 
 

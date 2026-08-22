@@ -354,10 +354,14 @@ def _run_release_self_tests(failures, checks, check):
     kcm_ok = hasattr(kcm, "list_collections") and callable(kcm.list_collections)
     check("collection-manager-structure", kcm_ok, "KnowledgeCollectionManager missing list_collections")
 
-    # 15. Release chain verification works on empty chain
-    chain_result = rm.verify_release_chain()
-    check("release-chain-empty", chain_result.get("verified", False),
-          f"empty chain should be trivially verifiable: {chain_result.get('error')}")
+    # 15. Release chain verification: test with empty chain (temp dir)
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_root = Path(tmpdir)
+        tmp_rm = ReleaseManager(tmp_root)
+        chain_result = tmp_rm.verify_release_chain()
+        check("release-chain-empty", chain_result.get("verified") is True,
+              f"empty chain should be trivially verifiable: {chain_result.get('error')}")
 
     # 16. Release summary works (may be empty or populated)
     summary = rm.release_summary()
@@ -1912,7 +1916,354 @@ def cmd_evaluate(argv) -> int:
     return 2
 
 
+# --------------------------------------------------------------------------- #
+# Research Automation commands
+# --------------------------------------------------------------------------- #
+
+def cmd_benchmark(argv) -> int:
+    """Benchmark discovery, acquisition, and audit."""
+    from evaluation_research.benchmark_discover import discover_all, discover_benchmark, register_benchmark
+    from evaluation_research.benchmark_acquire import acquire_benchmark
+    from evaluation_research.contamination import run_contamination_audit
+
+    ap = argparse.ArgumentParser(description="Benchmark management")
+    sub = ap.add_subparsers(dest="benchmark_cmd")
+
+    discover_p = sub.add_parser("discover", help="Discover benchmarks")
+    discover_p.add_argument("--id", default=None)
+    discover_p.add_argument("--register", action="store_true")
+
+    acquire_p = sub.add_parser("acquire", help="Acquire a benchmark")
+    acquire_p.add_argument("--id", required=True)
+    acquire_p.add_argument("--dry-run", action="store_true")
+
+    audit_p = sub.add_parser("audit", help="Contamination audit")
+    audit_p.add_argument("--eval-file", required=True)
+    audit_p.add_argument("--output", default=None)
+
+    args = ap.parse_args(argv)
+    if not args.benchmark_cmd:
+        ap.print_help()
+        return 2
+
+    if args.benchmark_cmd == "discover":
+        if args.id:
+            results = [discover_benchmark(args.id, ROOT)]
+        else:
+            results = discover_all(ROOT)
+        for r in results:
+            icon = "OK" if r.license_compatible else "BLOCKED"
+            print(f"  [{icon}] {r.benchmark_id}: {r.name} license={r.license} "
+                  f"N~={r.estimated_n_records} risk={r.contamination_risk}")
+        if args.register:
+            for r in results:
+                if r.license_compatible:
+                    register_benchmark(ROOT, r)
+        return 0
+
+    if args.benchmark_cmd == "acquire":
+        disc = discover_benchmark(args.id, ROOT)
+        if not disc.license_compatible:
+            print(f"[acquire] BLOCKED: license {disc.license} not compatible", file=sys.stderr)
+            return 1
+        result = acquire_benchmark(args.id, ROOT, dry_run=args.dry_run)
+        print(f"[acquire] {result.benchmark_id}: {result.status} "
+              f"records={result.n_records} schema_valid={result.schema_valid}")
+        return 0 if result.status in ("acquired", "partial") else 1
+
+    if args.benchmark_cmd == "audit":
+        result = run_contamination_audit(
+            Path(args.eval_file), ROOT, output_path=Path(args.output) if args.output else None)
+        print(f"  total={result.get('n_total')} clean={result.get('n_clean')} "
+              f"removed={result.get('n_removed')} verdict={result.get('verdict')}")
+        return 0 if result.get("verdict") in ("PASS", "HOLD") else 1
+
+    return 2
+
+
+def cmd_eval_research(argv) -> int:
+    """Research evaluation commands: calibration, status, matrix."""
+    from evaluation_research.calibration import main as cal_main
+    from evaluation_research.state_machine import ResearchStateMachine
+    from evaluation_research.matrix_runner import MatrixRunner
+
+    ap = argparse.ArgumentParser(description="Research evaluation")
+    sub = ap.add_subparsers(dest="eval_cmd")
+
+    cal_p = sub.add_parser("calibrate-policy", help="Generation-policy calibration")
+    cal_p.add_argument("--eval-file", required=True)
+    cal_p.add_argument("--family", required=True, choices=["math", "code", "semantic"])
+    cal_p.add_argument("--alphas", nargs="+", type=float, required=True)
+    cal_p.add_argument("--seed", type=int, default=42)
+    cal_p.add_argument("--max-records", type=int, default=None)
+    cal_p.add_argument("--smoke", action="store_true")
+    cal_p.add_argument("--resume", action="store_true")
+    cal_p.add_argument("--inference", action="store_true")
+    cal_p.add_argument("--output", default=None)
+
+    sub.add_parser("status", help="Research experiment status")
+    state_p = sub.add_parser("state", help="Show research state machine status")
+    state_p.add_argument("--experiment", default="default")
+
+    matrix_p = sub.add_parser("matrix", help="Run evaluation matrix for an experiment")
+    matrix_p.add_argument("--experiment", required=True, help="Experiment ID")
+    matrix_p.add_argument("--dry-run", action="store_true",
+                          help="Plan only, do not execute inference")
+    matrix_p.add_argument("--execute", action="store_true",
+                          help="Execute inference (requires CUDA)")
+    matrix_p.add_argument("--models", nargs="*", default=[],
+                          help="Override model list (JSON file path per model)")
+    matrix_p.add_argument("--family", default=None,
+                          help="Override family (default: inferred from experiment)")
+    matrix_p.add_argument("--max-records", type=int, default=None,
+                          help="Limit records for smoke testing")
+
+    args = ap.parse_args(argv)
+    if not args.eval_cmd:
+        ap.print_help()
+        return 2
+
+    if args.eval_cmd == "calibrate-policy":
+        return cal_main([
+            "--eval-file", args.eval_file, "--family", args.family,
+            "--alphas"
+        ] + [str(a) for a in args.alphas] +
+            ([] if args.seed == 42 else ["--seed", str(args.seed)]) +
+            ([] if args.max_records is None else ["--max-records", str(args.max_records)]) +
+            (["--smoke"] if args.smoke else []) +
+            (["--resume"] if args.resume else []) +
+            (["--inference"] if args.inference else []) +
+            ([] if args.output is None else ["--output", args.output])
+        )
+
+    if args.eval_cmd == "status":
+        cal_dir = ROOT / "metadata" / "evaluation" / "calibration"
+        prod_dir = ROOT / "evaluation" / "eval_sets" / "production"
+        print("=" * 60)
+        print("RESEARCH EVALUATION STATUS")
+        print("=" * 60)
+        for d in [cal_dir, prod_dir]:
+            if d.exists():
+                print(f"\n{d.relative_to(ROOT)}:")
+                for f in sorted(d.glob("*.json"))[-5:]:
+                    print(f"  {f.name}")
+        print("=" * 60)
+        return 0
+
+    if args.eval_cmd == "state":
+        sm = ResearchStateMachine(args.experiment, ROOT)
+        sm.load()
+        print(json.dumps(sm.summary(), indent=2))
+        return 0
+
+    if args.eval_cmd == "matrix":
+        if args.execute:
+            return cmd_eval_matrix_execute(args.experiment, ROOT,
+                                           max_records=args.max_records,
+                                           family=args.family)
+        return cmd_eval_matrix(args.experiment, ROOT,
+                               dry_run=args.dry_run,
+                               models=args.models,
+                               family=args.family)
+
+    return 2
+
+
+def cmd_eval_matrix(experiment_id: str, root: Path,
+                    dry_run: bool = False,
+                    models: list[str] | None = None,
+                    family: str | None = None) -> int:
+    """Run evaluation matrix for an experiment.
+
+    Resolves the experiment from research_state, finds the eval set,
+    plans or executes the matrix, and writes results.
+    """
+    from evaluation_research.state_machine import ResearchStateMachine, ResearchState
+    from evaluation_research.matrix_runner import MatrixRunner
+    from evaluation_research.eval_set_builder import EvalSetBuilder
+
+    # 1. Load research state
+    sm = ResearchStateMachine(experiment_id, root)
+    if not sm.load():
+        print(f"[matrix] ERROR: No research state found for experiment '{experiment_id}'",
+              file=sys.stderr)
+        return 2
+
+    current = sm.current_state
+    print(f"[matrix] experiment={experiment_id} state={current.value}")
+
+    # 2. Resolve family from experiment config or metadata
+    exp_family = family
+    if not exp_family:
+        exp_family = sm.get_metadata("family", "")
+    if not exp_family:
+        # Infer from eval sets
+        for f in (root / "evaluation" / "eval_sets" / "protocol_v2").glob("*_clean.jsonl"):
+            name = f.stem
+            if "math" in name:
+                exp_family = "math"
+                break
+            elif "code" in name:
+                exp_family = "code"
+                break
+        if not exp_family:
+            exp_family = "math"  # default
+    print(f"[matrix] family={exp_family}")
+
+    # 3. Resolve eval set
+    proto_dir = root / "evaluation" / "eval_sets" / "protocol_v2"
+    eval_file = None
+    for f in sorted(proto_dir.glob(f"*_{exp_family}_v2_clean.jsonl")):
+        eval_file = f
+        break
+    if eval_file is None:
+        # Fallback to any clean file
+        for f in sorted(proto_dir.glob("*_clean.jsonl")):
+            eval_file = f
+            break
+    if eval_file is None:
+        print(f"[matrix] ERROR: No clean eval set found for family '{exp_family}'",
+              file=sys.stderr)
+        return 2
+    print(f"[matrix] eval_set={eval_file}")
+
+    # 4. Resolve models from experiment config or defaults
+    model_list: list[dict[str, str]] = []
+    if models:
+        for mpath in models:
+            mp = Path(mpath)
+            if mp.exists():
+                try:
+                    mdata = json.loads(mp.read_text())
+                    model_list.append(mdata)
+                except json.JSONDecodeError:
+                    model_list.append({"model_id": mp.stem, "adapter_path": str(mp)})
+            else:
+                model_list.append({"model_id": mp.stem, "adapter_path": str(mp)})
+    else:
+        # Default: look for experiment config
+        exp_dir = root / "experiments" / experiment_id
+        if exp_dir.exists():
+            cfg_path = exp_dir / "config.json"
+            if cfg_path.exists():
+                try:
+                    cfg = json.loads(cfg_path.read_text())
+                    base = cfg.get("base_model", "Qwen/Qwen2.5-7B-Instruct")
+                    model_list = [{
+                        "model_id": experiment_id,
+                        "adapter_path": str(exp_dir),
+                        "base_model": base,
+                    }]
+                except json.JSONDecodeError:
+                    pass
+        if not model_list:
+            model_list = [{
+                "model_id": experiment_id,
+                "adapter_path": "",
+                "base_model": "Qwen/Qwen2.5-7B-Instruct",
+            }]
+
+    # 5. Plan or run matrix
+    runner = MatrixRunner(root)
+    plan = runner.plan_matrix(eval_file, model_list, family=exp_family)
+
+    print("=" * 60)
+    print(f"EVALUATION MATRIX — {experiment_id}")
+    print("=" * 60)
+    print(f"  Eval set:     {plan['eval_set']}")
+    print(f"  Records:      {plan['n_records']}")
+    print(f"  Family:       {plan['family']}")
+    print(f"  Models:       {plan['total_runs']}")
+    print(f"  Conditions:   quant={plan['identical_conditions']['quantization']} "
+          f"policy={plan['identical_conditions']['generation_policy']}")
+    print()
+
+    if dry_run:
+        print("[matrix] DRY-RUN — no inference executed")
+        # Write plan artifact
+        out_dir = root / "metadata" / "evaluation" / "matrix"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / f"{experiment_id}_plan.json"
+        out_path.write_text(json.dumps(plan, indent=2, ensure_ascii=False) + "\n",
+                            encoding="utf-8")
+        print(f"[matrix] plan written -> {out_path}")
+        return 0
+
+    # Real execution would require CUDA + inference infrastructure
+    # For now, document what would happen and write a pending artifact
+    print("[matrix] NOTE: Full inference requires CUDA hardware.")
+    print("  To execute: ensure RTX 5070 is available and re-run without --dry-run.")
+    print()
+    print("  Required gates:")
+    for g in plan["required_gates"]:
+        print(f"    - {g}")
+
+    # Write plan artifact even for non-dry-run
+    out_dir = root / "metadata" / "evaluation" / "matrix"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / f"{experiment_id}_plan.json"
+    out_path.write_text(json.dumps(plan, indent=2, ensure_ascii=False) + "\n",
+                        encoding="utf-8")
+    print(f"[matrix] plan written -> {out_path}")
+    return 0
+
+
+def cmd_eval_matrix_execute(experiment_id: str, root: Path,
+                            max_records: int | None = None,
+                            family: str | None = None) -> int:
+    """Execute live evaluation matrix (requires CUDA)."""
+    from evaluation_research.matrix_runner import MatrixRunner
+
+    runner = MatrixRunner(root)
+    print(f"[matrix] executing: experiment={experiment_id} dry_run=false")
+
+    result = runner.execute_matrix(
+        experiment_id,
+        dry_run=False,
+        max_records=max_records,
+        family_override=family,
+    )
+
+    print("=" * 60)
+    print(f"EVALUATION MATRIX EXECUTION — {experiment_id}")
+    print("=" * 60)
+    print(f"  Status:     {result.get('status', '?')}")
+    print(f"  Run ID:     {result.get('run_id', '?')}")
+
+    if result.get('error'):
+        print(f"  Error:      {result['error']}")
+        return 1
+
+    prov = result.get('provenance', {})
+    if prov:
+        print(f"  Eval set:   {prov.get('eval_set', '?')}")
+        print(f"  Model:      {prov.get('model', '?')}")
+        print(f"  Records:    {prov.get('n_records', '?')} scored")
+        print(f"  Holds:      {prov.get('n_holds', 0)}")
+        print(f"  Output:     {prov.get('output_path', '?')}")
+
+    gates = result.get('gates', {})
+    if gates:
+        print()
+        print("  Gates:")
+        for k, v in gates.items():
+            icon = "PASS" if v else "FAIL"
+            print(f"    [{icon}] {k}")
+
+    return 0 if result.get('status') == 'COMPLETED' else 1
+
+
 def main(argv=None) -> int:
+    # Intercept research automation commands before top-level parsing
+    # because they use nested subparsers that argparse can't handle
+    # at the top level without explicit registration.
+    if argv is None:
+        argv = sys.argv[1:]
+    if argv and argv[0] == "benchmark":
+        return cmd_benchmark(argv[1:])
+    if argv and argv[0] == "eval":
+        return cmd_eval_research(argv[1:])
+
     ap = argparse.ArgumentParser(prog="atlas", description="Atlas Dataset Foundation CLI.")
     sub = ap.add_subparsers(dest="cmd", required=True)
     # Existing commands
@@ -2008,6 +2359,10 @@ def main(argv=None) -> int:
 
     p_rc = sub.add_parser("release-check", help="Phase 4A.5 release verification checks")
 
+    # ---- Research Automation (Phase 6+) ----
+    p_bench = sub.add_parser("benchmark", help="benchmark discovery, acquisition, audit")
+    p_eval = sub.add_parser("eval", help="research evaluation: calibration, status")
+
     # ---- Phase 5C Training View Preparation ----
     p_tv = sub.add_parser("training-view",
                           help="list, generate (dry-run), or verify training views")
@@ -2039,6 +2394,9 @@ def main(argv=None) -> int:
                           help="evaluate training readiness gate (READ-ONLY)")
     p_tr.add_argument("--verify", action="store_true",
                       help="verify integrity of readiness report")
+
+    # ---- TUI Control Plane (Phase 7) ----
+    sub.add_parser("tui", help="launch the Atlas TUI control plane")
 
     args = ap.parse_args(argv)
     # Args after the program name + subcommand name are for the subcommand.
@@ -2094,6 +2452,17 @@ def main(argv=None) -> int:
     # ---- Phase 5D Training Readiness Gate ----
     if args.cmd == "training-readiness":
         return cmd_training_readiness(rest)
+
+    # ---- Research Automation (Phase 6+) ----
+    if args.cmd == "benchmark":
+        return cmd_benchmark(rest)
+    if args.cmd == "eval":
+        return cmd_eval_research(rest)
+
+    # ---- TUI Control Plane (Phase 7) ----
+    if args.cmd == "tui":
+        from atlas_tui import main as tui_main
+        return tui_main()
 
     return 2
 
