@@ -94,3 +94,85 @@ def arxiv_paper(arxiv_id: str = "2607.28608v1", title: str = "A Test Paper on Tr
         "doi": "",
         "journal_ref": "",
     }
+
+
+def kep_readme(with_alternatives: bool = True) -> str:
+    """Synthetic KEP README in the canonical template shape."""
+    alts = (
+        "## Alternatives\n\n"
+        "We considered keeping the old label semantics, but that would "
+        "require every consumer to handle both cases indefinitely.\n\n"
+        if with_alternatives else ""
+    )
+    return (
+        "# KEP-1659: Standard Topology Labels\n"
+        "\n"
+        "<!-- toc -->\n"
+        "- [Summary](#summary)\n"
+        "- [Motivation](#motivation)\n"
+        "<!-- /toc -->\n"
+        "\n"
+        "## Release Signoff Checklist\n"
+        "\n"
+        "- [x] KEP approvers have approved the KEP status as `implementable`\n"
+        "\n"
+        "## Summary\n"
+        "\n"
+        "Kubernetes currently assumes topology labels are arbitrary. This KEP "
+        "standardizes two well-known topology labels so components can depend "
+        "on them.\n"
+        "\n"
+        "## Motivation\n"
+        "\n"
+        "Components hard-code region and zone label keys today, which prevents "
+        "alternative topologies from working.\n"
+        "\n"
+        "### Goals\n"
+        "\n"
+        "Define standard label keys with documented failure-domain semantics.\n"
+        "\n"
+        "### Non-Goals\n"
+        "\n"
+        "Changing kubelet provider integration.\n"
+        "\n"
+        "## Proposal\n"
+        "\n"
+        "Reserve the well-known label prefix and document the semantics of "
+        "each standard key.\n"
+        "\n"
+        "## Design Details\n"
+        "\n"
+        "The kubelet applies the standard labels at registration time. "
+        "Existing clusters keep working because consumers fall back to the "
+        "legacy keys when the new ones are absent.\n"
+        "\n"
+        "### Test Plan\n"
+        "\n"
+        "Unit tests for label application plus an e2e conformance test.\n"
+        "\n"
+        + alts +
+        "## Implementation History\n"
+        "\n"
+        "2026-08-22: KEP drafted.\n"
+    )
+
+
+def kep_raw_row(markdown: str | None = None,
+                path: str = "keps/sig-architecture/1659-standard-topology-labels/README.md") -> dict:
+    from expert_pipeline.adapters.architecture import parse_kep_slug, parse_sections, \
+        parse_title, build_problem_solution
+
+    md = markdown if markdown is not None else kep_readme()
+    sig, kep_dir = parse_kep_slug(path)
+    sections = parse_sections(md)
+    problem, solution = build_problem_solution(sections)
+    return {
+        "path": path,
+        "sig": sig,
+        "kep_dir": kep_dir,
+        "title": parse_title(md, kep_dir),
+        "markdown": md,
+        "sections": sections,
+        "problem": problem,
+        "solution": solution,
+    }

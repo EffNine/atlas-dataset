@@ -100,3 +100,53 @@ def test_write_sample_roundtrip(tmp_path):
     lines = [json.loads(l) for l in out.read_text().splitlines()]
     assert len(lines) == len(sample)
     assert lines[0]["review_id"] == sample[0]["review_id"]
+
+
+# --- proportional (per-domain) review rates ---
+
+
+def test_resolve_rate_fallback():
+    assert rs.resolve_rate("mathematics", 0.05, None) == 0.05
+    assert rs.resolve_rate("mathematics", 0.05, {"software_engineering": 0.2}) == 0.05
+    assert rs.resolve_rate("software_engineering", 0.05,
+                           {"software_engineering": 0.2}) == 0.2
+    assert rs.resolve_rate(None, 0.05, {"software_engineering": 0.2}) == 0.05
+
+
+def _arch_records(n=6):
+    from expert_pipeline.adapters.architecture import KepAdapter
+
+    from conftest import kep_raw_row
+
+    adapter = KepAdapter(accessed_at=ACCESSED)
+    return [adapter.to_record(kep_raw_row(), i) for i in range(n)]
+
+
+def test_domain_rates_raise_targeted_sampling():
+    recs = _scored(_swe_records(10) + _math_records(10) + _arch_records(10))
+    # heavier sampling for architecture docs (no machine-verifiable answers),
+    # flat default elsewhere
+    sample = rs.build_sample(recs, rate=0.1, seed=11,
+                             domain_rates={"software_engineering": 1.0})
+    per_src = {}
+    for e in sample:
+        per_src[e["source_id"]] = per_src.get(e["source_id"], 0) + 1
+    # both SWE and KEP are software_engineering -> fully sampled at 1.0
+    assert per_src.get("expert-arch-001") == 10
+    assert per_src.get("expert-swe-001") == 10
+    # math keeps the base rate (~1 of 10)
+    assert per_src.get("expert-math-002", 0) <= 2
+
+
+def test_domain_rates_recorded_in_stratum():
+    recs = _scored(_arch_records(4))
+    sample = list(rs.stratify(recs, rate=0.05, seed=3,
+                              domain_rates={"software_engineering": 1.0}))
+    assert all(r["stratum"]["sample_rate"] == 1.0 for r in sample)
+
+
+def test_default_behavior_unchanged_without_domain_rates():
+    recs = _scored(_swe_records(20))
+    legacy = list(rs.stratify(recs, rate=0.5, seed=9))
+    extended = list(rs.stratify(recs, rate=0.5, seed=9, domain_rates=None))
+    assert [r["id"] for r in legacy] == [r["id"] for r in extended]

@@ -5,12 +5,19 @@ from __future__ import annotations
 
 import pytest
 
+from expert_pipeline.adapters.architecture import (
+    KepAdapter,
+    build_problem_solution,
+    difficulty_from_sections,
+    parse_kep_slug,
+    parse_sections,
+)
 from expert_pipeline.adapters.arxiv import ArxivAdapter, _check_retraction
 from expert_pipeline.adapters.openmath import OpenMathAdapter
 from expert_pipeline.adapters.swebench import SwebenchAdapter
 from expert_pipeline.validation import validate_provenance, validate_schema
 
-from conftest import arxiv_paper, openmath_row, score_record, swe_instance
+from conftest import arxiv_paper, kep_readme, kep_raw_row, openmath_row, score_record, swe_instance
 
 ACCESSED = "2026-08-02"
 
@@ -152,3 +159,188 @@ def test_arxiv_iter_raw_paginates_and_limits(monkeypatch):
     # pagination: the cs.LG page did NOT advance to start=500 (enough on page 0)
     assert ("cs.LG", 0) in calls
     assert ("cs.LG", 500) not in calls
+
+
+# --- KEP (architecture) adapter ---
+
+
+def test_parse_kep_slug():
+    sig, kep_dir = parse_kep_slug(
+        "keps/sig-architecture/1659-standard-topology-labels/README.md")
+    assert sig == "sig-architecture"
+    assert kep_dir == "1659-standard-topology-labels"
+    with pytest.raises(ValueError):
+        parse_kep_slug("keps/sig-architecture/20190731-production-readiness-review-process.md")
+    with pytest.raises(ValueError):
+        parse_kep_slug("keps/sig-network/0000-kep-template/README.md")
+
+
+def test_parse_sections_maps_h2_bodies():
+    sections = parse_sections(kep_readme())
+    assert "Motivation" in sections
+    assert "Design Details" in sections
+    # subsection content stays inside its parent section body
+    assert "Goals" in sections["Motivation"] or "standard label keys" in sections["Motivation"]
+    problem, solution = build_problem_solution(sections)
+    assert "hard-code region and zone label keys" in problem
+    assert "## Design Details" in solution
+    assert "## Alternatives" in solution
+
+
+def test_kep_record_schema_and_provenance():
+    adapter = KepAdapter(accessed_at=ACCESSED)
+    rec = adapter.to_record(kep_raw_row(), 0)
+    assert rec["id"] == "expert_arch_000000"
+    assert rec["domain"] == "software_engineering"
+    assert rec["expert_tier"] == "E2"
+    assert rec["license"] == "Apache-2.0"
+    assert rec["type"] == "qa"
+    assert rec["provenance"]["original_id"] == \
+        "sig-architecture/1659-standard-topology-labels"
+    assert rec["verification"]["method"] == "peer_review"
+    assert rec["verification"]["status"] == "needs_review"
+    assert rec["metadata"]["model_generated"] is False
+    assert rec["metadata"]["synthetic"] is False
+    assert rec["curated"] is False
+    # upstream text used verbatim in the conversation
+    assert "hard-code region and zone label keys" in rec["messages"][0]["content"]
+    assert "## Alternatives" in rec["messages"][1]["content"]
+    score_record(rec)
+    assert validate_schema(rec) == []
+    assert validate_provenance(rec) == []
+
+
+def test_kep_difficulty_heuristic():
+    # no alternatives, short design -> 2
+    assert difficulty_from_sections(design_len=100, has_alternatives=False) == 2
+    # alternatives present -> 3
+    assert difficulty_from_sections(design_len=100, has_alternatives=True) == 3
+    # long design -> 4
+    assert difficulty_from_sections(design_len=8001, has_alternatives=True) == 4
+    adapter = KepAdapter(accessed_at=ACCESSED)
+    with_alts = adapter.to_record(kep_raw_row(), 0)
+    assert with_alts["difficulty"] == 3
+    without = adapter.to_record(kep_raw_row(markdown=kep_readme(with_alternatives=False)), 0)
+    assert without["difficulty"] == 2
+
+
+def test_kep_deterministic_ids():
+    adapter = KepAdapter(accessed_at=ACCESSED)
+    a = adapter.to_record(kep_raw_row(), 0)
+    b = adapter.to_record(kep_raw_row(), 0)
+    assert a["id"] == b["id"]
+    assert a["provenance"]["original_id"] == b["provenance"]["original_id"]
+
+
+def test_kep_iter_raw_lists_fetches_and_limits(monkeypatch):
+    import expert_pipeline.adapters.architecture as archmod
+
+    paths = [
+        "keps/sig-apps/0002-something/README.md",
+        "keps/sig-architecture/1659-standard-topology-labels/README.md",
+        "keps/sig-network/0000-kep-template/README.md",
+    ]
+
+    def fake_list():
+        return paths
+
+    fetched: list[str] = []
+
+    def fake_get(url, timeout: int = 30, headers=None):
+        fetched.append(url)
+        return kep_readme()
+
+    monkeypatch.setattr(archmod, "_list_kep_paths", fake_list)
+    monkeypatch.setattr(archmod, "_fetch_kep", fake_get)
+    adapter = KepAdapter(accessed_at=ACCESSED)
+    rows = list(adapter.iter_raw(limit=2))
+    assert len(rows) == 2  # limit honored
+    assert rows[0]["sig"] == "sig-apps"
+    assert rows[1]["sig"] == "sig-architecture"
+    assert all("template" not in r["kep_dir"] for r in rows)
+
+
+def test_kep_iter_raw_skips_empty_docs(monkeypatch):
+    import expert_pipeline.adapters.architecture as archmod
+
+    def fake_list():
+        return [
+            "keps/sig-node/9999-template-only/README.md",
+            "keps/sig-node/9998-summary-no-motivation/README.md",
+        ]
+
+    mds = {
+        "keps/sig-node/9999-template-only/README.md":
+            "# KEP-9999: Empty\n\n## Summary\n\nTBD.\n",
+        "keps/sig-node/9998-summary-no-motivation/README.md":
+            "# KEP-9998: No Motivation Section\n\n"
+            "## Summary\n\n"
+            "This KEP standardizes retry budgets across controllers.\n\n"
+            "## Design Details\n\n"
+            "Controllers share a token-bucket implementation.\n",
+    }
+
+    def fake_get(url, timeout: int = 30, headers=None):
+        return mds[url]
+
+    monkeypatch.setattr(archmod, "_list_kep_paths", fake_list)
+    monkeypatch.setattr(archmod, "_fetch_kep", fake_get)
+    adapter = KepAdapter(accessed_at=ACCESSED)
+    rows = list(adapter.iter_raw(limit=5))
+    # template/hollow doc is skipped; summary-fallback doc yields
+    assert len(rows) == 1
+    assert rows[0]["problem"].strip()
+    assert "token-bucket" in rows[0]["solution"]
+
+
+def test_kep_registry_source_ids_consistent():
+    from expert_pipeline.runner import ADAPTERS, SOURCE_TO_KEY
+
+    assert ADAPTERS["architecture"].source_id == "expert-arch-001"
+    assert SOURCE_TO_KEY["expert-arch-001"] == "architecture"
+
+
+def test_list_kep_paths_walk(monkeypatch):
+    """Contents-API directory walk lists sig dirs only, excludes templates."""
+    import json
+
+    import expert_pipeline.adapters.architecture as archmod
+
+    listings = {
+        "https://api.github.com/repos/kubernetes/enhancements/contents/keps":
+            [{"name": "sig-apps", "type": "dir"},
+             {"name": "OWNERS", "type": "file"},
+             {"name": "provider-aws", "type": "dir"}],
+        "https://api.github.com/repos/kubernetes/enhancements/contents/keps/sig-apps":
+            [{"name": "0002-something", "type": "dir"},
+             {"name": "0000-kep-template", "type": "dir"},
+             {"name": "README.md", "type": "file"}],
+        "https://api.github.com/repos/kubernetes/enhancements/contents/keps/provider-aws":
+            [],
+    }
+
+    def fake_get(url, timeout=30, headers=None):
+        return json.dumps(listings[url])
+
+    monkeypatch.setattr(archmod, "_http_get", fake_get)
+    assert archmod._list_kep_paths_via_walk() == \
+        ["keps/sig-apps/0002-something/README.md"]
+
+
+def test_list_kep_paths_falls_back_when_trees_blocked(monkeypatch):
+    import json
+    import urllib.error
+
+    import expert_pipeline.adapters.architecture as archmod
+
+    real_http_get = archmod._http_get
+
+    def fake_get(url, timeout=30, headers=None):
+        if "git/trees" in url:
+            raise urllib.error.URLError("blocked by proxy")
+        return real_http_get(url, timeout=timeout, headers=headers)
+
+    monkeypatch.setattr(archmod, "_http_get", fake_get)
+    monkeypatch.setattr(archmod, "_list_kep_paths_via_walk",
+                        lambda: ["keps/sig-apps/0002-something/README.md"])
+    assert archmod._list_kep_paths() == ["keps/sig-apps/0002-something/README.md"]

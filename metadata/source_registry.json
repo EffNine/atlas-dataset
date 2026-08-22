@@ -1469,7 +1469,35 @@
       "acquisition_date": "2026-08-14",
       "role_classification": "TRAINING",
       "contamination_risk": "LOW"
+    },
+    {
+      "id": "expert-arch-001",
+      "name": "Kubernetes Enhancement Proposals (KEPs)",
+      "source": "kubernetes/enhancements (GitHub)",
+      "url": "https://github.com/kubernetes/enhancements",
+      "category": "02_software_engineering",
+      "subcategory_hint": "architecture-design-decisions",
+      "tier": "Tier 2",
+      "license": "Apache-2.0",
+      "license_class": "VERIFIED COMPATIBLE (GitHub API spdx_id check, 2026-08-22)",
+      "format": "Markdown (KEP README documents via GitHub contents API)",
+      "size": "keps/ contains 27 top-level entries across SIGs (2026-08-22); per-KEP record count TBD at first pull (adapter default batch 100)",
+      "status": "review",
+      "quality_score": 0,
+      "scores": {
+        "accuracy": 0,
+        "technical": 0,
+        "diversity": 0,
+        "cleanliness": 0,
+        "license_clarity": 10
+      },
+      "recommendation": "review",
+      "notes": "Architecture-reasoning gap fill for atan-v1 (motivation -> proposal/design/alternatives mapped deterministically to problem/solution; upstream text used verbatim, no generation). Adapter: scripts/expert_pipeline/adapters/architecture.py. Unauthenticated GitHub API is ~60 req/hour; set GITHUB_TOKEN/GH_TOKEN for scale pulls. Human review sample required on first batch before scale-up.",
+      "acquisition_phase": "expert-pipeline-v0.1",
+      "acquisition_date": "2026-08-22",
+      "role_classification": "TRAINING",
+      "contamination_risk": "LOW"
     }
   ],
-  "last_updated": "2026-08-14T14:41:43.541800+00:00"
+  "last_updated": "2026-08-22T00:00:00+00:00"
 }

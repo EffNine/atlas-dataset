@@ -8,6 +8,12 @@ Stratification (deterministic, seeded):
 1. proportional to source composition (500/3000/3000 -> 25/150/150)
 2. within each source, proportional across quality bands (5-6 / 7-8 / 9-10)
 
+Proportional review policy (--domain-rates): per-domain sample rates allow
+risk-proportional human verification (e.g. heavier sampling for domains
+without machine-verifiable answers such as architecture design docs or
+agentic traces, lighter sampling for execution-verified code). When omitted,
+the flat default rate applies and output is unchanged.
+
 Each sample line = the full Atlas expert record plus a review envelope
 (review_id, record_id, stratum, pending state, calibration context).
 The pipeline never writes approval decisions; dataset stays read-only.
@@ -49,7 +55,16 @@ def load_records(path: Path) -> list[dict]:
     return recs
 
 
-def stratify(records: list[dict], rate: float = SAMPLE_RATE, seed: int = SEED):
+def resolve_rate(domain: str | None, base_rate: float,
+                 domain_rates: dict[str, float] | None) -> float:
+    """Effective sample rate for one stratum's domain."""
+    if domain_rates and domain is not None and domain in domain_rates:
+        return domain_rates[domain]
+    return base_rate
+
+
+def stratify(records: list[dict], rate: float = SAMPLE_RATE, seed: int = SEED,
+             domain_rates: dict[str, float] | None = None):
     """Return sampled records with a 'stratum' key, deterministic by seed."""
     # group by source -> quality band
     buckets: dict[tuple[str, tuple[int, int]], list[dict]] = defaultdict(list)
@@ -58,7 +73,10 @@ def stratify(records: list[dict], rate: float = SAMPLE_RATE, seed: int = SEED):
 
     rng = random.Random(seed)
     for key, group in buckets.items():
-        n = max(1, round(len(group) * rate))
+        eff_rate = resolve_rate(group[0].get("domain"), rate, domain_rates)
+        n = round(len(group) * eff_rate)
+        if eff_rate > 0:
+            n = max(1, n)
         # deterministic shuffle per stratum
         idx = list(range(len(group)))
         rng.shuffle(idx)
@@ -68,12 +86,14 @@ def stratify(records: list[dict], rate: float = SAMPLE_RATE, seed: int = SEED):
             picked["stratum"] = {
                 "source_id": key[0],
                 "quality_band": list(key[1]),
+                "sample_rate": eff_rate,
             }
             yield picked
 
 
-def build_sample(records: list[dict], rate: float = SAMPLE_RATE, seed: int = SEED) -> list[dict]:
-    sampled = list(stratify(records, rate=rate, seed=seed))
+def build_sample(records: list[dict], rate: float = SAMPLE_RATE, seed: int = SEED,
+                 domain_rates: dict[str, float] | None = None) -> list[dict]:
+    sampled = list(stratify(records, rate=rate, seed=seed, domain_rates=domain_rates))
     # stable ordering for review: by source, then original id
     sampled.sort(key=lambda r: (r["source"]["source_id"], r["id"]))
     out = []
@@ -123,11 +143,24 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--records", default=str(DEFAULT_RECORDS))
     parser.add_argument("--output", default=str(DEFAULT_SAMPLE))
     parser.add_argument("--rate", type=float, default=SAMPLE_RATE, help="sample rate (default 0.05)")
+    parser.add_argument("--domain-rates", default=None,
+                        help="JSON map of domain -> sample rate overriding --rate "
+                             "(e.g. '{\"software_engineering\": 0.2}')")
     parser.add_argument("--seed", type=int, default=SEED, help="deterministic seed (default 20260802)")
     args = parser.parse_args(argv)
 
+    domain_rates = None
+    if args.domain_rates:
+        try:
+            domain_rates = json.loads(args.domain_rates)
+        except ValueError:
+            parser.error("--domain-rates must be valid JSON, e.g. '{\"mathematics\": 0.1}'")
+        if not isinstance(domain_rates, dict) or not all(
+                isinstance(v, (int, float)) and 0.0 <= v <= 1.0 for v in domain_rates.values()):
+            parser.error("--domain-rates values must be numbers in [0.0, 1.0]")
+
     records = load_records(Path(args.records))
-    sample = build_sample(records, rate=args.rate, seed=args.seed)
+    sample = build_sample(records, rate=args.rate, seed=args.seed, domain_rates=domain_rates)
     out = Path(args.output)
     write_sample(sample, out)
     print(json.dumps({"written": str(out), "sample_size": len(sample),

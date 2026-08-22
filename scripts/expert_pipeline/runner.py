@@ -24,6 +24,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from .adapters.architecture import KepAdapter
 from .adapters.arxiv import ArxivAdapter
 from .adapters.openmath import OpenMathAdapter
 from .adapters.swebench import SwebenchAdapter
@@ -56,12 +57,14 @@ ADAPTERS = {
     "swebench": SwebenchAdapter,
     "openmath": OpenMathAdapter,
     "arxiv": ArxivAdapter,
+    "architecture": KepAdapter,
 }
 # source_id -> adapter key
 SOURCE_TO_KEY = {
     "expert-swe-001": "swebench",
     "expert-math-002": "openmath",
     "expert-aiml-001": "arxiv",
+    "expert-arch-001": "architecture",
 }
 
 
