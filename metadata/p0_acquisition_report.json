@@ -1,0 +1,191 @@
+{
+  "generated_at": "2026-08-14T15:07:46.112142+00:00",
+  "phase": "P0 Frontier Dataset Acquisition",
+  "status": "COMPLETE",
+  "total_sources": 8,
+  "total_records": 4151,
+  "total_bytes": 108089608,
+  "sources": {
+    "p0-nemotron-math-proofs-v2": {
+      "hf_id": "nvidia/Nemotron-Math-Proofs-v2",
+      "domain": "math",
+      "role": "TRAINING",
+      "category": "06_science_engineering",
+      "subcategory": "mathematics",
+      "license": "CC-BY-4.0",
+      "upstream_size": "17.13 GB (full)",
+      "sampled": 500,
+      "teacher": "Llama-3.1-405B-Instruct",
+      "data_type": "DISTILLED",
+      "verification": "YES — formally verified proofs",
+      "contamination_risk": "MEDIUM",
+      "specialist_pools": [
+        "Math"
+      ],
+      "status": "completed",
+      "records": 497,
+      "validation_errors": 0,
+      "validation_passed": true,
+      "staging_bytes": 2081988
+    },
+    "p0-swe-smith-trajectories": {
+      "hf_id": "SWE-bench/SWE-smith-trajectories",
+      "domain": "code",
+      "role": "TRAINING",
+      "category": "02_software_engineering",
+      "subcategory": "debugging",
+      "license": "MIT",
+      "upstream_size": "~200 MB (2 of 32 shards)",
+      "sampled": 500,
+      "teacher": "SWE-agent (Claude 3.7 Sonnet)",
+      "data_type": "DISTILLED",
+      "verification": "YES — verified trajectories",
+      "contamination_risk": "MEDIUM",
+      "specialist_pools": [
+        "Code",
+        "Software Engineering"
+      ],
+      "status": "completed",
+      "records": 1000,
+      "validation_errors": 0,
+      "validation_passed": true,
+      "staging_bytes": 59344351
+    },
+    "p0-cpp-compiler-curriculum": {
+      "hf_id": "gonzalolinares/cpp-compiler-curriculum",
+      "domain": "systems",
+      "role": "TRAINING",
+      "category": "03_system_engineering",
+      "subcategory": "linux",
+      "license": "Apache-2.0",
+      "upstream_size": "~63 KB",
+      "sampled": null,
+      "teacher": "LLM-generated",
+      "data_type": "SYNTHETIC",
+      "verification": "NO",
+      "contamination_risk": "LOW",
+      "specialist_pools": [
+        "Systems",
+        "Hardware"
+      ],
+      "status": "completed",
+      "records": 112,
+      "validation_errors": 0,
+      "validation_passed": true,
+      "staging_bytes": 121785
+    },
+    "p0-swe-smith-mini": {
+      "hf_id": "Kwai-Klear/SWE-smith-mini_swe_agent_plus-trajectories-66k",
+      "domain": "code",
+      "role": "TRAINING",
+      "category": "02_software_engineering",
+      "subcategory": "debugging",
+      "license": "MIT",
+      "upstream_size": "~54 MB (2 of 47 shards)",
+      "sampled": 500,
+      "teacher": "SWE-agent",
+      "data_type": "SYNTHETIC",
+      "verification": "YES",
+      "contamination_risk": "MEDIUM",
+      "specialist_pools": [
+        "Code",
+        "Software Engineering"
+      ],
+      "status": "completed",
+      "records": 1000,
+      "validation_errors": 0,
+      "validation_passed": true,
+      "staging_bytes": 44658945
+    },
+    "p0-ifeval": {
+      "hf_id": "google/IFEval",
+      "domain": "evaluation",
+      "role": "EVALUATION",
+      "category": "01_foundation",
+      "subcategory": "instruction-following",
+      "license": "Apache-2.0",
+      "upstream_size": "~207 KB",
+      "sampled": null,
+      "teacher": "None",
+      "data_type": "HUMAN",
+      "verification": "YES",
+      "contamination_risk": "HIGH",
+      "specialist_pools": [
+        "Evaluation (protected)"
+      ],
+      "status": "completed",
+      "records": 541,
+      "validation_errors": 0,
+      "validation_passed": true,
+      "staging_bytes": 495919
+    },
+    "p0-swe-bench-verified": {
+      "hf_id": "princeton-nlp/SWE-bench_Verified",
+      "domain": "code",
+      "role": "BOTH_WITH_STRICT_SPLIT",
+      "category": "02_software_engineering",
+      "subcategory": "debugging",
+      "license": "MIT",
+      "upstream_size": "~2.1 MB (test split)",
+      "sampled": null,
+      "teacher": "None",
+      "data_type": "HUMAN",
+      "verification": "YES",
+      "contamination_risk": "HIGH",
+      "specialist_pools": [
+        "Code",
+        "Software Engineering"
+      ],
+      "status": "completed",
+      "records": 500,
+      "validation_errors": 0,
+      "validation_passed": true,
+      "staging_bytes": 569410
+    },
+    "p0-multi-domain-reasoning": {
+      "hf_id": "khazarai/Multi-Domain-Reasoning-Benchmark",
+      "domain": "reasoning",
+      "role": "TRAINING",
+      "category": "01_foundation",
+      "subcategory": "general-reasoning",
+      "license": "Apache-2.0",
+      "upstream_size": "~92 KB",
+      "sampled": null,
+      "teacher": "None",
+      "data_type": "HUMAN",
+      "verification": "YES",
+      "contamination_risk": "LOW",
+      "specialist_pools": [
+        "General Reasoning"
+      ],
+      "status": "completed",
+      "records": 100,
+      "validation_errors": 0,
+      "validation_passed": true,
+      "staging_bytes": 117186
+    },
+    "p0-quantum-hardware-physics": {
+      "hf_id": "Neura-parse/quantum-hardware-device-physics",
+      "domain": "science",
+      "role": "TRAINING",
+      "category": "05_hardware_engineering",
+      "subcategory": "cpu",
+      "license": "CC-BY-4.0",
+      "upstream_size": "~18.8 MB (sampled 500/95K)",
+      "sampled": 500,
+      "teacher": "UNKNOWN",
+      "data_type": "SYNTHETIC",
+      "verification": "NO",
+      "contamination_risk": "LOW",
+      "specialist_pools": [
+        "Science",
+        "Hardware"
+      ],
+      "status": "completed",
+      "records": 401,
+      "validation_errors": 0,
+      "validation_passed": true,
+      "staging_bytes": 700024
+    }
+  }
+}

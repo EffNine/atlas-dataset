@@ -1,0 +1,13 @@
+{
+  "adapter_path": "/home/afnan/projects/active/atlas-dataset/experiments/atlas-math-pilot-nemotron8b-lora-v1/checkpoints",
+  "base_model": "nvidia/Nemotron-Orchestrator-8B",
+  "loaded": true,
+  "peft_config": {
+    "default": "LoraConfig(task_type='CAUSAL_LM', peft_type=<PeftType.LORA: 'LORA'>, auto_mapping=None, peft_version='0.20.0', base_model_name_or_path='nvidia/Nemotron-Orchestrator-8B', revision=None, inference_mode=True, r=8, target_modules={'down_proj', 'v_proj', 'gate_proj', 'q_proj', 'o_proj', 'k_proj', 'up_proj'}, exclude_modules=None, lora_alpha=16, lora_dropout=0.05, fan_in_fan_out=False, bias='none', use_rslora=False, modules_to_save=None, init_lora_weights=True, layers_to_transform=None, layers_pattern=None, rank_pattern={}, alpha_pattern={}, megatron_config=None, megatron_core='megatron.core', trainable_token_indices=None, loftq_config={}, eva_config=None, corda_config=None, lora_ga_config=None, use_dora=False, velora_config=None, alora_invocation_tokens=None, use_qalora=False, qalora_group_size=16, monteclora_config=None, layer_replication=None, runtime_config=LoraRuntimeConfig(ephemeral_gpu_offload=False), lora_bias=False, target_parameters=None, use_bdlora=None, arrow_config=None, ensure_weight_tying=False)"
+  },
+  "active_adapter": [
+    "default"
+  ],
+  "trainable_params_on_eval": 0,
+  "total_params_on_eval": 8212558848
+}

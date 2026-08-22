@@ -1,7 +1,7 @@
 {
   "validation_version": "v1",
   "template_version": "qwen2.5-chatml-deterministic-v1",
-  "generated_at": "2026-08-05T15:22:07.340450+00:00",
+  "generated_at": "2026-08-14T23:29:41.445062+00:00",
   "families": {
     "math": {
       "family": "math",
@@ -116,7 +116,9 @@
     "files": [
       "code_eval_v2.jsonl",
       "code_eval_v2_held.jsonl",
-      "math_eval_v2.jsonl"
+      "math_eval_v2.jsonl",
+      "math_eval_v2_clean.jsonl",
+      "systems_eval_v1.jsonl"
     ],
     "stderr_tail": []
   },

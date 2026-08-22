@@ -6,26 +6,25 @@
         "family": "math",
         "gate": "G-POL",
         "checks": {
-          "truncation_rate_le_0.05": false,
+          "truncation_rate_le_0.05": true,
           "majority_stop_is_eos": true,
           "determinism_spot_check": true
         },
-        "pass": false,
+        "pass": true,
         "note": "gate failure -> capability conclusions HOLD; policy covariates reported, never interpreted as capability"
       },
       "aggregate_policy_covariates": {
         "patch_emission_rate": null,
         "format_distribution": {
-          "math": 100
+          "math": 3
         },
-        "truncation_rate": 0.41,
+        "truncation_rate": 0.0,
         "stop_reason_counts": {
-          "eos": 59,
-          "max_length": 41
+          "eos": 3
         },
-        "tokens_mean": 461.76,
-        "tokens_median": 406.0,
-        "budget_fallback_used": 1
+        "tokens_mean": 520.33,
+        "tokens_median": 515.0,
+        "budget_fallback_used": 0
       }
     },
     "code": {
@@ -44,15 +43,14 @@
       "aggregate_policy_covariates": {
         "patch_emission_rate": 1.0,
         "format_distribution": {
-          "patch": 99
+          "patch": 3
         },
-        "truncation_rate": 0.0303,
+        "truncation_rate": 0.0,
         "stop_reason_counts": {
-          "eos": 96,
-          "max_length": 3
+          "eos": 3
         },
-        "tokens_mean": 187.55,
-        "tokens_median": 151.0,
+        "tokens_mean": 397.0,
+        "tokens_median": 163.0,
         "budget_fallback_used": 0
       }
     }

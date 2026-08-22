@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated": "2026-07-28",
+  "updated": "2026-08-13",
   "description": "Atlas Benchmark Registry — catalogs all supported evaluation benchmarks. Internal benchmarks are defined by Atlas; external benchmarks are registered as placeholders for future integration. No benchmark data is downloaded or stored.",
   "registry": {
     "internal": {
@@ -45,11 +45,17 @@
       "gsm8k": {
         "benchmark_id": "gsm8k",
         "category": "external",
-        "purpose": "Grade School Math 8K — measure arithmetic reasoning ability via chain-of-thought.",
+        "purpose": "Grade School Math 8K — arithmetic reasoning with chain-of-thought. Well-known benchmark; moderate contamination risk with math training data.",
         "metric": "exact_match",
         "split": "test",
         "license": "MIT",
-        "status": "placeholder"
+        "status": "discovered",
+        "source_url": "https://huggingface.co/datasets/openai/gsm8k",
+        "family": "math",
+        "estimated_n_records": 1319,
+        "canonical_answer_available": true,
+        "contamination_risk": "medium",
+        "registered_at": "2026-08-13T00:01:32.771107+00:00"
       },
       "humaneval": {
         "benchmark_id": "humaneval",
@@ -68,6 +74,21 @@
         "split": "test",
         "license": "CC-BY-SA-4.0",
         "status": "placeholder"
+      },
+      "math": {
+        "benchmark_id": "math",
+        "category": "external",
+        "purpose": "MATH benchmark — competition-level math problems. High contamination risk: widely used in LLM training.",
+        "metric": "exact_match",
+        "split": "test",
+        "license": "MIT",
+        "status": "discovered",
+        "source_url": "https://huggingface.co/datasets/ HuggingFaceH4/MATH",
+        "family": "math",
+        "estimated_n_records": 5000,
+        "canonical_answer_available": true,
+        "contamination_risk": "high",
+        "registered_at": "2026-08-13T00:01:32.771189+00:00"
       }
     }
   }

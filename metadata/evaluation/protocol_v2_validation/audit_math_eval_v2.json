@@ -1,8 +1,8 @@
 {
   "layer": "L3",
   "audit_tool": "scripts/evaluation_engine/leakage/audit.py",
-  "per_example_file": "/Users/afnanrudy/Github-Projects/atlas-dataset/metadata/evaluation/protocol_v2_validation/per_example_math_eval_v2.jsonl",
-  "eval_file": "/Users/afnanrudy/Github-Projects/atlas-dataset/evaluation/eval_sets/protocol_v2/math_eval_v2.jsonl",
+  "per_example_file": "/home/afnan/projects/active/atlas-dataset/metadata/evaluation/protocol_v2_validation/per_example_math_eval_v2.jsonl",
+  "eval_file": "/home/afnan/projects/active/atlas-dataset/evaluation/eval_sets/protocol_v2/math_eval_v2.jsonl",
   "family": "math",
   "n_records": 100,
   "n_pass": 100,

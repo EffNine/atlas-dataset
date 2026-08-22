@@ -1,0 +1,18 @@
+{
+  "experiment_id": "test-exp",
+  "current_state": "BENCHMARK_ACQUIRED",
+  "transitions": [
+    {
+      "from_state": "BENCHMARK_DISCOVERY",
+      "to_state": "BENCHMARK_ACQUIRED",
+      "timestamp": "2026-08-11T16:57:12.190446+00:00",
+      "triggered_by": "system",
+      "reason": "",
+      "metadata": {},
+      "verdict": ""
+    }
+  ],
+  "metadata": {},
+  "human_approved": [],
+  "last_updated": "2026-08-11T16:57:12.190477+00:00"
+}

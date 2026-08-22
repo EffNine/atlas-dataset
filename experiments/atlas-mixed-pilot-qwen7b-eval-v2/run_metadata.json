@@ -2,8 +2,8 @@
   "experiment_id": "atlas-mixed-pilot-qwen7b-eval-v2",
   "phase": "T3 canonical baseline (R1/R2)",
   "protocol_version": "v2",
-  "status": "BLOCKED",
-  "started_at": "2026-08-06T13:12:40.168966+00:00",
+  "status": "COMPLETED",
+  "started_at": "2026-08-10T17:03:14.421217+00:00",
   "model": {
     "base_model": "Qwen/Qwen2.5-7B-Instruct",
     "revision": "a09a35458c702b33eeacc393d103063234e8bc28"
@@ -48,8 +48,120 @@
       "policy_block_sha256": "0f82e6039f065fdbb868310596e8411d5391163282a6f7e967522068c41793a7"
     }
   },
-  "families": {},
+  "families": {
+    "math": {
+      "aggregate": {
+        "family": "math",
+        "evaluated_examples": 3,
+        "total_examples": 3,
+        "correctness": 0.6667,
+        "reasoning_quality": 0.7167,
+        "hallucination_rate": 0.3333,
+        "answer_format_consistency": 1.0,
+        "patch_emission_rate": null,
+        "format_distribution": {
+          "math": 3
+        },
+        "truncation_rate": 0.0,
+        "stop_reason_counts": {
+          "eos": 3
+        },
+        "tokens_mean": 520.33,
+        "tokens_median": 515.0,
+        "budget_fallback_used": 0
+      },
+      "gpol": {
+        "family": "math",
+        "gate": "G-POL",
+        "checks": {
+          "truncation_rate_le_0.05": true,
+          "majority_stop_is_eos": true,
+          "determinism_spot_check": true
+        },
+        "pass": true,
+        "note": "gate failure -> capability conclusions HOLD; policy covariates reported, never interpreted as capability"
+      },
+      "spot_check": {
+        "family": "math",
+        "sample_size": 3,
+        "all_identical": true,
+        "matches": [
+          true,
+          true,
+          true
+        ],
+        "sample_record_ids": [
+          "expert_math_000021",
+          "expert_math_000033",
+          "expert_math_000046"
+        ],
+        "note": "two greedy generations within one process on a fixed sample"
+      }
+    },
+    "code": {
+      "aggregate": {
+        "family": "code",
+        "evaluated_examples": 3,
+        "total_examples": 3,
+        "correctness": 0.0431,
+        "reasoning_quality": 0.2944,
+        "hallucination_rate": 1.0,
+        "answer_format_consistency": 1.0,
+        "patch_emission_rate": 1.0,
+        "format_distribution": {
+          "patch": 3
+        },
+        "truncation_rate": 0.0,
+        "stop_reason_counts": {
+          "eos": 3
+        },
+        "tokens_mean": 397.0,
+        "tokens_median": 163.0,
+        "budget_fallback_used": 0
+      },
+      "gpol": {
+        "family": "code",
+        "gate": "G-POL",
+        "checks": {
+          "patch_emission_rate_ge_0.90": true,
+          "truncation_rate_le_0.05": true,
+          "majority_stop_is_eos": true,
+          "determinism_spot_check": true
+        },
+        "pass": true,
+        "note": "gate failure -> capability conclusions HOLD; policy covariates reported, never interpreted as capability"
+      },
+      "spot_check": {
+        "family": "code",
+        "sample_size": 3,
+        "all_identical": true,
+        "matches": [
+          true,
+          true,
+          true
+        ],
+        "sample_record_ids": [
+          "expert_swe_000003",
+          "expert_swe_000005",
+          "expert_swe_000009"
+        ],
+        "note": "two greedy generations within one process on a fixed sample"
+      }
+    }
+  },
   "hold_records": [],
-  "error": "Some modules are dispatched on the CPU or the disk. Make sure you have enough GPU RAM to fit the quantized model. If you want to dispatch the model on the CPU or the disk while keeping these modules in 32-bit, you need to set `llm_int8_enable_fp32_cpu_offload=True` and pass a custom `device_map` to `from_pretrained`. Check https://huggingface.co/docs/transformers/main/en/main_classes/quantization#offload-between-cpu-and-gpu for more details. ",
-  "completed_at": "2026-08-06T13:18:42.277367+00:00"
+  "leak_pass_rate": 1.0,
+  "hardware": {
+    "host": "devpc",
+    "platform": "Linux-7.0.0-29-generic-x86_64-with-glibc2.43",
+    "torch": "2.13.0+cu130",
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 5070",
+    "vram_total_mib": 11773.06,
+    "cuda_version": "13.0",
+    "transformers": "5.14.1",
+    "bitsandbytes": "0.50.0",
+    "accelerate": "1.14.0"
+  },
+  "completed_at": "2026-08-10T17:07:03.267683+00:00"
 }

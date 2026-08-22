@@ -1,0 +1,259 @@
+{
+  "phase": "P1 Frontier Expansion",
+  "generated_at": "2026-08-14T23:04:57.590638+00:00",
+  "status": "COMPLETE",
+  "executed_at": "2026-08-14T23:04:57.590663+00:00",
+  "sources": {
+    "p1-swe-smith-mini": {
+      "source_id": "p1-swe-smith-mini",
+      "hf_id": "Kwai-Klear/SWE-smith-mini_swe_agent_plus-trajectories-66k",
+      "category": "02_software_engineering",
+      "subcategory": "debugging",
+      "license": "MIT",
+      "license_class": "VERIFIED COMPATIBLE",
+      "status": "completed",
+      "raw_records": 65994,
+      "valid_records": 65985,
+      "duplicate_records": 9,
+      "rejected_records": 0,
+      "eligible_records": 65985,
+      "staging_bytes": 3492802205,
+      "unique_repositories": 109,
+      "trajectory_analysis": {
+        "message_count_min": 5,
+        "message_count_max": 315,
+        "message_count_avg": 69.6,
+        "system_messages": 65985,
+        "user_messages": 2263554,
+        "assistant_messages": 2263554,
+        "tool_messages": 0,
+        "observation_tags": 6
+      },
+      "difficulty_distribution": {
+        "2": 65985
+      },
+      "quality_score_distribution": {
+        "7": 65985
+      },
+      "contamination_check": {
+        "overlaps_with_swe_bench_verified": 0,
+        "risk_level": "LOW"
+      },
+      "frontier_distribution": {
+        "A Strong Specialist": 65833,
+        "B Professional": 152
+      },
+      "provenance": {
+        "upstream_hf_id": "Kwai-Klear/SWE-smith-mini_swe_agent_plus-trajectories-66k",
+        "upstream_url": "https://huggingface.co/datasets/Kwai-Klear/SWE-smith-mini_swe_agent_plus-trajectories-66k",
+        "license": "MIT",
+        "acquisition_date": "2026-08-14T23:04:58.899986+00:00",
+        "source_type": "DISTILLED",
+        "teacher": "SWE-agent (mini-swe-agent-plus)",
+        "data_type": "Synthetic agent trajectories",
+        "trajectory_structure_preserved": true
+      }
+    },
+    "p1-nemotron-math-proofs-v2": {
+      "source_id": "p1-nemotron-math-proofs-v2",
+      "hf_id": "nvidia/Nemotron-Math-Proofs-v2",
+      "category": "06_science_engineering",
+      "subcategory": "mathematics",
+      "license": "CC-BY-4.0",
+      "license_class": "VERIFIED COMPATIBLE",
+      "status": "completed",
+      "raw_records": 82737,
+      "valid_records": 43779,
+      "duplicate_records": 38958,
+      "rejected_records": 0,
+      "eligible_records": 43779,
+      "unique_problems": 5752,
+      "samples_per_problem_avg": 14.38,
+      "staging_bytes": 198265540,
+      "subset_distribution": {
+        "proof": 24696,
+        "meta-verification": 29176,
+        "verification": 28865
+      },
+      "math_domain_distribution": {
+        "geometry": 25229,
+        "other": 36286,
+        "algebra": 2841,
+        "number-theory": 16494,
+        "analysis": 1619,
+        "combinatorics": 268
+      },
+      "proof_length_distribution": {
+        "min": 338,
+        "max": 21909,
+        "avg": 2681.5
+      },
+      "contamination_check": {
+        "overlaps_with_math_eval_v2": 0,
+        "risk_level": "LOW"
+      },
+      "frontier_distribution": {
+        "A+ Frontier": 43736,
+        "A Strong Specialist": 43
+      },
+      "provenance": {
+        "upstream_hf_id": "nvidia/Nemotron-Math-Proofs-v2",
+        "upstream_url": "https://huggingface.co/datasets/nvidia/Nemotron-Math-Proofs-v2",
+        "license": "CC-BY-4.0",
+        "acquisition_date": "2026-08-14T23:05:38.922137+00:00",
+        "source_type": "DISTILLED",
+        "teacher": "DeepSeek-V4-Pro (Max inference mode)",
+        "data_type": "Formally verified proofs",
+        "problem_identity_preserved": true,
+        "attribution_required": true
+      }
+    },
+    "p1-y9-linux-kernel": {
+      "source_id": "p1-y9-linux-kernel",
+      "hf_id": "ewedubs/linux-kernel-commits-aireason-instruct",
+      "category": "03_system_engineering",
+      "subcategory": "linux",
+      "license": "Apache-2.0",
+      "license_class": "VERIFIED COMPATIBLE",
+      "status": "completed",
+      "raw_records": 144089,
+      "sampled_records": 10000,
+      "valid_records": 8803,
+      "duplicate_records": 1197,
+      "rejected_records": 0,
+      "eligible_records": 8803,
+      "staging_bytes": 40846821,
+      "sampling_method": "deterministic_stratified_by_variant",
+      "sampling_seed": 42,
+      "variant_distribution": {
+        "high_score": 3500,
+        "premium_score": 3500,
+        "high_reasoning": 1500,
+        "premium_reasoning": 1500,
+        "super_ultra": 500
+      },
+      "subsystem_distribution": {
+        "other": 8106,
+        "net": 294,
+        "drivers": 159,
+        "mm": 152,
+        "arch": 26,
+        "kernel": 23,
+        "fs": 20,
+        "include": 19,
+        "security": 3,
+        "init": 1
+      },
+      "contamination_check": {
+        "overlaps_with_swe_bench_verified": 0,
+        "risk_level": "LOW"
+      },
+      "frontier_distribution": {
+        "A+ Frontier": 7003,
+        "A Strong Specialist": 1797,
+        "B Professional": 3
+      },
+      "provenance": {
+        "upstream_hf_id": "ewedubs/linux-kernel-commits-aireason-instruct",
+        "upstream_url": "https://huggingface.co/datasets/ewedubs/linux-kernel-commits-aireason-instruct",
+        "license": "Apache-2.0",
+        "acquisition_date": "2026-08-14T23:05:39.013468+00:00",
+        "source_type": "HUMAN_CURATED",
+        "data_type": "Kernel commit patches with instruction",
+        "commit_hash_preserved": true
+      }
+    },
+    "p1-y5-stackexchange-systems": {
+      "source_id": "p1-y5-stackexchange-systems",
+      "status": "blocked",
+      "reason": "No suitable HuggingFace dataset with raw Q&A content found. Canonical source is archive.org XML dumps (unix.stackexchange.com, serverfault.com, networkengineering.stackexchange.com). The HF datasets found (mlfoundations-dev/stackexchange-unix-sandboxes, laion/stackexchange-unix-sandboxes-verified) contain compressed task archives, not extractable Q&A text.",
+      "attempted_sources": [
+        "mlfoundations-dev/stackexchange-unix-sandboxes (10K rows, binary task archives)",
+        "laion/stackexchange-unix-sandboxes-verified (10K rows, binary task archives)",
+        "flax-sentence-embeddings/stackexchange_xml (361 7z archives, hundreds of GB)"
+      ],
+      "license": "CC-BY-SA-4.0",
+      "target_records": 8000,
+      "actual_records": 0,
+      "attribution_required": true,
+      "share_alike": true
+    }
+  },
+  "cross_source_dedup": {
+    "duplicates": 0,
+    "pairs": []
+  },
+  "specialist_mapping": {
+    "p1-swe-smith-mini": {
+      "domain": "Code",
+      "conceptual_domains": [
+        "Code"
+      ]
+    },
+    "p1-nemotron-math-proofs-v2": {
+      "domain": "Math",
+      "conceptual_domains": [
+        "Math"
+      ]
+    },
+    "p1-y9-linux-kernel": {
+      "domain": "Systems",
+      "conceptual_domains": [
+        "Systems",
+        "Hardware"
+      ]
+    },
+    "p1-y5-stackexchange-systems": {
+      "domain": "Systems",
+      "conceptual_domains": [
+        "Systems"
+      ]
+    }
+  },
+  "inventory_by_domain": {
+    "Code": {
+      "records": 65985,
+      "eligible": 65985,
+      "frontier": {
+        "A Strong Specialist": 65833,
+        "B Professional": 152
+      }
+    },
+    "Math": {
+      "records": 43779,
+      "eligible": 43779,
+      "frontier": {
+        "A+ Frontier": 43736,
+        "A Strong Specialist": 43
+      }
+    },
+    "Systems": {
+      "records": 8803,
+      "eligible": 8803,
+      "frontier": {
+        "A+ Frontier": 7003,
+        "A Strong Specialist": 1797,
+        "B Professional": 3
+      }
+    }
+  },
+  "frontier_summary": {
+    "A+ Frontier": 50739,
+    "A Strong Specialist": 67673,
+    "B Professional": 155,
+    "C General": 0,
+    "D Reject": 0
+  },
+  "summary": {
+    "total_sources": 4,
+    "completed": 3,
+    "blocked": 1,
+    "total_raw": 292820,
+    "total_valid": 118567,
+    "total_duplicate": 40164,
+    "total_rejected": 0,
+    "total_eligible": 118567,
+    "total_staging_bytes": 3731914566,
+    "total_estimated_tokens": 3513840
+  }
+}

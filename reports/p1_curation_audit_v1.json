@@ -1,0 +1,153 @@
+{
+  "audit_version": "v1",
+  "date": "2026-08-14",
+  "phase": "P1 Frontier Corpus Curation Audit",
+  "status": "COMPLETE",
+  "corpus_inventory": {
+    "total_records": 118567,
+    "total_estimated_tokens": 933038913,
+    "sources": {
+      "swe_smith_mini": {
+        "records": 65985,
+        "tokens_est": 885290240,
+        "domain": "Code"
+      },
+      "nemotron_math": {
+        "records": 43779,
+        "tokens_est": 39582391,
+        "domain": "Math"
+      },
+      "linux_kernel_y9": {
+        "records": 8803,
+        "tokens_est": 8166282,
+        "domain": "Systems"
+      }
+    }
+  },
+  "record_level_stats": {
+    "swe_smith_mini": {
+      "trajectory_length": {
+        "min": 5,
+        "max": 315,
+        "avg": 69.6,
+        "median": 65
+      },
+      "unique_repos": 109,
+      "task_types": {
+        "bug_fix": "84.6%",
+        "implementation": "12.3%",
+        "testing": "1.4%",
+        "refactoring": "<0.1%"
+      },
+      "languages": {
+        "c": "51.2%",
+        "python": "32.4%",
+        "other": "15.2%"
+      },
+      "tool_use": "minimal (0 tool messages in staging)"
+    },
+    "nemotron_math": {
+      "unique_problems": 5752,
+      "proofs_per_problem": {
+        "avg": 14.38,
+        "median": 15
+      },
+      "domains": {
+        "geometry": "32.8%",
+        "number_theory": "19.2%",
+        "other": "42.8%"
+      },
+      "verification": "formal_proof",
+      "proof_length": {
+        "avg": 1617,
+        "median": 2000
+      }
+    },
+    "linux_kernel_y9": {
+      "subsystems": 15,
+      "instruction_types": {
+        "bugfix": "95.3%",
+        "feature": "3.4%"
+      },
+      "patch_size": {
+        "avg": 1071,
+        "median": 738
+      },
+      "language": "C (100%)"
+    }
+  },
+  "frontier_distribution": {
+    "code": {
+      "A+ Frontier": 0,
+      "A Strong Specialist": 26454,
+      "B Professional": 39531
+    },
+    "math": {
+      "A+ Frontier": 36820,
+      "A Strong Specialist": 6959
+    },
+    "systems": {
+      "A+ Frontier": 2916,
+      "A Strong Specialist": 5857,
+      "B Professional": 30
+    }
+  },
+  "cross_domain_balance": {
+    "records": {
+      "Code": 65985,
+      "Math": 43779,
+      "Systems": 8803
+    },
+    "tokens_pct": {
+      "Code": 95.5,
+      "Math": 4.2,
+      "Systems": 0.9
+    }
+  },
+  "data_gaps": {
+    "code": [
+      "architecture",
+      "long-horizon",
+      "agentic_planning",
+      "non_python_langs"
+    ],
+    "math": [
+      "competition_beyond_aops",
+      "undergraduate_math",
+      "applied_math"
+    ],
+    "systems": [
+      "user_space",
+      "cpu_gpu_arch",
+      "virtualization",
+      "storage",
+      "perf_tuning"
+    ],
+    "hardware": [
+      "cpu_arch",
+      "gpu",
+      "embedded",
+      "firmware"
+    ]
+  },
+  "recommendations": {
+    "immediate": [
+      "Proceed with Option B (Frontier Weighted) for initial training",
+      "Acquire y5 StackExchange in P2 to boost Systems coverage"
+    ],
+    "short_term": [
+      "Add SWE-smith-trajectories for higher-quality code trajectories",
+      "Acquire olympiad math sources for competition diversity"
+    ],
+    "long_term": [
+      "Build hardware corpus (CPU/GPU architecture)",
+      "Add interdisciplinary records"
+    ]
+  },
+  "risks": {
+    "code_concentration": "HIGH \u2014 top 5 repos = 26% of data",
+    "math_redundancy": "MEDIUM \u2014 14x same-problem variants",
+    "systems_narrowness": "HIGH \u2014 kernel-only, no user-space",
+    "domain_imbalance": "HIGH \u2014 Code 95.5% of tokens"
+  }
+}

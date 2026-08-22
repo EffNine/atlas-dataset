@@ -2,7 +2,7 @@
   "layer": "L1",
   "scan_tool": "scripts/evaluation_engine/leakage/scan.py",
   "eval_set_id": "code_eval_v2",
-  "eval_file": "/Users/afnanrudy/Github-Projects/atlas-dataset/evaluation/eval_sets/protocol_v2/code_eval_v2.jsonl",
+  "eval_file": "/home/afnan/projects/active/atlas-dataset/evaluation/eval_sets/protocol_v2/code_eval_v2.jsonl",
   "family": "code",
   "policy_lock": {
     "version": "v1",

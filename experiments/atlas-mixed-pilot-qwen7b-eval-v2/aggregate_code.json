@@ -1,23 +1,22 @@
 {
   "aggregate": {
     "family": "code",
-    "evaluated_examples": 99,
-    "total_examples": 99,
-    "correctness": 0.0089,
-    "reasoning_quality": 0.2711,
+    "evaluated_examples": 3,
+    "total_examples": 3,
+    "correctness": 0.0431,
+    "reasoning_quality": 0.2944,
     "hallucination_rate": 1.0,
     "answer_format_consistency": 1.0,
     "patch_emission_rate": 1.0,
     "format_distribution": {
-      "patch": 99
+      "patch": 3
     },
-    "truncation_rate": 0.0303,
+    "truncation_rate": 0.0,
     "stop_reason_counts": {
-      "eos": 96,
-      "max_length": 3
+      "eos": 3
     },
-    "tokens_mean": 187.55,
-    "tokens_median": 151.0,
+    "tokens_mean": 397.0,
+    "tokens_median": 163.0,
     "budget_fallback_used": 0
   },
   "gpol": {

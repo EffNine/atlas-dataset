@@ -1,0 +1,74 @@
+{
+  "experiment_id": "atlas_500m_pilot_v2_format_fixed",
+  "version": "v0.2",
+  "generated_at": "2026-08-15T12:00:00+00:00",
+  "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "random_seed": 42,
+  "target_tokens_per_arm": 1000000,
+  "arms": {
+    "math": {
+      "arm_type": "specialist",
+      "record_count": 1000,
+      "format_contract": "problem -> reasoning -> \\boxed{answer}",
+      "train_path": "/home/afnan/projects/active/atlas-dataset/pilot/v0.2/math/train.jsonl"
+    },
+    "code": {
+      "arm_type": "specialist",
+      "record_count": 401,
+      "format_contract": "issue description -> unified diff patch",
+      "train_path": "/home/afnan/projects/active/atlas-dataset/pilot/v0.2/code/train.jsonl"
+    },
+    "systems": {
+      "arm_type": "specialist",
+      "record_count": 2000,
+      "format_contract": "kernel context -> diff --git patch",
+      "train_path": "/home/afnan/projects/active/atlas-dataset/pilot/v0.2/systems/train.jsonl"
+    },
+    "general": {
+      "arm_type": "general",
+      "record_count": 1098,
+      "format_contract": "multi-domain mixed",
+      "train_path": "/home/afnan/projects/active/atlas-dataset/pilot/v0.2/general/train.jsonl"
+    }
+  },
+  "evaluation_sets": {
+    "math_eval_v2": {
+      "path": "/home/afnan/projects/active/atlas-dataset/evaluation/eval_sets/protocol_v2/math_eval_v2.jsonl",
+      "n": 100
+    },
+    "code_eval_v2": {
+      "path": "/home/afnan/projects/active/atlas-dataset/evaluation/eval_sets/protocol_v2/code_eval_v2.jsonl",
+      "n": 99
+    },
+    "systems_eval_v2": {
+      "path": "/home/afnan/projects/active/atlas-dataset/evaluation/eval_sets/protocol_v2/systems_eval_v2.jsonl",
+      "n": 350
+    }
+  },
+  "format_contracts": {
+    "math": {
+      "input": "problem (single user message)",
+      "reasoning": "optional step-by-step derivation",
+      "final_answer": "\\boxed{answer} (machine-parseable)",
+      "parser": "extract_last_boxed"
+    },
+    "code": {
+      "input": "GitHub issue / bug description",
+      "reasoning": "optional analysis",
+      "final_answer": "unified diff patch (diff --git format)",
+      "parser": "patch_similarity"
+    },
+    "systems": {
+      "input": "kernel code context + commit instruction",
+      "reasoning": "optional reasoning",
+      "final_answer": "unified diff patch (diff --git format)",
+      "parser": "patch_similarity"
+    }
+  },
+  "contamination_controls": {
+    "math_eval_excluded": true,
+    "code_eval_excluded": true,
+    "systems_eval_cleaned": true,
+    "systems_contamination_removed": 3
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "policy": "max_5pct_per_repo",
+  "before": {
+    "total_records": 65985,
+    "total_tokens": 943803111,
+    "top_repo_pct": 8.2
+  },
+  "after": {
+    "total_records": 62833,
+    "total_tokens": 895077162,
+    "records_removed": 3152,
+    "token_reduction_pct": 5.2
+  },
+  "top_repos_before": [
+    [
+      "conan-io",
+      4798,
+      8.2
+    ],
+    [
+      "(unnamed)",
+      4468,
+      6.4
+    ],
+    [
+      "stanfordnlp",
+      4309,
+      5.6
+    ]
+  ],
+  "top_repos_after": [
+    [
+      "conan-io",
+      2989,
+      5.3
+    ],
+    [
+      "(unnamed)",
+      3560,
+      5.3
+    ],
+    [
+      "stanfordnlp",
+      3874,
+      5.3
+    ]
+  ]
+}

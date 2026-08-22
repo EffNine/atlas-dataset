@@ -1,0 +1,31 @@
+{
+  "eval_set": "/home/afnan/projects/active/atlas-dataset/evaluation/eval_sets/protocol_v2/math_eval_v2_clean.jsonl",
+  "n_records": 87,
+  "family": "math",
+  "models": [
+    {
+      "model_id": "test-exp",
+      "adapter_path": "",
+      "base_model": "Qwen/Qwen2.5-7B-Instruct"
+    }
+  ],
+  "total_runs": 1,
+  "estimated_cost": "87 inferences",
+  "identical_conditions": {
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "quantization": "4bit_nf4",
+    "generation_policy": "dynamic-reference-derived",
+    "extractor": "qee-v2-math-evaluator",
+    "prompt_module": "evaluation_engine.leakage.prompts"
+  },
+  "required_gates": [
+    "G-POL pass for each model",
+    "Determinism spot-check",
+    "Prompt guard 100% pass"
+  ],
+  "statistical_method": {
+    "ci_method": "wilson_score",
+    "paired_test": "mcnemar_exact",
+    "overlap_tracking": true
+  }
+}

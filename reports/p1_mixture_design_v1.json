@@ -1,0 +1,179 @@
+{
+  "title": "Atlas Frontier Mixture v1 \u2014 Design & P2 Acquisition Specification",
+  "date": "2026-08-14",
+  "phase": "P1 Frontier Expansion",
+  "1_current_corpus": {
+    "total_records": 118567,
+    "total_tokens_est": 995703902,
+    "sources": {
+      "swe_smith_mini": {
+        "records": 65985,
+        "tokens": 943803111,
+        "domain": "Code"
+      },
+      "nemotron_math": {
+        "records": 43779,
+        "tokens": 43730565,
+        "domain": "Math"
+      },
+      "linux_kernel_y9": {
+        "records": 8803,
+        "tokens": 8170226,
+        "domain": "Systems"
+      }
+    }
+  },
+  "2_token_mixture": {
+    "option_a": {
+      "math": 0.4,
+      "code": 0.3,
+      "sys": 0.3,
+      "feasible": true,
+      "needs_resampling": true
+    },
+    "option_b": {
+      "math": 0.5,
+      "code": 0.3,
+      "sys": 0.2,
+      "feasible": true,
+      "needs_resampling": true
+    },
+    "option_c": {
+      "math": 0.4,
+      "code": 0.25,
+      "sys": 0.35,
+      "feasible": true,
+      "needs_resampling": true
+    }
+  },
+  "3_frontier_tiers": {
+    "proposed_mix": {
+      "A+": 0.4,
+      "A": 0.4,
+      "B": 0.15,
+      "C": 0.05,
+      "D": 0.0
+    },
+    "current": {
+      "code": {
+        "A+": 0,
+        "A": 0.401,
+        "B": 0.599
+      },
+      "math": {
+        "A+": 0.841,
+        "A": 0.159,
+        "B": 0
+      },
+      "systems": {
+        "A+": 0.331,
+        "A": 0.665,
+        "B": 0.003
+      }
+    }
+  },
+  "4_code_diversification": {
+    "max_token_share_per_repo": "5%",
+    "max_record_share_per_repo": "3%",
+    "language_targets": {
+      "python": "30-40%",
+      "c": "30-40%",
+      "js/ts": "10-15%",
+      "go": "5-10%",
+      "rust": "5-10%"
+    },
+    "task_type_targets": {
+      "bugfix": "<70%",
+      "implementation": "20%",
+      "testing": "5%",
+      "refactoring": "3%"
+    }
+  },
+  "5_math_proof_policy": {
+    "recommendation": "ONE PROOF PER PROBLEM",
+    "rationale": "Already implemented; eliminates 38,958 redundant verification variants",
+    "unique_problems": 5752
+  },
+  "6_systems_coverage": {
+    "existing": [
+      "kernel",
+      "mm",
+      "fs",
+      "net",
+      "drivers",
+      "arch"
+    ],
+    "missing": [
+      "user_space",
+      "cpu_gpu_arch",
+      "virtualization",
+      "performance",
+      "security"
+    ],
+    "stackexchange_fills": [
+      "user_space",
+      "networking_admin",
+      "performance_tuning",
+      "virtualization_admin"
+    ]
+  },
+  "7_p2_stackexchange": {
+    "target_records": 8000,
+    "sites": [
+      "unix.stackexchange.com",
+      "serverfault.com",
+      "networkengineering.stackexchange.com"
+    ],
+    "min_score": 5,
+    "license": "CC-BY-SA-4.0",
+    "priority": "P2"
+  },
+  "8_hardware_gaps": {
+    "capabilities_needed": 10,
+    "capabilities_covered": 0,
+    "priority": [
+      "cpu_arch",
+      "gpu_arch",
+      "memory",
+      "networking",
+      "virtualization",
+      "performance"
+    ]
+  },
+  "9_mixture_recommendation": {
+    "recommended": "Option B \u2014 Frontier Weighted",
+    "weights": {
+      "math": 0.5,
+      "code": 0.3,
+      "sys": 0.2
+    },
+    "rationale": "Highest frontier density while reducing code dominance from 95% to ~70%"
+  },
+  "10_budget_feasibility": {
+    "1M": "SUPPORTED",
+    "5M": "SUPPORTED",
+    "10M": "SUPPORTED",
+    "25M": "SUPPORTED",
+    "50M": "NEEDS RESAMPLING (Systems shortfall)",
+    "500M_pilot": "REQUIRES RESAMPLING (Math x11.4, Systems x24.4)"
+  },
+  "11_specialist_views": {
+    "general": "All domains, no frontier filtering",
+    "math_specialist": "Math 60% / Code 25% / Systems 15%, A+/A prioritized",
+    "code_specialist": "Code 70% / Math 20% / Systems 10%, trajectory depth prioritized",
+    "systems_specialist": "Systems 50% / Code 30% / Math 20%, kernel + SE combined"
+  },
+  "12_evaluation_coverage": {
+    "math": "ADEQUATE with gaps (no undergrad/applied math)",
+    "code": "ADEQUATE with gaps (no generation, only debugging)",
+    "systems": "INADEQUATE (no eval set exists)",
+    "general": "ADEQUATE (minimal but functional)"
+  },
+  "13_next_step": "Proceed with Option B mixture design; initiate P2 StackExchange acquisition",
+  "14_risks": {
+    "code_concentration": "HIGH \u2014 top 5 repos = 26%",
+    "systems_narrowness": "HIGH \u2014 kernel-only, no user-space",
+    "domain_imbalance": "MEDIUM \u2014 mitigated by Option B weighting",
+    "math_redundancy": "LOW \u2014 already deduped to one proof/problem"
+  }
+}

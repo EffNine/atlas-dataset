@@ -1683,5 +1683,50 @@
         "delta": -1.0
       }
     ]
+  },
+  "post_training": {
+    "label": "post_training",
+    "correctness": {
+      "mean": 0.68,
+      "std": 0.468826,
+      "min": 0.0,
+      "max": 1.0,
+      "n": 100
+    },
+    "reasoning_quality": {
+      "mean": 0.7258,
+      "std": 0.321146,
+      "min": 0.26,
+      "max": 0.945,
+      "n": 100
+    },
+    "hallucination_rate": {
+      "mean": 0.32,
+      "std": 0.468826,
+      "min": 0.0,
+      "max": 1.0,
+      "n": 100
+    },
+    "answer_format_consistency": {
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0,
+      "n": 100
+    },
+    "evaluated_examples": 100,
+    "total_examples": 100,
+    "truncation_rate": 0.95,
+    "stop_reason_counts": {
+      "max_length": 95,
+      "eos": 5
+    },
+    "method_counts": {
+      "number": 49,
+      "unparsable": 32,
+      "numeric_sampling": 17,
+      "robust(text_commands)": 1,
+      "robust(split_equation)": 1
+    }
   }
 }

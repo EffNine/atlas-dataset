@@ -1,0 +1,44 @@
+{
+  "experiment_id": "atlas-math-pilot-nemotron8b-lora-v1",
+  "phase": "6.2",
+  "training_view_id": "math_300m_v0.1",
+  "base_model": "nvidia/Nemotron-Orchestrator-8B",
+  "quantization": {
+    "load_in_4bit": true,
+    "bnb_4bit_use_double_quant": true,
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_compute_dtype": "bfloat16"
+  },
+  "lora": {
+    "r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "bias": "none",
+    "task_type": "CAUSAL_LM",
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  },
+  "training": {
+    "seed": 42,
+    "max_seq_length": 1024,
+    "max_steps": 60,
+    "per_device_train_batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "effective_batch_size": 8,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.01,
+    "lr_scheduler_type": "cosine",
+    "warmup_ratio": 0.03,
+    "optim": "paged_adamw_8bit",
+    "max_grad_norm": 1.0,
+    "bf16": true,
+    "gradient_checkpointing": true
+  }
+}

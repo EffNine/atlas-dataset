@@ -1,0 +1,143 @@
+[
+  {
+    "source_id": "p0-nemotron-math-proofs-v2",
+    "hf_id": "nvidia/Nemotron-Math-Proofs-v2",
+    "role": "TRAINING",
+    "domain": "math",
+    "category": "06_science_engineering",
+    "subcategory": "mathematics",
+    "license": "cc-by-4.0",
+    "license_class": "VERIFIED COMPATIBLE",
+    "train_eligible": true,
+    "eval_eligible": false,
+    "strict_split_required": false,
+    "specialist_pools": [
+      "Math"
+    ],
+    "contamination_risk": "MEDIUM \u2014 widely-used benchmarks"
+  },
+  {
+    "source_id": "p0-swe-smith-trajectories",
+    "hf_id": "SWE-bench/SWE-smith-trajectories",
+    "role": "TRAINING",
+    "domain": "code",
+    "category": "02_software_engineering",
+    "subcategory": "debugging",
+    "license": "mit",
+    "license_class": "VERIFIED COMPATIBLE",
+    "train_eligible": true,
+    "eval_eligible": false,
+    "strict_split_required": false,
+    "specialist_pools": [
+      "Code",
+      "Software Engineering"
+    ],
+    "contamination_risk": "MEDIUM \u2014 widely-used benchmarks"
+  },
+  {
+    "source_id": "p0-cpp-compiler-curriculum",
+    "hf_id": "gonzalolinares/cpp-compiler-curriculum",
+    "role": "TRAINING",
+    "domain": "systems",
+    "category": "03_system_engineering",
+    "subcategory": "linux",
+    "license": "apache-2.0",
+    "license_class": "VERIFIED COMPATIBLE",
+    "train_eligible": true,
+    "eval_eligible": false,
+    "strict_split_required": false,
+    "specialist_pools": [
+      "Systems",
+      "Hardware"
+    ],
+    "contamination_risk": "LOW"
+  },
+  {
+    "source_id": "p0-swe-smith-mini",
+    "hf_id": "Kwai-Klear/SWE-smith-mini_swe_agent_plus-trajectories-66k",
+    "role": "TRAINING",
+    "domain": "code",
+    "category": "02_software_engineering",
+    "subcategory": "debugging",
+    "license": "mit",
+    "license_class": "VERIFIED COMPATIBLE",
+    "train_eligible": true,
+    "eval_eligible": false,
+    "strict_split_required": false,
+    "specialist_pools": [
+      "Code",
+      "Software Engineering"
+    ],
+    "contamination_risk": "MEDIUM \u2014 widely-used benchmarks"
+  },
+  {
+    "source_id": "p0-ifeval",
+    "hf_id": "google/IFEval",
+    "role": "EVALUATION",
+    "domain": "evaluation",
+    "category": "06_science_engineering",
+    "subcategory": "general",
+    "license": "apache-2.0",
+    "license_class": "VERIFIED COMPATIBLE",
+    "train_eligible": false,
+    "eval_eligible": true,
+    "strict_split_required": false,
+    "specialist_pools": [
+      "Evaluation (protected)"
+    ],
+    "contamination_risk": "HIGH \u2014 EVAL ONLY, must not mix with training"
+  },
+  {
+    "source_id": "p0-swe-bench-verified",
+    "hf_id": "princeton-nlp/SWE-bench_Verified",
+    "role": "BOTH_WITH_STRICT_SPLIT",
+    "domain": "code",
+    "category": "02_software_engineering",
+    "subcategory": "debugging",
+    "license": "None",
+    "license_class": "NEEDS REVIEW",
+    "train_eligible": true,
+    "eval_eligible": true,
+    "strict_split_required": true,
+    "specialist_pools": [
+      "Code",
+      "Software Engineering"
+    ],
+    "contamination_risk": "MEDIUM \u2014 strict train/eval split required"
+  },
+  {
+    "source_id": "p0-multi-domain-reasoning",
+    "hf_id": "khazarai/Multi-Domain-Reasoning-Benchmark",
+    "role": "TRAINING",
+    "domain": "reasoning",
+    "category": "06_science_engineering",
+    "subcategory": "general",
+    "license": "apache-2.0",
+    "license_class": "VERIFIED COMPATIBLE",
+    "train_eligible": true,
+    "eval_eligible": false,
+    "strict_split_required": false,
+    "specialist_pools": [
+      "General Reasoning"
+    ],
+    "contamination_risk": "LOW"
+  },
+  {
+    "source_id": "p0-quantum-hardware-physics",
+    "hf_id": "Neura-parse/quantum-hardware-device-physics",
+    "role": "TRAINING",
+    "domain": "science",
+    "category": "05_hardware_engineering",
+    "subcategory": "cpu",
+    "license": "cc-by-4.0",
+    "license_class": "VERIFIED COMPATIBLE",
+    "train_eligible": true,
+    "eval_eligible": false,
+    "strict_split_required": false,
+    "specialist_pools": [
+      "Science",
+      "Hardware"
+    ],
+    "contamination_risk": "LOW"
+  }
+]

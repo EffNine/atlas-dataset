@@ -1,0 +1,87 @@
+{
+  "experiment_id": "cal-math-20260811-v1",
+  "family": "math",
+  "eval_set_path": "evaluation/eval_sets/protocol_v2/math_eval_v2_clean.jsonl",
+  "n_records_total": 87,
+  "n_records_evaluated": 30,
+  "policies": [
+    {
+      "family": "math",
+      "alpha": 1.5,
+      "base_budget": 128,
+      "n_records": 30,
+      "truncation_count": 0,
+      "truncation_rate": 0.0,
+      "stop_reason_counts": {
+        "eos": 30
+      },
+      "tokens_generated_values": [],
+      "budget_fallback_count": 0,
+      "gpol_pass": true,
+      "gpol_checks": {
+        "truncation_rate_le_0.05": true
+      },
+      "deterministic_repeatable": null,
+      "run_id": "",
+      "note": "analytical (alpha=1.5); inference verification required",
+      "tokens_mean": null,
+      "tokens_median": null,
+      "tokens_p90": null
+    },
+    {
+      "family": "math",
+      "alpha": 2.0,
+      "base_budget": 128,
+      "n_records": 30,
+      "truncation_count": 0,
+      "truncation_rate": 0.0,
+      "stop_reason_counts": {
+        "eos": 30
+      },
+      "tokens_generated_values": [],
+      "budget_fallback_count": 0,
+      "gpol_pass": true,
+      "gpol_checks": {
+        "truncation_rate_le_0.05": true
+      },
+      "deterministic_repeatable": null,
+      "run_id": "",
+      "note": "analytical (alpha=2.0); inference verification required",
+      "tokens_mean": null,
+      "tokens_median": null,
+      "tokens_p90": null
+    },
+    {
+      "family": "math",
+      "alpha": 3.0,
+      "base_budget": 128,
+      "n_records": 30,
+      "truncation_count": 0,
+      "truncation_rate": 0.0,
+      "stop_reason_counts": {
+        "eos": 30
+      },
+      "tokens_generated_values": [],
+      "budget_fallback_count": 0,
+      "gpol_pass": true,
+      "gpol_checks": {
+        "truncation_rate_le_0.05": true
+      },
+      "deterministic_repeatable": null,
+      "run_id": "",
+      "note": "analytical (alpha=3.0); inference verification required",
+      "tokens_mean": null,
+      "tokens_median": null,
+      "tokens_p90": null
+    }
+  ],
+  "recommended_policy": "math",
+  "recommended_alpha": 1.5,
+  "status": "completed",
+  "verdict": "PASS",
+  "evidence_refs": [
+    "evaluation/eval_sets/protocol_v2/math_eval_v2_clean.jsonl"
+  ],
+  "generated_at": "2026-08-11T16:56:53.320454+00:00",
+  "notes": "Analytical calibration: truncation rates are placeholders. Run inference-based calibration on CUDA hardware for measured values."
+}

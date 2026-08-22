@@ -1,6 +1,6 @@
 {
   "schema": "metadata/training_readiness_report.json",
-  "generated_at": "2026-07-27T18:37:11.149872+00:00",
+  "generated_at": "2026-08-12T22:58:19.724610+00:00",
   "dataset_version": "v0.2",
   "verdict": "BLOCKED",
   "dimensions": {
@@ -30,93 +30,40 @@
     },
     "data_quality_readiness": {
       "status": "BLOCKED",
-      "total_records": 663,
-      "quality_distribution": {
-        "7": 362,
-        "8": 58,
-        "5": 14,
-        "6": 20,
-        "9": 209
-      },
-      "quality_mean": 7.0,
-      "missing_lineage": 158,
-      "schema_compliance": false,
-      "provenance_status": "PARTIAL",
+      "total_records": 0,
+      "quality_distribution": {},
+      "quality_mean": 0.0,
+      "missing_lineage": 0,
+      "schema_compliance": true,
+      "provenance_status": "UNKNOWN",
       "details": [
-        "Missing lineage on 158 record(s)",
-        "Unresolved provenance on 158 record(s)",
-        "Schema compliance issues: 158 record(s)"
+        "No curated records found"
       ],
-      "quality_min": 5,
-      "quality_max": 9,
-      "missing_provenance": 158,
-      "schema_issues": 158,
-      "blocked_conditions": [
-        "Missing lineage on 158 record(s)",
-        "Unresolved provenance on 158 record(s)",
-        "Schema compliance issues: 158 record(s)"
-      ],
-      "warnings": [],
       "sources": [
         "curated/"
       ]
     },
     "license_readiness": {
       "status": "BLOCKED",
-      "total_records": 663,
-      "license_distribution": {
-        "unknown": 158,
-        "Apache-2.0": 89,
-        "CC-BY-4.0": 34,
-        "MIT": 78,
-        "ODC-BY": 62,
-        "CC-BY-SA-4.0": 36,
-        "CC-BY-SA-3.0": 32,
-        "arXiv non-exclusive license": 18,
-        "Public Domain (US)": 16,
-        "CC-BY-4.0 (gated; verify on access)": 4,
-        "MIT (verify; PII caution)": 4,
-        "BigCode Open RAIL-M (use-restricted)": 8,
-        "BigCode Open RAIL-M": 8,
-        "CC-BY-SA-4.0 (attribution + share-alike)": 8,
-        "Apache-2.0 (verify; repo 404 at check)": 6,
-        "Apache-2.0 (gated; verify)": 6,
-        "Public domain / MIT-style (man-pages); GFDL for some kernel docs": 8,
-        "CC-BY-4.0 (docs repo)": 6,
-        "Apache-2.0 (docs repo)": 6,
-        "CC-BY-SA-4.0 (some GFDL)": 6,
-        "CC-BY-SA-4.0 (Red Hat Customer Portal docs)": 6,
-        "arXiv.org perpetual non-exclusive license (preprint; no copyright transfer)": 10,
-        "Mixed (per-subset; many ODC-BY/CC; some restricted)": 10,
-        "Custom / research-only (verify)": 10,
-        "CC-BY-SA-4.0 (verify)": 4,
-        "CC-BY-4.0 (generated; must human-review)": 4,
-        "MIT (gated; verify)": 4,
-        "CC-BY-4.0 (must human-review)": 8,
-        "CC-BY-4.0 (generated; human-review)": 14
-      },
+      "total_records": 0,
+      "license_distribution": {},
       "denied_licenses": {
         "source:f8": 1,
         "source:h5": 1,
         "source:r4": 1,
         "source:x1": 1,
         "source:x2": 1,
-        "source:y8": 1,
-        "unknown": 158
+        "source:y8": 1
       },
-      "unknown_licenses": {
-        "unknown": 158
-      },
-      "attribution_required": 435,
-      "attribution_complete": 435,
+      "unknown_licenses": {},
+      "attribution_required": 0,
+      "attribution_complete": 0,
       "details": [
-        "Denied licenses found: 164 record(s)",
-        "Unknown licenses found: 158 record(s)"
+        "Denied licenses found: 6 record(s)"
       ],
       "attribution_pending": 0,
       "blocked_conditions": [
-        "Denied licenses found: 164 record(s)",
-        "Unknown licenses found: 158 record(s)"
+        "Denied licenses found: 6 record(s)"
       ],
       "warnings": [],
       "sources": [
@@ -126,19 +73,17 @@
     },
     "evaluation_readiness": {
       "status": "CONDITIONAL",
-      "benchmark_count": 7,
+      "benchmark_count": 8,
       "internal_benchmarks": 3,
-      "external_benchmarks": 4,
-      "evaluation_reports": 0,
+      "external_benchmarks": 5,
+      "evaluation_reports": 7,
       "evaluation_reproducible": false,
       "details": [
-        "No verified/reproducible evaluation benchmarks",
-        "No evaluation reports found"
+        "No verified/reproducible evaluation benchmarks"
       ],
       "blocked_conditions": [],
       "warnings": [
-        "No verified/reproducible evaluation benchmarks",
-        "No evaluation reports found"
+        "No verified/reproducible evaluation benchmarks"
       ],
       "sources": [
         "metadata/benchmark_registry.json",
@@ -159,35 +104,35 @@
       "status": "BLOCKED",
       "passed": false,
       "description": "All records must have complete lineage",
-      "detail": "Missing lineage on 158 record(s); Unresolved provenance on 158 record(s); Schema compliance issues: 158 record(s)"
+      "detail": "No curated records found"
     },
     {
       "gate": "provenance_gate",
       "status": "BLOCKED",
       "passed": false,
       "description": "All records must have resolved provenance",
-      "detail": "Missing lineage on 158 record(s); Unresolved provenance on 158 record(s); Schema compliance issues: 158 record(s)"
+      "detail": "No curated records found"
     },
     {
       "gate": "license_gate",
       "status": "BLOCKED",
       "passed": false,
       "description": "No denied or unknown licenses",
-      "detail": "Denied licenses found: 164 record(s); Unknown licenses found: 158 record(s)"
+      "detail": "Denied licenses found: 6 record(s)"
     },
     {
       "gate": "quality_gate",
       "status": "BLOCKED",
       "passed": false,
       "description": "Quality scores must exist with variance",
-      "detail": "Missing lineage on 158 record(s); Unresolved provenance on 158 record(s); Schema compliance issues: 158 record(s)"
+      "detail": "No curated records found"
     },
     {
       "gate": "evaluation_gate",
       "status": "CONDITIONAL",
       "passed": false,
       "description": "Evaluation benchmarks available and reproducible",
-      "detail": "No verified/reproducible evaluation benchmarks; No evaluation reports found"
+      "detail": "No verified/reproducible evaluation benchmarks"
     }
   ],
   "gate_summary": {
@@ -200,13 +145,13 @@
     "approved_records": 0,
     "pending_records": 150,
     "approval_rate": 0.0,
-    "quality_mean": 7.0,
-    "missing_lineage": 158,
-    "missing_provenance": 158,
-    "denied_licenses": 164,
-    "unknown_licenses": 158,
-    "benchmark_count": 7,
-    "evaluation_reports": 0
+    "quality_mean": 0.0,
+    "missing_lineage": 0,
+    "missing_provenance": 0,
+    "denied_licenses": 6,
+    "unknown_licenses": 0,
+    "benchmark_count": 8,
+    "evaluation_reports": 7
   },
   "rules_applied": [
     "Any pending human review \u2192 BLOCKED",
@@ -215,5 +160,5 @@
     "Any denied/unknown license \u2192 BLOCKED",
     "No evaluation benchmarks \u2192 BLOCKED"
   ],
-  "report_hash": "590b6a02fcf7781f997efc07b2a1d80df42ed15df7e3d618fe299fa31f7b7b61"
+  "report_hash": "88132ca603e07fe12598cc12d258f90aaab3b7f632f85c2fe0fd410863d59f17"
 }

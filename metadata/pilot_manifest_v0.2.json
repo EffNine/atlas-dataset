@@ -1,0 +1,217 @@
+{
+  "experiment_id": "atlas-500m-pilot-v0.1",
+  "version": "v0.1",
+  "generated_at": "2026-08-15T00:01:23.836342+00:00",
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "model_revision": "d1fb931",
+  "tokenizer": "Qwen/Qwen2.5-0.5B-Instruct",
+  "training_method": "sft_lora",
+  "target_tokens": 1000000,
+  "tolerance": 0.1,
+  "random_seed": 42,
+  "dataset_manifest": {
+    "general": {
+      "arm_type": "general",
+      "specialist_policy": null,
+      "record_count": 1167,
+      "total_tokens": 1012158,
+      "token_variance_pct": 1.2,
+      "within_tolerance": true,
+      "train_path": "/home/afnan/projects/active/atlas-dataset/pilot/v0.1/general/train.jsonl",
+      "train_sha256": "e0189775aacf9102bf96876c2e21818f09500e5803283600a365289d4bde14f5",
+      "inclusion_policy": {
+        "source_ids": [
+          "p1-swe-smith-mini",
+          "p1-nemotron-math-proofs-v2",
+          "p1-y9-linux-kernel"
+        ],
+        "diversification": null,
+        "eval_exclusion": true,
+        "deterministic_sampling": true,
+        "sampling_seed": 42
+      },
+      "exclusion_policy": {
+        "eval_sets": [
+          "math_eval_v2",
+          "code_eval_v2",
+          "general_eval_v1",
+          "systems_eval_v1",
+          "ifeval",
+          "swe_bench_verified"
+        ]
+      }
+    },
+    "math": {
+      "arm_type": "specialist",
+      "specialist_policy": "math",
+      "record_count": 1181,
+      "total_tokens": 950441,
+      "token_variance_pct": 5.0,
+      "within_tolerance": true,
+      "train_path": "/home/afnan/projects/active/atlas-dataset/pilot/v0.1/math/train.jsonl",
+      "train_sha256": "7c54d508004dbfd983bbcbae0eee706614f51a1ab4ed5982796e7b55f3074b0a",
+      "inclusion_policy": {
+        "source_ids": [
+          "p1-swe-smith-mini",
+          "p1-nemotron-math-proofs-v2",
+          "p1-y9-linux-kernel"
+        ],
+        "diversification": null,
+        "eval_exclusion": true,
+        "deterministic_sampling": true,
+        "sampling_seed": 42
+      },
+      "exclusion_policy": {
+        "eval_sets": [
+          "math_eval_v2",
+          "code_eval_v2",
+          "general_eval_v1",
+          "systems_eval_v1",
+          "ifeval",
+          "swe_bench_verified"
+        ]
+      }
+    },
+    "code": {
+      "arm_type": "specialist",
+      "specialist_policy": "code",
+      "record_count": 510,
+      "total_tokens": 951050,
+      "token_variance_pct": 4.9,
+      "within_tolerance": true,
+      "train_path": "/home/afnan/projects/active/atlas-dataset/pilot/v0.1/code/train.jsonl",
+      "train_sha256": "cf4a21e2bbfe5acabbe9a198f26bd54ea4da7b51b1fcc97f8a4ad342001dd948",
+      "inclusion_policy": {
+        "source_ids": [
+          "p1-swe-smith-mini",
+          "p1-nemotron-math-proofs-v2",
+          "p1-y9-linux-kernel"
+        ],
+        "diversification": "max_5pct_per_repo",
+        "eval_exclusion": true,
+        "deterministic_sampling": true,
+        "sampling_seed": 42
+      },
+      "exclusion_policy": {
+        "eval_sets": [
+          "math_eval_v2",
+          "code_eval_v2",
+          "general_eval_v1",
+          "systems_eval_v1",
+          "ifeval",
+          "swe_bench_verified"
+        ]
+      }
+    },
+    "systems": {
+      "arm_type": "specialist",
+      "specialist_policy": "systems",
+      "record_count": 2034,
+      "total_tokens": 950309,
+      "token_variance_pct": 5.0,
+      "within_tolerance": true,
+      "train_path": "/home/afnan/projects/active/atlas-dataset/pilot/v0.1/systems/train.jsonl",
+      "train_sha256": "093e5c06b3e4f776ddc441f0b0b2ee27b250f4ac7dcc89dfb1c822d79321984d",
+      "inclusion_policy": {
+        "source_ids": [
+          "p1-swe-smith-mini",
+          "p1-nemotron-math-proofs-v2",
+          "p1-y9-linux-kernel"
+        ],
+        "diversification": null,
+        "eval_exclusion": true,
+        "deterministic_sampling": true,
+        "sampling_seed": 42
+      },
+      "exclusion_policy": {
+        "eval_sets": [
+          "math_eval_v2",
+          "code_eval_v2",
+          "general_eval_v1",
+          "systems_eval_v1",
+          "ifeval",
+          "swe_bench_verified"
+        ]
+      }
+    }
+  },
+  "evaluation_manifest": {
+    "math_eval_v2": {
+      "protected": true
+    },
+    "code_eval_v2": {
+      "protected": true
+    },
+    "systems_eval_v1": {
+      "protected": true
+    },
+    "general_eval_v1": {
+      "protected": true
+    },
+    "ifeval": {
+      "protected": true
+    },
+    "swe_bench_verified": {
+      "protected": true
+    }
+  },
+  "contamination_checks": {
+    "eval_vs_training": "PASS",
+    "cross_source": "PASS",
+    "checked_at": "2026-08-15T00:01:23.836342+00:00"
+  },
+  "source_lineage": {
+    "p1_swe_smith_mini": {
+      "hf_id": "Kwai-Klear/SWE-smith-mini_swe_agent_plus-trajectories-66k",
+      "license": "MIT"
+    },
+    "p1_nemotron_math": {
+      "hf_id": "nvidia/Nemotron-Math-Proofs-v2",
+      "license": "CC-BY-4.0"
+    },
+    "p1_linux_kernel_y9": {
+      "hf_id": "ewedubs/linux-kernel-commits-aireason-instruct",
+      "license": "Apache-2.0"
+    }
+  },
+  "specialist_vs_general": {
+    "note": "Specialist: 100% domain. General: multi-domain.",
+    "arms": {
+      "base": "No training",
+      "general": "Multi-domain",
+      "math": "100% Math",
+      "code": "100% Code",
+      "systems": "100% Systems"
+    }
+  },
+  "token_counts": {
+    "general": {
+      "target": 1000000,
+      "actual": 1012158,
+      "variance_pct": 1.2,
+      "within_tolerance": true
+    },
+    "math": {
+      "target": 1000000,
+      "actual": 950441,
+      "variance_pct": 5.0,
+      "within_tolerance": true
+    },
+    "code": {
+      "target": 1000000,
+      "actual": 951050,
+      "variance_pct": 4.9,
+      "within_tolerance": true
+    },
+    "systems": {
+      "target": 1000000,
+      "actual": 950309,
+      "variance_pct": 5.0,
+      "within_tolerance": true
+    }
+  },
+  "checksum": {
+    "algorithm": "SHA-256",
+    "manifest": "baaf39086280aa0c5d8d5734b1fbc82d243a748002331625a56b5273cbda683b"
+  }
+}

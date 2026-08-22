@@ -1,0 +1,904 @@
+{
+  "experiment_id": "clean_math_eval_v2",
+  "evaluation_id": "m1_m2_m2prime_clean_comparison",
+  "status": "COMPLETE",
+  "generated_at": "2026-08-11T16:38:25.294174+00:00",
+  "hardware": {
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 5070",
+    "vram_total_mib": 11774.0,
+    "torch_version": "2.13.0+cu130",
+    "cuda_version": "13.0"
+  },
+  "dataset": {
+    "eval_set": "math_eval_v2_clean",
+    "eval_jsonl": "/home/afnan/projects/active/atlas-dataset/evaluation/eval_sets/protocol_v2/math_eval_v2_clean.jsonl",
+    "n_records": 87,
+    "checksum": "90ce0cc1a0b45ef06c3701897df13cd3e875fb8b0637a0d95ce8404aeb04ce75",
+    "description": "math_eval_v2 minus 13 M2 training-overlap records",
+    "overlap_audit": {
+      "m1_training_overlap": 0,
+      "m2_training_overlap": 13,
+      "m2prime_training_overlap": 0,
+      "clean_for_m1": true,
+      "clean_for_m2": true,
+      "clean_for_m2prime": true
+    }
+  },
+  "models": {
+    "m1": {
+      "correctness_mean": 0.6801,
+      "n": 87,
+      "wilson_ci_95": [
+        0.5762,
+        0.7687
+      ]
+    },
+    "m2": {
+      "correctness_mean": 0.6552,
+      "n": 87,
+      "wilson_ci_95": [
+        0.5506,
+        0.7466
+      ]
+    },
+    "m2prime": {
+      "correctness_mean": 0.6284,
+      "n": 87,
+      "wilson_ci_95": [
+        0.5234,
+        0.7224
+      ]
+    }
+  },
+  "deltas": {
+    "m2_vs_m1": -0.0249,
+    "m2prime_vs_m1": -0.0517,
+    "m2prime_vs_m2": -0.0268
+  },
+  "statistical_comparison": {
+    "m2_vs_m1": {
+      "paired_ttest": {
+        "t_stat": 0.5447,
+        "p_value": 0.585954,
+        "interpretation": "not significant"
+      },
+      "mcnemar": {
+        "chi2": 0.2667,
+        "p_value": 0.8752,
+        "discordant_b": 9,
+        "discordant_c": 6
+      }
+    },
+    "m2prime_vs_m1": {
+      "paired_ttest": {
+        "t_stat": 1.5801,
+        "p_value": 0.11408,
+        "interpretation": "not significant"
+      },
+      "mcnemar": {
+        "chi2": 1.125,
+        "p_value": 0.5698,
+        "discordant_b": 6,
+        "discordant_c": 2
+      }
+    },
+    "m2prime_vs_m2": {
+      "paired_ttest": {
+        "t_stat": 0.6226,
+        "p_value": 0.533521,
+        "interpretation": "not significant"
+      }
+    }
+  },
+  "power_analysis": {
+    "m2_vs_m1": {
+      "observed_diff": 0.0249,
+      "power_at_n87": 0.0536
+    },
+    "m2prime_vs_m1": {
+      "observed_diff": 0.0517,
+      "power_at_n87": 0.107
+    },
+    "note": "Power is low for detecting small effects (2-3pp) at N=87. N>=500 needed for >10% power."
+  },
+  "discordant_pairs": {
+    "m2_vs_m1": {
+      "both_correct": 50,
+      "both_incorrect": 21,
+      "a_correct_b_incorrect": 9,
+      "a_incorrect_b_correct": 6
+    },
+    "m2prime_vs_m1": {
+      "both_correct": 52,
+      "both_incorrect": 25,
+      "a_correct_b_incorrect": 6,
+      "a_incorrect_b_correct": 2
+    }
+  },
+  "per_example": [
+    {
+      "record_id": "expert_math_000021",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000033",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000046",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 1.0,
+      "m2prime_vs_m2": 1.0
+    },
+    {
+      "record_id": "expert_math_000057",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000185",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000221",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000254",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000287",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000288",
+      "m1": 1.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": -1.0,
+      "m2prime_vs_m1": -1.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000328",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000448",
+      "m1": 0.0,
+      "m2": 1.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 1.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": -1.0
+    },
+    {
+      "record_id": "expert_math_000477",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000512",
+      "m1": 1.0,
+      "m2": 0.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": -1.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 1.0
+    },
+    {
+      "record_id": "expert_math_000513",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000514",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000524",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000561",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000602",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000706",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000708",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000732",
+      "m1": 0.0,
+      "m2": 1.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 1.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": -1.0
+    },
+    {
+      "record_id": "expert_math_000764",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000788",
+      "m1": 1.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": -1.0,
+      "m2prime_vs_m1": -1.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000849",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000905",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000937",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_000989",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001000",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001177",
+      "m1": 0.0,
+      "m2": 1.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 1.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": -1.0
+    },
+    {
+      "record_id": "expert_math_001199",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001224",
+      "m1": 1.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": -1.0,
+      "m2prime_vs_m1": -1.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001277",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001286",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001296",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001305",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001362",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001433",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001452",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001478",
+      "m1": 1.0,
+      "m2": 0.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": -1.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 1.0
+    },
+    {
+      "record_id": "expert_math_001519",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001535",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": -1.0,
+      "m2prime_vs_m2": -1.0
+    },
+    {
+      "record_id": "expert_math_001600",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001712",
+      "m1": 1.0,
+      "m2": 0.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": -1.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 1.0
+    },
+    {
+      "record_id": "expert_math_001731",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001779",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001783",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001820",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001839",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001907",
+      "m1": 0.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 1.0,
+      "m2prime_vs_m1": 1.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001920",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001951",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 0.5,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": -0.5,
+      "m2prime_vs_m2": -0.5
+    },
+    {
+      "record_id": "expert_math_001969",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_001983",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002074",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002131",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002137",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002179",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002203",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002244",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002286",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002346",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002350",
+      "m1": 0.0,
+      "m2": 1.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 1.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": -1.0
+    },
+    {
+      "record_id": "expert_math_002362",
+      "m1": 0.0,
+      "m2": 1.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 1.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": -1.0
+    },
+    {
+      "record_id": "expert_math_002371",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002375",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002388",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002413",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002426",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002450",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002558",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002566",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002578",
+      "m1": 1.0,
+      "m2": 0.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": -1.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 1.0
+    },
+    {
+      "record_id": "expert_math_002598",
+      "m1": 1.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": -1.0,
+      "m2prime_vs_m1": -1.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002677",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002689",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": -1.0,
+      "m2prime_vs_m2": -1.0
+    },
+    {
+      "record_id": "expert_math_002706",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002722",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002731",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002747",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002775",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002780",
+      "m1": 0.0,
+      "m2": 0.0,
+      "m2prime": 0.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002819",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002844",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002932",
+      "m1": 0.1667,
+      "m2": 1.0,
+      "m2prime": 0.1667,
+      "m2_vs_m1": 0.8333,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": -0.8333
+    },
+    {
+      "record_id": "expert_math_002942",
+      "m1": 1.0,
+      "m2": 0.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": -1.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 1.0
+    },
+    {
+      "record_id": "expert_math_002956",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    },
+    {
+      "record_id": "expert_math_002981",
+      "m1": 1.0,
+      "m2": 1.0,
+      "m2prime": 1.0,
+      "m2_vs_m1": 0.0,
+      "m2prime_vs_m1": 0.0,
+      "m2prime_vs_m2": 0.0
+    }
+  ]
+}

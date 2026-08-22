@@ -1,0 +1,44 @@
+{
+  "experiment_id": "lora_pilot_math_m2_v0.1",
+  "phase": "5B.4",
+  "evaluation_id": "post_training_m2",
+  "status": "COMPLETE",
+  "model": "LORA_ADAPTER",
+  "model_id": "Qwen/Qwen2.5-7B-Instruct",
+  "adapter_label": "m2",
+  "adapter_path": "/home/afnan/projects/active/atlas-dataset/experiments/lora_pilot_math_m2_v0.1/checkpoints",
+  "hardware": {
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 5070",
+    "vram_total_mib": 11774.0,
+    "torch_version": "2.13.0+cu130",
+    "cuda_version": "13.0"
+  },
+  "generated_at": "2026-08-11T15:33:43.898621+00:00",
+  "inference_config": {
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "adapter": "/home/afnan/projects/active/atlas-dataset/experiments/lora_pilot_math_m2_v0.1/checkpoints",
+    "quantization": "4bit_nf4_double_quant",
+    "max_new_tokens": 256,
+    "sampling": "greedy"
+  },
+  "scoring": {
+    "engine": "scripts/evaluation_engine/v2 (QEE v2)",
+    "dispatch": "authoritative eval set: math_eval_v2"
+  },
+  "dataset": {
+    "eval_set": "math_eval_v2",
+    "eval_jsonl": "/home/afnan/projects/active/atlas-dataset/evaluation/eval_sets/protocol_v2/math_eval_v2.jsonl",
+    "n_records": 100,
+    "checksum": "16288500568c4dc161beaf55d557709519ab5d41eea0aeddd01c5fc735989056"
+  },
+  "aggregate": {
+    "correctness": 0.68,
+    "reasoning_quality": 0.7258,
+    "hallucination_rate": 0.32,
+    "answer_format_consistency": 1.0,
+    "evaluated_examples": 100,
+    "total_examples": 100
+  },
+  "total_examples": 100
+}

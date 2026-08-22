@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "generated_at": "2026-08-15T14:33:03.242626+00:00",
+  "total_records": 10000,
+  "train_records": 9000,
+  "val_records": 1000,
+  "category_distribution": {
+    "architecture": 1334,
+    "debugging": 1575,
+    "code_review": 1073,
+    "planning": 920,
+    "testing": 778,
+    "refactoring": 937,
+    "devops": 637,
+    "api_design": 770,
+    "database": 1044,
+    "performance": 932
+  },
+  "difficulty_distribution": {
+    "L2": 1508,
+    "L3": 4047,
+    "L4": 3445,
+    "L5": 1000
+  },
+  "diversity_metrics": {
+    "full_content_uniqueness": 0.9973,
+    "short_content_uniqueness": 0.9582,
+    "category_count": 10,
+    "difficulty_count": 4,
+    "project_type_count": 15,
+    "reasoning_structure_count": 12
+  },
+  "config": {
+    "seed": 42,
+    "total_records": 10000,
+    "output_dir": 

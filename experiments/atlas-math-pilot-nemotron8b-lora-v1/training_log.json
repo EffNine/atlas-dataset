@@ -1,0 +1,75 @@
+{
+  "experiment_id": "atlas-math-pilot-nemotron8b-lora-v1",
+  "phase": "6.2",
+  "status": "COMPLETED",
+  "pre_training": {
+    "git_commit": "3cd0f658ac379779b18e649ed7164142461c6637",
+    "git_short": "3cd0f65",
+    "train_jsonl_sha256": "6aecc2a754c1a4aec941a9dbb59136445cf04175a0ae02c158e86acd4e4a4572",
+    "approved_train_sha256": "6aecc2a754c1a4aec941a9dbb59136445cf04175a0ae02c158e86acd4e4a4572",
+    "checksum_match": true,
+    "model_revision": "26df4b9aad5abdc5b7871ee4c71063ce888feb26"
+  },
+  "config": {
+    "experiment_id": "atlas-math-pilot-nemotron8b-lora-v1",
+    "phase": "6.2",
+    "training_view_id": "math_300m_v0.1",
+    "base_model": "nvidia/Nemotron-Orchestrator-8B",
+    "quantization": {
+      "load_in_4bit": true,
+      "bnb_4bit_use_double_quant": true,
+      "bnb_4bit_quant_type": "nf4",
+      "bnb_4bit_compute_dtype": "bfloat16"
+    },
+    "lora": {
+      "r": 8,
+      "lora_alpha": 16,
+      "lora_dropout": 0.05,
+      "bias": "none",
+      "task_type": "CAUSAL_LM",
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ]
+    },
+    "training": {
+      "seed": 42,
+      "max_seq_length": 1024,
+      "max_steps": 60,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 8,
+      "effective_batch_size": 8,
+      "learning_rate": 0.0002,
+      "weight_decay": 0.01,
+      "lr_scheduler_type": "cosine",
+      "warmup_ratio": 0.03,
+      "optim": "paged_adamw_8bit",
+      "max_grad_norm": 1.0,
+      "bf16": true,
+      "gradient_checkpointing": true
+    }
+  },
+  "trainable_parameters": 21823488,
+  "trainable_percent": 0.2657,
+  "training_metrics": {
+    "steps": 60,
+    "examples_consumed": 480,
+    "final_loss": 0.35517,
+    "min_loss": 0.19887,
+    "peak_mem_allocated_mib": 8446.8,
+    "last_mem_allocated_mib": 6063.4,
+    "last_mem_reserved_mib": 8712.0,
+    "throughput_tps_mean": 631.56,
+    "wall_time_s": 263.543
+  },
+  "files": {
+    "step_metrics": "/home/afnan/projects/active/atlas-dataset/experiments/atlas-math-pilot-nemotron8b-lora-v1/training_log/step_metrics.csv",
+    "adapter": "/home/afnan/projects/active/atlas-dataset/experiments/atlas-math-pilot-nemotron8b-lora-v1/checkpoints"
+  },
+  "generated_at": "2026-08-13T16:38:57.645202+00:00"
+}

@@ -1,0 +1,106 @@
+{
+  "pilot_version": "v0.1",
+  "generated_at": "2026-08-14T23:28:02.781897+00:00",
+  "mixture": {
+    "math": 0.5,
+    "code": 0.3,
+    "systems": 0.2
+  },
+  "sources": {
+    "math": {
+      "source_id": "p1-nemotron-math-proofs-v2",
+      "records": 43779,
+      "tokens_est": 43730565,
+      "eval_set": "systems_eval_v1"
+    },
+    "code": {
+      "source_id": "p1-swe-smith-mini",
+      "records": 65985,
+      "records_diversified": 62833,
+      "tokens_est": 943803111,
+      "tokens_diversified": 895077162,
+      "diversification_policy": "max_5pct_per_repo"
+    },
+    "systems": {
+      "source_id": "p1-y9-linux-kernel",
+      "records": 8803,
+      "records_eval_heldout": 120,
+      "records_training": 8683,
+      "tokens_est": 8170226,
+      "eval_set": "systems_eval_v1"
+    }
+  },
+  "eval_sets": {
+    "math_eval_v2": {
+      "path": "evaluation/eval_sets/protocol_v2/math_eval_v2.jsonl",
+      "n_records": 100,
+      "status": "protected"
+    },
+    "code_eval_v2": {
+      "path": "evaluation/eval_sets/protocol_v2/code_eval_v2.jsonl",
+      "n_records": 100,
+      "status": "protected"
+    },
+    "systems_eval_v1": {
+      "path": "evaluation/eval_sets/protocol_v2/systems_eval_v1.jsonl",
+      "n_records": 120,
+      "status": "new",
+      "held_out_from": "p1-y9-linux-kernel",
+      "holdout_seed": 42,
+      "holdout_fraction": 0.12
+    },
+    "general_eval_v1": {
+      "status": "protected"
+    },
+    "ifeval": {
+      "status": "protected"
+    },
+    "swe_bench_verified": {
+      "status": "protected_strict_split"
+    }
+  },
+  "contamination_check": {
+    "eval_vs_training": "PASS",
+    "cross_source": "PASS",
+    "checked_at": "2026-08-14T23:28:02.781923+00:00"
+  },
+  "pilot_budgets": {
+    "1M": {
+      "supported": true,
+      "needs_resampling": false
+    },
+    "5M": {
+      "supported": true,
+      "needs_resampling": false
+    },
+    "10M": {
+      "supported": true,
+      "needs_resampling": false
+    },
+    "25M": {
+      "supported": true,
+      "needs_resampling": false
+    },
+    "50M": {
+      "supported": false,
+      "needs_resampling": true,
+      "reason": "Systems needs x1.2 resampling"
+    },
+    "500M": {
+      "supported": false,
+      "needs_resampling": true,
+      "reason": "Math x11.4, Systems x61x resampling needed"
+    }
+  },
+  "recommendations": {
+    "immediate": [
+      "Use 1M-10M token budget for initial pilot",
+      "Apply 5% repo cap diversification to Code",
+      "Hold out 120 kernel records for Systems eval"
+    ],
+    "next_phase": [
+      "Acquire P2 StackExchange (8K records) for Systems expansion",
+      "Re-evaluate 50M+ budget feasibility after P2"
+    ]
+  }
+}
