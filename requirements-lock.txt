@@ -1,0 +1,26 @@
+# Atlas Dataset — pinned dependencies
+#
+# Reference environment: .venv-nemotron-nano (training/eval reference env).
+# Versions below are frozen from that environment on 2026-08-22 so that
+# pipeline and training reruns are reproducible (HANDOFF_HERMES.md
+# determinism claim). Regenerate with:
+#   .venv-nemotron-nano/bin/pip list --format=freeze > requirements-lock.txt
+
+datasets==4.3.0
+huggingface-hub==1.27.0
+numpy==2.5.2
+pandas==3.0.5
+peft==0.20.0
+pyarrow==25.0.1
+pydantic==2.13.4
+requests==2.34.2
+rich==15.0.0
+safetensors==0.8.0
+tokenizers==0.22.2
+torch==2.11.0
+tqdm==4.70.0
+transformers==5.5.0
+accelerate==1.14.0
+trl==0.24.0
+sentencepiece==0.2.2
+httpx==0.28.1

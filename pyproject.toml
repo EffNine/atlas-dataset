@@ -1,0 +1,33 @@
+[project]
+name = "atlas-dataset"
+version = "1.0.0"
+description = "Governed AI training-data pipeline: acquisition -> ETL -> curation -> evaluation -> release"
+requires-python = ">=3.12"
+# Pinned to the reference environment (.venv-nemotron-nano); see
+# requirements-lock.txt for the complete frozen set including transitive
+# versions. Regenerate the lock after any deliberate upgrade.
+dependencies = [
+    "datasets==4.3.0",
+    "huggingface-hub==1.27.0",
+    "numpy==2.5.2",
+    "pandas==3.0.5",
+    "peft==0.20.0",
+    "pyarrow==25.0.1",
+    "pydantic==2.13.4",
+    "requests==2.34.2",
+    "rich==15.0.0",
+    "safetensors==0.8.0",
+    "tokenizers==0.22.2",
+    "torch==2.11.0",
+    "tqdm==4.70.0",
+    "transformers==5.5.0",
+    "accelerate==1.14.0",
+    "trl==0.24.0",
+    "sentencepiece==0.2.2",
+    "httpx==0.28.1",
+]
+
+[tool.pytest.ini_options]
+# Canonical pytest config lives in pytest.ini; this section only records
+# that intent here so tools reading pyproject see consistent paths.
+testpaths = ["tests"]
