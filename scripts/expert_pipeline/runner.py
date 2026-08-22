@@ -34,6 +34,7 @@ from .constants import (
     QUALITY_REPORT_PATH,
     RECORDS_PATH,
     MANIFEST_PATH,
+    ROOT,
 )
 from .quality import (
     classify_gate,
@@ -176,8 +177,23 @@ def _build_report(stats: dict, per_source: dict[str, dict], dry_run: bool) -> di
     return report
 
 
+def _resolve_output_paths(output_tag: str | None) -> tuple[Path, Path, Path]:
+    """Tagged batches get their own versioned output paths; the default
+    (None) keeps the frozen 6500-pilot paths."""
+    if not output_tag:
+        return RECORDS_PATH, MANIFEST_PATH, QUALITY_REPORT_PATH
+    base = f"atlas_expert_{output_tag}"
+    return (
+        ROOT / "tmp" / f"records_{base}.jsonl",
+        ROOT / "metadata" / f"manifest_{base}.json",
+        ROOT / "reports" / f"quality_{base}.json",
+    )
+
+
 def run_pilot(sources: list[str] | None = None, limits: dict[str, int] | None = None,
-              dry_run: bool = False, accessed_at: str | None = None) -> dict:
+              dry_run: bool = False, accessed_at: str | None = None,
+              records_path: Path | None = None, manifest_path: Path | None = None,
+              report_path: Path | None = None) -> dict:
     """Execute pilot extraction. Returns aggregate stats dict."""
     keys = sources or list(ADAPTERS.keys())
     limits = limits or {}
@@ -213,10 +229,12 @@ def run_pilot(sources: list[str] | None = None, limits: dict[str, int] | None = 
     report = _build_report(total_stats, per_source, dry_run)
 
     if not dry_run:
-        write_records(all_records, RECORDS_PATH)
-        write_manifest(per_source, all_records, MANIFEST_PATH)
-        write_quality_report(report, QUALITY_REPORT_PATH)
-        LOG.info("wrote records=%s manifest=%s report=%s", RECORDS_PATH, MANIFEST_PATH, QUALITY_REPORT_PATH)
+        written_records = write_records(all_records, records_path or RECORDS_PATH)
+        write_manifest(per_source, all_records, manifest_path or MANIFEST_PATH,
+                       records_path=written_records)
+        write_quality_report(report, report_path or QUALITY_REPORT_PATH)
+        LOG.info("wrote records=%s manifest=%s report=%s",
+                 written_records, manifest_path, report_path)
     else:
         LOG.info("DRY RUN: would write %d records, manifest, and quality report", len(all_records))
 
@@ -232,11 +250,16 @@ def main(argv: list[str] | None = None) -> int:
                         help="limit raw rows per source (testing only)")
     parser.add_argument("--accessed-at", default=None,
                         help="ISO date used for source.accessed_at (default: today)")
+    parser.add_argument("--output-tag", default=None,
+                        help="write this batch to tagged versioned paths "
+                             "(tmp/metadata/reports atlas_expert_<tag>_*) "
+                             "instead of the frozen 6500-pilot defaults")
     parser.add_argument("--log-file", default=None, help="write logs to this file")
     parser.add_argument("-v", "--verbose", action="store_true", help="debug logging")
     args = parser.parse_args(argv)
 
     _setup_logging(args.verbose, Path(args.log_file) if args.log_file else None)
+    records_path, manifest_path, report_path = _resolve_output_paths(args.output_tag)
 
     try:
         report = run_pilot(
@@ -244,6 +267,9 @@ def main(argv: list[str] | None = None) -> int:
             limits={k: args.limit for k in (args.sources or list(ADAPTERS.keys()))} if args.limit else None,
             dry_run=args.dry_run,
             accessed_at=args.accessed_at,
+            records_path=records_path,
+            manifest_path=manifest_path,
+            report_path=report_path,
         )
         print(json.dumps({
             "dry_run": report["dry_run"],

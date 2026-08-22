@@ -29,7 +29,8 @@ def write_records(records: list[dict], path: Path | None = None) -> Path:
 
 
 def write_manifest(per_source: dict[str, dict], records: list[dict],
-                   path: Path | None = None) -> Path:
+                   path: Path | None = None,
+                   records_path: Path | None = None) -> Path:
     out = path or MANIFEST_PATH
     if out.exists():
         raise FileExistsError(f"refusing to overwrite existing manifest: {out}")
@@ -40,7 +41,7 @@ def write_manifest(per_source: dict[str, dict], records: list[dict],
         "generated_at": utc_now_iso(),
         "total_records": len(records),
         "per_source": per_source,
-        "records_file": str(RECORDS_PATH),
+        "records_file": str(records_path or RECORDS_PATH),
         "records_sha256": sha256_hex(
             "\n".join(json.dumps(r, ensure_ascii=False, sort_keys=True) for r in records)
         ),

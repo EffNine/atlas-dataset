@@ -1,0 +1,110 @@
+{
+  "report_name": "expert_pilot_6500_quality_v0.1",
+  "phase": "0.5 pilot extraction (Option A)",
+  "dry_run": false,
+  "per_source": {
+    "expert-arch-001": {
+      "name": "Kubernetes Enhancement Proposals",
+      "target": 0,
+      "retrieved_raw": 100,
+      "converted": 100,
+      "dry_run": false,
+      "records_checked": 100,
+      "schema": {
+        "checked": 100,
+        "passed": 100,
+        "failed": 0,
+        "pass_rate": 1.0,
+        "failures": []
+      },
+      "provenance": {
+        "checked": 100,
+        "complete": 100,
+        "rate": 1.0,
+        "failures": []
+      },
+      "license": {
+        "checked": 100,
+        "passed": 100,
+        "rate": 1.0,
+        "failures": []
+      },
+      "security_flags": [],
+      "duplicates": {
+        "exact_ids": 0,
+        "near_groups": 0,
+        "records_involved": 0,
+        "rate": 0.0
+      },
+      "quality": {
+        "dimension_means": {
+          "correctness": 3.0,
+          "reasoning_depth": 5.0,
+          "explanation_quality": 5.0,
+          "provenance_confidence": 4.0
+        },
+        "quality_score_mean": 8.0,
+        "quality_score_ge7": 100,
+        "quality_score_distribution": {
+          "8": 100
+        },
+        "gate": {
+          "KEEP": 100
+        },
+        "gate_distribution": {
+          "KEEP": 1.0
+        },
+        "gold_candidates": 0,
+        "scorer": "calibration-heuristic-v0.1"
+      }
+    }
+  },
+  "records_checked": 100,
+  "schema": {
+    "checked": 100,
+    "passed": 100,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "failures": []
+  },
+  "provenance": {
+    "checked": 100,
+    "complete": 100,
+    "rate": 1.0,
+    "failures": []
+  },
+  "license": {
+    "checked": 100,
+    "passed": 100,
+    "rate": 1.0,
+    "failures": []
+  },
+  "security_flags": [],
+  "duplicates": {
+    "exact_ids": 0,
+    "near_groups": 0,
+    "records_involved": 0,
+    "rate": 0.0
+  },
+  "quality": {
+    "dimension_means": {
+      "correctness": 3.0,
+      "reasoning_depth": 5.0,
+      "explanation_quality": 5.0,
+      "provenance_confidence": 4.0
+    },
+    "quality_score_mean": 8.0,
+    "quality_score_ge7": 100,
+    "quality_score_distribution": {
+      "8": 100
+    },
+    "gate": {
+      "KEEP": 100
+    },
+    "gate_distribution": {
+      "KEEP": 1.0
+    },
+    "gold_candidates": 0,
+    "scorer": "calibration-heuristic-v0.1"
+  }
+}

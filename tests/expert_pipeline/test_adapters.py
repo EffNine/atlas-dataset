@@ -169,6 +169,10 @@ def test_parse_kep_slug():
         "keps/sig-architecture/1659-standard-topology-labels/README.md")
     assert sig == "sig-architecture"
     assert kep_dir == "1659-standard-topology-labels"
+    # real-world slug with uppercase
+    sig2, kep2 = parse_kep_slug(
+        "keps/sig-api-machinery/2334-graduate-server-side-get-and-partial-objects-to-GA/README.md")
+    assert kep2 == "2334-graduate-server-side-get-and-partial-objects-to-GA"
     with pytest.raises(ValueError):
         parse_kep_slug("keps/sig-architecture/20190731-production-readiness-review-process.md")
     with pytest.raises(ValueError):

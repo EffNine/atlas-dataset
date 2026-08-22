@@ -70,6 +70,35 @@ def test_runner_writes_outputs(tmp_path, monkeypatch):
     assert quality["quality"]["gate"]["KEEP"] == 2
 
 
+def test_runner_tagged_output_paths(tmp_path, monkeypatch):
+    """run_pilot with explicit paths writes the batch to those exact files
+    and the manifest records_file points at them."""
+    monkeypatch.setattr(runner, "ADAPTERS", {"swebench": _FakeSweAdapter})
+    records_path = tmp_path / "records_batch.jsonl"
+    manifest_path = tmp_path / "manifest_batch.json"
+
+    report = runner.run_pilot(sources=["swebench"], limits={"swebench": 2},
+                              dry_run=False, accessed_at=ACCESSED,
+                              records_path=records_path,
+                              manifest_path=manifest_path,
+                              report_path=tmp_path / "quality_batch.json")
+    assert report["dry_run"] is False
+    assert records_path.exists() and manifest_path.exists()
+    manifest = json.loads(manifest_path.read_text())
+    assert manifest["records_file"] == str(records_path)
+
+
+def test_resolve_output_paths():
+    from expert_pipeline.constants import MANIFEST_PATH, QUALITY_REPORT_PATH, RECORDS_PATH
+
+    assert runner._resolve_output_paths(None) == (
+        RECORDS_PATH, MANIFEST_PATH, QUALITY_REPORT_PATH)
+    rec, man, rep = runner._resolve_output_paths("architecture-v0.1")
+    assert rec.name == "records_atlas_expert_architecture-v0.1.jsonl"
+    assert man.name == "manifest_atlas_expert_architecture-v0.1.json"
+    assert rep.name == "quality_atlas_expert_architecture-v0.1.json"
+
+
 def test_runner_refuses_overwrite(tmp_path, monkeypatch):
     monkeypatch.setattr(runner, "ADAPTERS", {"swebench": _FakeSweAdapter})
     records_path = tmp_path / "records.jsonl"
