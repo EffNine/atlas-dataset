@@ -1,0 +1,52 @@
+{
+  "calibration_name": "atlas_expert_architecture-v0.2_calibration",
+  "generated_at": "2026-08-22T23:53:38.529164+00:00",
+  "batch": "architecture-v0.2",
+  "purpose": "post-calibration drift check at 10% review rate",
+  "reviewer": [
+    "human:afnan"
+  ],
+  "n_reviewed": 51,
+  "coverage": "51/51",
+  "verdict_agreement": {
+    "agree": 51,
+    "total": 51,
+    "rate": 1.0
+  },
+  "dimension_mae": {
+    "correctness": 1.0,
+    "reasoning_depth": 2.0,
+    "explanation_quality": 1.0,
+    "provenance_confidence": 0.0
+  },
+  "dimension_bias_human_minus_auto": {
+    "correctness": 1.0,
+    "reasoning_depth": -2.0,
+    "explanation_quality": -1.0,
+    "provenance_confidence": 0.0
+  },
+  "within_1_rate": {
+    "correctness": 1.0,
+    "reasoning_depth": 0.0,
+    "explanation_quality": 1.0,
+    "provenance_confidence": 1.0
+  },
+  "drift_vs_v01_bias": {
+    "correctness": 0.0,
+    "reasoning_depth": 0.0,
+    "explanation_quality": 0.0,
+    "provenance_confidence": 0.0
+  },
+  "findings": [
+    "Verdict agreement 100% (51/51 KEEP); zero reviewer drift from v0.1.",
+    "Dimension biases identical to v0.1 baseline (drift 0.00 on all four).",
+    "Known scorer reasoning_depth +2.0 inflation on verbatim docs persists as documented; human-calibrated thresholds remain required for gold-tier selection.",
+    "Human mean overall 3.75/5 (~7.5/10) matches v0.1 exactly."
+  ],
+  "recommendation": {
+    "source_status": "trusted_at_10pct_cadence",
+    "sft_eligible": true,
+    "condition": "reasoning_depth dimension not used unsupervised for this source",
+    "token_budget_note": "275/507 records <=4096 tokens; dedup by provenance.original_id vs v0.1"
+  }
+}
