@@ -78,10 +78,10 @@
       "hub": {
         "repo_id": "EffNine/atlas-dataset",
         "repo_type": "dataset",
-        "published_at": "2026-08-22T12:20:10.165234+00:00",
-        "commit_url": "https://huggingface.co/datasets/EffNine/atlas-dataset/commit/294076546ec1e40b21560841cc7719a9ee90ebd3",
-        "commit_hash": "294076546ec1e40b21560841cc7719a9ee90ebd3",
-        "files": 21,
+        "published_at": "2026-08-22T14:30:43.367902+00:00",
+        "commit_url": "",
+        "commit_hash": "",
+        "files": 15,
         "total_records": 9515938,
         "verified": true
       }
