@@ -1,0 +1,44 @@
+{
+  "calibration_name": "atlas_expert_architecture-v0.1_calibration",
+  "generated_at": "2026-08-22T23:29:46.073149+00:00",
+  "batch": "architecture-v0.1",
+  "reviewer": [
+    "human:afnan"
+  ],
+  "n_reviewed": 30,
+  "coverage": "30/30",
+  "verdict_agreement": {
+    "agree": 30,
+    "total": 30,
+    "rate": 1.0
+  },
+  "dimension_mae": {
+    "correctness": 1.0,
+    "reasoning_depth": 2.0,
+    "explanation_quality": 1.0,
+    "provenance_confidence": 0.0
+  },
+  "dimension_bias_human_minus_auto": {
+    "correctness": 1.0,
+    "reasoning_depth": -2.0,
+    "explanation_quality": -1.0,
+    "provenance_confidence": 0.0
+  },
+  "within_1_rate": {
+    "correctness": 1.0,
+    "reasoning_depth": 0.0,
+    "explanation_quality": 1.0,
+    "provenance_confidence": 1.0
+  },
+  "findings": [
+    "Scorer reasoning_depth inflated by +2.0 on verbatim KEP documents (structure/length heuristic); gold-tier selection for this source must use human-calibrated thresholds or a domain-adjusted dimension.",
+    "correctness and explanation_quality within-1 at 100%; systematic small biases (-1/+1) documented.",
+    "provenance_confidence exact match (MAE 0.0).",
+    "Human mean overall 3.75/5 (~7.5/10) vs scorer mean quality_score 8.0/10."
+  ],
+  "recommendation": {
+    "scale_up": true,
+    "gate_basis": "verdict-level",
+    "condition": "reasoning_depth dimension not used unsupervised for this source"
+  }
+}
