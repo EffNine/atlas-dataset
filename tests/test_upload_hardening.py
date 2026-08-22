@@ -169,6 +169,44 @@ class TestChecksumAwareResume:
         assert warnings == 0
 
 
+class TestPathPrefixResume:
+    """Release files live under releases/<version>/… on the Hub; resume must
+    compare against the prefixed repo paths."""
+
+    def _build_release(self, tmp_path: Path):
+        root = tmp_path / "rel"
+        (root / "metadata").mkdir(parents=True)
+        f = root / "metadata" / "a.json"
+        f.write_text('{"x": 1}', encoding="utf-8")
+        return root, f
+
+    def test_prefix_match_skips(self, tmp_path: Path):
+        mod = _load_upload_module()
+        root, a = self._build_release(tmp_path)
+        vm = _load_verify_module()
+        rpath = "releases/v1.0/metadata/a.json"
+        remote_sizes = {rpath: a.stat().st_size}
+        remote_checksums = {rpath: vm.sha256_file(a)}
+        pending, warnings = mod._resume_skip(
+            [("metadata", [a])], remote_sizes, remote_checksums, root,
+            path_prefix="releases/v1.0",
+        )
+        assert pending == []
+        assert warnings == 0
+
+    def test_prefix_mismatch_uploads(self, tmp_path: Path):
+        mod = _load_upload_module()
+        root, a = self._build_release(tmp_path)
+        rpath = "releases/v1.0/metadata/a.json"
+        # Same rel path WITHOUT prefix must NOT match when prefix is used.
+        remote_sizes = {str(a.relative_to(root)): a.stat().st_size}
+        pending, _ = mod._resume_skip(
+            [("metadata", [a])], remote_sizes, {}, root,
+            path_prefix="releases/v1.0",
+        )
+        assert {s for s, _ in pending} == {"metadata"}
+
+
 # ---------------------------------------------------------------------------
 # U-4: retry classification
 # ---------------------------------------------------------------------------

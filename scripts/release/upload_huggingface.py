@@ -20,15 +20,22 @@ Usage:
   export HF_TOKEN=hf_xxx
   .venv-release/bin/python scripts/release/upload_huggingface.py \
       --repo-id EffNine/atlas-dataset \
-      --release v1.0-RC1 \
+      --release v1.0 \
       --private \
       --workers 4 \
       --dry-run
+
+Layout:
+  Files land under ``releases/<release>/<section>/…`` on the Hub, matching
+  the canonical publish_promotion.py convention and the live repo. Optional
+  governance files (--extra-file README.md …) land at
+  ``releases/<release>/<filename>`` so a release folder is self-describing.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import sys
 import time
@@ -46,7 +53,7 @@ from verify_sha256 import (
     verify_manifest_files,
 )
 
-DEFAULT_RELEASE = "v1.0-RC1"
+DEFAULT_RELEASE = "v1.0"
 MAX_RETRIES = 3
 BACKOFF_BASE_S = 2.0
 
@@ -238,11 +245,15 @@ def _resume_skip(
     remote_sizes: dict[str, int],
     remote_checksums: dict[str, str],
     release_root: Path,
+    path_prefix: str = "",
 ) -> tuple[list[tuple[str, list[Path]]], int]:
     """Keep only files that are missing or differ on the Hub.
 
     Prefer SHA-256 comparison when remote metadata is available.
     Fall back to size-only with a warning when remote SHA-256 is unavailable.
+
+    ``path_prefix`` is the repo-side directory the release lives under
+    (e.g. ``releases/v1.0``). Empty string compares against repo root.
     """
     pending: list[tuple[str, list[Path]]] = []
     size_only_fallback_warnings = 0
@@ -250,10 +261,11 @@ def _resume_skip(
         missing: list[Path] = []
         for f in files:
             rel = str(f.relative_to(release_root))
-            if rel not in remote_sizes:
+            rpath = f"{path_prefix}/{rel}" if path_prefix else rel
+            if rpath not in remote_sizes:
                 missing.append(f)
                 continue
-            remote_sha = remote_checksums.get(rel)
+            remote_sha = remote_checksums.get(rpath)
             if remote_sha:
                 try:
                     local_sha = sha256_file(f).lower()
@@ -265,7 +277,7 @@ def _resume_skip(
                 # else: skip upload
             else:
                 size_only_fallback_warnings += 1
-                if remote_sizes.get(rel, -1) != f.stat().st_size:
+                if remote_sizes.get(rpath, -1) != f.stat().st_size:
                     missing.append(f)
                 # else: skip upload with warning
         if missing:
@@ -287,10 +299,16 @@ def _upload_section_with_retry(
     release_root: Path,
     commit_message: str,
     dry_run: bool = False,
+    path_prefix: str = "",
 ) -> dict[str, Any]:
-    """Upload one section; retry only retryable failures."""
+    """Upload one section; retry only retryable failures.
+
+    Lands the local ``<section>/`` directory under
+    ``[<path_prefix>/]<section>`` in the repo.
+    """
     last_err: Exception | None = None
     section_dir = release_root / section
+    path_in_repo = f"{path_prefix}/{section}" if path_prefix else section
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             if dry_run:
@@ -303,7 +321,7 @@ def _upload_section_with_retry(
             commit = api.upload_folder(
                 repo_id=repo_id,
                 folder_path=str(section_dir),
-                path_in_repo=section,
+                path_in_repo=path_in_repo,
                 repo_type="dataset",
                 token=token,
                 commit_message=commit_message,
@@ -342,6 +360,7 @@ def _verify_remote(
     token: str,
     local_files: list[Path],
     release_root: Path,
+    path_prefix: str = "",
 ) -> tuple[bool, list[str]]:
     """Verify every local file exists remotely with matching size (+ sha256)."""
     remote_paths = api.list_repo_files(repo_id=repo_id, repo_type="dataset", token=token)
@@ -363,16 +382,65 @@ def _verify_remote(
     ok = True
     for local in local_files:
         rel = str(local.relative_to(release_root))
-        if rel not in remote:
+        rpath = f"{path_prefix}/{rel}" if path_prefix else rel
+        if rpath not in remote:
             ok = False
-            problems.append(f"MISSING on Hub: {rel}")
+            problems.append(f"MISSING on Hub: {rpath}")
             continue
-        rsize = remote[rel]["size"]
+        rsize = remote[rpath]["size"]
         lsize = local.stat().st_size
         if rsize is not None and rsize != lsize:
             ok = False
-            problems.append(f"SIZE mismatch: {rel} local={lsize} remote={rsize}")
+            problems.append(f"SIZE mismatch: {rpath} local={lsize} remote={rsize}")
     return ok, problems
+
+
+# ---------------------------------------------------------------------------
+# Extra-file upload (governance docs)
+# ---------------------------------------------------------------------------
+
+def _upload_extra_file_with_retry(
+    api,
+    local_path: Path,
+    *,
+    repo_id: str,
+    token: str,
+    path_in_repo: str,
+    commit_message: str,
+) -> dict[str, Any]:
+    """Upload a single file; retry only retryable failures."""
+    last_err: Exception | None = None
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            commit = api.upload_file(
+                path_or_fileobj=str(local_path),
+                path_in_repo=path_in_repo,
+                repo_id=repo_id,
+                repo_type="dataset",
+                token=token,
+                commit_message=commit_message,
+            )
+            return {
+                "section": f"extra:{local_path.name}",
+                "files": 1,
+                "commit_url": getattr(commit, "commit_url", ""),
+                "commit_hash": getattr(commit, "commit_hash", ""),
+            }
+        except Exception as exc:
+            last_err = exc
+            category = _classify_upload_error(exc)
+            if category == UploadErrorCategory.FATAL:
+                raise RuntimeError(
+                    f"fatal upload error for {path_in_repo}: {exc}"
+                ) from exc
+            if attempt < MAX_RETRIES:
+                wait = BACKOFF_BASE_S * (2 ** (attempt - 1))
+                print(
+                    f"  [retry {attempt}/{MAX_RETRIES}] {path_in_repo} failed "
+                    f"({exc}); waiting {wait:.0f}s"
+                )
+                time.sleep(wait)
+    raise RuntimeError(f"upload failed for {path_in_repo}: {last_err}")
 
 
 # ---------------------------------------------------------------------------
@@ -438,6 +506,15 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="Release root (default: <repo>/releases/<release>).",
     )
+    ap.add_argument(
+        "--extra-file",
+        action="append",
+        default=[],
+        dest="extra_files",
+        metavar="NAME",
+        help="Additional file in the release root to upload as "
+        "releases/<release>/<NAME> (repeatable), e.g. governance docs.",
+    )
     args = ap.parse_args(argv)
 
     workers = resolve_upload_workers(explicit=args.workers)
@@ -446,6 +523,29 @@ def main(argv: list[str] | None = None) -> int:
     release_root = _release_root(args.release, args.output)
     local_files = _collect_local_files(release_root)
     sections = _plan_sections(release_root)
+    # Repo-side location of this release (canonical publish_promotion layout).
+    path_prefix = f"releases/{args.release}"
+
+    # Safeguard: surface the exact release identity being published.
+    rel_meta_path = release_root / "metadata" / "release.json"
+    if rel_meta_path.is_file():
+        try:
+            rel_meta = json.loads(rel_meta_path.read_text(encoding="utf-8"))
+            print(
+                f"Release identity: version={rel_meta.get('release_version')} "
+                f"id={rel_meta.get('release_id')} status={rel_meta.get('status')} "
+                f"records={rel_meta.get('total_records')}"
+            )
+        except Exception as exc:
+            print(f"WARNING: could not read {rel_meta_path}: {exc}")
+
+    extra_paths: list[Path] = []
+    for name in args.extra_files:
+        p = release_root / name
+        if not p.is_file():
+            print(f"ERROR: --extra-file {name} not found in release root: {p}")
+            return 2
+        extra_paths.append(p)
 
     total_bytes = sum(f.stat().st_size for f in local_files)
     print(
@@ -507,7 +607,7 @@ def main(argv: list[str] | None = None) -> int:
     remote_sizes = _remote_sizes(api, args.repo_id, token)
     remote_checksums = _remote_checksums(api, args.repo_id, token)
     pending_sections, size_only_warnings = _resume_skip(
-        sections, remote_sizes, remote_checksums, release_root
+        sections, remote_sizes, remote_checksums, release_root, path_prefix=path_prefix
     )
     uploaded_names = {s for s, _ in sections} - {s for s, _ in pending_sections}
     for s in sorted(uploaded_names):
@@ -519,47 +619,62 @@ def main(argv: list[str] | None = None) -> int:
             f"because remote SHA-256 metadata was unavailable."
         )
 
-    if not pending_sections:
-        print("Nothing to upload — all sections already on the Hub.")
-        return 0
-
-    print(f"\nUploading {len(pending_sections)} pending section(s)...")
     results: list[dict[str, Any]] = []
-    if workers <= 1:
-        for section, files in pending_sections:
-            results.append(
-                _upload_section_with_retry(
-                    api,
-                    section,
-                    files,
-                    repo_id=args.repo_id,
-                    token=token,
-                    release_root=release_root,
-                    commit_message=args.commit_message.format(release=args.release),
+    if pending_sections:
+        print(f"\nUploading {len(pending_sections)} pending section(s)...")
+        if workers <= 1:
+            for section, files in pending_sections:
+                results.append(
+                    _upload_section_with_retry(
+                        api,
+                        section,
+                        files,
+                        repo_id=args.repo_id,
+                        token=token,
+                        release_root=release_root,
+                        commit_message=args.commit_message.format(release=args.release),
+                        path_prefix=path_prefix,
+                    )
                 )
-            )
+        else:
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                futures = {
+                    pool.submit(
+                        _upload_section_with_retry,
+                        api,
+                        section,
+                        files,
+                        repo_id=args.repo_id,
+                        token=token,
+                        release_root=release_root,
+                        commit_message=args.commit_message.format(release=args.release),
+                        path_prefix=path_prefix,
+                    ): section
+                    for section, files in pending_sections
+                }
+                for fut in as_completed(futures):
+                    try:
+                        results.append(fut.result())
+                        print(f"  + {futures[fut]} uploaded")
+                    except Exception as exc:
+                        print(f"  ! {futures[fut]} FAILED: {exc}")
+                        return 1
     else:
-        with ThreadPoolExecutor(max_workers=workers) as pool:
-            futures = {
-                pool.submit(
-                    _upload_section_with_retry,
-                    api,
-                    section,
-                    files,
-                    repo_id=args.repo_id,
-                    token=token,
-                    release_root=release_root,
-                    commit_message=args.commit_message.format(release=args.release),
-                ): section
-                for section, files in pending_sections
-            }
-            for fut in as_completed(futures):
-                try:
-                    results.append(fut.result())
-                    print(f"  + {futures[fut]} uploaded")
-                except Exception as exc:
-                    print(f"  ! {futures[fut]} FAILED: {exc}")
-                    return 1
+        print("Nothing to upload — all sections already on the Hub.")
+
+    # 2b. Governance/extra files → releases/<release>/<NAME>.
+    for extra in extra_paths:
+        r = _upload_extra_file_with_retry(
+            api,
+            extra,
+            repo_id=args.repo_id,
+            token=token,
+            path_in_repo=f"{path_prefix}/{extra.name}",
+            commit_message=args.commit_message.format(release=args.release)
+            + f" (governance: {extra.name})",
+        )
+        results.append(r)
+        print(f"  + extra {extra.name} → {path_prefix}/{extra.name}")
 
     for r in results:
         print(f"  section {r['section']}: {r.get('commit_url') or 'dry'}")
@@ -567,7 +682,10 @@ def main(argv: list[str] | None = None) -> int:
 
     # 3. Verify all local files exist remotely with matching size/sha256.
     print("\nVerifying remote files...")
-    ok, problems = _verify_remote(api, args.repo_id, token, local_files, release_root)
+    verify_files = sorted(set(local_files) | set(extra_paths))
+    ok, problems = _verify_remote(
+        api, args.repo_id, token, verify_files, release_root, path_prefix=path_prefix
+    )
     if ok:
         print(f"VERIFICATION OK — all {len(local_files)} files present on Hub.")
     else:

@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-08-22T12:14:26.654176+00:00",
+  "source": "/home/afnan/projects/data/atlas/releases/v1.0",
+  "authoritative_manifest": "metadata/releases/v1.0_release.json",
+  "release": {
+    "release_version": "v1.0",
+    "release_id": "4dcfd43e9da2d756",
+    "status": "final",
+    "total_records": 9515938
+  },
+  "checks": {
+    "exists:metadata/checksums.sha256": true,
+    "exists:metadata/release.json": true,
+    "exists:BACKUP_MANIFEST.json": true,
+    "sha256_all_match": true,
+    "sha256_entries": 14,
+    "record_counts_match_authoritative": true,
+    "release_id_matches_authoritative": true,
+    "status_is_final": true,
+    "hub_payload_byte_identical": true,
+    "hub_payload_files_compared": 9
+  },
+  "all_passed": true
+}
