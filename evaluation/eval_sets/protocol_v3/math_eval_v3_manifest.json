@@ -1,0 +1,16 @@
+{
+  "manifest_name": "math_eval_v3_manifest",
+  "generated_at": "2026-08-23T06:13:40.427622+00:00",
+  "eval_set_id": "math_eval_v3",
+  "family": "math",
+  "protocol_version": "v3",
+  "n_records": 300,
+  "sha256": "b821b9eb3550c300d7d3aa374872735b806fa849fbedd444fe50cb2c20d0c53b",
+  "path": "evaluation/eval_sets/protocol_v3/math_eval_v3.jsonl",
+  "difficulty_distribution": {
+    "3": 300
+  },
+  "contamination_audit": "passed - 0 overlap with atlas-sft-v0.2",
+  "source": "https://huggingface.co/datasets/reasoning-machines/gsm-hard",
+  "independent": true
+}

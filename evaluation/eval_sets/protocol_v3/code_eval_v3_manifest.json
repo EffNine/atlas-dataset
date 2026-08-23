@@ -1,0 +1,16 @@
+{
+  "manifest_name": "code_eval_v3_manifest",
+  "generated_at": "2026-08-23T06:13:40.438982+00:00",
+  "eval_set_id": "code_eval_v3",
+  "family": "code",
+  "protocol_version": "v3",
+  "n_records": 297,
+  "sha256": "fbdb816aeacf7dc013b953fbc2baacd1156275d742e3e543ec0b4e2c115d453f",
+  "path": "evaluation/eval_sets/protocol_v3/code_eval_v3.jsonl",
+  "difficulty_distribution": {
+    "4": 297
+  },
+  "contamination_audit": "passed - 0 overlap with atlas-sft-v0.2",
+  "source": "https://huggingface.co/datasets/princeton-nlp/SWE-bench_Lite",
+  "independent": true
+}
