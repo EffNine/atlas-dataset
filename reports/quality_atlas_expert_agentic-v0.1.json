@@ -1,0 +1,400 @@
+{
+  "report_name": "expert_pilot_6500_quality_v0.1",
+  "phase": "0.5 pilot extraction (Option A)",
+  "dry_run": false,
+  "per_source": {
+    "expert-agentic-001": {
+      "name": "SWE-smith agent trajectories",
+      "target": 0,
+      "retrieved_raw": 20000,
+      "converted": 20000,
+      "dry_run": false,
+      "records_checked": 20000,
+      "schema": {
+        "checked": 20000,
+        "passed": 20000,
+        "failed": 0,
+        "pass_rate": 1.0,
+        "failures": []
+      },
+      "provenance": {
+        "checked": 20000,
+        "complete": 20000,
+        "rate": 1.0,
+        "failures": []
+      },
+      "license": {
+        "checked": 20000,
+        "passed": 20000,
+        "rate": 1.0,
+        "failures": []
+      },
+      "security_flags": [
+        {
+          "id": "expert_agentic_000786",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_agentic_000996",
+          "hits": {
+            "private_key": "-----BEGIN PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_001117",
+          "hits": {
+            "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_001143",
+          "hits": {
+            "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_001996",
+          "hits": {
+            "private_key": "-----BEGIN PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_002117",
+          "hits": {
+            "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_002143",
+          "hits": {
+            "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_004677",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_agentic_004730",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_agentic_004990",
+          "hits": {
+            "private_key": "-----BEGIN PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_005119",
+          "hits": {
+            "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_005156",
+          "hits": {
+            "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_007683",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_agentic_007736",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_agentic_008478",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_agentic_009478",
+          "hits": {
+            "private_key": "-----BEGIN PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_010216",
+          "hits": {
+            "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_014441",
+          "hits": {
+            "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+          }
+        },
+        {
+          "id": "expert_agentic_014574",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_agentic_014632",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_agentic_015918",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_agentic_016385",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        },
+        {
+          "id": "expert_agentic_018878",
+          "hits": {
+            "local_win_path": "C:\\Users\\"
+          }
+        }
+      ],
+      "duplicates": {
+        "exact_ids": 0,
+        "near_groups": 1004,
+        "records_involved": 2011,
+        "rate": 0.1006
+      },
+      "quality": {
+        "dimension_means": {
+          "correctness": 2.954,
+          "reasoning_depth": 4.509,
+          "explanation_quality": 4.456,
+          "provenance_confidence": 4.0
+        },
+        "quality_score_mean": 7.596,
+        "quality_score_ge7": 17411,
+        "quality_score_distribution": {
+          "4": 672,
+          "5": 256,
+          "6": 1661,
+          "7": 1307,
+          "8": 16104
+        },
+        "gate": {
+          "REJECT": 928,
+          "KEEP": 19072
+        },
+        "gate_distribution": {
+          "REJECT": 0.0464,
+          "KEEP": 0.9536
+        },
+        "gold_candidates": 0,
+        "scorer": "calibration-heuristic-v0.1"
+      }
+    }
+  },
+  "records_checked": 20000,
+  "schema": {
+    "checked": 20000,
+    "passed": 20000,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "failures": []
+  },
+  "provenance": {
+    "checked": 20000,
+    "complete": 20000,
+    "rate": 1.0,
+    "failures": []
+  },
+  "license": {
+    "checked": 20000,
+    "passed": 20000,
+    "rate": 1.0,
+    "failures": []
+  },
+  "security_flags": [
+    {
+      "id": "expert_agentic_000786",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_agentic_000996",
+      "hits": {
+        "private_key": "-----BEGIN PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_001117",
+      "hits": {
+        "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_001143",
+      "hits": {
+        "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_001996",
+      "hits": {
+        "private_key": "-----BEGIN PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_002117",
+      "hits": {
+        "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_002143",
+      "hits": {
+        "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_004677",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_agentic_004730",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_agentic_004990",
+      "hits": {
+        "private_key": "-----BEGIN PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_005119",
+      "hits": {
+        "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_005156",
+      "hits": {
+        "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_007683",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_agentic_007736",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_agentic_008478",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_agentic_009478",
+      "hits": {
+        "private_key": "-----BEGIN PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_010216",
+      "hits": {
+        "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_014441",
+      "hits": {
+        "private_key": "-----BEGIN RSA PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "expert_agentic_014574",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_agentic_014632",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_agentic_015918",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_agentic_016385",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    },
+    {
+      "id": "expert_agentic_018878",
+      "hits": {
+        "local_win_path": "C:\\Users\\"
+      }
+    }
+  ],
+  "duplicates": {
+    "exact_ids": 0,
+    "near_groups": 1004,
+    "records_involved": 2011,
+    "rate": 0.1006
+  },
+  "quality": {
+    "dimension_means": {
+      "correctness": 2.954,
+      "reasoning_depth": 4.509,
+      "explanation_quality": 4.456,
+      "provenance_confidence": 4.0
+    },
+    "quality_score_mean": 7.596,
+    "quality_score_ge7": 17411,
+    "quality_score_distribution": {
+      "4": 672,
+      "5": 256,
+      "6": 1661,
+      "7": 1307,
+      "8": 16104
+    },
+    "gate": {
+      "REJECT": 928,
+      "KEEP": 19072
+    },
+    "gate_distribution": {
+      "REJECT": 0.0464,
+      "KEEP": 0.9536
+    },
+    "gold_candidates": 0,
+    "scorer": "calibration-heuristic-v0.1"
+  }
+}

@@ -53,6 +53,7 @@ CATEGORY_BY_SOURCE = {
     "expert-swe-001": "code",
     "expert-math-002": "math",
     "expert-aiml-001": "aiml",
+    "expert-agentic-001": "agentic",
 }
 
 DIM_KEYS = ("correctness", "reasoning_depth", "explanation_quality", "provenance_confidence")

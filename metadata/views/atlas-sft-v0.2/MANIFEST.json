@@ -1,0 +1,79 @@
+{
+  "manifest_name": "sft_view_atlas-sft-v0.2",
+  "generated_at": "2026-08-23T01:34:01.662248+00:00",
+  "gates": {
+    "schema": "validate_schema == []",
+    "license": "license in ['Apache-2.0', 'CC-BY-4.0', 'MIT', 'arXiv non-exclusive license']",
+    "security": "security_scan clean",
+    "messages": "user+assistant, non-empty",
+    "quality": "metadata.quality_score >= 7",
+    "token_budget": "est_tokens(chars/4) <= 4096"
+  },
+  "dedup": {
+    "primary": "provenance.original_id",
+    "fallback": "sha256(normalized_problem)"
+  },
+  "input_records": 27007,
+  "accepted_total": 6860,
+  "duplicates_skipped": {
+    "math": 28,
+    "agentic": 479
+  },
+  "rejections": {
+    "token_budget": 19395,
+    "security": 29,
+    "quality_below_threshold": 2713
+  },
+  "categories": {
+    "agentic": {
+      "path": "metadata/views/atlas-sft-v0.2/agentic/train.jsonl",
+      "records": 246,
+      "sha256": "2723a3e9507358968afaa346fd7cc5ce46f5dcf0b3faf90cca7de89393d108ff",
+      "sources": [
+        "expert-agentic-001"
+      ],
+      "est_token_p50": 3757,
+      "est_token_max": 4096
+    },
+    "aiml": {
+      "path": "metadata/views/atlas-sft-v0.2/aiml/train.jsonl",
+      "records": 2903,
+      "sha256": "62067047e76090a0fa5a53b56ac270fc67a4f854fff494df91faf5bb52572abc",
+      "sources": [
+        "expert-aiml-001"
+      ],
+      "est_token_p50": 834,
+      "est_token_max": 1133
+    },
+    "architecture": {
+      "path": "metadata/views/atlas-sft-v0.2/architecture/train.jsonl",
+      "records": 275,
+      "sha256": "54136e56a0074bca0b56de525f86b6af1ebaa15cff29a319849f5b83b83753f8",
+      "sources": [
+        "expert-arch-001"
+      ],
+      "est_token_p50": 2282,
+      "est_token_max": 4084
+    },
+    "code": {
+      "path": "metadata/views/atlas-sft-v0.2/code/train.jsonl",
+      "records": 491,
+      "sha256": "9e12685ca2aabde0c4c73551df86a7a47caf777308e1b235d0fbcd4e2ff48774",
+      "sources": [
+        "expert-swe-001"
+      ],
+      "est_token_p50": 661,
+      "est_token_max": 3771
+    },
+    "math": {
+      "path": "metadata/views/atlas-sft-v0.2/math/train.jsonl",
+      "records": 2945,
+      "sha256": "fa76f467ebd4a24f53eb562016ef9526a0386e4ac37d331f9d055b0510bc75f3",
+      "sources": [
+        "expert-math-002"
+      ],
+      "est_token_p50": 232,
+      "est_token_max": 1778
+    }
+  }
+}

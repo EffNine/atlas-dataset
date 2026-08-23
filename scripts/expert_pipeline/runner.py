@@ -24,6 +24,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from .adapters.agentic_local import AgenticLocalAdapter
 from .adapters.architecture import KepAdapter
 from .adapters.arxiv import ArxivAdapter
 from .adapters.openmath import OpenMathAdapter
@@ -59,6 +60,7 @@ ADAPTERS = {
     "openmath": OpenMathAdapter,
     "arxiv": ArxivAdapter,
     "architecture": KepAdapter,
+    "agentic-local": AgenticLocalAdapter,
 }
 # source_id -> adapter key
 SOURCE_TO_KEY = {
@@ -66,6 +68,7 @@ SOURCE_TO_KEY = {
     "expert-math-002": "openmath",
     "expert-aiml-001": "arxiv",
     "expert-arch-001": "architecture",
+    "expert-agentic-001": "agentic-local",
 }
 
 
