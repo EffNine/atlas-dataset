@@ -2253,6 +2253,179 @@ def cmd_eval_matrix_execute(experiment_id: str, root: Path,
     return 0 if result.get('status') == 'COMPLETED' else 1
 
 
+# --------------------------------------------------------------------------- #
+# sft-review — dual-mode SFT semantic review (human | ai)
+#
+# Deterministic gates (sft_view.gate_record) are mandatory in BOTH modes and
+# always run before semantic review. AI mode can never bypass schema, license,
+# security, quality, token, dedup, provenance or checksum gates.
+# Default review mode: human (preserves all existing behaviour).
+# --------------------------------------------------------------------------- #
+def cmd_sft_review(argv) -> int:
+    ap = argparse.ArgumentParser(prog="atlas sft-review",
+                                 description="Dual-mode SFT semantic review")
+    actions = ap.add_subparsers(dest="action", required=True)
+
+    p_sample = actions.add_parser(
+        "sample", help="generate a human calibration sample "
+                       "(reuses expert_pipeline.review_sample; rate-configurable)")
+    p_sample.add_argument("--records", nargs="+", required=True,
+                          help="SFT view train.jsonl files or record JSONL")
+    p_sample.add_argument("--output", required=True)
+    p_sample.add_argument("--rate", type=float, default=0.05,
+                          help="flat sample rate (default 0.05)")
+    p_sample.add_argument("--domain-rates", default=None,
+                          help="JSON map domain -> rate overriding --rate")
+    p_sample.add_argument("--seed", type=int, default=20260802)
+
+    p_run = actions.add_parser(
+        "run", help="review records in the chosen mode")
+    p_run.add_argument("--review-mode", choices=("human", "ai"),
+                       default="human",
+                       help="semantic review mode (default: human)")
+    p_run.add_argument("--records", nargs="+", default=None,
+                       help="(ai mode) record JSONL / SFT train.jsonl inputs")
+    p_run.add_argument("--out-dir", default=None,
+                       help="(ai mode) output dir "
+                            "(default: metadata/sft_review/<tag>)")
+    p_run.add_argument("--tag", default="sft-review",
+                       help="review batch tag for the output layout")
+    # ai mode: provider/model configuration (env ATLAS_REVIEW_* also honored)
+    p_run.add_argument("--base-url", default=None,
+                       help="(ai) OpenAI-compatible base URL, e.g. https://host/v1")
+    p_run.add_argument("--model", default=None, help="(ai) reviewer model id")
+    p_run.add_argument("--api-key-env", default="ATLAS_REVIEW_API_KEY",
+                       help="(ai) env var holding the API key "
+                            "(fallback: OPENAI_API_KEY)")
+    p_run.add_argument("--temperature", type=float, default=0.0)
+    p_run.add_argument("--timeout", type=float, default=120.0)
+    p_run.add_argument("--max-retries", type=int, default=2)
+    p_run.add_argument("--limit", type=int, default=None)
+    p_run.add_argument("--min-quality", type=int, default=7,
+                       help="deterministic gate floor (default 7)")
+    p_run.add_argument("--max-tokens", type=int, default=4096,
+                       help="deterministic token budget (default 4096)")
+    # human mode: delegate to review_ui.py (unchanged behaviour)
+    p_run.add_argument("--input", default=None,
+                       help="(human) blind review input JSONL")
+    p_run.add_argument("--sample-file", default=None,
+                       help="(human) sample file for auto_gate_snapshot join")
+    p_run.add_argument("--decisions", default=None,
+                       help="(human) resume-safe decisions JSONL")
+    p_run.add_argument("--reviewer", default=None,
+                       help='(human) reviewer identity (default "human:$USER")')
+
+    p_cal = actions.add_parser(
+        "calibrate", help="compare human decisions vs AI reviews")
+    p_cal.add_argument("--human", required=True,
+                       help="review_ui decisions JSONL")
+    p_cal.add_argument("--ai", required=True,
+                       help="ai_reviewer results JSONL")
+    p_cal.add_argument("--report-out", default=None)
+
+    args = ap.parse_args(argv)
+
+    if args.action == "sample":
+        _install_network_block()
+        import json as _json
+        from expert_pipeline.review_sample import build_sample, load_records, \
+            summarize, write_sample
+        domain_rates = None
+        if args.domain_rates:
+            try:
+                domain_rates = _json.loads(args.domain_rates)
+            except ValueError:
+                print("[sft-review] --domain-rates must be valid JSON",
+                      file=sys.stderr)
+                return 2
+        records = load_records(Path(args.records[0]))
+        sample = build_sample(records, rate=args.rate, seed=args.seed,
+                              domain_rates=domain_rates)
+        out = Path(args.output)
+        _assert_write_safe(out)
+        write_sample(sample, out)
+        print(_json.dumps({"written": str(out), **summarize(sample)}, indent=2))
+        return 0
+
+    if args.action == "run":
+        from expert_pipeline import review_mode as rm
+
+        if args.review_mode == "human":
+            _install_network_block()
+            from expert_pipeline import review_ui
+            ui_argv = []
+            if args.input:
+                ui_argv += ["--input", args.input]
+            if args.sample_file:
+                ui_argv += ["--sample", args.sample_file]
+            if args.decisions:
+                ui_argv += ["--decisions", args.decisions]
+            if args.reviewer:
+                ui_argv += ["--reviewer", args.reviewer]
+            print("[sft-review] human mode: launching interactive review UI "
+                  "(resume-safe); deterministic gates unaffected")
+            return review_ui.main(ui_argv)
+
+        # ---- ai mode ----
+        # NOTE: no network block here — the reviewer requires provider access.
+        import json as _json
+        from expert_pipeline import ai_reviewer as air
+        from expert_pipeline.sft_view import load_records
+        if not args.records:
+            print("[sft-review] --records is required in --review-mode ai",
+                  file=sys.stderr)
+            return 2
+        cfg = air.config_from_env()
+        if args.base_url:
+            cfg.base_url = args.base_url.rstrip("/")
+        if args.model:
+            cfg.model = args.model
+        cfg.api_key_env = args.api_key_env
+        cfg.temperature = args.temperature
+        cfg.timeout_s = args.timeout
+        cfg.max_retries = args.max_retries
+        out_dir = (Path(args.out_dir) if args.out_dir
+                   else ROOT / "metadata" / "sft_review" / args.tag)
+        _assert_write_safe(out_dir)
+        out_path = out_dir / "ai_reviews.jsonl"
+        records = load_records([Path(p) for p in args.records])
+        summary = air.run_batch(records, cfg, out_path,
+                                min_quality=args.min_quality,
+                                max_tokens=args.max_tokens, limit=args.limit)
+        summary_path = out_dir / "ai_review_summary.json"
+        _assert_write_safe(summary_path)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        summary_path.write_text(_json.dumps(summary, indent=2), encoding="utf-8")
+        print(_json.dumps({**summary, "summary_path": str(summary_path)},
+                          indent=2))
+        # exit 3 signals that some records still need adjudication (fail-safe,
+        # never a silent pass-through of failures)
+        return 3 if summary["failures"] else 0
+
+    if args.action == "calibrate":
+        _install_network_block()
+        import json as _json
+        from expert_pipeline import calibration as calib
+        report = calib.compare(calib.load_jsonl(Path(args.human)),
+                               calib.load_jsonl(Path(args.ai)))
+        if args.report_out:
+            out = Path(args.report_out)
+            _assert_write_safe(out)
+            calib.write_report(report, out)
+            print(f"[sft-review] calibration report -> {out}")
+        print(_json.dumps({
+            "matched": report["matched"],
+            "agreement_rate": report["verdict_agreement"]["rate"],
+            "false_accept_rate": report["false_accept_rate"],
+            "false_reject_rate": report["false_reject_rate"],
+            "disagreement_count": report["disagreement_count"],
+            "score_delta_mean": report["score_delta"]["mean_ai_minus_human"],
+        }, indent=2))
+        return 0
+
+    return 2
+
+
 def main(argv=None) -> int:
     # Intercept research automation commands before top-level parsing
     # because they use nested subparsers that argparse can't handle
@@ -2263,6 +2436,8 @@ def main(argv=None) -> int:
         return cmd_benchmark(argv[1:])
     if argv and argv[0] == "eval":
         return cmd_eval_research(argv[1:])
+    if argv and argv[0] == "sft-review":
+        return cmd_sft_review(argv[1:])
 
     ap = argparse.ArgumentParser(prog="atlas", description="Atlas Dataset Foundation CLI.")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -2395,15 +2570,19 @@ def main(argv=None) -> int:
     p_tr.add_argument("--verify", action="store_true",
                       help="verify integrity of readiness report")
 
+    # ---- Dual-Mode SFT Semantic Review (human | ai) ----
+    sub.add_parser("sft-review",
+                   help="dual-mode SFT review: sample | run | calibrate "
+                        "(--review-mode human|ai)")
+
     # ---- TUI Control Plane (Phase 7) ----
     sub.add_parser("tui", help="launch the Atlas TUI control plane")
 
     args = ap.parse_args(argv)
     # Args after the program name + subcommand name are for the subcommand.
-    # Stripping the subcommand token avoids argparse choking on it inside the
-    # subcommand's own parser (the previous dispatch left it in, so e.g.
-    # `ingest-pilot --max 5` silently fell back to the default).
-    rest = (argv[2:] if argv else sys.argv[2:])
+    # Strip ONLY the subcommand token (argv[0]); dropping two tokens made
+    # e.g. `atlas.py query --validate "<q>"` lose the flag itself.
+    rest = (argv[1:] if argv else sys.argv[2:])
     if args.cmd == "self-test":
         return cmd_self_test([])
     if args.cmd == "ingest-pilot":
@@ -2452,6 +2631,10 @@ def main(argv=None) -> int:
     # ---- Phase 5D Training Readiness Gate ----
     if args.cmd == "training-readiness":
         return cmd_training_readiness(rest)
+
+    # ---- Dual-Mode SFT Semantic Review (human | ai) ----
+    if args.cmd == "sft-review":
+        return cmd_sft_review(rest)
 
     # ---- Research Automation (Phase 6+) ----
     if args.cmd == "benchmark":

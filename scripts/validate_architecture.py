@@ -94,6 +94,14 @@ LAYER_MAP: dict[str, int] = {
     # Layer 4 — Training Readiness & Release Simulation (Phase 5D)
     "training_readiness": 4,
     "release_decision_simulator": 4,
+    # Layer 4 — Engineering Dashboard (ADR-016)
+    "dashboard": 4,
+    "dashboard.app": 4,
+    "dashboard.actions": 4,
+    "dashboard.jobs": 4,
+    "dashboard.state": 4,
+    "dashboard.safety": 4,
+    "dashboard.server": 4,
 }
 
 # Layer 1 modules — may only import stdlib

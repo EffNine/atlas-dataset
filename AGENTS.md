@@ -1,7 +1,7 @@
 # AGENTS.md — Atlas Project Context
 
 > **Status:** Canonical — update when phase or governance rules change.
-> **Last updated:** 2026-08-15
+> **Last updated:** 2026-08-25
 > **Purpose:** Single onboarding and handoff document for AI agents working on Atlas.
 
 ---
@@ -69,7 +69,7 @@ Do not couple Atlas architecture directly to one specific model implementation.
 
 ## 3. Current Project State
 
-### 3.1 Verified Current State (as of 2026-08-15)
+### 3.1 Verified Current State (as of 2026-08-25)
 
 | Item | Status |
 |------|--------|
@@ -81,6 +81,7 @@ Do not couple Atlas architecture directly to one specific model implementation.
 | Automation Layer v1.0 | **Implemented** — 11-state pipeline FSM |
 | QEE v2 | **Frozen** for Phase 8 experiments |
 | Pilot v0.2 data | **Available** — 4,499 records (math 1000, code 401, general 1098, systems 2000) |
+| SFT views | **Built** — `atlas-sft-v0.1` / `atlas-sft-v0.2` superviews via `expert_pipeline.sft_view` |
 | model-eval-finetune | **Separate project** — Qwen3-8B LoRA pipeline ready |
 
 ### 3.2 Current Blockers
@@ -153,6 +154,7 @@ The goal is to establish a reliable architectural foundation before continuing m
 | `scripts/release_builder/` | Release bundle builder | ✅ Implemented |
 | `scripts/training_view_engine/` | Training view generation engine | ✅ Implemented |
 | `scripts/view_builder/` | Model-format view builder | ✅ Implemented |
+| `scripts/dashboard/` | Engineering Dashboard (browser ops control plane, ADR-016) | ✅ Implemented |
 | `scripts/progressive_expansion.py` | Legacy expansion (superseded) | ⚠️ LEGACY |
 | `scripts/progressive_expansion_v2.py` | Legacy expansion v2 (superseded) | ⚠️ LEGACY |
 | `scripts/tui_backend.py` | TUI backend | ⚠️ Known violation (hardcoded workers) |
@@ -491,6 +493,10 @@ The system should be:
 - `quality.py` — Expert data quality assessment
 - `review_assign.py` — Review assignment
 - `review_sample.py` — Review sampling
+- `review_ui.py`, `review_mode.py` — Interactive terminal review UI for expert samples
+- `ai_reviewer.py` — AI-assisted review; an attention exit code is never acceptance
+- `calibration.py` — Human-vs-AI review calibration
+- `sft_view.py` — Verified/deduplicated/size-budgeted SFT view builder → `metadata/views/<tag>/<category>/train.jsonl` + `MANIFEST.json` with SHA-256; outputs are never overwritten
 - `validation.py` — Expert data validation
 - `sonnet_input.py` — Sonnet input processing
 - `report.py` — Expert pipeline reporting
@@ -501,6 +507,7 @@ The system should be:
   - `openmath.py` — OpenMath adapter
   - `swebench.py` — SWE-bench adapter
   - `arxiv.py` — arXiv adapter
+  - `agentic_local.py` — Local agentic trajectory adapter
 
 ### 8.13 Parallel Processing (`scripts/parallel/`)
 
@@ -530,6 +537,26 @@ The system should be:
 
 **Implementation:** `scripts/metadata/` — Includes `_training_cache/` and `acquisition_logs/`.
 
+### 8.16 Engineering Dashboard (`scripts/dashboard/`)
+
+**Purpose:** Browser-based operations control plane over existing Atlas subsystems (ADR-016). Orchestration layer only — zero business logic duplication.
+
+**Implementation:**
+- `app.py` — aiohttp application: JSON API + static SPA, security/auth/error middleware
+- `actions.py` — Whitelisted registry of real Atlas CLI operations (argv builders; browser cannot express arbitrary commands)
+- `jobs.py` — Persisted async job runner (`metadata/dashboard/jobs.json`); daemon worker pool; per-job timeout/cancel/logs
+- `state.py` — Read-only aggregation of authoritative state files (missing files surface as `_missing`, never fabricated)
+- `safety.py` — Path whitelists, traversal guards, typed confirmations, token compare
+- `server.py` — Entrypoint: `python -m scripts.dashboard.server [--host 127.0.0.1] [--port 8765]`
+- `static/` — Build-free vanilla JS SPA (Overview, Pipelines, Review, Sources & ETL, Views, Releases, Evaluation, Readiness, Jobs)
+
+**Key invariants:**
+- All actions execute the REAL CLIs as subprocesses; destructive actions require exact typed confirmation phrases
+- Human approval flows through the automation layer unchanged — the browser user is the human approver
+- Credential-gated actions (HF publish/restore, AI reviewer) are disabled with reasons when env credentials are absent; values never exposed
+- Optional bearer token via `ATLAS_DASHBOARD_TOKEN`; binds loopback by default
+- Job records are *evidence*, not a second state source; AI-reviewer exit code 3 surfaces as `needs_attention`, never acceptance
+
 ---
 
 ## 9. Architecture Layering (Enforced)
@@ -541,7 +568,7 @@ Modules are organized into 5 layers. **Lower layers must never import higher lay
 | 1 — Foundation | `atlas_constants`, `atlas_schema`, `atlas_paths` |
 | 2 — Validation & Lifecycle | `validate_dataset`, `quality_score`, `acquisition_engine.lifecycle` |
 | 3 — Engines | `acquisition_engine.*`, `evaluation_engine.*`, `training_view_engine.*`, `payload_resolver` |
-| 4 — CLI & Tooling | `atlas.py`, `clean_dataset.py`, `convert_format.py`, `eval_dataset.py`, etc. |
+| 4 — CLI & Tooling | `atlas.py`, `clean_dataset.py`, `convert_format.py`, `eval_dataset.py`, `dashboard.*`, etc. |
 | 5 — Tests | anything under `tests/` |
 
 **Key invariant:** `VALIDATION → RELEASED` transition is forbidden in the automation pipeline. Pipeline must pass through `WAITING_HUMAN_APPROVAL` first. Enforced by `scripts/automation/state_machine.py`.
@@ -585,6 +612,8 @@ The default pipeline is currently in `CANCELLED` state (test cancellation). This
 ### 11.2 Direct-Write-Safe Paths (agents may create/modify freely)
 `metadata/`, `docs/`, `tmp/`, `raw/pilot/`, `migrations/`, `knowledge_packs/`, `processing/`, `evaluation/`, `scripts/`, `tests/`, `experiments/`, `pilot/`, `artifacts/`, `reports/`
 
+Note: the runtime write guard `atlas_paths.APPROVED_WRITE_ROOTS` (enforced by dashboard actions and experiment scaffolding) is a **narrower** set: `curated`, `review_queue`, `training_views`, `metadata`, `docs`, `tmp`, `raw/pilot`, `migrations`, `knowledge_packs`.
+
 ### 11.3 Managed/Generated Paths (write-safe for pipeline, not for direct agent modification)
 - `curated/` — versioned output; use `scripts/acquisition_engine/versioning.py` or the e2e pipeline
 - `review_queue/` — queue state; use `scripts/automation_runner.py approve/deny`
@@ -619,13 +648,15 @@ The repository contains a large number of scripts and multiple generations of ar
 
 ### 12.2 Known Issues Discovered
 
-| Issue | Severity | Location |
-|-------|----------|----------|
-| Duplicated constant `SUPPORTED_SCHEMA_VERSIONS` | VIOLATION | `scripts/evaluation_engine/generation_policy/versioning.py` |
-| Duplicated `is_denied_license` function | KNOWN | `scripts/progressive_expansion.py`, `scripts/progressive_expansion_v2.py` |
-| Hardcoded worker count | VIOLATION | `scripts/tui_backend.py:workers=0` |
-| Self-test invariant failure | LOW | `release-chain-empty` — empty chain should be trivially verifiable |
-| TUI test failures | LOW | 2 tests failing related to cancelled pipeline state |
+| Issue | Status | Location |
+|-------|--------|----------|
+| Duplicated constant `SUPPORTED_SCHEMA_VERSIONS` | KNOWN exception | `scripts/evaluation_engine/generation_policy/versioning.py` |
+| Duplicated `is_denied_license` function | KNOWN exception | `scripts/progressive_expansion.py`, `scripts/progressive_expansion_v2.py` |
+| Duplicated path utilities in benchmarks | KNOWN exception | `benchmarks/eb/eb/paths.py` (`get_root`, `is_write_safe`) |
+| Hardcoded worker count | KNOWN exception | `scripts/tui_backend.py:workers=0` |
+| Release-pipeline test failures | OPEN | 7 tests in `tests/test_release_pipeline.py` + 1 in `tests/test_scheduler_compression.py` (compress/checksums/verify/upload) |
+
+Previously failing items now fixed: CLI self-test `release-chain-empty` invariant, TUI test failures.
 
 ### 12.3 Audit Methodology
 
@@ -683,7 +714,7 @@ Checks enforced:
 - Check 6: Direct path construction (tracks hardcoded paths as debt)
 - Hardcoded worker counts (ADR-013)
 
-**Current status:** 2 violations found. These are known and tracked.
+**Current status:** PASS — 0 violations; known duplications are registered as accepted exceptions (see `metadata/architecture_validation_report.json`).
 
 ### 14.2 CLI Self-Test
 
@@ -692,19 +723,19 @@ Checks enforced:
 python scripts/atlas.py self-test
 ```
 
-**Current status:** 1 invariant failing (`release-chain-empty`). This is a known issue.
+**Current status:** PASS — all invariants hold.
 
 ### 14.3 Test Suite
 
 ```bash
-# Full test suite (1269 tests, ~90s)
+# Full test suite (~1423 tests, ~100s)
 python -m pytest tests/ -q
 
 # Single test file
 python -m pytest tests/test_automation_layer.py -q
 ```
 
-**Current status:** 1267 passed, 2 failed (TUI tests related to cancelled pipeline state).
+**Current status:** 1415 passed, 8 failed — all 8 failures are pre-existing release-pipeline tests (7 in `tests/test_release_pipeline.py`, 1 in `tests/test_scheduler_compression.py`; see section 12.2). TUI tests pass.
 
 ### 14.4 Pre-commit Hooks
 
@@ -846,10 +877,19 @@ SHA-256 on sorted, serialized JSON. See `scripts/experiment_framework/metadata.p
 
 ## 18. Testing and Validation
 
+### 18.0 Environment
+
+- **Two venvs, distinct roles:**
+  - `.venv/` — dev/test environment (has pytest). Run all pipeline/test commands with `.venv/bin/python`.
+  - `.venv-nemotron-nano/` — frozen reference env for training/eval reproducibility. Deps pinned in `pyproject.toml` + `requirements-lock.txt` (regenerate via `pip list --format=freeze` from that venv). Never install dev deps into it.
+- Python ≥ 3.12 locally (`pyproject.toml`). CI runs on Python 3.11 with only pytest+pyyaml installed.
+- `pytest.ini` puts both `scripts/` and `tests/` on the python path — tests import foundation modules directly (`import atlas_constants`), no package prefix needed.
+- CI (`.github/workflows/ci.yml`) runs ONLY `validate_architecture.py` + `tests/test_parallel_stabilization.py`. The full suite is local-only — run it before declaring work done.
+
 ### 18.1 Commands (Verified)
 
 ```bash
-# Full test suite (1269 tests, ~90s)
+# Full test suite (~1423 tests, ~100s)
 python -m pytest tests/ -q
 
 # Single test file
@@ -866,6 +906,12 @@ python scripts/atlas.py self-test
 
 # Parallel stabilization tests (deterministic, CI-safe)
 python -m pytest tests/test_parallel_stabilization.py -q
+
+# Dashboard backend + API integration tests
+python -m pytest tests/test_dashboard_server.py -q
+
+# Engineering Dashboard (browser control plane)
+python -m scripts.dashboard.server --port 8765
 ```
 
 ### 18.2 What to Run After Changing Code
@@ -1067,7 +1113,7 @@ Read in this order:
 7. **`ATLAS_SUBSYSTEM_CONTRACTS.md`** — Subsystem interface contracts
 8. **Relevant subsystem source code** — `scripts/<subsystem>/`
 9. **Relevant tests** — `tests/test_<subsystem>.py`
-10. **`PROJECT_STATE.md`** — Current phase snapshot
+10. **`PROJECT_STATE.md`** — Current phase snapshot (stale, dated 2026-08-07 — trust this file and authoritative state over it)
 
 Then inspect the specific task. Do not start modifying code immediately.
 
@@ -1091,6 +1137,8 @@ Then inspect the specific task. Do not start modifying code immediately.
 | Release System | Build, verify, promote, publish | `scripts/release/`, `scripts/release_builder/` |
 | Parallel Processing | Universal adaptive scheduler | `scripts/parallel/` |
 | Architecture Validation | Enforcement of dependency boundaries | `scripts/validate_architecture.py` |
+| Engineering Dashboard | Browser ops control plane over real CLIs | `scripts/dashboard/` |
+| Expert review + SFT views | Terminal review UI, AI-assisted review, verified SFT superviews | `scripts/expert_pipeline/` (`review_ui`, `ai_reviewer`, `sft_view`) |
 | Pilot v0.2 Data | 4,499 records ready for training | `pilot/v0.2/` |
 | model-eval-finetune Integration | Qwen3-8B LoRA pipeline | `model-eval-finetune/` |
 
@@ -1099,11 +1147,10 @@ Then inspect the specific task. Do not start modifying code immediately.
 | Area | Status | Notes |
 |------|--------|-------|
 | Architecture drift | IN PROGRESS | Deep audit of subsystem ownership |
-| Duplicated constants | 2 violations known | `versioning.py`, `progressive_expansion*.py` |
-| TUI worker count | VIOLATION | `tui_backend.py:workers=0` |
-| Self-test invariant | 1 failing | `release-chain-empty` |
+| Known duplication exceptions | ACCEPTED | `versioning.py`, `progressive_expansion*.py`, `tui_backend.py`, `benchmarks/eb/eb/paths.py` |
 | Legacy script identification | IN PROGRESS | `progressive_expansion.py`, `progressive_expansion_v2.py` |
 | State source reconciliation | IN PROGRESS | Multiple review manifest variants exist |
+| Release-pipeline tests | FAILING | 7 in `test_release_pipeline.py` + 1 in `test_scheduler_compression.py` (pre-existing; see 12.2) |
 
 ### In Transition 🔄
 
@@ -1145,6 +1192,8 @@ Then inspect the specific task. Do not start modifying code immediately.
 | Parallel processing | `docs/adr/ADR-013-parallel-processing.md` |
 | Release pipeline | `docs/adr/ADR-014-release-pipeline.md` |
 | Universal scheduler | `docs/adr/ADR-015-universal-scheduler.md` |
+| Engineering Dashboard | `docs/adr/ADR-016-engineering-dashboard.md` |
+| Dashboard handbook | `scripts/dashboard/README.md` |
 | Research protocol | `docs/research/experiment_protocol_v1.md` |
 | Experiment matrix | `docs/research/experiment_matrix.md` |
 | Benchmark plan | `docs/research/benchmark_plan.md` |
@@ -1163,4 +1212,4 @@ Then inspect the specific task. Do not start modifying code immediately.
 
 ---
 
-*Updated 2026-08-15. This file is the canonical agent reference for this repo.*
+*Updated 2026-08-25. This file is the canonical agent reference for this repo.*
