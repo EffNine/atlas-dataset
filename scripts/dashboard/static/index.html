@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Atlas Engineering Dashboard">
+  <title>Atlas · Mission Control</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="shell">
+
+    <!-- ── Sidebar ─────────────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand" title="Atlas Engineering Dashboard">
+        <svg viewBox="0 0 24 24" class="brand-mark" aria-hidden="true"><path d="M12 2 L21 20 H3 Z"
+          fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <circle cx="12" cy="14.5" r="2.4" fill="currentColor"/></svg>
+        <span class="brand-name">ATLAS<span class="brand-sub">Mission Control</span></span>
+      </div>
+
+      <nav class="side-nav" id="tabs" aria-label="Sections"></nav>
+
+      <div class="side-foot">
+        <div class="conn" id="health-wrap">
+          <span id="conn-dot" class="dot dot-ok"></span>
+          <span id="health-text" class="conn-text">connecting…</span>
+        </div>
+        <button class="btn-icon" data-tab-jump="guide" title="Help & Guide" aria-label="Help and guide">
+          <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor"
+               stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M7.6 7.6 C8 6.5 9 6 10 6 C11.3 6 12.3 6.9 12.3 8 C12.3 9.6 10 9.6 10 11.4 M10 14 v.01"/></svg>
+        </button>
+        <button class="btn-icon" id="collapse-btn" title="Toggle sidebar" aria-label="Toggle sidebar">
+          <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor"
+               stroke-width="1.6"><path d="M8 4 L3 10 L8 16 M3 10 H17"/></svg>
+        </button>
+      </div>
+    </aside>
+    <div id="sidebar-scrim" class="scrim" hidden></div>
+
+    <!-- ── Main ────────────────────────────────────────────────── -->
+    <div class="content">
+      <header class="topbar">
+        <button class="btn-icon mobile-only" id="mobile-nav-btn" aria-label="Open navigation">
+          <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="1.7"><path d="M3 5 h14 M3 10 h14 M3 15 h14"/></svg>
+        </button>
+        <div class="topbar-title">
+          <h1 id="page-title">Overview</h1>
+          <span id="page-crumb" class="crumb">atlas-dataset · governed AI data infrastructure</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="kbd-hint" id="palette-btn" title="Command palette (⌘K)">
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor"
+                 stroke-width="1.5"><circle cx="7" cy="7" r="4.6"/><path d="M10.5 10.5 L14 14"/></svg>
+            <span>Search</span><kbd>⌘K</kbd>
+          </button>
+          <span class="token-chip mono" id="token-chip" title="Bearer token active">● auth</span>
+        </div>
+      </header>
+
+      <main id="main" class="main">
+        <section id="tab-overview"   class="tab-page" aria-label="Overview"></section>
+        <section id="tab-guide"      class="tab-page" hidden aria-label="Guide"></section>
+        <section id="tab-pipelines"  class="tab-page" hidden aria-label="Pipelines"></section>
+        <section id="tab-review"     class="tab-page" hidden aria-label="Review"></section>
+        <section id="tab-sources"    class="tab-page" hidden aria-label="Sources and ETL"></section>
+        <section id="tab-views"      class="tab-page" hidden aria-label="Training Views"></section>
+        <section id="tab-releases"   class="tab-page" hidden aria-label="Releases"></section>
+        <section id="tab-evaluation" class="tab-page" hidden aria-label="Evaluation"></section>
+        <section id="tab-readiness"  class="tab-page" hidden aria-label="Readiness"></section>
+        <section id="tab-jobs"       class="tab-page" hidden aria-label="Jobs"></section>
+      </main>
+    </div>
+  </div>
+
+  <!-- ── Command palette ───────────────────────────────────────── -->
+  <div id="palette-backdrop" class="modal-backdrop palette-backdrop" hidden>
+    <div class="palette" role="dialog" aria-modal="true" aria-label="Command palette">
+      <input type="text" id="palette-input" class="palette-input"
+             placeholder="Type a command, section or pipeline…" autocomplete="off"
+             spellcheck="false" aria-label="Command search">
+      <ul id="palette-list" class="palette-list" role="listbox"></ul>
+      <div class="palette-foot muted small">
+        <span><kbd>↑↓</kbd> navigate</span><span><kbd>↵</kbd> run</span><span><kbd>esc</kbd> close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Action parameter / confirmation modal ─────────────────── -->
+  <div id="modal-backdrop" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <div>
+          <h3 id="modal-title">Action</h3>
+          <span id="modal-sub" class="muted small mono"></span>
+        </div>
+        <button class="btn-icon" id="modal-close" aria-label="Close">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor"
+               stroke-width="1.6"><path d="M3 3 L13 13 M13 3 L3 13"/></svg>
+        </button>
+      </div>
+      <div id="modal-danger" class="danger-note" hidden></div>
+      <form id="modal-form" class="modal-body"></form>
+      <div class="modal-foot">
+        <span id="modal-error" class="error-text"></span>
+        <button class="btn btn-primary" id="modal-submit" type="submit"
+                form="modal-form">Run
+          <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor"
+               stroke-width="1.6"><path d="M2 7 H11 M8 3.5 L11.5 7 L8 10.5"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Artifact preview drawer ───────────────────────────────── -->
+  <div id="drawer-backdrop" class="drawer-backdrop" hidden>
+    <div class="drawer" role="dialog" aria-label="Artifact preview">
+      <div class="drawer-head">
+        <h3 id="drawer-title">Preview</h3>
+        <div class="action-row">
+          <button class="btn btn-mini" id="drawer-download">Download</button>
+          <button class="btn-icon" id="drawer-close" aria-label="Close">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor"
+                 stroke-width="1.6"><path d="M3 3 L13 13 M13 3 L3 13"/></svg>
+          </button>
+        </div>
+      </div>
+      <pre id="drawer-body" class="drawer-body"></pre>
+    </div>
+  </div>
+
+  <!-- ── Auth bar ──────────────────────────────────────────────── -->
+  <div id="authbar" class="authbar" hidden>
+    <strong>Dashboard token required.</strong>
+    <input type="password" id="auth-input" placeholder="ATLAS_DASHBOARD_TOKEN value" autocomplete="off">
+    <button class="btn btn-primary btn-mini" id="auth-save">Unlock</button>
+    <span class="muted small" id="auth-note">stored in this browser only (localStorage)</span>
+  </div>
+
+  <!-- ── Welcome tour ──────────────────────────────────────────── -->
+  <div id="welcome-backdrop" class="modal-backdrop" hidden>
+    <div class="modal welcome" role="dialog" aria-modal="true" aria-label="Welcome">
+      <div id="welcome-slide" class="welcome-body"></div>
+      <div class="modal-foot">
+        <span id="welcome-step-ind" class="muted small mono"></span>
+        <div class="action-row">
+          <button class="btn btn-mini" id="welcome-skip">Skip</button>
+          <button class="btn btn-primary btn-mini" id="welcome-next">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Toasts ────────────────────────────────────────────────── -->
+  <div id="toast-holder" class="toast-holder" aria-live="polite"></div>
+
+  <script src="/static/viz.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
