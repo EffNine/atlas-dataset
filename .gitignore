@@ -118,3 +118,10 @@ artifacts/
 
 # Pilot training-data slices (bulk JSONL, regenerable from pipeline)
 pilot/
+
+# Translation dataset build artifacts (bulk, regenerable; keep scripts + manifests)
+translation-ai-v0.1/data/
+translation-ai-v0.2/data/
+translation-ai-v0.2/checkpoints/
+# Large generated terminology tables (>100MB)
+metadata/source_discovery/*/terminology/*.jsonl
