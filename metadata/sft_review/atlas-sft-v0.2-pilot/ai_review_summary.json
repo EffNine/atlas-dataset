@@ -1,0 +1,27 @@
+{
+  "out_path": "/home/afnan/projects/active/atlas-dataset/metadata/sft_review/atlas-sft-v0.2-pilot/ai_reviews.jsonl",
+  "review_mode": "ai",
+  "review_version": "sft-review-v0.1",
+  "gates": {
+    "min_quality": 7,
+    "max_tokens": 4096
+  },
+  "reviewer": {
+    "provider": "openai-compatible",
+    "model": "agnes-2.5-flash",
+    "base_url": "https://apihub.agnes-ai.com/v1"
+  },
+  "thresholds": {
+    "reject_max_criterion": 2,
+    "reject_max_quality": 5,
+    "accept_min_quality": 8,
+    "accept_min_confidence": 0.7,
+    "conflict_spread": 2
+  },
+  "accepted": 1,
+  "reviewed": 0,
+  "rejected": 1,
+  "gated_out": 0,
+  "failures": 0,
+  "skipped_resume": 0
+}
