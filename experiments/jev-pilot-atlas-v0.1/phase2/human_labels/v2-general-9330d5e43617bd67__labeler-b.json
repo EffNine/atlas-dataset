@@ -1,0 +1,17 @@
+{
+ "schema_version": "human-label-v1",
+ "record_id": "v2-general-9330d5e43617bd67",
+ "arm": "general",
+ "content_sha256": "efbac10cda6c1ef7:5f79fbb7e321b24a",
+ "labeler_id": "labeler-b",
+ "labeled_at": "2026-09-17T17:26:00.520772+00:00",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "blinded_to_jev": true,
+ "labels": {
+  "correctness": "yes",
+  "problematic": "no",
+  "category_correct": "yes"
+ },
+ "notes": "Provenance: judgments relayed via operator; second human states direct blinded review of all 84 records. See STATUS.md."
+}

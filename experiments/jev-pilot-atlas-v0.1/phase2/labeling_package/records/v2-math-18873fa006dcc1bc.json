@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-18873fa006dcc1bc",
+ "arm": "math",
+ "content_sha256": "3760d03e6bc4ac54:581ab22c6c103c10",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "The units digit of the product $1! \\times 2! \\times 3! \\times \\cdots \\times 2006!$ is equal to $1$. Determine the last two digits of the factorial of the smallest integer $n$ such that $n!$ is divisible by $1000!$ and $n>1000$."
+  },
+  {
+   "role": "assistant",
+   "content": "We want to find the smallest integer $n$ such that $n!$ is divisible by $1000!$ and $n>1000$.\n\nSince $1000!$ contains all the primes less than or equal to $1000$, we need to find the smallest $n$ such that $n!$ contains all these primes. In particular, we need to find the smallest $n$ such that $n!$ contains all the factors of $2$, $5$, and other primes that divide $1000!$.\n\nThe number of factors of $2$ in $1000!$ is:\n\\[ \\left\\lfloor \\frac{1000}{2} \\right\\rfloor + \\left\\lfloor \\frac{1000}{2^2} \\right\\rfloor + \\left\\lfloor \\frac{1000}{2^3} \\right\\rfloor + \\cdots = 500 + 250 + 125 + \\cdots = 999 \\]\n\nThe number of factors of $5$ in $1000!$ is:\n\\[ \\left\\lfloor \\frac{1000}{5} \\right\\rfloor + \\left\\lfloor \\frac{1000}{5^2} \\right\\rfloor + \\left\\lfloor \\frac{1000}{5^3} \\right\\rfloor + \\cdots = 200 + 40 + 8 + \\cdots = 249 \\]\n\nSince $2^{999} \\cdot 5^{249}$ is not divisible by $1000!$, we need at least $250$ factors of $5$ in $n!$.\n\nThe smallest $n$ that satisfies this condition is:\n\\[ n = 5 \\cdot 250 = 1250 \\]\n\nHowever, we need to check if $1250!$ contains all the other primes that divide $1000!$. The largest prime less than or equal to $1000$ is $997$, so we need to check if $1250!$ contains at least one factor of $997$.\n\nSince $1250 > 997$, we know that $1250!$ contains at least one factor of $997$.\n\nTherefore, the smallest integer $n$ such that $n!$ is divisible by $1000!$ and $n>1000$ is:\n\\[ n = 1250 \\]\n\nThe last two digits of $1250!$ are:\n\\[ 00 \\]\n\nSo, the answer is:\n\\[ \\boxed{00} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

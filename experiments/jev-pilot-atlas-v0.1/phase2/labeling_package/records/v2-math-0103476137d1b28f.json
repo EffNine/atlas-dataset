@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-0103476137d1b28f",
+ "arm": "math",
+ "content_sha256": "7dca6f39159cb5dd:a2123c9dbc2c7d79",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Count the number of positive integers $m$ such that there exists an integer $n$, for which $m$ is the smallest positive integer satisfying $2^n + m = 3^k$, where $k$ is a positive integer."
+  },
+  {
+   "role": "assistant",
+   "content": "We can rewrite the equation as $m = 3^k - 2^n$.\nFor $m$ to be positive, $3^k > 2^n$.\n\nNotice that when $k$ increases by 1, $3^k$ increases by a factor of 3, while $2^n$ increases by a factor of 2 when $n$ increases by 1. This means that if $3^k > 2^n$, then $3^{k+1} > 2^{n+1}$.\n\nTo find the smallest $m$, we need to find the smallest $k$ for which $3^k > 2^n$.\n\nWe can start with $k = 1$ and $n = 1$ and increment $n$ until $3^k < 2^n$.\nThen, we increment $k$ and repeat the process until $3^k > 2^n$.\n\nWe can see that the sequence of $m$ values will be increasing, since $3^k$ increases faster than $2^n$.\n\nLet's calculate the first few values of $m$:\n\nFor $k = 1$, $n = 1$, $m = 3^1 - 2^1 = 1$.\n\nFor $k = 2$, $n = 2$, $m = 3^2 - 2^2 = 5$.\n\nFor $k = 3$, $n = 3$, $m = 3^3 - 2^3 = 19$.\n\nFor $k = 4$, $n = 4$, $m = 3^4 - 2^4 = 65$.\n\nNotice that the values of $m$ are increasing rapidly.\n\nSince $m$ is the smallest positive integer satisfying the equation, we can stop here and count the number of distinct $m$ values.\n\nThere are $\\boxed{4}$ distinct values of $m$."
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

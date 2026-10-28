@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-4d4ac1d9bc9d1c27",
+ "arm": "math",
+ "content_sha256": "5e023b22b4094695:67a7a3c538471373",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Let $x$ be a real number. Define\n$$\\binom{x}{0}=1, \\qquad \\binom{x}{n}=\\frac{x(x-1)\\dots (x-n+1)}{n!}, \\qquad n=1,2,\\dots.$$\nProve that for any positive integer $n,$\n$$\\sum_{k=0}^{n} (-1)^{n-k}\\binom{n}{k}\\binom{x+k}{n}=\\begin{cases} 0& \\text{if} & x=0,1,2,\\dots,n-1\\\\ 1&\\text{if}& x=n. \\end{cases}$$"
+  },
+  {
+   "role": "assistant",
+   "content": "Let $f(x) = \\sum_{k=0}^{n} (-1)^{n-k}\\binom{n}{k}\\binom{x+k}{n}$. The problem asks to prove that $f(x) = 0$ if $x = 0, 1, 2, \\dots, n-1$ and $f(x) = 1$ if $x = n$.\n\nTo prove this, we use the Principle of Inclusion-Exclusion.\n\nSuppose we have $x$ items, and we want to choose $n$ of them. If $x < n$, then we cannot choose $n$ items, so the number of ways to choose $n$ items is 0.\n\nIf $x \\ge n$, then we can choose $n$ items in $\\binom{x}{n}$ ways.\n\nHowever, if we have $n$ additional items that we can also choose from, then we can choose $n$ items in $\\binom{x+n}{n}$ ways.\n\nBut this overcounts the number of ways to choose $n$ items, because we are counting some combinations multiple times.\n\nTo correct for this, we need to subtract the number of ways to choose $n$ items from the $n$ additional items, which is $\\binom{n}{n}$.\n\nHowever, this undercounts the number of ways to choose $n$ items, because we are not counting some combinations at all.\n\nTo correct for this, we need to add the number of ways to choose $n$ items from the $x$ original items and $n-1$ of the additional items, which is $\\binom{n}{n-1}\\binom{x+1}{n}$.\n\nContinuing in this way, we get the formula:\n\n\\[ f(x) = \\binom{x+n}{n} - \\binom{n}{n}\\binom{x}{n} + \\binom{n}{n-1}\\binom{x+1}{n} - \\dots + (-1)^n\\binom{n}{0}\\binom{x+n}{n} \\]\n\nUsing the fact that $\\binom{n}{k} = \\binom{n}{n-k}$, we can rewrite this formula as:\n\n\\[ f(x) = \\sum_{k=0}^{n} (-1)^{n-k}\\binom{n}{k}\\binom{x+k}{n} \\]\n\nNow we can see that if $x = 0, 1, 2, \\dots, n-1$, then $f(x) = 0$, because we cannot choose $n$ items from $x$ items.\n\nAnd if $x = n$, then $f(x) = 1$, because there is only one way to choose $n$ items from $n$ items.\n\nThus, we have proven the desired result.\n\nSo, the answer is:\n\\[ \\boxed{1} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

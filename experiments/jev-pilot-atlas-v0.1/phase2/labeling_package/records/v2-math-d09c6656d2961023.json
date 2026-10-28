@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-d09c6656d2961023",
+ "arm": "math",
+ "content_sha256": "dfb1d0899cae53a4:7eb4a59b6b58f515",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "In a square grid, each row and column contains 20 squares. Amanda colors each square red or blue, such that no two adjacent squares in a row or column have the same color. She then counts the number of red squares in each row and column, rounds each count to the nearest multiple of 5, and adds up the rounded counts. Meanwhile, Bella does the same with a grid of 25 squares per row and column. What is the positive difference between Amanda's total count and Bella's total count?"
+  },
+  {
+   "role": "assistant",
+   "content": "For a grid with an even number of squares per row and column, there are two possible arrangements of red and blue squares: a \"red-first\" arrangement, where the top left square is red, and a \"blue-first\" arrangement, where the top left square is blue.\n\nIn a grid with 20 squares per row and column, each row and column will have 10 red squares in the \"red-first\" arrangement and 10 blue squares in the \"blue-first\" arrangement. Since Amanda rounds each count to the nearest multiple of 5, the total count for each row and column will be 10.\n\nSince there are 20 rows and 20 columns, Amanda's total count will be:\n\\[ 20(10) + 20(10) = 400 \\]\n\nFor a grid with 25 squares per row and column, each row and column will have 12 or 13 squares of the same color, depending on whether the top left square is red or blue. Bella will round the count of 12 or 13 to 10 or 15, respectively.\n\nIn the \"red-first\" arrangement, there will be 12 red squares in each row and column, so Bella will round each count to 10.\n\nIn the \"blue-first\" arrangement, there will be 13 blue squares in each row and column, so Bella will round each count to 15.\n\nHowever, since Bella has to round each count to the nearest multiple of 5, and since there are an equal number of rows and columns with 12 or 13 squares of the same color, the total count will be the same for both arrangements.\n\nSince there are 25 rows and 25 columns, Bella's total count will be:\n\\[ 25(12.5) + 25(12.5) = 25(10) + 25(15) = 625 \\]\n\nThe positive difference between Amanda's total count and Bella's total count is:\n\\[ 625 - 400 = \\boxed{225} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

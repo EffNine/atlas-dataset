@@ -1,0 +1,62 @@
+{
+ "version": "phase2.2-agreement-v1",
+ "generated_at": "2026-09-17T17:32:24.353821+00:00",
+ "n_batches_two_reviewers": 0,
+ "status": "HOLD_NO_PAIRED_REVIEWS",
+ "note": "No batch has two independent reviews yet. Metrics null \u2014 never fabricate.",
+ "dimensions": {
+  "correctness": {
+   "n_paired": 0,
+   "n_agree": 0,
+   "raw_agreement": null,
+   "cohens_kappa": null
+  },
+  "problematic": {
+   "n_paired": 0,
+   "n_agree": 0,
+   "raw_agreement": null,
+   "cohens_kappa": null
+  },
+  "category_correct": {
+   "n_paired": 0,
+   "n_agree": 0,
+   "raw_agreement": null,
+   "cohens_kappa": null
+  },
+  "truncation_incomplete": {
+   "n_paired": 0,
+   "n_agree": 0,
+   "raw_agreement": null,
+   "cohens_kappa": null
+  },
+  "factual_technical_error": {
+   "n_paired": 0,
+   "n_agree": 0,
+   "raw_agreement": null,
+   "cohens_kappa": null
+  },
+  "instruction_violation": {
+   "n_paired": 0,
+   "n_agree": 0,
+   "raw_agreement": null,
+   "cohens_kappa": null
+  },
+  "malformed_output": {
+   "n_paired": 0,
+   "n_agree": 0,
+   "raw_agreement": null,
+   "cohens_kappa": null
+  },
+  "other_defect": {
+   "n_paired": 0,
+   "n_agree": 0,
+   "raw_agreement": null,
+   "cohens_kappa": null
+  }
+ },
+ "full_agreement": {
+  "n_paired": 0,
+  "n_full_agree": 0,
+  "rate": null
+ }
+}

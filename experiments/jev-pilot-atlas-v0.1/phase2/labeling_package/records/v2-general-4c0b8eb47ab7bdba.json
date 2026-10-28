@@ -1,0 +1,32 @@
+{
+ "record_id": "v2-general-4c0b8eb47ab7bdba",
+ "arm": "general",
+ "content_sha256": "7a117615fccd4d48:b64a54727d6c514f",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "name": "ewedubs/linux-kernel-commits-aireason-instruct",
+  "url": "https://huggingface.co/datasets/ewedubs/linux-kernel-commits-aireason-instruct",
+  "license": "Apache-2.0",
+  "date": "2026-08-14"
+ },
+ "category_label": "03_system_engineering",
+ "subcategory_label": "general",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n\tint ret = 0;\n\n\tmutex_lock(&group->mutex);\n\tlist_for_each_entry(device, &group->devices, list) {\n\t\tstruct list_head dev_resv_regions;\n\n\t\tINIT_LIST_HEAD(&dev_resv_regions);\n\t\tiommu_get_resv_regions(device->dev, &dev_resv_regions);\n\t\tret = iommu_insert_device_resv_regions(&dev_resv_regions, head);\n\t\tiommu_put_resv_regions(device->dev, &dev_resv_regions);\n\t\tif (ret)\n\t\t\tbreak;\n\t}\n\tmutex_unlock(&group->mutex);\n\treturn ret;\n\n/* ... */\n\n\tstruct device *dev;\n\tint ret, req_type;\n\n\tif (!capable(CAP_SYS_ADMIN) || !capable(CAP_SYS_RAWIO))\n\t\treturn -EACCES;\n\n\tif (WARN_ON(!group))\n\t\treturn -EINVAL;\n\n\tif (sysfs_streq(buf, \"identity\"))\n\t\treq_type = IOMMU_DOMAIN_IDENTITY;\n\telse if (sysfs_streq(buf, \"DMA\"))\n\t\treq_type = IOMMU_DOMAIN_DMA;\n\telse if (sysfs_streq(buf, \"DMA-FQ\"))\n\t\treq_type = IOMMU_DOMAIN_DMA_FQ;\n\telse if (sysfs_streq(buf, \"auto\"))\n\t\treq_type = 0;\n\telse\n\t\treturn -EINVAL;\n\n\t/*\n\t * Lock/Unlock the group mutex here before device lock to\n\t * 1. Make sure that the iommu group has only one device (this is a\n\t *    prerequisite for step 2)\n\t * 2. Get struct *dev which is needed to lock device\n\t */\n\tmutex_lock(&group->mutex);\n\tif (iommu_group_device_count(group) != 1) {\n\t\tmutex_unlock(&group->mutex);\n\t\tpr_err_ratelimited(\"Cannot change default domain: Group has more than one device\\n\");\n\t\treturn -EINVAL;\n\t}\n\n\t/* Since group has only one device */\n\nInstruction:\niommu: Make sysfs robust for non-API groups\n\nGroups created by VFIO backends outside the core IOMMU API should never\nbe passed directly into the API itself, however they still expose their\nstandard sysfs attributes, so we can still stumble across them that way.\nTake care to consider those cases before jumping into our normal\nassumptions of a fully-initialised core API group.\n\nFixes: 3f6634d997db (\"iommu: Use right way to retrieve iommu_ops\")\nReported-by: Jan Stancek <jstancek@redhat.com>\nTested-by: Jan Stancek <jstancek@redhat.com>\nReviewed-by: Jason Gunthorpe <jgg@nvidia.com>\nSigned-off-by: Robin Murphy <robin.murphy@arm.com>\nLink: https://lore.kernel.org/r/86ada41986988511a8424e84746dfe9ba7f87573.1651667683.git.robin.murphy@arm.com\nSigned-off-by: Joerg Roedel <jroedel@suse.de>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c\nindex f2c45b8..857d4c2 100644\n--- a/drivers/iommu/iommu.c\n+++ b/drivers/iommu/iommu.c\n@@ -506,6 +506,13 @@ int iommu_get_group_resv_regions(struct iommu_group *group,\n \tlist_for_each_entry(device, &group->devices, list) {\n \t\tstruct list_head dev_resv_regions;\n \n+\t\t/*\n+\t\t * Non-API groups still expose reserved_regions in sysfs,\n+\t\t * so filter out calls that get here that way.\n+\t\t */\n+\t\tif (!device->dev->iommu)\n+\t\t\tbreak;\n+\n \t\tINIT_LIST_HEAD(&dev_resv_regions);\n \t\tiommu_get_resv_regions(device->dev, &dev_resv_regions);\n \t\tret = iommu_insert_device_resv_regions(&dev_resv_regions, head);\n@@ -3019,7 +3026,7 @@ static ssize_t iommu_group_store_type(struct iommu_group *group,\n \tif (!capable(CAP_SYS_ADMIN) || !capable(CAP_SYS_RAWIO))\n \t\treturn -EACCES;\n \n-\tif (WARN_ON(!group))\n+\tif (WARN_ON(!group) || !group->default_domain)\n \t\treturn -EINVAL;\n \n \tif (sysfs_streq(buf, \"identity\"))"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

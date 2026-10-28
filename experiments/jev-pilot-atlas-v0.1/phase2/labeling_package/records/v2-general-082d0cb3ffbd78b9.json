@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-general-082d0cb3ffbd78b9",
+ "arm": "general",
+ "content_sha256": "175ae8bb33947daf:d9919fc7662b55d3",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "general",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Let $O$ be the center of a circle with radius $2$ cm. A line cuts a chord $AB$ with length $4$ cm in half and intersects the circle again at point $C$. Find the distance between $O$ and $C$."
+  },
+  {
+   "role": "assistant",
+   "content": "Let's call the point where the line cuts the chord $AB$ in half point $M$. We know that $OM$ is perpendicular to $AB$ because it is a radius bisecting a chord.\n\nSince $AB = 4$ cm, we have $AM = MB = 2$ cm. By the Pythagorean theorem applied to the right triangle $AOM$, we have\n\\[ OA^2 = OM^2 + AM^2 \\Rightarrow OM^2 = OA^2 - AM^2 \\Rightarrow OM^2 = 2^2 - 2^2 = 0 \\]\n\nSo $OM = 0$, which means that $M$ coincides with $O$.\n\nNow, $OC$ is a radius of the circle, so $OC = 2$ cm.\n\nTherefore, the distance between $O$ and $C$ is $\\boxed{2}$ cm."
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

@@ -1,0 +1,6 @@
+{
+ "version": "phase2-threshold-v1",
+ "status": "INCONCLUSIVE_NO_HUMAN_LABELS",
+ "n_labeled": 0,
+ "note": "No human labels recorded yet. Calibration metrics (precision/recall/TPR/FPR and confusion matrices for 'correct' and 'problematic') cannot be computed. Re-run after labeling."
+}

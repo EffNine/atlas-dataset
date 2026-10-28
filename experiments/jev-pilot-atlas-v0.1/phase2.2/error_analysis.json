@@ -1,0 +1,19 @@
+{
+ "version": "phase2.2-error-analysis-v1",
+ "generated_at": "2026-09-17T17:32:24.354121+00:00",
+ "status": "HOLD_NO_GOLD",
+ "note": "No agreed/adjudicated gold exists. Matrix cells are null \u2014 never fabricate.",
+ "matrix": {
+  "TP_flagged_defect": null,
+  "FP_flagged_clean": null,
+  "FN_clean_defect": null,
+  "TN_clean_clean": null
+ },
+ "metrics": {
+  "precision": null,
+  "recall": null,
+  "fpr": null,
+  "fnr": null
+ },
+ "items": []
+}

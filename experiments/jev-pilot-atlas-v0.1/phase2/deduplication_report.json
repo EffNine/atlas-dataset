@@ -1,0 +1,30 @@
+{
+ "version": "phase2-dedup-v1",
+ "scope": "pilot/v0.2 (4 arms)",
+ "method": "deterministic SHA-256 content hashing (exact) + MinHash LSH Jaccard>=0.8 on user text (near); canonical = earliest arm in [math,code,general,systems] then input order",
+ "n_total_records": 4499,
+ "n_exact_content_dup_groups": 822,
+ "n_exact_user_only_dup_groups": 2,
+ "n_near_dup_pairs": 6,
+ "n_duplicate_rows": 1647,
+ "n_exact_content_duplicate_rows": 822,
+ "n_user_only_duplicate_rows": 825,
+ "unique_records_after_exact_dedup": 3677,
+ "records_after_excluding_user_only_redundant": 2942,
+ "n_requires_human_review": 96,
+ "breakdown": {
+  "exact_content_dup_groups": 822,
+  "exact_user_only_dup_groups": 2,
+  "exact_user_only_same_source_rows": 735,
+  "exact_user_only_diff_source_rows": 90,
+  "near_dup_pairs": 6,
+  "exact_dup_by_arm_pair": {
+   "code->general": 366,
+   "math->general": 366,
+   "general->systems": 90
+  },
+  "note": "exact_duplicate rows = the 822 identical user+assistant content groups (the Phase-1 finding). exact_duplicate_user_only = same prompt, different answers: same-source pairs are redundant (drop), cross-source pairs are potentially legitimate parallel answers (human review). unique_records_after_exact_dedup counts ONLY the identical-content groups; user-only and near-dup rows need review before they are ever dropped."
+ },
+ "generated_at": "2026-09-18T00:32:06.016728+00:00",
+ "manifest": "deduplication_manifest.jsonl"
+}

@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-fa7762f9793cde06",
+ "arm": "math",
+ "content_sha256": "a3a3db5654aba0d3:177a9c084959aa42",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Emily has been a nurse for 25 years, and her colleague has 5 years less experience. What is the total number of years they have worked as nurses?"
+  },
+  {
+   "role": "assistant",
+   "content": "Emily has been a nurse for 25 years. \nHer colleague has 5 years less experience, which means she has 25 - 5 = 20 years of experience. \nThe total number of years they have worked as nurses is 25 + 20 = 45. \nThus, they have worked as nurses for \\boxed{45} years."
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

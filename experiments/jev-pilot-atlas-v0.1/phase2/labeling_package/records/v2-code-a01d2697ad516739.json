@@ -1,0 +1,27 @@
+{
+ "record_id": "v2-code-a01d2697ad516739",
+ "arm": "code",
+ "content_sha256": "efbac10cda6c1ef7:5f79fbb7e321b24a",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": "p0-swe-bench-verified",
+ "category_label": "software_engineering",
+ "subcategory_label": "patch_generation",
+ "license": "MIT",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Fix parse_duration() for some negative durations\nDescription\n\t\nThe ​https://docs.djangoproject.com/en/2.1/_modules/django/utils/dateparse/ defines:\nstandard_duration_re = re.compile(\n\tr'^'\n\tr'(?:(?P<days>-?\\d+) (days?, )?)?'\n\tr'((?:(?P<hours>-?\\d+):)(?=\\d+:\\d+))?'\n\tr'(?:(?P<minutes>-?\\d+):)?'\n\tr'(?P<seconds>-?\\d+)'\n\tr'(?:\\.(?P<microseconds>\\d{1,6})\\d{0,6})?'\n\tr'$'\n)\nthat doesn't match to negative durations, because of the <hours> definition final (lookahead) part does not have '-?' in it. The following will work:\n\tr'((?:(?P<hours>-?\\d+):)(?=-?\\d+:-?\\d+))?'\n(Thanks to Konstantin Senichev for finding the fix.)\n"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/django/utils/dateparse.py b/django/utils/dateparse.py\n--- a/django/utils/dateparse.py\n+++ b/django/utils/dateparse.py\n@@ -29,9 +29,10 @@\n standard_duration_re = re.compile(\n     r'^'\n     r'(?:(?P<days>-?\\d+) (days?, )?)?'\n-    r'((?:(?P<hours>-?\\d+):)(?=\\d+:\\d+))?'\n-    r'(?:(?P<minutes>-?\\d+):)?'\n-    r'(?P<seconds>-?\\d+)'\n+    r'(?P<sign>-?)'\n+    r'((?:(?P<hours>\\d+):)(?=\\d+:\\d+))?'\n+    r'(?:(?P<minutes>\\d+):)?'\n+    r'(?P<seconds>\\d+)'\n     r'(?:\\.(?P<microseconds>\\d{1,6})\\d{0,6})?'\n     r'$'\n )\n"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

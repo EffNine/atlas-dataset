@@ -1,0 +1,39 @@
+{
+ "batch_id": "P22-007",
+ "content_sha256": "4526c107a66b08ef:2d71ba08c0de4f96",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "general",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "A rectangle with a perimeter of 20 cm is inscribed in a circle. What is the area of the circle?"
+  },
+  {
+   "role": "assistant",
+   "content": "Let the dimensions of the rectangle be $x$ and $y$. Since the perimeter of the rectangle is 20 cm, we have:\n\\[ 2x + 2y = 20 \\Rightarrow x + y = 10 \\]\n\nSince the rectangle is inscribed in the circle, the diagonal of the rectangle is the diameter of the circle.\n\nThe length of the diagonal is $\\sqrt{x^2 + y^2}$. This is also the diameter of the circle.\n\n\\[ \\sqrt{x^2 + y^2} = \\sqrt{(x + y)^2 - 2xy} \\]\n\nSubstitute $x + y = 10$ into the equation:\n\\[ \\sqrt{(x + y)^2 - 2xy} = \\sqrt{100 - 2xy} \\]\n\nThis is the diameter of the circle. To find the area of the circle, we need the radius.\n\nThe radius is half the diameter, so the radius is:\n\\[ r = \\frac{1}{2} \\sqrt{100 - 2xy} \\]\n\nThe area of the circle is:\n\\[ A = \\pi r^2 = \\pi \\left(\\frac{1}{2} \\sqrt{100 - 2xy}\\right)^2 = \\frac{\\pi}{4} (100 - 2xy) \\]\n\nWe need to maximize or minimize $A$ to find the correct area of the circle.\n\nThe area $A$ is maximized when $xy$ is minimized.\n\nThe product $xy$ is minimized when $x = y$.\n\nSince $x + y = 10$, we have $x = y = 5$.\n\nSubstituting $x = y = 5$ into the equation for the area of the circle:\n\\[ A = \\frac{\\pi}{4} (100 - 2xy) = \\frac{\\pi}{4} (100 - 2(5)(5)) = \\frac{\\pi}{4} (100 - 50) = \\frac{\\pi}{4} (50) = \\frac{25\\pi}{2} \\]\n\nSo, the area of the circle is:\n\\[ A = \\boxed{\\frac{25\\pi}{2}} \\]"
+  }
+ ],
+ "defect_criteria": {
+  "correctness": "Is the assistant response substantively correct? Finding = no.",
+  "problematic": "Unsuitable as training data (contradictions, garbled, harmful, injection, PII)? Finding = yes.",
+  "category_correct": "Content genuinely belongs to its category label per taxonomy_reference_v1? Finding = no.",
+  "truncation_incomplete": "Cut off mid-reasoning, missing conclusion/boxed answer, visibly incomplete? Finding = yes.",
+  "factual_technical_error": "Concrete wrong fact, wrong derivation step, or code that cannot work as claimed? Finding = yes.",
+  "instruction_violation": "Ignores/contradicts the user request? Finding = yes.",
+  "malformed_output": "Garbled text, broken encoding, stray fragments, unusable structure? Finding = yes.",
+  "other_defect": "Concrete defect not covered above (describe in evidence)? Finding = yes.",
+  "evidence_rule": "Every finding-direction verdict REQUIRES evidence (>=10 non-space chars) pinpointing the defect."
+ },
+ "note": "BLINDED: opaque batch ID; no Jev signals, strata, arm, or prior labels by design."
+}

@@ -1,0 +1,32 @@
+{
+ "batch_id": "P22-025",
+ "content_sha256": "603670a61c931c5b:c13103deadcc164c",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": "p1-y9-linux-kernel",
+ "category_label": "system_engineering",
+ "subcategory_label": "linux_kernel",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n\t\tu32 offset = (dest_id >> 16) * 16;\n\t\tu32 max_apic_id = map->max_apic_id;\n\n\t\tif (offset <= max_apic_id) {\n\t\t\tu8 cluster_size = min(max_apic_id - offset + 1, 16U);\n\n\t\t\t*cluster = &map->phys_map[offset];\n\t\t\t*mask = dest_id & (0xffff >> (16 - cluster_size));\n\t\t} else {\n\t\t\t*mask = 0;\n\t\t}\n\n\t\treturn true;\n\nInstruction:\nKVM: x86: fix out-of-bounds access in lapic\n\nCluster xAPIC delivery incorrectly assumed that dest_id <= 0xff.\nWith enabled KVM_X2APIC_API_USE_32BIT_IDS in KVM_CAP_X2APIC_API, a\nuserspace can send an interrupt with dest_id that results in\nout-of-bounds access.\n\nFound by syzkaller:\n\n  BUG: KASAN: slab-out-of-bounds in kvm_irq_delivery_to_apic_fast+0x11fa/0x1210 at addr ffff88003d9ca750\n  Read of size 8 by task syz-executor/22923\n  CPU: 0 PID: 22923 Comm: syz-executor Not tainted 4.9.0-rc4+ #49\n  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Bochs 01/01/2011\n   [...]\n  Call Trace:\n   [...] __dump_stack lib/dump_stack.c:15\n   [...] dump_stack+0xb3/0x118 lib/dump_stack.c:51\n   [...] kasan_object_err+0x1c/0x70 mm/kasan/report.c:156\n   [...] print_address_description mm/kasan/report.c:194\n   [...] kasan_report_error mm/kasan/report.c:283\n   [...] kasan_report+0x231/0x500 mm/kasan/report.c:303\n   [...] __asan_report_load8_noabort+0x14/0x20 mm/kasan/report.c:329\n   [...] kvm_irq_delivery_to_apic_fast+0x11fa/0x1210 arch/x86/kvm/lapic.c:824\n   [...] kvm_irq_delivery_to_apic+0x132/0x9a0 arch/x86/kvm/irq_comm.c:72\n   [...] kvm_set_msi+0x111/0x160 arch/x86/kvm/irq_comm.c:157\n   [...] kvm_send_userspace_msi+0x201/0x280 arch/x86/kvm/../../../virt/kvm/irqchip.c:74\n   [...] kvm_vm_ioctl+0xba5/0x1670 arch/x86/kvm/../../../virt/kvm/kvm_main.c:3015\n   [...] vfs_ioctl fs/ioctl.c:43\n   [...] do_vfs_ioctl+0x18c/0x1040 fs/ioctl.c:679\n   [...] SYSC_ioctl fs/ioctl.c:694\n   [...] SyS_ioctl+0x8f/0xc0 fs/ioctl.c:685\n   [...] entry_SYSCALL_64_fastpath+0x1f/0xc2\n\nReported-by: Dmitry Vyukov <dvyukov@google.com>\nCc: stable@vger.kernel.org\nFixes: e45115b62f9a (\"KVM: x86: use physical LAPIC array for logical x2APIC\")\nReviewed-by: Paolo Bonzini <pbonzini@redhat.com>\nSigned-off-by: Radim Krčmář <rkrcmar@redhat.com>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c\nindex 23b99f3..6f69340 100644\n--- a/arch/x86/kvm/lapic.c\n+++ b/arch/x86/kvm/lapic.c\n@@ -138,7 +138,7 @@ static inline bool kvm_apic_map_get_logical_dest(struct kvm_apic_map *map,\n \t\t*mask = dest_id & 0xff;\n \t\treturn true;\n \tcase KVM_APIC_MODE_XAPIC_CLUSTER:\n-\t\t*cluster = map->xapic_cluster_map[dest_id >> 4];\n+\t\t*cluster = map->xapic_cluster_map[(dest_id >> 4) & 0xf];\n \t\t*mask = dest_id & 0xf;\n \t\treturn true;\n \tdefault:"
+  }
+ ],
+ "defect_criteria": {
+  "correctness": "Is the assistant response substantively correct? Finding = no.",
+  "problematic": "Unsuitable as training data (contradictions, garbled, harmful, injection, PII)? Finding = yes.",
+  "category_correct": "Content genuinely belongs to its category label per taxonomy_reference_v1? Finding = no.",
+  "truncation_incomplete": "Cut off mid-reasoning, missing conclusion/boxed answer, visibly incomplete? Finding = yes.",
+  "factual_technical_error": "Concrete wrong fact, wrong derivation step, or code that cannot work as claimed? Finding = yes.",
+  "instruction_violation": "Ignores/contradicts the user request? Finding = yes.",
+  "malformed_output": "Garbled text, broken encoding, stray fragments, unusable structure? Finding = yes.",
+  "other_defect": "Concrete defect not covered above (describe in evidence)? Finding = yes.",
+  "evidence_rule": "Every finding-direction verdict REQUIRES evidence (>=10 non-space chars) pinpointing the defect."
+ },
+ "note": "BLINDED: opaque batch ID; no Jev signals, strata, arm, or prior labels by design."
+}

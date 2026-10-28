@@ -1,0 +1,31 @@
+{
+ "schema_version": "human-review-v2",
+ "batch_id": "<P22-XXX>",
+ "reviewer_id": "<your-reviewer-id>",
+ "reviewed_at": "<ISO-8601, e.g. 2026-09-18T10:00:00+00:00>",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "blinded_to_jev": true,
+ "blinded_to_prior_labels": true,
+ "labels": {
+  "correctness": "<yes|no>",
+  "problematic": "<yes|no>",
+  "category_correct": "<yes|no>",
+  "truncation_incomplete": "<yes|no>",
+  "factual_technical_error": "<yes|no>",
+  "instruction_violation": "<yes|no>",
+  "malformed_output": "<yes|no>",
+  "other_defect": "<yes|no>"
+ },
+ "evidence": {
+  "correctness": "<required (>=10 chars) for every finding-direction verdict>",
+  "problematic": "<required (>=10 chars) for every finding-direction verdict>",
+  "category_correct": "<required (>=10 chars) for every finding-direction verdict>",
+  "truncation_incomplete": "<required (>=10 chars) for every finding-direction verdict>",
+  "factual_technical_error": "<required (>=10 chars) for every finding-direction verdict>",
+  "instruction_violation": "<required (>=10 chars) for every finding-direction verdict>",
+  "malformed_output": "<required (>=10 chars) for every finding-direction verdict>",
+  "other_defect": "<required (>=10 chars) for every finding-direction verdict>"
+ },
+ "notes": "<optional>"
+}

@@ -1,0 +1,20 @@
+{
+ "version": "phase2-calibration-v1",
+ "generated_at": "2026-09-18T00:32:08.601801+00:00",
+ "n_records": 96,
+ "strata": {
+  "normal": 40,
+  "low_jev": 20,
+  "flagged": 20,
+  "outliers": 10,
+  "spread": 6
+ },
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "protocol": "Two independent labelers per record; disagreements resolved by a third. Labels are recorded in human_labels/ separately from Jev outputs. Do not reveal Jev answers to labelers before they complete their own pass.",
+ "status": "PENDING_HUMAN_LABELS",
+ "records_note": "records embedded above; each is 'labeling_status: pending' with no human labels \u2014 do not fabricate."
+}

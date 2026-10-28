@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-501c77b2e08b35cd",
+ "arm": "math",
+ "content_sha256": "ea0279034a3c843d:3568865ba4e67b7b",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Emily earned 180 points during her freshman year on the school volleyball team. She earned 15% more points during her sophomore year. How many points did she earn during both years?"
+  },
+  {
+   "role": "assistant",
+   "content": "Emily earned 180 points during her freshman year.\nShe earned 15% more points during her sophomore year.\n15% of 180 points is $180 * 15 / 100 = 2700 / 100 = 27$.\nSo she earned $180 + 27 = 207$ points during her sophomore year.\nThus, the total points she earned in both years is $180 + 207 = 387$.\nSo Emily earned \\boxed{387} points during both years."
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

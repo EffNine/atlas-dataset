@@ -1,0 +1,651 @@
+{
+ "version": "phase2-taxonomy-audit-v1",
+ "generated_at": "2026-09-18T00:32:08.577617+00:00",
+ "method": "independent domain-signal inference; NOT the record's own label",
+ "reference_version": "taxonomy_reference_v1",
+ "n_records": 4499,
+ "n_suspect_misclassification": 0,
+ "n_domain_mismatch_any_confidence": 61,
+ "n_label_match": 4438,
+ "n_inconclusive_inference": 0,
+ "per_label": {
+  "03_system_engineering": {
+   "n": 366,
+   "suspect": 0,
+   "predicted_counts": {
+    "03_system_engineering": 366
+   }
+  },
+  "mathematics": {
+   "n": 1366,
+   "suspect": 0,
+   "predicted_counts": {
+    "01_foundation": 1305,
+    "02_software_engineering": 32,
+    "03_system_engineering": 13,
+    "07_business_knowledge": 12,
+    "06_science_engineering": 2,
+    "08_creative_knowledge": 1,
+    "04_ai_machine_learning": 1
+   }
+  },
+  "software_engineering": {
+   "n": 767,
+   "suspect": 0,
+   "predicted_counts": {
+    "02_software_engineering": 767
+   }
+  },
+  "system_engineering": {
+   "n": 2000,
+   "suspect": 0,
+   "predicted_counts": {
+    "03_system_engineering": 2000
+   }
+  }
+ },
+ "representative_suspects": [
+  {
+   "record_id": "v2-math-d1c446a4e26e7b6b",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Emily is at the market with a budget of $80. She plans to buy 3 jars of jam, each costing $4, a box of cereal for $15, milk for $8, and eggs for $12. She also wants to purchase some oranges, which are priced at $3 each. "
+  },
+  {
+   "record_id": "v2-math-19e1d34bd3653bda",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "In a certain class, the average score on the first exam was 72, and the average score on the second exam was 80. If a student in the class scored 10 points higher on the second exam than on the first exam, and their scor"
+  },
+  {
+   "record_id": "v2-math-f6fdb5801fc3089e",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A rectangular prism made of copper has a volume of 240 cubic centimeters and weighs 1.2 kilograms. If a cylindrical container made of the same copper alloy has a volume of 1200 cubic centimeters, how much will it weigh? "
+  },
+  {
+   "record_id": "v2-math-b64cd8719a989ccc",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "08_creative_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A bookshelf has five shelves, and each shelf can hold a specific type of book (e.g., fiction, non-fiction, biography, self-help, and children's books). If the bookshelf is currently empty, how many different ways can you"
+  },
+  {
+   "record_id": "v2-math-16ac324af14c0ff4",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Mr. Johnson's class collected $75 for their school event. In addition to that, each of his 25 students donated $4. The cost of the event is $6 per student. After covering all the event expenses, how much money is left in"
+  },
+  {
+   "record_id": "v2-math-2f107b74b3b3b21b",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Maria has 4 baskets that can hold 15 kilograms of apples each. She bought the baskets for $420. Maria plans to sell the apples at a price of $8 per kilogram, but she found that 5 kilograms of apples were spoiled. How muc"
+  },
+  {
+   "record_id": "v2-math-2d9802eb3fc7887d",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Find the domain of the function $f(x) = \\sqrt[5]{2x + 3} - \\sqrt[5]{7 - 3x}.$"
+  },
+  {
+   "record_id": "v2-math-5b59bf9ea155f589",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Emily wanted to bake a cake and cookies for a party. She needed a few ingredients from the store and bought the following: 1 bag of all-purpose flour that was on sale for $2.25 a bag. 1 pack of sugar for $1.25. A dozen l"
+  },
+  {
+   "record_id": "v2-math-2bad6fc365c87849",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let $F$ be a function from the set of all positive integers to the set of all positive integers. Suppose that for all positive integers $a$ and $b$, $F(a^2 + b^2) = F(a)^2 + F(b)^2$, and $F(1) = 1$. Find the number of po"
+  },
+  {
+   "record_id": "v2-math-ada073566ba78e53",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A new video game is released and sells 80,000 copies in its first week, generating $2.5 million in revenue. It goes on to sell 4 times that many copies throughout its entire lifespan. If the game development company gets"
+  },
+  {
+   "record_id": "v2-math-44dd727f3b3a524a",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Count the number of ways to paint a 4x4 square grid with 4 different colors, such that no two adjacent squares have the same color."
+  },
+  {
+   "record_id": "v2-math-7fd5c9b200c488a5",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "The function $y=\\frac{2x^3+5x^2+4x+1}{x+1}$ can be simplified into the function $y=Ex^2+Fx+G$, defined everywhere except at $x=H$. What is the product of the values of $E$, $F$, $G$, and $H$?"
+  },
+  {
+   "record_id": "v2-math-b8662ccaf531d913",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A company has 5 different products, and the market share of each product is represented by a sector in a pie chart. The central angle of the sector representing product A is 30 degrees more than that of product B, and th"
+  },
+  {
+   "record_id": "v2-math-9c9ddde22e3a1d34",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "In a given cube, all eight vertices are tangent to a sphere with radius $r$. Three mutually perpendicular planes, each of which contains four of the vertices of the cube, are also tangent to three spheres, each with radi"
+  },
+  {
+   "record_id": "v2-math-b2e4cd1c20e823fa",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "The sum of the proper divisors of a positive integer $N$ is equal to $N$ itself. What is the largest such integer less than 500?"
+  },
+  {
+   "record_id": "v2-math-0286fcb4e9720ec5",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A teacher has a class with $24$ students in it. If she wants to split the students into equal groups of at most $10$ students each, what is the least number of groups that she needs?"
+  },
+  {
+   "record_id": "v2-math-87c15dbfa3f2a7b1",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Maria's class was assigned a task to count the number of wheels of different objects they saw in the park. Maria observed 12 strollers, 5 bicycles, 2 tricycles, and 8 skateboards. How many wheels in total did Maria see?"
+  },
+  {
+   "record_id": "v2-math-b0f615f551040d52",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let $g(x)$ be a function defined on $[-1, 1]$ whose graph is symmetric about the line $y=x$. If the point $(0.6, 0.8)$ lies on the graph of $g(x)$, what is the sum of the coordinates of the point on the graph of $g^{-1}("
+  },
+  {
+   "record_id": "v2-math-5e63ba109f3cff91",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A cylindrical container has a height of 10 feet and a volume of 240 cubic feet. The cost of painting the lateral surface of the container is $120, while the cost of painting the top and bottom surfaces is $80. What is th"
+  },
+  {
+   "record_id": "v2-math-b4cad2c63ef07182",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A bakery sells bread in loaves of 1 pound each. If 1 pound is equivalent to 0.45 kilograms, and the bakery wants to package their bread in bundles of 500 grams each, how many loaves of bread will they need to sell in ord"
+  },
+  {
+   "record_id": "v2-math-5fd27d872f4f3dda",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Samantha spends $120 a month on art supplies. Her art class is 6 months long. She wants to use the months she's not taking art class to save up by walking dogs, pet-sitting, and house-sitting. She charges $15 for each ta"
+  },
+  {
+   "record_id": "v2-math-c3497a11e2da1476",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Liam has $75 to spend at the farmer's market. He bought 8 pineapples and 4 jugs of orange juice. Each pineapple cost $4, and each jug of orange juice cost $5. How much money does Liam have left?"
+  },
+  {
+   "record_id": "v2-math-c50ceff50e15e697",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let's define a function @ such that:   $$x@y = xy +2|x - y|.$$ What is the value of $(2@6)-(6@2)$?"
+  },
+  {
+   "record_id": "v2-math-3cc38a698748be29",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let $r$ be a rational number with denominator $d$. What is the maximum number of digits needed to express $r$ as a decimal, given that $d$ is not divisible by 2 or 5?"
+  },
+  {
+   "record_id": "v2-math-7c6f2c2036608e87",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "65% of the students in a class are studying mathematics and the rest are studying language arts. If there are 39 students studying mathematics, how many students are studying language arts?"
+  },
+  {
+   "record_id": "v2-math-17edc7ac89c5e525",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let $f(x)=x+3$ and $g(x)=3x+5$.  Find $f(g(4))-g(f(4))$."
+  },
+  {
+   "record_id": "v2-math-bfe18c31685c8293",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "In a cube, there are 6 faces, each with 4 edges. If we select one edge from each face, how many different sets of 6 edges can be chosen such that no two edges in a set share a vertex?"
+  },
+  {
+   "record_id": "v2-math-2773659f7e45458b",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Find the product of $1101_2 \\cdot 1001_2$.  Express your answer in base 2."
+  },
+  {
+   "record_id": "v2-math-66cc6a497c5f95e3",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A bakery sells two types of cakes: chocolate and vanilla. The chocolate cake costs $\\$2.50$ per slice and the vanilla cake costs $\\$1.75$ per slice. The bakery sells a total of 250 slices per day. If the bakery earns a t"
+  },
+  {
+   "record_id": "v2-math-b314c913794f08d4",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Five players sit around a circular table, and each player only passes a chip to the person sitting closest to their left who has fewer chips than they do. Initially, each player has a different number of chips between 1 "
+  },
+  {
+   "record_id": "v2-math-1f7cbe668f3e9e83",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "04_ai_machine_learning",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Emily runs at full speed for 8 minutes, but then she has to walk for 3 minutes to recover before running at full speed again. How many turns can Emily take running at full speed during a single 1.5-hour training session?"
+  },
+  {
+   "record_id": "v2-math-334d644c690fcd31",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A fixer uses 30% of the nails in a container to repair the kitchen. He also used 70% of the remaining nails in the container to repair the fence. If there were 400 nails in the container, how many nails are remaining?"
+  },
+  {
+   "record_id": "v2-math-129b91b543d53601",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A bookstore has 10 shelves, each containing 5 books of different genres (romance, sci-fi, fantasy, mystery, and horror). A customer wants to create a list of 3 books to read, but with the condition that no two books can "
+  },
+  {
+   "record_id": "v2-math-fdb496a31af9d3d5",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let $f(x) = x^5 + x^3 - 2x$, and suppose $g$ is a function that is symmetric about the line $y=x$. If the domain of $g$ is $[0,5]$, what is the range of $g(f(x))$?"
+  },
+  {
+   "record_id": "v2-math-a53809020c4993b4",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "In a certain school, the number of boys is 20% more than the number of girls. If 15% of the boys and 20% of the girls are taking art class, and the total number of students taking art class is 108, what is the total numb"
+  },
+  {
+   "record_id": "v2-math-63599245050dc362",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let \\( f(x) = \\sin(\\pi - x) \\). Find the value of \\( f(f(f(0))) \\)."
+  },
+  {
+   "record_id": "v2-math-fac930682f4b96aa",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "06_science_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A particle moves along a curve in 3D space, with its position at time $t$ given by a vector $\\vec{r}(t)$. At time $t=0$, the particle is at $\\begin{pmatrix} 2 \\\\ 1 \\\\ -1 \\end{pmatrix}$, and at time $t=1$, the particle is"
+  },
+  {
+   "record_id": "v2-math-5f0c11c3c5de49fa",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "What is the period of $y = \\cos^2 x - \\sin^2 x$?"
+  },
+  {
+   "record_id": "v2-math-52756db50a1620d1",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Ana wants to purchase a new freezer for her ice cream shop that costs $720. Every day Ana sells 25 ice cream cones for $3 each and 8 sundaes for $8 each. She has to pay $15 each day for supplies and $5 each day for adver"
+  },
+  {
+   "record_id": "v2-math-d3ab297cc88707fd",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A water tank can hold 1200 cubic meters of water. If the water is sold at a rate of $0.05 per liter, what is the total revenue, in dollars, that can be obtained from selling a full tank of water?"
+  },
+  {
+   "record_id": "v2-math-7835ee55c2be988e",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Convert $115_{10}$ to base 11. Represent $10$ as $A$, if necessary."
+  },
+  {
+   "record_id": "v2-math-180fc621eea2b329",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let $r(x) = 2x + 5$ and $q(r(x)) = x^2 - 2x + 1$. Find $q(3)$."
+  },
+  {
+   "record_id": "v2-math-60b46173c2af951c",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let $f$ be a quadratic function for which $f(0)=1$, $f(2)=7$, and $f(3)-f(1)=8$. Determine $f(4)-f(2)$."
+  },
+  {
+   "record_id": "v2-math-9ba730f89d3145c6",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.429,
+   "domain_mismatch": true,
+   "user_snippet": "Let $f(x)$ be a function such that $f(0) = 10,000$ and $f(n) = 1.06f(n - 1)$ for all positive integers $n.$  Then find the least positive integer $n$ such that $f(n) > 20,000.$"
+  },
+  {
+   "record_id": "v2-math-6fde025774d6ddbb",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A fixer uses 30% of the nails in a container to repair the kitchen. He also used 70% of the remaining nails in the container to repair the fence. If there were 400 nails in the container, how many nails are remaining?"
+  },
+  {
+   "record_id": "v2-math-6323db7a29ef4c77",
+   "arm": "math",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A company has been experiencing exponential growth in its sales, with the annual revenue increasing by 20% every year. If the company's revenue was $100 million in 2005, what would be its revenue in 2010, assuming the gr"
+  },
+  {
+   "record_id": "v2-general-93f5c8cc785b1dea",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Ana wants to purchase a new freezer for her ice cream shop that costs $720. Every day Ana sells 25 ice cream cones for $3 each and 8 sundaes for $8 each. She has to pay $15 each day for supplies and $5 each day for adver"
+  },
+  {
+   "record_id": "v2-general-ac81ec06806f134d",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "65% of the students in a class are studying mathematics and the rest are studying language arts. If there are 39 students studying mathematics, how many students are studying language arts?"
+  },
+  {
+   "record_id": "v2-general-905e3fed0821fbd8",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "In a cube, there are 6 faces, each with 4 edges. If we select one edge from each face, how many different sets of 6 edges can be chosen such that no two edges in a set share a vertex?"
+  },
+  {
+   "record_id": "v2-general-2afeddb5b1b00885",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "In a certain class, the average score on the first exam was 72, and the average score on the second exam was 80. If a student in the class scored 10 points higher on the second exam than on the first exam, and their scor"
+  },
+  {
+   "record_id": "v2-general-89efc07fa89553eb",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "06_science_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A particle moves along a curve in 3D space, with its position at time $t$ given by a vector $\\vec{r}(t)$. At time $t=0$, the particle is at $\\begin{pmatrix} 2 \\\\ 1 \\\\ -1 \\end{pmatrix}$, and at time $t=1$, the particle is"
+  },
+  {
+   "record_id": "v2-general-b55cb9102c1a76a3",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A teacher has a class with $24$ students in it. If she wants to split the students into equal groups of at most $10$ students each, what is the least number of groups that she needs?"
+  },
+  {
+   "record_id": "v2-general-f92ccf066805aed3",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "In a certain school, the number of boys is 20% more than the number of girls. If 15% of the boys and 20% of the girls are taking art class, and the total number of students taking art class is 108, what is the total numb"
+  },
+  {
+   "record_id": "v2-general-b1dcfc50962e321d",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "03_system_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A fixer uses 30% of the nails in a container to repair the kitchen. He also used 70% of the remaining nails in the container to repair the fence. If there were 400 nails in the container, how many nails are remaining?"
+  },
+  {
+   "record_id": "v2-general-301c39fb422f6640",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Liam has $75 to spend at the farmer's market. He bought 8 pineapples and 4 jugs of orange juice. Each pineapple cost $4, and each jug of orange juice cost $5. How much money does Liam have left?"
+  },
+  {
+   "record_id": "v2-general-bcda1534ed1ff5ef",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let $g(x)$ be a function defined on $[-1, 1]$ whose graph is symmetric about the line $y=x$. If the point $(0.6, 0.8)$ lies on the graph of $g(x)$, what is the sum of the coordinates of the point on the graph of $g^{-1}("
+  },
+  {
+   "record_id": "v2-general-300dcfdd9b88c7bf",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Samantha spends $120 a month on art supplies. Her art class is 6 months long. She wants to use the months she's not taking art class to save up by walking dogs, pet-sitting, and house-sitting. She charges $15 for each ta"
+  },
+  {
+   "record_id": "v2-general-1f5ec705a56e1fd1",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "07_business_knowledge",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "A bakery sells two types of cakes: chocolate and vanilla. The chocolate cake costs $\\$2.50$ per slice and the vanilla cake costs $\\$1.75$ per slice. The bakery sells a total of 250 slices per day. If the bakery earns a t"
+  },
+  {
+   "record_id": "v2-general-20841ff63fea13d0",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let $F$ be a function from the set of all positive integers to the set of all positive integers. Suppose that for all positive integers $a$ and $b$, $F(a^2 + b^2) = F(a)^2 + F(b)^2$, and $F(1) = 1$. Find the number of po"
+  },
+  {
+   "record_id": "v2-general-710f37c40532cc3d",
+   "arm": "general",
+   "source": "expert-math-002",
+   "label": "mathematics",
+   "inferred_category": "02_software_engineering",
+   "inferred_confidence": 0.45,
+   "domain_mismatch": true,
+   "user_snippet": "Let $f(x)=x+3$ and $g(x)=3x+5$.  Find $f(g(4))-g(f(4))$."
+  }
+ ],
+ "interpretation": "n_suspect_misclassification = confident (>=0.5) AND clear-margin (>=0.3) AND domain-mismatched inferences: the strongest screen-detected misclassifications. n_domain_mismatch_any_confidence = all records whose predicted domain differs from the label (including low-confidence inferences): the full disagreement surface for human review. n_inconclusive_inference = records with no detectable domain signal: cannot be judged by this method.",
+ "limitation": "keyword/domain-signal method is a coarse screen; it is NOT ground truth. Math-domain content is legitimately 01_foundation (general reasoning) in this pilot's taxonomy. Source priors are weighted heavily because source is authoritative provenance. Human review is required before any relabel decision."
+}

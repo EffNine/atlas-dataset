@@ -1,0 +1,17 @@
+{
+ "schema_version": "human-label-v1",
+ "record_id": "v2-general-1ce9bfe41fffb31c",
+ "arm": "general",
+ "content_sha256": "f538794ed9145466:eaaefdbe80b47b8f",
+ "labeler_id": "labeler-a",
+ "labeled_at": "2026-09-17T15:49:20.659985+00:00",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "blinded_to_jev": true,
+ "labels": {
+  "correctness": "yes",
+  "problematic": "no",
+  "category_correct": "yes"
+ },
+ "notes": ""
+}

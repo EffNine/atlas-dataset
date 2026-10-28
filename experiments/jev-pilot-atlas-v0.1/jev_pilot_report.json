@@ -1,0 +1,1242 @@
+{
+ "generated_at": "2026-09-17T07:25:59.194701+00:00",
+ "total_evaluated": 500,
+ "ok": 500,
+ "errors": 0,
+ "error_sample": [],
+ "latency_s": {
+  "n": 497,
+  "mean": 0.322,
+  "min": 0.243,
+  "max": 0.87,
+  "p10": 0.272,
+  "p50": 0.301,
+  "p90": 0.376
+ },
+ "score_distributions": {
+  "correct": {
+   "mean": 0.719
+  },
+  "quality": {
+   "mean": 2.633
+  },
+  "adherence": {
+   "mean": 0.808
+  },
+  "consistent_category": {
+   "mean": 0.954
+  },
+  "problematic": {
+   "mean": 0.204
+  },
+  "training_value": {
+   "mean": 2.729
+  }
+ },
+ "noul_means": {
+  "correct": 0.719,
+  "adherence": 0.808,
+  "consistent_category": 0.954,
+  "problematic": 0.204
+ },
+ "score_means": {
+  "quality": 2.633,
+  "training_value": 2.729
+ },
+ "score_probabilities_aggregate": {
+  "quality": {
+   "0": 14.619999999999951,
+   "1": 86.58000000000001,
+   "2": 79.44,
+   "3": 205.16000000000017,
+   "4": 114.19000000000005
+  },
+  "training_value": {
+   "0": 4.869999999999983,
+   "1": 29.710000000000175,
+   "2": 81.03999999999995,
+   "3": 363.3900000000003,
+   "4": 20.909999999999965
+  }
+ },
+ "by_category": {
+  "math/mathematics/math": {
+   "n": 150,
+   "quality_mean": 2.761,
+   "correct_mean": 0.762,
+   "problematic_mean": 0.197
+  },
+  "code/software_engineering/patch_generation": {
+   "n": 100,
+   "quality_mean": 2.457,
+   "correct_mean": 0.635,
+   "problematic_mean": 0.193
+  },
+  "systems/system_engineering/linux_kernel": {
+   "n": 100,
+   "quality_mean": 2.568,
+   "correct_mean": 0.691,
+   "problematic_mean": 0.252
+  },
+  "general/software_engineering/general": {
+   "n": 54,
+   "quality_mean": 2.417,
+   "correct_mean": 0.685,
+   "problematic_mean": 0.173
+  },
+  "general/03_system_engineering/general": {
+   "n": 51,
+   "quality_mean": 2.716,
+   "correct_mean": 0.761,
+   "problematic_mean": 0.225
+  },
+  "general/mathematics/general": {
+   "n": 45,
+   "quality_mean": 2.909,
+   "correct_mean": 0.823,
+   "problematic_mean": 0.16
+  }
+ },
+ "token_usage": {
+  "avg_input_tokens_per_record": 1517.2,
+  "avg_output_tokens_per_record": 100
+ },
+ "flagged_records": [
+  {
+   "record_id": "v2-math-44a53543d48fba20",
+   "content_sha256": "f05aac8d1e1d0c3b:c9e456e2bc4b0db6",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.53,
+   "correct_noul": 0.32,
+   "problematic_noul": 0.5,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-d09c6656d2961023",
+   "content_sha256": "dfb1d0899cae53a4:7eb4a59b6b58f515",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.43,
+   "correct_noul": 0.25,
+   "problematic_noul": 0.59,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-348fd57c957ddb93",
+   "content_sha256": "5b97424a96128f4e:c6bf317e12a11443",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 0.5,
+   "correct_noul": 0.03,
+   "problematic_noul": 0.85,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-059a07cdca71586a",
+   "content_sha256": "fb372544f419efc8:ac1a905fe52cfd63",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 0.86,
+   "correct_noul": 0.03,
+   "problematic_noul": 0.94,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-1c63daec86c685d8",
+   "content_sha256": "4fd7ec7a533cc669:d09ee89d71e1bdaf",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.25,
+   "correct_noul": 0.3,
+   "problematic_noul": 0.67,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-380200a3c7bfc8d8",
+   "content_sha256": "f7ca006d415d0fc4:32b36f459f1e9d30",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.24,
+   "correct_noul": 0.07,
+   "problematic_noul": 0.62,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-b6262a19831c2d9f",
+   "content_sha256": "4352c84598ef1fb9:a9d2877f97f865e4",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.64,
+   "correct_noul": 0.27,
+   "problematic_noul": 0.66,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-9de5eda493a8fa51",
+   "content_sha256": "ecb457f67ef9b34c:22a5bb4797a9bbee",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.09,
+   "correct_noul": 0.18,
+   "problematic_noul": 0.82,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-cf114d62f36f71e7",
+   "content_sha256": "39b7bc401e34e953:b8b94088bfbbadcb",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 0.79,
+   "correct_noul": 0.13,
+   "problematic_noul": 0.67,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-e7600473cff0f5ae",
+   "content_sha256": "1cc0dfd5b05f5538:3027ec5dd0c1ec9e",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.32,
+   "correct_noul": 0.22,
+   "problematic_noul": 0.56,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-4d4ac1d9bc9d1c27",
+   "content_sha256": "5e023b22b4094695:67a7a3c538471373",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 0.95,
+   "correct_noul": 0.1,
+   "problematic_noul": 0.78,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-b6f0b4bd0323d7e4",
+   "content_sha256": "f9234408a70597ab:473ea3d0199aa3a7",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.43,
+   "correct_noul": 0.28,
+   "problematic_noul": 0.54,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-18873fa006dcc1bc",
+   "content_sha256": "3760d03e6bc4ac54:581ab22c6c103c10",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.23,
+   "correct_noul": 0.24,
+   "problematic_noul": 0.72,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-c87eaba80943bccb",
+   "content_sha256": "ad3ed84d23795584:39174d0f097b4a42",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 0.28,
+   "correct_noul": 0.02,
+   "problematic_noul": 0.86,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-0103476137d1b28f",
+   "content_sha256": "7dca6f39159cb5dd:a2123c9dbc2c7d79",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 0.53,
+   "correct_noul": 0.06,
+   "problematic_noul": 0.56,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-code-e0c53345c359a77e",
+   "content_sha256": "cf4081c50e2bce78:994791bc1468bd91",
+   "arm": "code",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 0.92,
+   "correct_noul": 0.09,
+   "problematic_noul": 0.69,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-code-a01d2697ad516739",
+   "content_sha256": "efbac10cda6c1ef7:5f79fbb7e321b24a",
+   "arm": "code",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.12,
+   "correct_noul": 0.09,
+   "problematic_noul": 0.55,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-general-60fcc87fcf34e44f",
+   "content_sha256": "65b577e67de60b15:9e9143d14bc8d63a",
+   "arm": "general",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.58,
+   "correct_noul": 0.28,
+   "problematic_noul": 0.68,
+   "category": "03_system_engineering"
+  },
+  {
+   "record_id": "v2-general-13388d63aa48543f",
+   "content_sha256": "6ffad925244a6950:ddfac4d062d51e46",
+   "arm": "general",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.24,
+   "correct_noul": 0.15,
+   "problematic_noul": 0.91,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-general-fd8cb6485db662e5",
+   "content_sha256": "b4820415473d3cd0:3af661ad2108a771",
+   "arm": "general",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.27,
+   "correct_noul": 0.32,
+   "problematic_noul": 0.53,
+   "category": "03_system_engineering"
+  },
+  {
+   "record_id": "v2-general-98c309025d0bf8fd",
+   "content_sha256": "c18335eceeddd431:ee3a2db72e4e058f",
+   "arm": "general",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 0.65,
+   "correct_noul": 0.08,
+   "problematic_noul": 0.86,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-general-4f3b51f8d4b06443",
+   "content_sha256": "4526c107a66b08ef:2d71ba08c0de4f96",
+   "arm": "general",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.47,
+   "correct_noul": 0.22,
+   "problematic_noul": 0.61,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-general-872aa79e00252fa9",
+   "content_sha256": "5685488194505b6c:d323fa24d6a6b58b",
+   "arm": "general",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.76,
+   "correct_noul": 0.33,
+   "problematic_noul": 0.53,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-general-896084c346593174",
+   "content_sha256": "2563cdee2682870c:039d06ff74019b21",
+   "arm": "general",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.01,
+   "correct_noul": 0.18,
+   "problematic_noul": 0.56,
+   "category": "03_system_engineering"
+  },
+  {
+   "record_id": "v2-general-d45a04b12f2ba11d",
+   "content_sha256": "4352c84598ef1fb9:a9d2877f97f865e4",
+   "arm": "general",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.54,
+   "correct_noul": 0.23,
+   "problematic_noul": 0.68,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_597aa16c782496bf74c5dc3b45ff472a",
+   "content_sha256": "1c83b01f036369c4:96adce9e66a45efe",
+   "arm": "systems",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.17,
+   "correct_noul": 0.24,
+   "problematic_noul": 0.5,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_40767b0dc768060266d261b4a330164b",
+   "content_sha256": "47405ccbb043fb6d:57b8409b9e6ec6f5",
+   "arm": "systems",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 0.9,
+   "correct_noul": 0.1,
+   "problematic_noul": 0.63,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_444fdad88f35de9fd1c130b2c4e45506",
+   "content_sha256": "603670a61c931c5b:c13103deadcc164c",
+   "arm": "systems",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.25,
+   "correct_noul": 0.19,
+   "problematic_noul": 0.66,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_9b75a867cc9ddbafcaf35029358ac500_ac965c33",
+   "content_sha256": "8b2e1880a236aa05:ac965c3392fb7da1",
+   "arm": "systems",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.11,
+   "correct_noul": 0.14,
+   "problematic_noul": 0.66,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-math-7450bed64a4cebf4",
+   "content_sha256": "7f73bbb4b5e58c39:a702dbac1b6c6f97",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality"
+   ],
+   "quality_score": 1.46,
+   "correct_noul": 0.5,
+   "problematic_noul": 0.54,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-e3e6d4f5623e85f9",
+   "content_sha256": "1874e7a1c27bcc7b:22245cf72a3d5b1c",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality"
+   ],
+   "quality_score": 1.43,
+   "correct_noul": 0.74,
+   "problematic_noul": 0.77,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-92cf4e77c3e980fe",
+   "content_sha256": "c27f03239b276fde:aea8d73dfdfe3caf",
+   "arm": "math",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.4,
+   "correct_noul": 0.32,
+   "problematic_noul": 0.39,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-1d2237b32a495eda",
+   "content_sha256": "c69540e75dcd99c0:2c0302120a431e22",
+   "arm": "math",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.75,
+   "correct_noul": 0.34,
+   "problematic_noul": 0.44,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-481f44ccaed1a261",
+   "content_sha256": "401330949586efe9:3c16e1049d5cd156",
+   "arm": "math",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 0.79,
+   "correct_noul": 0.13,
+   "problematic_noul": 0.49,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-cde8e89488c7170b",
+   "content_sha256": "a5b5e351c7c6c83d:037aeb41ecb8e15b",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality"
+   ],
+   "quality_score": 1.64,
+   "correct_noul": 0.37,
+   "problematic_noul": 0.76,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-1c30eef4bd8d316e",
+   "content_sha256": "73239a60e5804b35:60a8e152ba805531",
+   "arm": "math",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.31,
+   "correct_noul": 0.21,
+   "problematic_noul": 0.42,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-a54da60f22df03bb",
+   "content_sha256": "eb2bc6cc31dc4ccd:1bb0d44f26b7cc1e",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 2.15,
+   "correct_noul": 0.32,
+   "problematic_noul": 0.7,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-b41cb7b1fb721560",
+   "content_sha256": "8b81f99744386e02:d6dd4f580c8e35d9",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality"
+   ],
+   "quality_score": 1.56,
+   "correct_noul": 0.39,
+   "problematic_noul": 0.78,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-92e713e52bf1130d",
+   "content_sha256": "ed950ded1862960d:0a00a8acef591508",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality"
+   ],
+   "quality_score": 1.78,
+   "correct_noul": 0.63,
+   "problematic_noul": 0.53,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-code-d3c43b994aa8b2f3",
+   "content_sha256": "658b186e181f63e4:d09c1eff4eb13be7",
+   "arm": "code",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.28,
+   "correct_noul": 0.28,
+   "problematic_noul": 0.32,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-code-7a69cb67f947797c",
+   "content_sha256": "1755ba7fe03d6f59:325a43d8995a3ee5",
+   "arm": "code",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.44,
+   "correct_noul": 0.24,
+   "problematic_noul": 0.37,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-code-f1f9c3b367a7f5f8",
+   "content_sha256": "9ab38d31087d297d:32bbca94cff00471",
+   "arm": "code",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.0,
+   "correct_noul": 0.16,
+   "problematic_noul": 0.45,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-code-c52843bf7328daaf",
+   "content_sha256": "7eec6e997311bf10:2dcab4569a942fed",
+   "arm": "code",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.2,
+   "correct_noul": 0.23,
+   "problematic_noul": 0.46,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-code-40c9f863bd63c43f",
+   "content_sha256": "f86e27ce1f598af9:ca103b1d37b3bb14",
+   "arm": "code",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.51,
+   "correct_noul": 0.3,
+   "problematic_noul": 0.41,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-code-f2f3334354fa2bb4",
+   "content_sha256": "1a82e3a4fcebb5f0:1112300429f02c45",
+   "arm": "code",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.32,
+   "correct_noul": 0.21,
+   "problematic_noul": 0.38,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-general-9330d5e43617bd67",
+   "content_sha256": "efbac10cda6c1ef7:5f79fbb7e321b24a",
+   "arm": "general",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.22,
+   "correct_noul": 0.13,
+   "problematic_noul": 0.49,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-general-99c46a8615349a07",
+   "content_sha256": "e09f2f06fba2878e:b15079ba0b887c43",
+   "arm": "general",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.45,
+   "correct_noul": 0.31,
+   "problematic_noul": 0.33,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_5598c9bfdb81f40f2f5d769b342d25bf",
+   "content_sha256": "8d7c74e05e00fda2:fa0f7c23aca41d7e",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.93,
+   "correct_noul": 0.29,
+   "problematic_noul": 0.39,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_90098efacc4c3e2e4f6262a657d6b520",
+   "content_sha256": "ae509eb7c0d55d2d:19dd73ffa86f97bb",
+   "arm": "systems",
+   "flags": [
+    "jev_flags_problematic",
+    "jev_low_quality"
+   ],
+   "quality_score": 1.62,
+   "correct_noul": 0.39,
+   "problematic_noul": 0.55,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_5f2a404cbccec0c8d6635f0997cea2ac",
+   "content_sha256": "231cef09b9e36784:8750299cf2ecf06d",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality",
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.53,
+   "correct_noul": 0.26,
+   "problematic_noul": 0.43,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-math-2c7ae9c58deae98b",
+   "content_sha256": "7ce9e6bc4aa7aa48:73ae65203188107e",
+   "arm": "math",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.38,
+   "correct_noul": 0.39,
+   "problematic_noul": 0.34,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-fcb6f4f193b82842",
+   "content_sha256": "372b8df735cb05a5:622296d22a65f934",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic"
+   ],
+   "quality_score": 2.42,
+   "correct_noul": 0.78,
+   "problematic_noul": 0.5,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-23f71187aba29ec4",
+   "content_sha256": "0e4ce1d5772be6b4:a08a7c3194107c58",
+   "arm": "math",
+   "flags": [
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.81,
+   "correct_noul": 0.29,
+   "problematic_noul": 0.4,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-55dc672d5c51d842",
+   "content_sha256": "f9ae665754cabfc3:ec89650cfb05cd9e",
+   "arm": "math",
+   "flags": [
+    "jev_flags_problematic"
+   ],
+   "quality_score": 2.51,
+   "correct_noul": 0.53,
+   "problematic_noul": 0.59,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-math-99a00c3394daab26",
+   "content_sha256": "c6b8c9ce2b07ec9b:8b2296aadcde9cd0",
+   "arm": "math",
+   "flags": [
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.89,
+   "correct_noul": 0.34,
+   "problematic_noul": 0.43,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-code-de7599c274e46d27",
+   "content_sha256": "dd3266ec4a7c3e8c:19289b1c984a6a35",
+   "arm": "code",
+   "flags": [
+    "jev_flags_problematic"
+   ],
+   "quality_score": 2.5,
+   "correct_noul": 0.79,
+   "problematic_noul": 0.63,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-code-1ba078a8db91258a",
+   "content_sha256": "0453b1e19a5f5d36:aef228ae701c1432",
+   "arm": "code",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.64,
+   "correct_noul": 0.39,
+   "problematic_noul": 0.26,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-code-36b15bee4423ed9b",
+   "content_sha256": "6c701bb3840d26e8:76add5ea570c3839",
+   "arm": "code",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.68,
+   "correct_noul": 0.37,
+   "problematic_noul": 0.28,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-code-eff570a747a768aa",
+   "content_sha256": "d9558af32ba6cbcd:b5ab77d37fb636b5",
+   "arm": "code",
+   "flags": [
+    "jev_flags_problematic"
+   ],
+   "quality_score": 1.84,
+   "correct_noul": 0.48,
+   "problematic_noul": 0.58,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-code-5f3ebeca44d0d5c8",
+   "content_sha256": "e09f2f06fba2878e:b15079ba0b887c43",
+   "arm": "code",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.57,
+   "correct_noul": 0.35,
+   "problematic_noul": 0.33,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-general-d52f572bd9de1a3a",
+   "content_sha256": "8c1d40e9a2845ead:d68f13d00c14ddd3",
+   "arm": "general",
+   "flags": [
+    "jev_flags_problematic"
+   ],
+   "quality_score": 1.95,
+   "correct_noul": 0.58,
+   "problematic_noul": 0.53,
+   "category": "mathematics"
+  },
+  {
+   "record_id": "v2-general-50690e197b171c54",
+   "content_sha256": "90a901a7b3d510c5:42828c5c12981040",
+   "arm": "general",
+   "flags": [
+    "jev_unlikely_correct"
+   ],
+   "quality_score": 1.81,
+   "correct_noul": 0.33,
+   "problematic_noul": 0.21,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-general-d485f59262347b28",
+   "content_sha256": "ee32284737d8db88:68966fff72bd0f22",
+   "arm": "general",
+   "flags": [
+    "jev_flags_problematic"
+   ],
+   "quality_score": 2.05,
+   "correct_noul": 0.44,
+   "problematic_noul": 0.51,
+   "category": "03_system_engineering"
+  },
+  {
+   "record_id": "v2-general-2802fec50b56c7bb",
+   "content_sha256": "d297234be7a3f2db:a07038a4aaa44ec8",
+   "arm": "general",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.39,
+   "correct_noul": 0.49,
+   "problematic_noul": 0.38,
+   "category": "03_system_engineering"
+  },
+  {
+   "record_id": "v2-general-f115a988bda7a27d",
+   "content_sha256": "2245d89607e130ef:c927d74e38e245de",
+   "arm": "general",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.49,
+   "correct_noul": 0.71,
+   "problematic_noul": 0.31,
+   "category": "03_system_engineering"
+  },
+  {
+   "record_id": "v2-general-4da7cca30524e44c",
+   "content_sha256": "1b04ffa8e91360cc:413a90c09ecfd8f5",
+   "arm": "general",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.48,
+   "correct_noul": 0.45,
+   "problematic_noul": 0.45,
+   "category": "software_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_370891f0d983e6166db81c7fa2cc083c",
+   "content_sha256": "5a1a96c983aace47:e6b474ea9e804461",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.61,
+   "correct_noul": 0.37,
+   "problematic_noul": 0.38,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_2a5840124009f133bd09fd855963551f",
+   "content_sha256": "84b3bde8048b39e4:0054a65a404af500",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.52,
+   "correct_noul": 0.48,
+   "problematic_noul": 0.38,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_258f5f905815979f15d5151d2ea4f20d_cfddd036",
+   "content_sha256": "1485c7dd6678cbdd:cfddd03695c6655e",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.32,
+   "correct_noul": 0.42,
+   "problematic_noul": 0.39,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_39d2adebf137de5f900843f69f5e5009",
+   "content_sha256": "4ddfa1d38dcebb63:a89f56ca0199c879",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.36,
+   "correct_noul": 0.38,
+   "problematic_noul": 0.3,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_7de295d1a1a1b84e57b348e8bfd0fab5",
+   "content_sha256": "1f4c5794aaad4a55:0fc318c3af3f5b10",
+   "arm": "systems",
+   "flags": [
+    "jev_flags_problematic"
+   ],
+   "quality_score": 1.75,
+   "correct_noul": 0.4,
+   "problematic_noul": 0.52,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_39dd0f234fc37da071dadbd9b49fe800",
+   "content_sha256": "08b5587c9e261885:f5ef607266e8dd7c",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.37,
+   "correct_noul": 0.53,
+   "problematic_noul": 0.34,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_10aa5c80603088d10c2cd5e7e27d561a",
+   "content_sha256": "95ba1488e0888724:2e73d2fe24a31f0d",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.68,
+   "correct_noul": 0.5,
+   "problematic_noul": 0.45,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_5c14e51d2d7df49fe0d4e64a12c58d25",
+   "content_sha256": "ea7c18cbd80ca34b:20381adbcbf625b8",
+   "arm": "systems",
+   "flags": [
+    "jev_flags_problematic"
+   ],
+   "quality_score": 2.35,
+   "correct_noul": 0.48,
+   "problematic_noul": 0.53,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_6aa0365a3c8512587fffd42fe4387687",
+   "content_sha256": "63970bce08935aba:6e9a09210c756abc",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.47,
+   "correct_noul": 0.59,
+   "problematic_noul": 0.32,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_094ee6017ea09c11d6af187935a949df",
+   "content_sha256": "c088418e29d59f85:7f1635b11b49af4d",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.32,
+   "correct_noul": 0.39,
+   "problematic_noul": 0.39,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_5c0aea0e8d98e38858fbb3a09870ed84",
+   "content_sha256": "66a4d7db71feb2f9:061c423a60828d18",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.53,
+   "correct_noul": 0.59,
+   "problematic_noul": 0.3,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_29e10487d6df050afeee886b7c1da208",
+   "content_sha256": "5f138fb4fc862c6d:af6cdabba867366b",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.69,
+   "correct_noul": 0.5,
+   "problematic_noul": 0.33,
+   "category": "system_engineering"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_96de900ae78e7dbedc937fd91bafe293",
+   "content_sha256": "ca05e439021a3c28:ac7acbb59dc501e5",
+   "arm": "systems",
+   "flags": [
+    "jev_low_quality"
+   ],
+   "quality_score": 1.53,
+   "correct_noul": 0.49,
+   "problematic_noul": 0.35,
+   "category": "system_engineering"
+  }
+ ],
+ "n_flagged": 79,
+ "near_duplicate_pairs_jaccard_ge_0p25": [
+  {
+   "a": "v2-code-cf555ce9bf97ce80",
+   "b": "v2-general-8fa0ed587e55ab7a",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-general-e62ce2749d11a6be",
+   "b": "v2-math-9a692b20920ec172",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-17945e84cc95a185",
+   "b": "v2-general-59be6fb84644e194",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-96696823f1a5e3a5",
+   "b": "v2-general-0995d6a033749fc3",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-general-735c376254744ba7",
+   "b": "v2-math-1613d09aec44934f",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-91c2848a9b92911e",
+   "b": "v2-general-f077b20264a10188",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-general-4848615b0e58b366",
+   "b": "v2-math-7b5f2da2cd4afdf9",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-99f55f667c16260d",
+   "b": "v2-general-244d3ab328c5e3fe",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-general-02a2c81f7f5c8bb6",
+   "b": "v2-math-f7ce7233ff04f516",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-5311bb8d3667a8a2",
+   "b": "v2-general-2db1ab4ba5c6cf77",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-general-082d0cb3ffbd78b9",
+   "b": "v2-math-790a1b815b565060",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-d5559a1701573109",
+   "b": "v2-general-d736813685469244",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-5f3ebeca44d0d5c8",
+   "b": "v2-general-99c46a8615349a07",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-general-d45a04b12f2ba11d",
+   "b": "v2-math-b6262a19831c2d9f",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-69f32cd5e7fde8da",
+   "b": "v2-general-00408b03e1f8bbbc",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-927076018bee47a3",
+   "b": "v2-general-acf5bb8a3da7952f",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-a01d2697ad516739",
+   "b": "v2-general-9330d5e43617bd67",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-general-88ea89f63b63fb9b",
+   "b": "v2-systems-p1-y9-linux-kernel_2c6efe9cf2d7841b75fe38ed1adbd41a",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-a607bfe2f6bab60f",
+   "b": "v2-general-53bc06dcc84eb355",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-code-e4d617d125e9ee61",
+   "b": "v2-general-91330ff413f344bc",
+   "jaccard_shingles": 1.0
+  },
+  {
+   "a": "v2-general-4613456ed75fdf03",
+   "b": "v2-math-95693fef55a4bfb9",
+   "jaccard_shingles": 0.311
+  }
+ ],
+ "n_near_dup_candidates": 21
+}

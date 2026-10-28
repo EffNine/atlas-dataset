@@ -1,0 +1,1801 @@
+{
+ "version": "phase2-calibration-v1",
+ "generated_at": "2026-09-18T00:32:08.601801+00:00",
+ "n_records": 96,
+ "strata": {
+  "normal": 40,
+  "low_jev": 20,
+  "flagged": 20,
+  "outliers": 10,
+  "spread": 6
+ },
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "protocol": "Two independent labelers per record; disagreements resolved by a third. Labels are recorded in human_labels/ separately from Jev outputs. Do not reveal Jev answers to labelers before they complete their own pass.",
+ "status": "PENDING_HUMAN_LABELS",
+ "records": [
+  {
+   "record_id": "v2-general-885deb11224f7801",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.12,
+    "correct": 0.95,
+    "problematic": 0.06,
+    "adherence": 0.95,
+    "consistent_category": 0.97,
+    "training_value": 2.81,
+    "flags": []
+   },
+   "content_sha256": "17d7a62ffd0f5e05:25c44e2cd8b4ae2c",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-3eb86fbf89916aed",
+   "arm": "code",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.79,
+    "correct": 0.73,
+    "problematic": 0.11,
+    "adherence": 0.9,
+    "consistent_category": 0.96,
+    "training_value": 3.02,
+    "flags": []
+   },
+   "content_sha256": "75075130dacc2494:778ef34b5f5da694",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-94fb9c5b706679c9",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.76,
+    "correct": 0.83,
+    "problematic": 0.12,
+    "adherence": 0.79,
+    "consistent_category": 0.96,
+    "training_value": 2.98,
+    "flags": []
+   },
+   "content_sha256": "1a089ebde40b260f:5c9b92a2d4944839",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-49fd89641436b479",
+   "arm": "code",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.72,
+    "correct": 0.69,
+    "problematic": 0.16,
+    "adherence": 0.9,
+    "consistent_category": 0.96,
+    "training_value": 2.94,
+    "flags": []
+   },
+   "content_sha256": "938971021e89cd88:57a810467af331eb",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-c28069d1bc1fb952",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.96,
+    "correct": 0.83,
+    "problematic": 0.08,
+    "adherence": 0.89,
+    "consistent_category": 0.97,
+    "training_value": 3.03,
+    "flags": []
+   },
+   "content_sha256": "360343632af96cb5:96c38d39b936d027",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_6569fc12e442ea973d96db39e542aa19",
+   "arm": "systems",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.66,
+    "correct": 0.83,
+    "problematic": 0.19,
+    "adherence": 0.88,
+    "consistent_category": 0.96,
+    "training_value": 2.88,
+    "flags": []
+   },
+   "content_sha256": "4ea797785a0363ee:fd9cc667e388a3c8",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-f53c32ba87a65a3d",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.2,
+    "correct": 0.93,
+    "problematic": 0.06,
+    "adherence": 0.93,
+    "consistent_category": 0.97,
+    "training_value": 2.86,
+    "flags": []
+   },
+   "content_sha256": "4b380870769adba6:da6516669926be90",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-382cef51b5ff9276",
+   "arm": "math",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.7,
+    "correct": 0.77,
+    "problematic": 0.16,
+    "adherence": 0.7,
+    "consistent_category": 0.98,
+    "training_value": 2.85,
+    "flags": []
+   },
+   "content_sha256": "73ec3ab3327f1ae9:d65931acf8641e09",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-2d9802eb3fc7887d",
+   "arm": "math",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.27,
+    "correct": 0.98,
+    "problematic": 0.04,
+    "adherence": 0.88,
+    "consistent_category": 0.99,
+    "training_value": 2.79,
+    "flags": []
+   },
+   "content_sha256": "8576eaa047e4dbf8:cec4dcfbcc1efff5",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-b6f27e0be7c10f61",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.43,
+    "correct": 0.99,
+    "problematic": 0.03,
+    "adherence": 0.97,
+    "consistent_category": 0.98,
+    "training_value": 2.72,
+    "flags": []
+   },
+   "content_sha256": "33a8845680be78b9:63681c16468a7886",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-a3afe18dc0a8d761",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.33,
+    "correct": 0.93,
+    "problematic": 0.04,
+    "adherence": 0.96,
+    "consistent_category": 0.98,
+    "training_value": 2.93,
+    "flags": []
+   },
+   "content_sha256": "c2d44fdc7239895b:a96ab50514be84cd",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_5e20e3499682c4f1724438d23afcafd4",
+   "arm": "systems",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.01,
+    "correct": 0.81,
+    "problematic": 0.19,
+    "adherence": 0.82,
+    "consistent_category": 0.96,
+    "training_value": 2.99,
+    "flags": []
+   },
+   "content_sha256": "891e045fc28a6373:260bd6e18700dbc1",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-0a5f6960fcd9e48b",
+   "arm": "code",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.6,
+    "correct": 0.69,
+    "problematic": 0.11,
+    "adherence": 0.89,
+    "consistent_category": 0.97,
+    "training_value": 2.97,
+    "flags": []
+   },
+   "content_sha256": "8c35fba9272466ee:d0b9b8daa663676e",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-02a2c81f7f5c8bb6",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.57,
+    "correct": 0.7,
+    "problematic": 0.13,
+    "adherence": 0.91,
+    "consistent_category": 0.97,
+    "training_value": 2.74,
+    "flags": []
+   },
+   "content_sha256": "f1cff6130b126bdd:4ee37ed2825c6d75",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-721a16b4da322b7c",
+   "arm": "code",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.34,
+    "correct": 0.86,
+    "problematic": 0.08,
+    "adherence": 0.93,
+    "consistent_category": 0.97,
+    "training_value": 3.05,
+    "flags": []
+   },
+   "content_sha256": "92e9410d9f1fe201:7da97e8979686c7a",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-4c0b8eb47ab7bdba",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.62,
+    "correct": 0.67,
+    "problematic": 0.21,
+    "adherence": 0.76,
+    "consistent_category": 0.91,
+    "training_value": 2.84,
+    "flags": []
+   },
+   "content_sha256": "7a117615fccd4d48:b64a54727d6c514f",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-a2187879e08d8ad8",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.05,
+    "correct": 0.86,
+    "problematic": 0.09,
+    "adherence": 0.9,
+    "consistent_category": 0.97,
+    "training_value": 2.61,
+    "flags": []
+   },
+   "content_sha256": "ac4843e0786eb8b1:9159f59fecd8441a",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-dbb22a131d38fac9",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.14,
+    "correct": 0.81,
+    "problematic": 0.18,
+    "adherence": 0.86,
+    "consistent_category": 0.91,
+    "training_value": 3.02,
+    "flags": []
+   },
+   "content_sha256": "faf7b66f4394bbb0:351d2a5344e0f4fd",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_40369bfe717e96e26650eeecfa5a6363",
+   "arm": "systems",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.21,
+    "correct": 0.8,
+    "problematic": 0.15,
+    "adherence": 0.91,
+    "consistent_category": 0.96,
+    "training_value": 3.11,
+    "flags": []
+   },
+   "content_sha256": "02c9ed1f3384cb4d:cdff2f1580b55e9f",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-3fead721cbbb4d62",
+   "arm": "math",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.5,
+    "correct": 0.97,
+    "problematic": 0.04,
+    "adherence": 0.96,
+    "consistent_category": 0.99,
+    "training_value": 2.88,
+    "flags": []
+   },
+   "content_sha256": "4357884fcd7bc983:e958bb0f327f2991",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-1ce9bfe41fffb31c",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.04,
+    "correct": 0.87,
+    "problematic": 0.16,
+    "adherence": 0.88,
+    "consistent_category": 0.89,
+    "training_value": 2.82,
+    "flags": []
+   },
+   "content_sha256": "f538794ed9145466:eaaefdbe80b47b8f",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_84b3adc2430eafd2eb703570075c3c14",
+   "arm": "systems",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.24,
+    "correct": 0.87,
+    "problematic": 0.14,
+    "adherence": 0.91,
+    "consistent_category": 0.96,
+    "training_value": 2.96,
+    "flags": []
+   },
+   "content_sha256": "3df976ee7dbc1770:553aec23f72d6d79",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-082d0cb3ffbd78b9",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.12,
+    "correct": 0.85,
+    "problematic": 0.15,
+    "adherence": 0.93,
+    "consistent_category": 0.97,
+    "training_value": 2.78,
+    "flags": []
+   },
+   "content_sha256": "175ae8bb33947daf:d9919fc7662b55d3",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-2eca69760d4b6413",
+   "arm": "math",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.13,
+    "correct": 0.95,
+    "problematic": 0.04,
+    "adherence": 0.92,
+    "consistent_category": 0.98,
+    "training_value": 2.63,
+    "flags": []
+   },
+   "content_sha256": "86c91e0c93251a3b:a88e9ace69b01411",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_99f1c46011cc0feb47d4f4f7bee70a03",
+   "arm": "systems",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.27,
+    "correct": 0.92,
+    "problematic": 0.15,
+    "adherence": 0.92,
+    "consistent_category": 0.97,
+    "training_value": 3.09,
+    "flags": []
+   },
+   "content_sha256": "38d0e5f64cbf2d19:5b8eee0664f38345",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-7dbec7b81fa1af56",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.5,
+    "correct": 0.7,
+    "problematic": 0.15,
+    "adherence": 0.75,
+    "consistent_category": 0.96,
+    "training_value": 2.95,
+    "flags": []
+   },
+   "content_sha256": "0183a0fabfe0276a:686d63a8c9b8ee17",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-d400993a42026fc1",
+   "arm": "math",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.11,
+    "correct": 0.9,
+    "problematic": 0.06,
+    "adherence": 0.89,
+    "consistent_category": 0.98,
+    "training_value": 2.81,
+    "flags": []
+   },
+   "content_sha256": "1a0e71bc68a642a4:db7a62a2b2a8d6e9",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-ba8da6eb3ddfdb36",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.97,
+    "correct": 0.82,
+    "problematic": 0.14,
+    "adherence": 0.88,
+    "consistent_category": 0.89,
+    "training_value": 2.9,
+    "flags": []
+   },
+   "content_sha256": "08003fdc8b6d0912:f7402dead346c5d7",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-501c77b2e08b35cd",
+   "arm": "math",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.43,
+    "correct": 0.99,
+    "problematic": 0.04,
+    "adherence": 0.93,
+    "consistent_category": 0.99,
+    "training_value": 2.87,
+    "flags": []
+   },
+   "content_sha256": "ea0279034a3c843d:3568865ba4e67b7b",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_38e8844005e6068f336a3ad45451a562",
+   "arm": "systems",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.29,
+    "correct": 0.88,
+    "problematic": 0.16,
+    "adherence": 0.91,
+    "consistent_category": 0.97,
+    "training_value": 3.13,
+    "flags": []
+   },
+   "content_sha256": "a1885950ed567f4d:585256ed257c2397",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-ec07a971a6a0a235",
+   "arm": "code",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.88,
+    "correct": 0.79,
+    "problematic": 0.13,
+    "adherence": 0.88,
+    "consistent_category": 0.96,
+    "training_value": 3.02,
+    "flags": []
+   },
+   "content_sha256": "2260a8491280312f:1d2160f01959bb4e",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_553c7d5ba2fe64cdbfcdf49560ef71ef",
+   "arm": "systems",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.79,
+    "correct": 0.69,
+    "problematic": 0.22,
+    "adherence": 0.82,
+    "consistent_category": 0.96,
+    "training_value": 2.79,
+    "flags": []
+   },
+   "content_sha256": "f51ca8508188aa68:14cb79d72b5846bc",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-fffc0f9c847ba7b1",
+   "arm": "math",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.93,
+    "correct": 0.75,
+    "problematic": 0.08,
+    "adherence": 0.79,
+    "consistent_category": 0.99,
+    "training_value": 2.91,
+    "flags": []
+   },
+   "content_sha256": "a1934ca2b6422d2a:93c245c613a826b4",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-b622be913aee458f",
+   "arm": "code",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.77,
+    "correct": 0.83,
+    "problematic": 0.08,
+    "adherence": 0.92,
+    "consistent_category": 0.97,
+    "training_value": 2.91,
+    "flags": []
+   },
+   "content_sha256": "70c79d6da0284ce8:b720439fe90e5673",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-790a1b815b565060",
+   "arm": "math",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.16,
+    "correct": 0.86,
+    "problematic": 0.13,
+    "adherence": 0.88,
+    "consistent_category": 0.98,
+    "training_value": 2.8,
+    "flags": []
+   },
+   "content_sha256": "175ae8bb33947daf:d9919fc7662b55d3",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-73bcfcb7ab1215ce",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.45,
+    "correct": 0.92,
+    "problematic": 0.04,
+    "adherence": 0.97,
+    "consistent_category": 0.98,
+    "training_value": 3.0,
+    "flags": []
+   },
+   "content_sha256": "047988baa5af80d3:7dfc8d4cfe8d5f4a",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-fa7762f9793cde06",
+   "arm": "math",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 3.43,
+    "correct": 0.99,
+    "problematic": 0.04,
+    "adherence": 0.9,
+    "consistent_category": 0.99,
+    "training_value": 2.51,
+    "flags": []
+   },
+   "content_sha256": "a3a3db5654aba0d3:177a9c084959aa42",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-2217540aed022f20",
+   "arm": "general",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.95,
+    "correct": 0.77,
+    "problematic": 0.08,
+    "adherence": 0.93,
+    "consistent_category": 0.97,
+    "training_value": 2.92,
+    "flags": []
+   },
+   "content_sha256": "c3c7cf588dabed60:c783704bc0d3dd7b",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-564fc7cea260e12f",
+   "arm": "math",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.56,
+    "correct": 0.66,
+    "problematic": 0.14,
+    "adherence": 0.81,
+    "consistent_category": 0.98,
+    "training_value": 2.73,
+    "flags": []
+   },
+   "content_sha256": "e47baac91cfc2d02:ad04c854bcb52244",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-30b263059fc2e141",
+   "arm": "math",
+   "stratum": "normal",
+   "jev_signals": {
+    "quality": 2.51,
+    "correct": 0.64,
+    "problematic": 0.23,
+    "adherence": 0.8,
+    "consistent_category": 0.98,
+    "training_value": 2.65,
+    "flags": []
+   },
+   "content_sha256": "26dfb6022c8f5b1e:ab46002023fb2dca",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-c87eaba80943bccb",
+   "arm": "math",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 0.28,
+    "correct": 0.02,
+    "problematic": 0.86,
+    "adherence": 0.26,
+    "consistent_category": 0.93,
+    "training_value": 1.0,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "ad3ed84d23795584:39174d0f097b4a42",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-348fd57c957ddb93",
+   "arm": "math",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 0.5,
+    "correct": 0.03,
+    "problematic": 0.85,
+    "adherence": 0.39,
+    "consistent_category": 0.9,
+    "training_value": 1.03,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "5b97424a96128f4e:c6bf317e12a11443",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-0103476137d1b28f",
+   "arm": "math",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 0.53,
+    "correct": 0.06,
+    "problematic": 0.56,
+    "adherence": 0.39,
+    "consistent_category": 0.95,
+    "training_value": 1.09,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "7dca6f39159cb5dd:a2123c9dbc2c7d79",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-98c309025d0bf8fd",
+   "arm": "general",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 0.65,
+    "correct": 0.08,
+    "problematic": 0.86,
+    "adherence": 0.58,
+    "consistent_category": 0.95,
+    "training_value": 1.28,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "c18335eceeddd431:ee3a2db72e4e058f",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-481f44ccaed1a261",
+   "arm": "math",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 0.79,
+    "correct": 0.13,
+    "problematic": 0.49,
+    "adherence": 0.59,
+    "consistent_category": 0.97,
+    "training_value": 1.33,
+    "flags": [
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "401330949586efe9:3c16e1049d5cd156",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-cf114d62f36f71e7",
+   "arm": "math",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 0.79,
+    "correct": 0.13,
+    "problematic": 0.67,
+    "adherence": 0.57,
+    "consistent_category": 0.96,
+    "training_value": 1.29,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "39b7bc401e34e953:b8b94088bfbbadcb",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-059a07cdca71586a",
+   "arm": "math",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 0.86,
+    "correct": 0.03,
+    "problematic": 0.94,
+    "adherence": 0.24,
+    "consistent_category": 0.97,
+    "training_value": 1.3,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "fb372544f419efc8:ac1a905fe52cfd63",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_40767b0dc768060266d261b4a330164b",
+   "arm": "systems",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 0.9,
+    "correct": 0.1,
+    "problematic": 0.63,
+    "adherence": 0.35,
+    "consistent_category": 0.95,
+    "training_value": 1.77,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "47405ccbb043fb6d:57b8409b9e6ec6f5",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-e0c53345c359a77e",
+   "arm": "code",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 0.92,
+    "correct": 0.09,
+    "problematic": 0.69,
+    "adherence": 0.26,
+    "consistent_category": 0.91,
+    "training_value": 2.01,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "cf4081c50e2bce78:994791bc1468bd91",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-4d4ac1d9bc9d1c27",
+   "arm": "math",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 0.95,
+    "correct": 0.1,
+    "problematic": 0.78,
+    "adherence": 0.26,
+    "consistent_category": 0.93,
+    "training_value": 1.12,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "5e023b22b4094695:67a7a3c538471373",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-f1f9c3b367a7f5f8",
+   "arm": "code",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 1.0,
+    "correct": 0.16,
+    "problematic": 0.45,
+    "adherence": 0.6,
+    "consistent_category": 0.92,
+    "training_value": 2.2,
+    "flags": [
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "9ab38d31087d297d:32bbca94cff00471",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-896084c346593174",
+   "arm": "general",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 1.01,
+    "correct": 0.18,
+    "problematic": 0.56,
+    "adherence": 0.41,
+    "consistent_category": 0.83,
+    "training_value": 2.02,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "2563cdee2682870c:039d06ff74019b21",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-9de5eda493a8fa51",
+   "arm": "math",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 1.09,
+    "correct": 0.18,
+    "problematic": 0.82,
+    "adherence": 0.56,
+    "consistent_category": 0.97,
+    "training_value": 1.4,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "ecb457f67ef9b34c:22a5bb4797a9bbee",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_9b75a867cc9ddbafcaf35029358ac500_ac965c33",
+   "arm": "systems",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 1.11,
+    "correct": 0.14,
+    "problematic": 0.66,
+    "adherence": 0.33,
+    "consistent_category": 0.92,
+    "training_value": 2.26,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "8b2e1880a236aa05:ac965c3392fb7da1",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-a01d2697ad516739",
+   "arm": "code",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 1.12,
+    "correct": 0.09,
+    "problematic": 0.55,
+    "adherence": 0.29,
+    "consistent_category": 0.93,
+    "training_value": 2.2,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "efbac10cda6c1ef7:5f79fbb7e321b24a",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_597aa16c782496bf74c5dc3b45ff472a",
+   "arm": "systems",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 1.17,
+    "correct": 0.24,
+    "problematic": 0.5,
+    "adherence": 0.38,
+    "consistent_category": 0.94,
+    "training_value": 2.01,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "1c83b01f036369c4:96adce9e66a45efe",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-c52843bf7328daaf",
+   "arm": "code",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 1.2,
+    "correct": 0.23,
+    "problematic": 0.46,
+    "adherence": 0.64,
+    "consistent_category": 0.93,
+    "training_value": 1.96,
+    "flags": [
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "7eec6e997311bf10:2dcab4569a942fed",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-9330d5e43617bd67",
+   "arm": "general",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 1.22,
+    "correct": 0.13,
+    "problematic": 0.49,
+    "adherence": 0.27,
+    "consistent_category": 0.94,
+    "training_value": 2.29,
+    "flags": [
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "efbac10cda6c1ef7:5f79fbb7e321b24a",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-18873fa006dcc1bc",
+   "arm": "math",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 1.23,
+    "correct": 0.24,
+    "problematic": 0.72,
+    "adherence": 0.48,
+    "consistent_category": 0.9,
+    "training_value": 1.37,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "3760d03e6bc4ac54:581ab22c6c103c10",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-380200a3c7bfc8d8",
+   "arm": "math",
+   "stratum": "low_jev",
+   "jev_signals": {
+    "quality": 1.24,
+    "correct": 0.07,
+    "problematic": 0.62,
+    "adherence": 0.44,
+    "consistent_category": 0.93,
+    "training_value": 1.81,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "f7ca006d415d0fc4:32b36f459f1e9d30",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-e3e6d4f5623e85f9",
+   "arm": "math",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.43,
+    "correct": 0.74,
+    "problematic": 0.77,
+    "adherence": 0.4,
+    "consistent_category": 0.95,
+    "training_value": 1.02,
+    "flags": [
+     "problematic"
+    ]
+   },
+   "content_sha256": "1874e7a1c27bcc7b:22245cf72a3d5b1c",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-cf114d62f36f71e7",
+   "arm": "math",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 0.79,
+    "correct": 0.13,
+    "problematic": 0.67,
+    "adherence": 0.57,
+    "consistent_category": 0.96,
+    "training_value": 1.29,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "39b7bc401e34e953:b8b94088bfbbadcb",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-9de5eda493a8fa51",
+   "arm": "math",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.09,
+    "correct": 0.18,
+    "problematic": 0.82,
+    "adherence": 0.56,
+    "consistent_category": 0.97,
+    "training_value": 1.4,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "ecb457f67ef9b34c:22a5bb4797a9bbee",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-55dc672d5c51d842",
+   "arm": "math",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 2.51,
+    "correct": 0.53,
+    "problematic": 0.59,
+    "adherence": 0.71,
+    "consistent_category": 0.95,
+    "training_value": 2.7,
+    "flags": [
+     "problematic"
+    ]
+   },
+   "content_sha256": "f9ae665754cabfc3:ec89650cfb05cd9e",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-e0c53345c359a77e",
+   "arm": "code",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 0.92,
+    "correct": 0.09,
+    "problematic": 0.69,
+    "adherence": 0.26,
+    "consistent_category": 0.91,
+    "training_value": 2.01,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "cf4081c50e2bce78:994791bc1468bd91",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-c52843bf7328daaf",
+   "arm": "code",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.2,
+    "correct": 0.23,
+    "problematic": 0.46,
+    "adherence": 0.64,
+    "consistent_category": 0.93,
+    "training_value": 1.96,
+    "flags": [
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "7eec6e997311bf10:2dcab4569a942fed",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_5f2a404cbccec0c8d6635f0997cea2ac",
+   "arm": "systems",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.53,
+    "correct": 0.26,
+    "problematic": 0.43,
+    "adherence": 0.52,
+    "consistent_category": 0.87,
+    "training_value": 2.06,
+    "flags": [
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "231cef09b9e36784:8750299cf2ecf06d",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-40c9f863bd63c43f",
+   "arm": "code",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.51,
+    "correct": 0.3,
+    "problematic": 0.41,
+    "adherence": 0.56,
+    "consistent_category": 0.93,
+    "training_value": 2.47,
+    "flags": [
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "f86e27ce1f598af9:ca103b1d37b3bb14",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-fd8cb6485db662e5",
+   "arm": "general",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.27,
+    "correct": 0.32,
+    "problematic": 0.53,
+    "adherence": 0.5,
+    "consistent_category": 0.88,
+    "training_value": 1.98,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "b4820415473d3cd0:3af661ad2108a771",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-4d4ac1d9bc9d1c27",
+   "arm": "math",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 0.95,
+    "correct": 0.1,
+    "problematic": 0.78,
+    "adherence": 0.26,
+    "consistent_category": 0.93,
+    "training_value": 1.12,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "5e023b22b4094695:67a7a3c538471373",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-e7600473cff0f5ae",
+   "arm": "math",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.32,
+    "correct": 0.22,
+    "problematic": 0.56,
+    "adherence": 0.59,
+    "consistent_category": 0.97,
+    "training_value": 1.8,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "1cc0dfd5b05f5538:3027ec5dd0c1ec9e",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-d52f572bd9de1a3a",
+   "arm": "general",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.95,
+    "correct": 0.58,
+    "problematic": 0.53,
+    "adherence": 0.75,
+    "consistent_category": 0.95,
+    "training_value": 2.03,
+    "flags": [
+     "problematic"
+    ]
+   },
+   "content_sha256": "8c1d40e9a2845ead:d68f13d00c14ddd3",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-44a53543d48fba20",
+   "arm": "math",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.53,
+    "correct": 0.32,
+    "problematic": 0.5,
+    "adherence": 0.62,
+    "consistent_category": 0.97,
+    "training_value": 1.97,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "f05aac8d1e1d0c3b:c9e456e2bc4b0db6",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-f1f9c3b367a7f5f8",
+   "arm": "code",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.0,
+    "correct": 0.16,
+    "problematic": 0.45,
+    "adherence": 0.6,
+    "consistent_category": 0.92,
+    "training_value": 2.2,
+    "flags": [
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "9ab38d31087d297d:32bbca94cff00471",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-eff570a747a768aa",
+   "arm": "code",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.84,
+    "correct": 0.48,
+    "problematic": 0.58,
+    "adherence": 0.44,
+    "consistent_category": 0.74,
+    "training_value": 2.5,
+    "flags": [
+     "problematic"
+    ]
+   },
+   "content_sha256": "d9558af32ba6cbcd:b5ab77d37fb636b5",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-92e713e52bf1130d",
+   "arm": "math",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.78,
+    "correct": 0.63,
+    "problematic": 0.53,
+    "adherence": 0.66,
+    "consistent_category": 0.94,
+    "training_value": 1.62,
+    "flags": [
+     "problematic"
+    ]
+   },
+   "content_sha256": "ed950ded1862960d:0a00a8acef591508",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-b6262a19831c2d9f",
+   "arm": "math",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.64,
+    "correct": 0.27,
+    "problematic": 0.66,
+    "adherence": 0.55,
+    "consistent_category": 0.88,
+    "training_value": 1.86,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "4352c84598ef1fb9:a9d2877f97f865e4",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-d3c43b994aa8b2f3",
+   "arm": "code",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.28,
+    "correct": 0.28,
+    "problematic": 0.32,
+    "adherence": 0.76,
+    "consistent_category": 0.92,
+    "training_value": 2.37,
+    "flags": [
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "658b186e181f63e4:d09c1eff4eb13be7",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-f2f3334354fa2bb4",
+   "arm": "code",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.32,
+    "correct": 0.21,
+    "problematic": 0.38,
+    "adherence": 0.39,
+    "consistent_category": 0.91,
+    "training_value": 2.57,
+    "flags": [
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "1a82e3a4fcebb5f0:1112300429f02c45",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_597aa16c782496bf74c5dc3b45ff472a",
+   "arm": "systems",
+   "stratum": "flagged",
+   "jev_signals": {
+    "quality": 1.17,
+    "correct": 0.24,
+    "problematic": 0.5,
+    "adherence": 0.38,
+    "consistent_category": 0.94,
+    "training_value": 2.01,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "1c83b01f036369c4:96adce9e66a45efe",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-d45a04b12f2ba11d",
+   "arm": "general",
+   "stratum": "outliers",
+   "jev_signals": {
+    "quality": 1.54,
+    "correct": 0.23,
+    "problematic": 0.68,
+    "adherence": 0.5,
+    "consistent_category": 0.88,
+    "training_value": 1.83,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "4352c84598ef1fb9:a9d2877f97f865e4",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-d09c6656d2961023",
+   "arm": "math",
+   "stratum": "outliers",
+   "jev_signals": {
+    "quality": 1.43,
+    "correct": 0.25,
+    "problematic": 0.59,
+    "adherence": 0.53,
+    "consistent_category": 0.95,
+    "training_value": 1.65,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "dfb1d0899cae53a4:7eb4a59b6b58f515",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-18873fa006dcc1bc",
+   "arm": "math",
+   "stratum": "outliers",
+   "jev_signals": {
+    "quality": 1.23,
+    "correct": 0.24,
+    "problematic": 0.72,
+    "adherence": 0.48,
+    "consistent_category": 0.9,
+    "training_value": 1.37,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "3760d03e6bc4ac54:581ab22c6c103c10",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-f1f9c3b367a7f5f8",
+   "arm": "code",
+   "stratum": "outliers",
+   "jev_signals": {
+    "quality": 1.0,
+    "correct": 0.16,
+    "problematic": 0.45,
+    "adherence": 0.6,
+    "consistent_category": 0.92,
+    "training_value": 2.2,
+    "flags": [
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "9ab38d31087d297d:32bbca94cff00471",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-99c46a8615349a07",
+   "arm": "general",
+   "stratum": "outliers",
+   "jev_signals": {
+    "quality": 1.45,
+    "correct": 0.31,
+    "problematic": 0.33,
+    "adherence": 0.53,
+    "consistent_category": 0.94,
+    "training_value": 2.52,
+    "flags": [
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "e09f2f06fba2878e:b15079ba0b887c43",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-c52843bf7328daaf",
+   "arm": "code",
+   "stratum": "outliers",
+   "jev_signals": {
+    "quality": 1.2,
+    "correct": 0.23,
+    "problematic": 0.46,
+    "adherence": 0.64,
+    "consistent_category": 0.93,
+    "training_value": 1.96,
+    "flags": [
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "7eec6e997311bf10:2dcab4569a942fed",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-4d4ac1d9bc9d1c27",
+   "arm": "math",
+   "stratum": "outliers",
+   "jev_signals": {
+    "quality": 0.95,
+    "correct": 0.1,
+    "problematic": 0.78,
+    "adherence": 0.26,
+    "consistent_category": 0.93,
+    "training_value": 1.12,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "content_sha256": "5e023b22b4094695:67a7a3c538471373",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_444fdad88f35de9fd1c130b2c4e45506",
+   "arm": "systems",
+   "stratum": "outliers",
+   "jev_signals": {
+    "quality": 1.25,
+    "correct": 0.19,
+    "problematic": 0.66,
+    "adherence": 0.39,
+    "consistent_category": 0.93,
+    "training_value": 2.73,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "603670a61c931c5b:c13103deadcc164c",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-2c7ae9c58deae98b",
+   "arm": "math",
+   "stratum": "outliers",
+   "jev_signals": {
+    "quality": 1.38,
+    "correct": 0.39,
+    "problematic": 0.34,
+    "adherence": 0.58,
+    "consistent_category": 0.96,
+    "training_value": 1.41,
+    "flags": []
+   },
+   "content_sha256": "7ce9e6bc4aa7aa48:73ae65203188107e",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-9330d5e43617bd67",
+   "arm": "general",
+   "stratum": "outliers",
+   "jev_signals": {
+    "quality": 1.22,
+    "correct": 0.13,
+    "problematic": 0.49,
+    "adherence": 0.27,
+    "consistent_category": 0.94,
+    "training_value": 2.29,
+    "flags": [
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "efbac10cda6c1ef7:5f79fbb7e321b24a",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-code-eb9dc008dbf1fd61",
+   "arm": "code",
+   "stratum": "spread",
+   "jev_signals": {
+    "quality": 2.4,
+    "correct": 0.66,
+    "problematic": 0.2,
+    "adherence": 0.83,
+    "consistent_category": 0.95,
+    "training_value": 2.93,
+    "flags": []
+   },
+   "content_sha256": "2ffeda0f37f0b31f:4d9894b021f03db2",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-24c5777ba3ce680d",
+   "arm": "general",
+   "stratum": "spread",
+   "jev_signals": {
+    "quality": 1.78,
+    "correct": 0.53,
+    "problematic": 0.28,
+    "adherence": 0.63,
+    "consistent_category": 0.84,
+    "training_value": 2.48,
+    "flags": []
+   },
+   "content_sha256": "7032b70cdb21a3d6:51be9525a4ea875b",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-13388d63aa48543f",
+   "arm": "general",
+   "stratum": "spread",
+   "jev_signals": {
+    "quality": 1.24,
+    "correct": 0.15,
+    "problematic": 0.91,
+    "adherence": 0.55,
+    "consistent_category": 0.91,
+    "training_value": 1.2,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "content_sha256": "6ffad925244a6950:ddfac4d062d51e46",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-general-503dcd2a402044e6",
+   "arm": "general",
+   "stratum": "spread",
+   "jev_signals": {
+    "quality": 2.52,
+    "correct": 0.86,
+    "problematic": 0.12,
+    "adherence": 0.91,
+    "consistent_category": 0.95,
+    "training_value": 2.73,
+    "flags": []
+   },
+   "content_sha256": "1f07796a60c95eb7:a1f6c1f9598eda33",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-math-36b99a746186d743",
+   "arm": "math",
+   "stratum": "spread",
+   "jev_signals": {
+    "quality": 3.42,
+    "correct": 0.98,
+    "problematic": 0.04,
+    "adherence": 0.92,
+    "consistent_category": 0.99,
+    "training_value": 2.94,
+    "flags": []
+   },
+   "content_sha256": "0ded786c182c4549:dfaf711b7cc7f908",
+   "labeling_status": "pending",
+   "human_labels": null
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_29e10487d6df050afeee886b7c1da208",
+   "arm": "systems",
+   "stratum": "spread",
+   "jev_signals": {
+    "quality": 1.69,
+    "correct": 0.5,
+    "problematic": 0.33,
+    "adherence": 0.59,
+    "consistent_category": 0.96,
+    "training_value": 2.54,
+    "flags": []
+   },
+   "content_sha256": "5f138fb4fc862c6d:af6cdabba867366b",
+   "labeling_status": "pending",
+   "human_labels": null
+  }
+ ]
+}

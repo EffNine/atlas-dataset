@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-2c7ae9c58deae98b",
+ "arm": "math",
+ "content_sha256": "7ce9e6bc4aa7aa48:73ae65203188107e",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "How many of the natural numbers from 1 to 600, inclusive, have a digit that appears exactly three times?"
+  },
+  {
+   "role": "assistant",
+   "content": "Let's consider the total number of natural numbers from 1 to 600 and then subtract the numbers that do not meet the given condition.\n\nFirst, we find the total count of numbers with a digit appearing exactly three times.\n\nFor numbers with three digits (from 100 to 600), we consider the following cases:\n\n1. The digit 0 appears exactly three times: Not possible since these would be 3-digit numbers.\n2. A non-zero digit appears exactly three times: There are 5 choices for the non-zero digit (1, 2, 3, 4, 5, but not 6 since numbers are only up to 600), and for each choice, there is only 1 way to arrange the digits. This gives us $5 \\cdot 1 = 5$ numbers.\n\nFor numbers with two digits (from 10 to 99), it's not possible for a digit to appear exactly three times.\n\nFor numbers with one digit (from 1 to 9), it's also not possible for a digit to appear exactly three times.\n\nSo, the total count of numbers with a digit appearing exactly three times is $5$.\n\nThe answer is:\n\\[ \\boxed{5} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

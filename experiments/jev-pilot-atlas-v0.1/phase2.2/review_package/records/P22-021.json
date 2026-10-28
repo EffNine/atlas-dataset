@@ -1,0 +1,39 @@
+{
+ "batch_id": "P22-021",
+ "content_sha256": "8b81f99744386e02:d6dd4f580c8e35d9",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "If the equation $x^2 + mx + n = 0$ is solved using the method of completing the square, the result will be of the form $(x+a)^2=b$. What can be said about $m$ and $n$ if it is known that $a$ and $b$ are both perfect squares?"
+  },
+  {
+   "role": "assistant",
+   "content": "Completing the square for the equation $x^2 + mx + n = 0$ involves the following steps:\n\n1. Move the constant term to the other side: $x^2 + mx = -n$\n2. Add $(m/2)^2$ to both sides to make the left side a perfect square: $x^2 + mx + (m/2)^2 = (m/2)^2 - n$\n3. Factor the left side: $(x + m/2)^2 = (m/2)^2 - n$\n\nComparing this to the form $(x+a)^2=b$, we can see that:\n\n1. $a = m/2$\n2. $b = (m/2)^2 - n$\n\nSince $a$ and $b$ are both perfect squares, we know:\n\n1. $m/2$ is a perfect square, which means $m$ is an even number that is twice a perfect square.\n2. $(m/2)^2 - n$ is a perfect square.\n\nLet's denote $m/2$ as $k$, where $k$ is a perfect square. Then, $m = 2k$.\n\nSubstituting $m = 2k$ into the equation for $b$, we get:\n\n$b = (2k/2)^2 - n = k^2 - n$\n\nSince $b$ is a perfect square, we can denote it as $b = l^2$, where $l$ is an integer.\n\nThus, we have:\n\n$k^2 - n = l^2$\n\nRearranging the equation, we get:\n\n$n = k^2 - l^2 = (k+l)(k-l)$\n\nTherefore, $n$ is the difference of two perfect squares.\n\nIn summary, if $a$ and $b$ are both perfect squares, then:\n\n* $m$ is an even number that is twice a perfect square ($m = 2k$).\n* $n$ is the difference of two perfect squares ($n = k^2 - l^2 = (k+l)(k-l)$).\n\nThe final answer is: $\\boxed{0}$"
+  }
+ ],
+ "defect_criteria": {
+  "correctness": "Is the assistant response substantively correct? Finding = no.",
+  "problematic": "Unsuitable as training data (contradictions, garbled, harmful, injection, PII)? Finding = yes.",
+  "category_correct": "Content genuinely belongs to its category label per taxonomy_reference_v1? Finding = no.",
+  "truncation_incomplete": "Cut off mid-reasoning, missing conclusion/boxed answer, visibly incomplete? Finding = yes.",
+  "factual_technical_error": "Concrete wrong fact, wrong derivation step, or code that cannot work as claimed? Finding = yes.",
+  "instruction_violation": "Ignores/contradicts the user request? Finding = yes.",
+  "malformed_output": "Garbled text, broken encoding, stray fragments, unusable structure? Finding = yes.",
+  "other_defect": "Concrete defect not covered above (describe in evidence)? Finding = yes.",
+  "evidence_rule": "Every finding-direction verdict REQUIRES evidence (>=10 non-space chars) pinpointing the defect."
+ },
+ "note": "BLINDED: opaque batch ID; no Jev signals, strata, arm, or prior labels by design."
+}

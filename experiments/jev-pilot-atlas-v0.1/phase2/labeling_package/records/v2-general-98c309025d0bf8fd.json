@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-general-98c309025d0bf8fd",
+ "arm": "general",
+ "content_sha256": "c18335eceeddd431:ee3a2db72e4e058f",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "general",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Quadrilateral $ABCD$ is inscribed in a circle. Diagonals $\\overline{AC}$ and $\\overline{BD}$ intersect at point $O$. $AB = BC$, $\\angle AOB = \\angle BOC + \\angle COD$, and $\\angle BOD = 90^\\circ$. If $AD = 17$ cm, then what is the length of $CD$?"
+  },
+  {
+   "role": "assistant",
+   "content": "Since $\\angle BOD = 90^\\circ$, $BD$ is the diameter of the circle. In triangle $ABD$, $AB = BC$ so $\\angle BAD = \\angle CBD$.\n\nAlso, since $\\angle BOD = 90^\\circ$, $\\angle AOB = \\angle BOC + \\angle COD$ simplifies to $\\angle AOB = \\angle COD$ because $\\angle BOC = 90^\\circ$.\n\nBy the Inscribed Angle Theorem, $\\angle ADB = \\angle AOB = \\angle COD$.\n\nIn triangle $COD$, $\\angle COD = \\angle ADB$ and $\\angle ODC = \\angle OBD = 90^\\circ$, so $\\angle OCD = \\angle BAD$.\n\nTherefore, $\\triangle COD \\sim \\triangle BAD$ by the Angle-Angle Similarity Theorem.\n\nSince $AD = 17$ cm, we know that $CD = \\frac{AD \\cdot OC}{OB} = \\frac{17 \\cdot OC}{OB}$.\n\nSince $\\triangle COD \\sim \\triangle BAD$, $\\frac{OC}{OB} = \\frac{CD}{AD} = \\frac{CD}{17} \\Rightarrow CD^2 = 17 \\cdot OC = 17 \\cdot (OB - OC)$.\n\nSince $\\triangle ABO \\sim \\triangle DCO$, $\\frac{AO}{DO} = \\frac{BO}{CO}$.\n\nTherefore, $\\frac{17}{CD} = \\frac{OB}{OB - OC}$.\n\nSolving for $CD$:\n\\[ 17 \\cdot (OB - OC) = CD \\cdot OB \\Rightarrow 17 \\cdot OC = CD \\cdot (OB - (OB - OC)) \\Rightarrow 17 \\cdot OC = CD \\cdot OC \\Rightarrow CD = 17 \\]\n\nSo, the answer is:\n\\[ \\boxed{17} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

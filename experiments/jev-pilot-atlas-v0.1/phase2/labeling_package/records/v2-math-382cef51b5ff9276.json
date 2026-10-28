@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-382cef51b5ff9276",
+ "arm": "math",
+ "content_sha256": "73ec3ab3327f1ae9:d65931acf8641e09",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Compute the value of $x$ in the equation $\\sin 3x = \\cos 2x$."
+  },
+  {
+   "role": "assistant",
+   "content": "Use the identity $\\cos 2x = \\sin \\left( \\frac{\\pi}{2} - 2x \\right)$.\n\nThe equation becomes $\\sin 3x = \\sin \\left( \\frac{\\pi}{2} - 2x \\right)$.\n\nSince the sines are equal, the angles are either equal or supplementary to each other.\n\n\\[ 3x = \\frac{\\pi}{2} - 2x + 2k \\pi \\quad \\text{or} \\quad 3x = \\pi - \\left( \\frac{\\pi}{2} - 2x \\right) + 2k \\pi \\]\n\nwhere $k$ is an integer.\n\nSolve the first equation:\n\\[ 3x = \\frac{\\pi}{2} - 2x + 2k \\pi \\Rightarrow 5x = \\frac{\\pi}{2} + 2k \\pi \\Rightarrow x = \\frac{\\pi}{10} + \\frac{2}{5}k \\pi \\]\n\nSolve the second equation:\n\\[ 3x = \\pi - \\frac{\\pi}{2} + 2x + 2k \\pi \\Rightarrow 3x = \\frac{\\pi}{2} + 2x + 2k \\pi \\Rightarrow x = \\frac{\\pi}{2} + 2k \\pi \\]\n\nThus, the solutions are $x = \\frac{\\pi}{10} + \\frac{2}{5}k \\pi$ and $x = \\frac{\\pi}{2} + 2k \\pi$, where $k$ is an integer.\n\nFor the smallest positive value of $x$, choose $k = 0$ in the first solution:\n\\[ x = \\frac{\\pi}{10} + \\frac{2}{5}(0) \\pi = \\boxed{\\frac{\\pi}{10}} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

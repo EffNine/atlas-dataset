@@ -1,0 +1,39 @@
+{
+ "batch_id": "P22-014",
+ "content_sha256": "4fd7ec7a533cc669:d09ee89d71e1bdaf",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "For any finite sequence $A = (a_1, a_2, \\ldots, a_n)$ of real numbers, define $S(A)$ to be the sum of all the elements of $A$, and $D(A)$ to be the sum of the squares of the elements of $A$. Find the smallest real number $k$ such that the inequality \\[D(A) + D(B) \\geq k(S(A) - S(B))^2\\]holds for all pairs $(A, B)$ of sequences of real numbers with the same length."
+  },
+  {
+   "role": "assistant",
+   "content": "## Step 1: Define the sequences and their sums\nLet $A = (a_1, a_2, \\ldots, a_n)$ and $B = (b_1, b_2, \\ldots, b_n)$ be two sequences of real numbers with the same length $n$.\nDefine $S(A)$ to be the sum of all the elements of $A$, and $D(A)$ to be the sum of the squares of the elements of $A$.\nSimilarly, define $S(B)$ and $D(B)$ for sequence $B$.\n\n## Step 2: Express the inequality in terms of the sequences\nWe are given the inequality $D(A) + D(B) \\geq k(S(A) - S(B))^2$ and we need to find the smallest real number $k$ that satisfies this inequality for all pairs of sequences $(A, B)$.\n\n## Step 3: Use the Cauchy-Schwarz inequality\nBy the Cauchy-Schwarz inequality, we have\n\\[(a_1^2 + a_2^2 + \\ldots + a_n^2)(b_1^2 + b_2^2 + \\ldots + b_n^2) \\geq (a_1b_1 + a_2b_2 + \\ldots + a_nb_n)^2\\]\nWe can apply this inequality to our problem.\n\n## Step 4: Derive the relationship between D(A), D(B), and S(A) - S(B)\nWe can express $D(A) + D(B)$ as\n\\[D(A) + D(B) = (a_1^2 + a_2^2 + \\ldots + a_n^2) + (b_1^2 + b_2^2 + \\ldots + b_n^2)\\]\nUsing the Cauchy-Schwarz inequality, we get\n\\[D(A) + D(B) \\geq \\frac{(a_1 - b_1)^2 + (a_2 - b_2)^2 + \\ldots + (a_n - b_n)^2}{2}\\]\nNote that\n\\[(a_1 - b_1)^2 + (a_2 - b_2)^2 + \\ldots + (a_n - b_n)^2 \\geq \\frac{(a_1 - b_1 + a_2 - b_2 + \\ldots + a_n - b_n)^2}{n}\\]\nBy definition, $S(A) - S(B) = a_1 - b_1 + a_2 - b_2 + \\ldots + a_n - b_n$.\n\n## Step 5: Find the smallest real number k\nWe have derived the relationship\n\\[D(A) + D(B) \\geq \\frac{(S(A) - S(B))^2}{2n}\\]\nComparing this with the given inequality, we can see that\n\\[k = \\frac{1}{2n}\\]\nHowever, we need to find the smallest real number $k$ that satisfies the inequality for all pairs of sequences $(A, B)$.\n\n## Step 6: Consider the case when n = 1\nWhen $n = 1$, the sequences $A$ and $B$ each have only one element.\nIn this case, $D(A) = a_1^2$ and $D(B) = b_1^2$.\nThe inequality becomes\n\\[a_1^2 + b_1^2 \\geq k(a_1 - b_1)^2\\]\nFor this inequality to hold for all $a_1$ and $b_1$, we must have $k \\leq \\frac{1}{2}$.\n\n## Step 7: Find the smallest real number k\nFrom step 5, we have $k = \\frac{1}{2n}$.\nHowever, from step 6, we know that $k \\leq \\frac{1}{2}$.\nTherefore, the smallest real number $k$ that satisfies the inequality for all pairs of sequences $(A, B)$ is $k = \\frac{1}{2}$.\n\nThe final answer is: $\\boxed{\\frac{1}{2}}$"
+  }
+ ],
+ "defect_criteria": {
+  "correctness": "Is the assistant response substantively correct? Finding = no.",
+  "problematic": "Unsuitable as training data (contradictions, garbled, harmful, injection, PII)? Finding = yes.",
+  "category_correct": "Content genuinely belongs to its category label per taxonomy_reference_v1? Finding = no.",
+  "truncation_incomplete": "Cut off mid-reasoning, missing conclusion/boxed answer, visibly incomplete? Finding = yes.",
+  "factual_technical_error": "Concrete wrong fact, wrong derivation step, or code that cannot work as claimed? Finding = yes.",
+  "instruction_violation": "Ignores/contradicts the user request? Finding = yes.",
+  "malformed_output": "Garbled text, broken encoding, stray fragments, unusable structure? Finding = yes.",
+  "other_defect": "Concrete defect not covered above (describe in evidence)? Finding = yes.",
+  "evidence_rule": "Every finding-direction verdict REQUIRES evidence (>=10 non-space chars) pinpointing the defect."
+ },
+ "note": "BLINDED: opaque batch ID; no Jev signals, strata, arm, or prior labels by design."
+}

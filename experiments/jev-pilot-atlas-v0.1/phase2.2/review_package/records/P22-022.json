@@ -1,0 +1,39 @@
+{
+ "batch_id": "P22-022",
+ "content_sha256": "f9234408a70597ab:473ea3d0199aa3a7",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Let $g(x) = \\frac{f(x)}{f(x) + 1}$ for all real numbers $x$ where $f(x) \\neq -1$. Which of the graphs below is the graph of $y = g(x)$? Assume $f$ is the function whose graph is shown above. \n(Note: The graph above means the original graph in the original problem.)\n\nYour response should start after this graph.\n\n\n[asy]\nunitsize(0.5 cm);\n\npicture[] graf;\nint i, n;\n\nreal func(real x) {\n  real y;\n  if (x >= -3 && x <= 0) {y = -2 - x;}\n  if (x >= 0 && x <= 2) {y = sqrt(4 - (x - 2)^2) - 2;}\n  if (x >= 2 && x <= 3) {y = 2*(x - 2);}\n  return(y);\n}\n\nreal funcb(real x) {\n  real y = min(-1,func(x))/(func(x) + 1);\n  return(y);\n}\n\nreal funcc(real x) {\n  real y = func(x)/(func(x) + 1);\n  return(y);\n}\n\nreal funcd(real x) {\n  real y = func(x)/(func(x) + 2);\n  return(y);\n}\n\nreal funce(real x) {\n  real y = func(x)/(func(x) + 3);\n  return(y);\n}\n\nreal funcf(real x) {\n  real y = func(x)/(func(x) - 1);\n  return(y);\n}\n\nfor (n = 1; n <= 5; ++n) {\n  graf[n] = new picture;\n  for (i = -5; i <= 5; ++i) {\n    draw(graf[n],(i,-5)--(i,5),gray(0.7));\n    draw(graf[n],(-5,i)--(5,i),gray(0.7));\n  }\n  draw(graf[n],(-5,0)--(5,0),Arrows(6));\n  draw(graf[n],(0,-5)--(0,5),Arrows(6));\n\n  label(graf[n],\"$x$\", (5,0), E);\n  label(graf[n],\"$y$\", (0,5), N);\n}\n\ndraw(graf[1],graph(funcb,-3,3),red);\ndraw(graf[2],graph(funcc,-3,3),red);\ndraw(graf[3],graph(funcd,-3,3),red);\ndraw(graf[4],graph(funce,-3,3),red);\ndraw(graf[5],graph(funcf,-3,3),red);\n\nlabel(graf[1], \"A\", (0,-6));\nlabel(graf[2], \"B\", (0,-6));\nlabel(graf[3], \"C\", (0,-6));\nlabel(graf[4], \"D\", (0,-6));\nlabel(graf[5], \"E\", (0,-6));\n\nadd(graf[1]);\nadd(shift((12,0))*(graf[2]));\nadd(shift((24,0))*(graf[3]));\nadd(shift((6,-12))*(graf[4]));\nadd(shift((18,-12))*(graf[5]));\n[/asy]"
+  },
+  {
+   "role": "assistant",
+   "content": "The function $g(x)$ is defined as $g(x) = \\frac{f(x)}{f(x) + 1}$. To determine the graph of $y = g(x)$, we need to analyze how the function $f(x)$ is transformed.\n\nWhen $f(x) = -1$, the function $g(x)$ is undefined, as division by zero is not allowed. For all other values of $x$, we can analyze the behavior of $g(x)$ by considering the following cases:\n\nCase 1: When $f(x) > -1$, the function $g(x)$ will be positive, as both the numerator and denominator are positive.\n\nCase 2: When $f(x) < -1$, the function $g(x)$ will be negative, as the numerator is negative and the denominator is positive.\n\nFrom the graph of $f(x)$, we can see that $f(x) > -1$ for $x \\in (-3, 0) \\cup (2, 3)$, and $f(x) < -1$ for $x \\in (0, 2)$.\n\nTherefore, the graph of $y = g(x)$ will be positive for $x \\in (-3, 0) \\cup (2, 3)$ and negative for $x \\in (0, 2)$.\n\nComparing this behavior with the given options, we can see that the graph of $y = g(x)$ matches option B.\n\nSo, the answer is:\n\\[\\boxed{B}\\]"
+  }
+ ],
+ "defect_criteria": {
+  "correctness": "Is the assistant response substantively correct? Finding = no.",
+  "problematic": "Unsuitable as training data (contradictions, garbled, harmful, injection, PII)? Finding = yes.",
+  "category_correct": "Content genuinely belongs to its category label per taxonomy_reference_v1? Finding = no.",
+  "truncation_incomplete": "Cut off mid-reasoning, missing conclusion/boxed answer, visibly incomplete? Finding = yes.",
+  "factual_technical_error": "Concrete wrong fact, wrong derivation step, or code that cannot work as claimed? Finding = yes.",
+  "instruction_violation": "Ignores/contradicts the user request? Finding = yes.",
+  "malformed_output": "Garbled text, broken encoding, stray fragments, unusable structure? Finding = yes.",
+  "other_defect": "Concrete defect not covered above (describe in evidence)? Finding = yes.",
+  "evidence_rule": "Every finding-direction verdict REQUIRES evidence (>=10 non-space chars) pinpointing the defect."
+ },
+ "note": "BLINDED: opaque batch ID; no Jev signals, strata, arm, or prior labels by design."
+}

@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-481f44ccaed1a261",
+ "arm": "math",
+ "content_sha256": "401330949586efe9:3c16e1049d5cd156",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Let $n$ be a positive integer. Call a number $n$-balanced if the difference between the product of its digits and the sum of its digits is a multiple of $n$. How many $n$-balanced positive integers are there between $1000$ and $9999$ (inclusive) when $n=11$?"
+  },
+  {
+   "role": "assistant",
+   "content": "For $n=11$, an integer is $n$-balanced if the difference between the product of its digits and the sum of its digits is a multiple of 11.\n\nLet the 4-digit integer be $abcd$, where $a$, $b$, $c$, and $d$ are the digits.\n\nWe need to find the number of integers such that:\n\\[ abcd - (a + b + c + d) \\equiv 0 \\mod 11 \\]\n\nUsing the property of modular arithmetic:\n\\[ abcd - (a + b + c + d) \\equiv (a \\cdot b \\cdot c \\cdot d) - (a + b + c + d) \\mod 11 \\]\n\nWe can rewrite the equation as:\n\\[ (a \\cdot b \\cdot c \\cdot d) - (a + b + c + d) \\equiv 0 \\mod 11 \\]\n\nNow, we need to find the number of solutions to this equation.\n\nSince $1000 \\leq abcd \\leq 9999$, we have $1 \\leq a \\leq 9$ and $0 \\leq b, c, d \\leq 9$.\n\nWe can iterate through all possible values of $a$, $b$, $c$, and $d$ to count the number of solutions.\n\nHowever, we can also use a more efficient approach.\n\nNotice that the equation is symmetric in $a$, $b$, $c$, and $d$. Therefore, we can assume without loss of generality that $a \\leq b \\leq c \\leq d$.\n\nThis reduces the number of cases to consider.\n\nUsing this approach, we can count the number of solutions to the equation.\n\nAfter iterating through all possible values, we find that there are:\n\\[ \\boxed{615} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

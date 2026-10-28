@@ -1,0 +1,32 @@
+{
+ "record_id": "v2-general-ba8da6eb3ddfdb36",
+ "arm": "general",
+ "content_sha256": "08003fdc8b6d0912:f7402dead346c5d7",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "name": "ewedubs/linux-kernel-commits-aireason-instruct",
+  "url": "https://huggingface.co/datasets/ewedubs/linux-kernel-commits-aireason-instruct",
+  "license": "Apache-2.0",
+  "date": "2026-08-14"
+ },
+ "category_label": "03_system_engineering",
+ "subcategory_label": "general",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n\n\tif (priv->vbus && priv->otg_phy_mode == PHY_MODE_USB_HOST) {\n\t\tret = regulator_enable(priv->vbus);\n\t\tif (ret)\n\t\t\treturn ret;\n\t}\n\n\treturn 0;\n}\n\nstatic const struct dev_pm_ops dwc3_meson_g12a_dev_pm_ops = {\n\tSET_SYSTEM_SLEEP_PM_OPS(dwc3_meson_g12a_suspend, dwc3_meson_g12a_resume)\n\tSET_RUNTIME_PM_OPS(dwc3_meson_g12a_runtime_suspend,\n\t\t\t   dwc3_meson_g12a_runtime_resume, NULL)\n};\n\nstatic const struct of_device_id dwc3_meson_g12a_match[] = {\n\t{\n\t\t.compatible = \"amlogic,meson-gxl-usb-ctrl\",\n\t\t.data = &gxl_drvdata,\n\nInstruction:\nusb: dwc3: meson-g12a: do post init to fix broken usb after resumption\n\nDevice connected to usb otg port of GXL-based boards can not be\nrecognised after resumption, doesn't recover even if disconnect and\nreconnect the device. dmesg shows it disconnects during resumption.\n\n[   41.492911] usb 1-2: USB disconnect, device number 3\n[   41.499346] usb 1-2: unregistering device\n[   41.511939] usb 1-2: unregistering interface 1-2:1.0\n\nCalling usb_post_init() will fix this issue, and it's tested and\nverified on libretech's aml-s905x-cc board.\n\nCc: stable@vger.kernel.org # v5.8+\nFixes: c99993376f72 (\"usb: dwc3: Add Amlogic G12A DWC3 glue\")\nSigned-off-by: Luke Lu <luke.lu@libre.computer>\nAcked-by: Neil Armstrong <neil.armstrong@linaro.org>\nLink: https://lore.kernel.org/r/20230809212911.18903-1-luke.lu@libre.computer\nSigned-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/drivers/usb/dwc3/dwc3-meson-g12a.c b/drivers/usb/dwc3/dwc3-meson-g12a.c\nindex e99c748..2c07c03 100644\n--- a/drivers/usb/dwc3/dwc3-meson-g12a.c\n+++ b/drivers/usb/dwc3/dwc3-meson-g12a.c\n@@ -926,6 +926,12 @@ static int __maybe_unused dwc3_meson_g12a_resume(struct device *dev)\n \t\t\treturn ret;\n \t}\n \n+\tif (priv->drvdata->usb_post_init) {\n+\t\tret = priv->drvdata->usb_post_init(priv);\n+\t\tif (ret)\n+\t\t\treturn ret;\n+\t}\n+\n \treturn 0;\n }"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

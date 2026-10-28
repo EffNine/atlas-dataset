@@ -1,0 +1,9 @@
+{
+ "captured_at": "2026-09-18T00:32:08.611558+00:00",
+ "files": {
+  "pilot/v0.2/math/train.jsonl": "045dea54685395b233413ecdefd6dd50389e42ecebd7b24287673cf8f511a3da",
+  "pilot/v0.2/code/train.jsonl": "28435fcde06ca7c3b8c74d2c9ab8ed02afa4f39a3a43d186da49898fde9dfe14",
+  "pilot/v0.2/general/train.jsonl": "f240c44aa22d67fa69bee1fe68806694525ec2e8ab61e4f0dd15b57a16d5d1d0",
+  "pilot/v0.2/systems/train.jsonl": "471178853d36023564ebbfdec86cfa87345aee51a0bb1605d4803f7da5be4882"
+ }
+}

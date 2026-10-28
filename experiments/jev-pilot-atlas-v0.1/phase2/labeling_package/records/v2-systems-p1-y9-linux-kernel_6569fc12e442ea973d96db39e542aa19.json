@@ -1,0 +1,27 @@
+{
+ "record_id": "v2-systems-p1-y9-linux-kernel_6569fc12e442ea973d96db39e542aa19",
+ "arm": "systems",
+ "content_sha256": "4ea797785a0363ee:fd9cc667e388a3c8",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": "p1-y9-linux-kernel",
+ "category_label": "system_engineering",
+ "subcategory_label": "linux_kernel",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n\tdma_contiguous_reserve(dma32_phys_limit);\n\tif (IS_ENABLED(CONFIG_64BIT))\n\t\thugetlb_cma_reserve(PUD_SHIFT - PAGE_SHIFT);\n\tmemblock_allow_resize();\n}\n\n#ifdef CONFIG_MMU\nstruct pt_alloc_ops pt_ops __initdata;\n\npgd_t swapper_pg_dir[PTRS_PER_PGD] __page_aligned_bss;\npgd_t trampoline_pg_dir[PTRS_PER_PGD] __page_aligned_bss;\nstatic pte_t fixmap_pte[PTRS_PER_PTE] __page_aligned_bss;\n\npgd_t early_pg_dir[PTRS_PER_PGD] __initdata __aligned(PAGE_SIZE);\n\n#ifdef CONFIG_XIP_KERNEL\n#define pt_ops\t\t\t(*(struct pt_alloc_ops *)XIP_FIXUP(&pt_ops))\n#define trampoline_pg_dir      ((pgd_t *)XIP_FIXUP(trampoline_pg_dir))\n#define fixmap_pte             ((pte_t *)XIP_FIXUP(fixmap_pte))\n#define early_pg_dir           ((pgd_t *)XIP_FIXUP(early_pg_dir))\n#endif /* CONFIG_XIP_KERNEL */\n\nstatic const pgprot_t protection_map[16] = {\n\t[VM_NONE]\t\t\t\t\t= PAGE_NONE,\n\t[VM_READ]\t\t\t\t\t= PAGE_READ,\n\nInstruction:\nriscv: mm: Ensure prot of VM_WRITE and VM_EXEC must be readable\n\nCommit 8aeb7b17f04e (\"RISC-V: Make mmap() with PROT_WRITE imply PROT_READ\")\nallows riscv to use mmap with PROT_WRITE only, and meanwhile mmap with w+x\nis also permitted. However, when userspace tries to access this page with\nPROT_WRITE|PROT_EXEC, which causes infinite loop at load page fault as\nwell as it triggers soft lockup. According to riscv privileged spec,\n\"Writable pages must also be marked readable\". The fix to drop the\n`PAGE_COPY_READ_EXEC` and then `PAGE_COPY_EXEC` would be just used instead.\nThis aligns the other arches (i.e arm64) for protection_map.\n\nFixes: 8aeb7b17f04e (\"RISC-V: Make mmap() with PROT_WRITE imply PROT_READ\")\nSigned-off-by: Hsieh-Tseng Shen <woodrow.shen@sifive.com>\nReviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>\nLink: https://lore.kernel.org/r/20230425102828.1616812-1-woodrow.shen@sifive.com\nSigned-off-by: Palmer Dabbelt <palmer@rivosinc.com>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c\nindex c6bb966..0fe75c9 100644\n--- a/arch/riscv/mm/init.c\n+++ b/arch/riscv/mm/init.c\n@@ -293,7 +293,7 @@ static const pgprot_t protection_map[16] = {\n \t[VM_EXEC]\t\t\t\t\t= PAGE_EXEC,\n \t[VM_EXEC | VM_READ]\t\t\t\t= PAGE_READ_EXEC,\n \t[VM_EXEC | VM_WRITE]\t\t\t\t= PAGE_COPY_EXEC,\n-\t[VM_EXEC | VM_WRITE | VM_READ]\t\t\t= PAGE_COPY_READ_EXEC,\n+\t[VM_EXEC | VM_WRITE | VM_READ]\t\t\t= PAGE_COPY_EXEC,\n \t[VM_SHARED]\t\t\t\t\t= PAGE_NONE,\n \t[VM_SHARED | VM_READ]\t\t\t\t= PAGE_READ,\n \t[VM_SHARED | VM_WRITE]\t\t\t\t= PAGE_SHARED,"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

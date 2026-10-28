@@ -1,0 +1,27 @@
+{
+ "record_id": "v2-general-503dcd2a402044e6",
+ "arm": "general",
+ "content_sha256": "1f07796a60c95eb7:a1f6c1f9598eda33",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": "p0-swe-bench-verified",
+ "category_label": "software_engineering",
+ "subcategory_label": "general",
+ "license": "MIT",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Add secure default SECURE_REFERRER_POLICY / Referrer-policy header\nDescription\n\t\n#29406 added the ability for the SECURE_REFERRER_POLICY setting to set Referrer-Policy, released in Django 3.0.\nI propose we change the default for this to \"same-origin\" to make Django applications leak less information to third party sites.\nThe main risk of breakage here would be linked websites breaking, if they depend on verification through the Referer header. This is a pretty fragile technique since it can be spoofed.\nDocumentation: ​https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy\nThe MDN support grid is out of date: ​https://caniuse.com/#search=Referrer-Policy\n"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/django/conf/global_settings.py b/django/conf/global_settings.py\n--- a/django/conf/global_settings.py\n+++ b/django/conf/global_settings.py\n@@ -637,6 +637,6 @@ def gettext_noop(s):\n SECURE_HSTS_PRELOAD = False\n SECURE_HSTS_SECONDS = 0\n SECURE_REDIRECT_EXEMPT = []\n-SECURE_REFERRER_POLICY = None\n+SECURE_REFERRER_POLICY = 'same-origin'\n SECURE_SSL_HOST = None\n SECURE_SSL_REDIRECT = False\n"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

@@ -1,0 +1,355 @@
+{
+ "version": "phase2.1-labeling-status-v1",
+ "generated_at": "2026-09-17T17:26:03.871009+00:00",
+ "n_unique_records": 84,
+ "n_manifest_rows": 96,
+ "n_label_files_valid": 168,
+ "n_label_files_total": 168,
+ "n_records_two_labelers": 84,
+ "n_records_one_labeler": 0,
+ "n_records_unlabeled": 0,
+ "labeler_ids_seen": [
+  "labeler-a",
+  "labeler-b"
+ ],
+ "meets_two_labeler_requirement": true,
+ "violations": [],
+ "per_record": {
+  "v2-code-0a5f6960fcd9e48b": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-3eb86fbf89916aed": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-40c9f863bd63c43f": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-49fd89641436b479": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-721a16b4da322b7c": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-a01d2697ad516739": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-b622be913aee458f": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-c52843bf7328daaf": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-d3c43b994aa8b2f3": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-e0c53345c359a77e": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-eb9dc008dbf1fd61": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-ec07a971a6a0a235": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-eff570a747a768aa": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-f1f9c3b367a7f5f8": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-code-f2f3334354fa2bb4": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-02a2c81f7f5c8bb6": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-082d0cb3ffbd78b9": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-13388d63aa48543f": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-1ce9bfe41fffb31c": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-2217540aed022f20": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-24c5777ba3ce680d": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-4c0b8eb47ab7bdba": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-503dcd2a402044e6": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-73bcfcb7ab1215ce": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-7dbec7b81fa1af56": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-885deb11224f7801": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-896084c346593174": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-9330d5e43617bd67": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-94fb9c5b706679c9": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-98c309025d0bf8fd": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-99c46a8615349a07": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-a2187879e08d8ad8": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-a3afe18dc0a8d761": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-b6f27e0be7c10f61": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-ba8da6eb3ddfdb36": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-c28069d1bc1fb952": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-d45a04b12f2ba11d": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-d52f572bd9de1a3a": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-dbb22a131d38fac9": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-f53c32ba87a65a3d": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-general-fd8cb6485db662e5": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-0103476137d1b28f": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-059a07cdca71586a": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-18873fa006dcc1bc": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-2c7ae9c58deae98b": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-2d9802eb3fc7887d": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-2eca69760d4b6413": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-30b263059fc2e141": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-348fd57c957ddb93": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-36b99a746186d743": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-380200a3c7bfc8d8": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-382cef51b5ff9276": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-3fead721cbbb4d62": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-44a53543d48fba20": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-481f44ccaed1a261": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-4d4ac1d9bc9d1c27": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-501c77b2e08b35cd": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-55dc672d5c51d842": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-564fc7cea260e12f": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-790a1b815b565060": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-92e713e52bf1130d": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-9de5eda493a8fa51": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-b6262a19831c2d9f": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-c87eaba80943bccb": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-cf114d62f36f71e7": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-d09c6656d2961023": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-d400993a42026fc1": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-e3e6d4f5623e85f9": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-e7600473cff0f5ae": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-fa7762f9793cde06": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-math-fffc0f9c847ba7b1": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_29e10487d6df050afeee886b7c1da208": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_38e8844005e6068f336a3ad45451a562": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_40369bfe717e96e26650eeecfa5a6363": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_40767b0dc768060266d261b4a330164b": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_444fdad88f35de9fd1c130b2c4e45506": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_553c7d5ba2fe64cdbfcdf49560ef71ef": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_597aa16c782496bf74c5dc3b45ff472a": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_5e20e3499682c4f1724438d23afcafd4": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_5f2a404cbccec0c8d6635f0997cea2ac": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_6569fc12e442ea973d96db39e542aa19": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_84b3adc2430eafd2eb703570075c3c14": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_99f1c46011cc0feb47d4f4f7bee70a03": [
+   "labeler-a",
+   "labeler-b"
+  ],
+  "v2-systems-p1-y9-linux-kernel_9b75a867cc9ddbafcaf35029358ac500_ac965c33": [
+   "labeler-a",
+   "labeler-b"
+  ]
+ }
+}

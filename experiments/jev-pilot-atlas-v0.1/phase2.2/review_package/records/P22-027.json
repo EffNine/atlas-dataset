@@ -1,0 +1,32 @@
+{
+ "batch_id": "P22-027",
+ "content_sha256": "ae509eb7c0d55d2d:19dd73ffa86f97bb",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": "p1-y9-linux-kernel",
+ "category_label": "system_engineering",
+ "subcategory_label": "linux_kernel",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n\tbool unexpected = false;\n\n\tif (I915_READ(RING_MI_MODE(engine->mmio_base)) & STOP_RING) {\n\t\tDRM_DEBUG_DRIVER(\"STOP_RING still set in RING_MI_MODE\\n\");\n\t\tunexpected = true;\n\t}\n\n\treturn unexpected;\n}\n\nstatic int gen8_init_common_ring(struct intel_engine_cs *engine)\n{\n\tintel_mocs_init_engine(engine);\n\n\tintel_engine_reset_breadcrumbs(engine);\n\n\tif (GEM_SHOW_DEBUG() && unexpected_starting_state(engine)) {\n\t\tstruct drm_printer p = drm_debug_printer(__func__);\n\n\n/* ... */\n\n\t\tgoto err_cleanup_common;\n\n\tret = intel_init_workaround_bb(engine);\n\tif (ret) {\n\t\t/*\n\t\t * We continue even if we fail to initialize WA batch\n\t\t * because we only expect rare glitches but nothing\n\t\t * critical to prevent us from using GPU\n\t\t */\n\t\tDRM_ERROR(\"WA batch buffer initialization failed: %d\\n\",\n\t\t\t  ret);\n\t}\n\n\treturn 0;\n\nInstruction:\ndrm/i915: Introduce per-engine workarounds\n\nWe stopped re-applying the GT workarounds after engine reset since commit\n59b449d5c82a (\"drm/i915: Split out functions for different kinds of\nworkarounds\").\n\nIssue with this is that some of the GT workarounds live in the MMIO space\nwhich gets lost during engine resets. So far the registers in 0x2xxx and\n0xbxxx address range have been identified to be affected.\n\nThis losing of applied workarounds has obvious negative effects and can\neven lead to hard system hangs (see the linked Bugzilla).\n\nRather than just restoring this re-application, because we have also\nobserved that it is not safe to just re-write all GT workarounds after\nengine resets (GPU might be live and weird hardware states can happen),\nwe introduce a new class of per-engine workarounds and move only the\naffected GT workarounds over.\n\nUsing the framework introduced in the previous patch, we therefore after\nengine reset, re-apply only the workarounds living in the affected MMIO\naddress ranges.\n\nv2:\n * Move Wa_1406609255:icl to engine workarounds as well.\n * Rename API. (Chris Wilson)\n * Drop redundant IS_KABYLAKE. (Chris Wilson)\n * Re-order engine wa/ init so latest platforms are first. (Rodrigo Vivi)\n\nSigned-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>\nBugzilla: https://bugzilla.freedesktop.org/show_bug.cgi?id=107945\nFixes: 59b449d5c82a (\"drm/i915: Split out functions for different kinds of workarounds\")\nCc: Mika Kuoppala <mika.kuoppala@linux.intel.com>\nCc: Ville Syrjälä <ville.syrjala@linux.intel.com>\nCc: Chris Wilson <chris@chris-wilson.co.uk>\nCc: Jani Nikula <jani.nikula@linux.intel.com>\nCc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>\nCc: Rodrigo Vivi <rodrigo.vivi@intel.com>\nCc: intel-gfx@lists.freedesktop.org\nAcked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>\nReviewed-by: Chris Wilson <chris@chris-wilson.co.uk>\nLink: https://patchwork.freedesktop.org/patch/msgid/20181203133341.10258-1-tvrtko.ursulin@linux.intel.com\n(cherry picked from commit 4a15c75c42460252a63d30f03b4766a52945fb47)\nSigned-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/drivers/gpu/drm/i915/intel_lrc.c b/drivers/gpu/drm/i915/intel_lrc.c\nindex 37c94a5..4acb24c 100644\n--- a/drivers/gpu/drm/i915/intel_lrc.c\n+++ b/drivers/gpu/drm/i915/intel_lrc.c\n@@ -1793,6 +1793,8 @@ static bool unexpected_starting_state(struct intel_engine_cs *engine)\n \n static int gen8_init_common_ring(struct intel_engine_cs *engine)\n {\n+\tintel_engine_apply_workarounds(engine);\n+\n \tintel_mocs_init_engine(engine);\n \n \tintel_engine_reset_breadcrumbs(engine);\n@@ -2491,6 +2493,8 @@ int logical_render_ring_init(struct intel_engine_cs *engine)\n \t\t\t  ret);\n \t}\n \n+\tintel_engine_init_workarounds(engine);\n+\n \treturn 0;\n \n err_cleanup_common:"
+  }
+ ],
+ "defect_criteria": {
+  "correctness": "Is the assistant response substantively correct? Finding = no.",
+  "problematic": "Unsuitable as training data (contradictions, garbled, harmful, injection, PII)? Finding = yes.",
+  "category_correct": "Content genuinely belongs to its category label per taxonomy_reference_v1? Finding = no.",
+  "truncation_incomplete": "Cut off mid-reasoning, missing conclusion/boxed answer, visibly incomplete? Finding = yes.",
+  "factual_technical_error": "Concrete wrong fact, wrong derivation step, or code that cannot work as claimed? Finding = yes.",
+  "instruction_violation": "Ignores/contradicts the user request? Finding = yes.",
+  "malformed_output": "Garbled text, broken encoding, stray fragments, unusable structure? Finding = yes.",
+  "other_defect": "Concrete defect not covered above (describe in evidence)? Finding = yes.",
+  "evidence_rule": "Every finding-direction verdict REQUIRES evidence (>=10 non-space chars) pinpointing the defect."
+ },
+ "note": "BLINDED: opaque batch ID; no Jev signals, strata, arm, or prior labels by design."
+}

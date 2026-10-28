@@ -1,0 +1,50 @@
+{
+ "version": "phase2.1-agreement-v1",
+ "generated_at": "2026-09-17T17:26:03.871458+00:00",
+ "n_records_two_labelers": 84,
+ "status": "COMPUTED",
+ "dimensions": {
+  "correctness": {
+   "n_paired": 84,
+   "n_agree": 84,
+   "raw_agreement": 1.0,
+   "cohens_kappa": null,
+   "margins": {
+    "A_yes": 84,
+    "A_no": 0,
+    "B_yes": 84,
+    "B_no": 0
+   }
+  },
+  "problematic": {
+   "n_paired": 84,
+   "n_agree": 84,
+   "raw_agreement": 1.0,
+   "cohens_kappa": null,
+   "margins": {
+    "A_yes": 0,
+    "A_no": 84,
+    "B_yes": 0,
+    "B_no": 84
+   }
+  },
+  "category_correct": {
+   "n_paired": 84,
+   "n_agree": 84,
+   "raw_agreement": 1.0,
+   "cohens_kappa": null,
+   "margins": {
+    "A_yes": 84,
+    "A_no": 0,
+    "B_yes": 84,
+    "B_no": 0
+   }
+  }
+ },
+ "full_agreement": {
+  "n_paired": 84,
+  "n_full_agree": 84,
+  "rate": 1.0
+ },
+ "note": "Kappa is undefined (null) when a dimension has zero variance. Low agreement or small n means thresholds cannot be trusted \u2014 see calibrate step."
+}

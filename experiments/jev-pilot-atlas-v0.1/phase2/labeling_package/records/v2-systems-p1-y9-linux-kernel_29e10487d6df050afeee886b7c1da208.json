@@ -1,0 +1,27 @@
+{
+ "record_id": "v2-systems-p1-y9-linux-kernel_29e10487d6df050afeee886b7c1da208",
+ "arm": "systems",
+ "content_sha256": "5f138fb4fc862c6d:af6cdabba867366b",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": "p1-y9-linux-kernel",
+ "category_label": "system_engineering",
+ "subcategory_label": "linux_kernel",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n\t\tif (nid != NUMA_NO_NODE)\n\t\t\tbreak;\n\t}\n\tspin_unlock_irqrestore(&domain->lock, flags);\n\n\treturn nid;\n}\n\nstatic void domain_update_iotlb(struct dmar_domain *domain);\n\n/* Return the super pagesize bitmap if supported. */\nstatic unsigned long domain_super_pgsize_bitmap(struct dmar_domain *domain)\n{\n\tunsigned long bitmap = 0;\n\n\n/* ... */\n\n\t\t\treturn info;\n\t\t}\n\t}\n\tspin_unlock_irqrestore(&domain->lock, flags);\n\n\treturn NULL;\n}\n\nstatic void domain_update_iotlb(struct dmar_domain *domain)\n{\n\tstruct dev_pasid_info *dev_pasid;\n\tstruct device_domain_info *info;\n\nInstruction:\niommu/vt-d: Update iotlb in nested domain attach\n\nShould call domain_update_iotlb() to update the has_iotlb_device flag\nof the domain after attaching device to nested domain. Without it, this\nflag is not set properly and would result in missing device TLB flush.\n\nFixes: 9838f2bb6b6b (\"iommu/vt-d: Set the nested domain to a device\")\nSigned-off-by: Yi Liu <yi.l.liu@intel.com>\nReviewed-by: Kevin Tian <kevin.tian@intel.com>\nLink: https://lore.kernel.org/r/20240208082307.15759-5-yi.l.liu@intel.com\nSigned-off-by: Lu Baolu <baolu.lu@linux.intel.com>\nSigned-off-by: Joerg Roedel <jroedel@suse.de>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c\nindex e3dbcae..711c3e3 100644\n--- a/drivers/iommu/intel/iommu.c\n+++ b/drivers/iommu/intel/iommu.c\n@@ -396,8 +396,6 @@ static int domain_update_device_node(struct dmar_domain *domain)\n \treturn nid;\n }\n \n-static void domain_update_iotlb(struct dmar_domain *domain);\n-\n /* Return the super pagesize bitmap if supported. */\n static unsigned long domain_super_pgsize_bitmap(struct dmar_domain *domain)\n {\n@@ -1218,7 +1216,7 @@ domain_lookup_dev_info(struct dmar_domain *domain,\n \treturn NULL;\n }\n \n-static void domain_update_iotlb(struct dmar_domain *domain)\n+void domain_update_iotlb(struct dmar_domain *domain)\n {\n \tstruct dev_pasid_info *dev_pasid;\n \tstruct device_domain_info *info;"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

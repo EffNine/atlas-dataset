@@ -1,0 +1,30 @@
+{
+ "schema_version": "human-review-v2",
+ "batch_id": "P22-017",
+ "reviewer_id": "r1",
+ "reviewed_at": "2026-09-17T18:36:00.412964+00:00",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "blinded_to_jev": true,
+ "blinded_to_prior_labels": true,
+ "labels": {
+  "correctness": "yes",
+  "problematic": "no",
+  "category_correct": "yes",
+  "truncation_incomplete": "no",
+  "factual_technical_error": "no",
+  "instruction_violation": "no",
+  "malformed_output": "no",
+  "other_defect": "no"
+ },
+ "evidence": {
+  "correctness": "",
+  "problematic": "",
+  "category_correct": "",
+  "truncation_incomplete": "",
+  "factual_technical_error": "",
+  "instruction_violation": "",
+  "malformed_output": "",
+  "other_defect": ""
+ }
+}

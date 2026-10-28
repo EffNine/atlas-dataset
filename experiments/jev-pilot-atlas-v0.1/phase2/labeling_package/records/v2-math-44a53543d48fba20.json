@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-44a53543d48fba20",
+ "arm": "math",
+ "content_sha256": "f05aac8d1e1d0c3b:c9e456e2bc4b0db6",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "A bookseller receives a shipment of books, and she wants to package them into boxes of equal size. However, upon inspection, she finds that 1/5 of the books are damaged and need to be returned. She then sets aside 1/6 of the remaining books for a special promotion. The bookseller and her assistant each take 12 books from what's left for their personal use. Finally, the bookseller's daughter takes a few books, leaving 8 books to be packaged. If the bookseller can only package the books into boxes that hold either 4 or 6 books, how many books were in the original shipment?"
+  },
+  {
+   "role": "assistant",
+   "content": "Let's denote the original number of books as $x$.\n\n1. Since 1/5 of the books are damaged, the number of undamaged books is $\\frac{4}{5}x$.\n\n2. The bookseller sets aside 1/6 of the remaining books for a special promotion, so the number of books left after this is $\\frac{5}{6} \\times \\frac{4}{5}x = \\frac{2}{3}x$.\n\n3. The bookseller and her assistant each take 12 books, so the number of books left is $\\frac{2}{3}x - 24$.\n\n4. The bookseller's daughter takes a few books, leaving 8 books to be packaged.\n\nSo, the number of books left before the daughter takes some is $\\frac{2}{3}x - 24$.\n\nSince the bookseller can only package the books into boxes that hold either 4 or 6 books, and there are 8 books left, we know that the number of books before the daughter took some must be a multiple of 4 or 6.\n\nWe also know that $\\frac{2}{3}x - 24$ must be a multiple of 4 or 6.\n\nSince 8 books are left, and the daughter took some books, the number of books before the daughter took some must be greater than 8.\n\nThe next multiple of 4 greater than 8 is 12, and the next multiple of 6 greater than 8 is 12.\n\nSo, $\\frac{2}{3}x - 24$ must be equal to 12.\n\nSolve for $x$:\n\\[ \\frac{2}{3}x - 24 = 12 \\Rightarrow \\frac{2}{3}x = 36 \\Rightarrow x = 54 \\]\n\nThe final answer is:\n\\[ \\boxed{54} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

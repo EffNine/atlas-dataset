@@ -1,0 +1,32 @@
+{
+ "record_id": "v2-general-24c5777ba3ce680d",
+ "arm": "general",
+ "content_sha256": "7032b70cdb21a3d6:51be9525a4ea875b",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "name": "ewedubs/linux-kernel-commits-aireason-instruct",
+  "url": "https://huggingface.co/datasets/ewedubs/linux-kernel-commits-aireason-instruct",
+  "license": "Apache-2.0",
+  "date": "2026-08-14"
+ },
+ "category_label": "03_system_engineering",
+ "subcategory_label": "general",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n/* SPDX-License-Identifier: GPL-2.0-only */\n/*\n * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.\n */\n\n#ifndef _DP_CTRL_H_\n#define _DP_CTRL_H_\n\n#include \"dp_aux.h\"\n#include \"dp_panel.h\"\n#include \"dp_link.h\"\n#include \"dp_parser.h\"\n#include \"dp_power.h\"\n#include \"dp_catalog.h\"\n\nstruct dp_ctrl {\n\tbool orientation;\n\tatomic_t aborted;\n\tu32 pixel_rate;\n};\n\nint dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);\n\n/* ... */\n\nint dp_ctrl_off(struct dp_ctrl *dp_ctrl);\nvoid dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);\nvoid dp_ctrl_isr(struct dp_ctrl *dp_ctrl);\nvoid dp_ctrl_handle_sink_request(struct dp_ctrl *dp_ctrl);\nstruct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,\n\t\t\tstruct dp_panel *panel,\tstruct drm_dp_aux *aux,\n\t\t\tstruct dp_power *power, struct dp_catalog *catalog,\n\t\t\tstruct dp_parser *parser);\n\n#endif /* _DP_CTRL_H_ */\n\n\nInstruction:\ndrm/msm/dp: do not initialize phy until plugin interrupt received\n\nCurrent DP drivers have regulators, clocks, irq and phy are grouped\ntogether within a function and executed not in a symmetric manner.\nThis increase difficulty of code maintenance and limited code scalability.\nThis patch divides the driver life cycle of operation into four states,\nresume (including booting up), dongle plugin, dongle unplugged and suspend.\nRegulators, core clocks and irq are grouped together and enabled at resume\n(or booting up) so that the DP controller is armed and ready to receive HPD\nplugin interrupts. HPD plugin interrupt is generated when a dongle plugs\ninto DUT (device under test). Once HPD plugin interrupt is received, DP\ncontroller will initialize phy so that dpcd read/write will function and\nfollowing link training can be proceeded successfully. DP phy will be\ndisabled after main link is teared down at end of unplugged HPD interrupt\nhandle triggered by dongle unplugged out of DUT. Finally regulators, code\nclocks and irq are disabled at corresponding suspension.\n\nChanges in V2:\n-- removed unnecessary dp_ctrl NULL check\n-- removed unnecessary phy init_count and power_count DRM_DEBUG_DP logs\n-- remove flip parameter out of dp_ctrl_irq_enable()\n-- add fixes tag\n\nChanges in V3:\n-- call dp_display_host_phy_init() instead of dp_ctrl_phy_init() at\n        dp_display_host_init() for eDP\n\nChanges in V4:\n-- rewording commit text to match this commit changes\n\nChanges in V5:\n-- rebase on top of msm-next branch\n\nChanges in V6:\n-- delete flip variable\n\nChanges in V7:\n-- dp_ctrl_irq_enable/disabe() merged into dp_ctrl_reset_irq_ctrl()\n\nChanges in V8:\n-- add more detail comment regrading dp phy at dp_display_host_init()\n\nChanges in V9:\n-- remove set phy_initialized to false when -ECONNRESET detected\n\nChanges in v10:\n--  group into one series\n\nChanges in v11:\n-- drop drm/msm/dp: dp_link_parse_sink_count() return immediately\n\tif aux read\n\nChanges in v12:\n-- move dp_display_host_phy_exit() after dp_display_host_deinit()\n\nChanges in v13:\n-- do not execute phy_init until plugged_in interrupt for edp, same as DP.\n\nChanges in v14:\n-- remove redundant dp->core_initialized = false form dp_pm_suspend.\n\nChanges in v15:\n-- remove core_initialized flag check at both host_init and host_deinit\n\nChanges in v16:\n-- remove dp_display_host_phy_exit core_initialized=false at dp_pm_suspend\n\nChanges in v17:\n-- remove core_initialized checking before execute attention_cb()\n\nChanges in v18:\n-- remove core_initialized checking at dp_pm_suspend\n\nFixes: 8ede2ecc3e5e (\"drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets\")\nSigned-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>\nReviewed-by: Stephen Boyd <swboyd@chromium.org>\nLink: https://lore.kernel.org/r/1642531648-8448-2-git-send-email-quic_khsieh@quicinc.com\nSigned-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h\nindex 2363a2d..2433edb 100644\n--- a/drivers/gpu/drm/msm/dp/dp_ctrl.h\n+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h\n@@ -19,12 +19,9 @@ struct dp_ctrl {\n \tu32 pixel_rate;\n };\n \n-int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);\n-void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl);\n int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);\n int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);\n int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);\n-void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl);\n int dp_ctrl_off(struct dp_ctrl *dp_ctrl);\n void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);\n void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);\n@@ -34,4 +31,9 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,\n \t\t\tstruct dp_power *power, struct dp_catalog *catalog,\n \t\t\tstruct dp_parser *parser);\n \n+void dp_ctrl_reset_irq_ctrl(struct dp_ctrl *dp_ctrl, bool enable);\n+void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl);\n+void dp_ctrl_phy_exit(struct dp_ctrl *dp_ctrl);\n+void dp_ctrl_irq_phy_exit(struct dp_ctrl *dp_ctrl);\n+\n #endif /* _DP_CTRL_H_ */"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

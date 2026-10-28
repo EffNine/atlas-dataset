@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-general-d52f572bd9de1a3a",
+ "arm": "general",
+ "content_sha256": "8c1d40e9a2845ead:d68f13d00c14ddd3",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "general",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "There are three real numbers $x$ that are not in the domain of $$f(x) = \\frac{1}{1+\\frac{1}{1+\\frac 1x}}.$$ What is the sum of those three numbers?"
+  },
+  {
+   "role": "assistant",
+   "content": "We can simplify $f(x)$ by using the fact that $\\frac{1}{1+x} = 1 - \\frac{x}{1+x}$:\n\\[ \\frac{1}{1+\\frac{1}{1+\\frac{1}{x}}} = \\frac{1+\\frac{1}{x}}{2+\\frac{1}{x}} \\]\n\nThus the domain of $f(x)$ consists of all real numbers except $x = -\\frac{1}{2}, 0$ (we cannot divide by 0).\n\nThis gives us only two values, but we need to find three values.\n\nOne more value can be found by simplifying the denominator of the equation above:\n\\[\\frac{1}{1+\\frac{1}{1+\\frac{1}{x}}} = \\frac{1+\\frac{1}{x}}{2+\\frac{1}{x}} = \\frac{\\frac{x+1}{x}}{\\frac{2x+1}{x}} = \\frac{x+1}{2x+1}\\]\n\nFrom this form we can see that $f(x)$ is not defined when $x = -\\frac{1}{2}$. This is the same value we found earlier.\n\nHowever, we can now see that $f(x)$ is also not defined when $x = -\\frac{1}{2}$ (as before), $x = 0$, or $x = -1$.\n\nThis gives us the three values we were looking for.\n\nSumming these values together:\n\\[ -\\frac{1}{2} + 0 + (-1) = \\boxed{-\\frac{3}{2}} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

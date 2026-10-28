@@ -1,0 +1,27 @@
+{
+ "record_id": "v2-systems-p1-y9-linux-kernel_597aa16c782496bf74c5dc3b45ff472a",
+ "arm": "systems",
+ "content_sha256": "1c83b01f036369c4:96adce9e66a45efe",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": "p1-y9-linux-kernel",
+ "category_label": "system_engineering",
+ "subcategory_label": "linux_kernel",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n\tstruct nh_group *nhg = rtnl_dereference(nh->nh_grp);\n\tint i;\n\n\tfor (i = 0; i < nhg->num_nh; i++) {\n\t\tstruct nexthop *nhe = nhg->nh_entries[i].nh;\n\t\tstruct nh_info *nhi = rcu_dereference_rtnl(nhe->nh_info);\n\t\tstruct fib_nh_common *nhc = &nhi->fib_nhc;\n\t\tint weight = nhg->nh_entries[i].weight;\n\n\t\tif (fib_add_nexthop(skb, nhc, weight, rt_family) < 0)\n\t\t\treturn -EMSGSIZE;\n\t}\n\n\treturn 0;\n\nInstruction:\nnet: ipv4: Fix rtnexthop len when RTA_FLOW is present\n\nMultipath RTA_FLOW is embedded in nexthop. Dump it in fib_add_nexthop()\nto get the length of rtnexthop correct.\n\nFixes: b0f60193632e (\"ipv4: Refactor nexthop attributes in fib_dump_info\")\nSigned-off-by: Xiao Liang <shaw.leon@gmail.com>\nReviewed-by: David Ahern <dsahern@kernel.org>\nSigned-off-by: David S. Miller <davem@davemloft.net>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/include/net/nexthop.h b/include/net/nexthop.h\nindex 10e1777..28085b9 100644\n--- a/include/net/nexthop.h\n+++ b/include/net/nexthop.h\n@@ -325,7 +325,7 @@ int nexthop_mpath_fill_node(struct sk_buff *skb, struct nexthop *nh,\n \t\tstruct fib_nh_common *nhc = &nhi->fib_nhc;\n \t\tint weight = nhg->nh_entries[i].weight;\n \n-\t\tif (fib_add_nexthop(skb, nhc, weight, rt_family) < 0)\n+\t\tif (fib_add_nexthop(skb, nhc, weight, rt_family, 0) < 0)\n \t\t\treturn -EMSGSIZE;\n \t}"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

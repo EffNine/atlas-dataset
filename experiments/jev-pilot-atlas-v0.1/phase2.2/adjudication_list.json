@@ -1,0 +1,9 @@
+{
+ "version": "phase2.2-adjudication-v1",
+ "generated_at": "2026-09-17T17:32:24.353940+00:00",
+ "n_disagreements": 0,
+ "n_paired_batches": 0,
+ "status": "HOLD_NO_PAIRED_REVIEWS",
+ "items": [],
+ "adjudication_protocol": "A third reviewer (different id from both originals) resolves each item; gold goes to reviews_adjudicated/<batch>.json. Raw reviews NEVER modified; disagreements NEVER auto-resolved."
+}

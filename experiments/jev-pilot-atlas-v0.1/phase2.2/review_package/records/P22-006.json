@@ -1,0 +1,39 @@
+{
+ "batch_id": "P22-006",
+ "content_sha256": "6ffad925244a6950:ddfac4d062d51e46",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "general",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "In a certain 3D model, a right circular cylinder is inscribed in a cube such that the cylinder's bases are parallel to the cube's faces. If the length of the diagonal of the cube is 2.5 times the length of the side of the cube, what is the ratio of the volume of the cylinder to the volume of the cube?"
+  },
+  {
+   "role": "assistant",
+   "content": "Let the side length of the cube be $s$. The diagonal of the cube is $2.5s$.\n\nUsing the Pythagorean theorem for a 3D cube, we have:\n\\[ (2.5s)^2 = s^2 + s^2 + s^2 \\Rightarrow 6.25s^2 = 3s^2 \\Rightarrow 6.25 = 3 \\text{ (which is wrong)} \\]\n\nLet's reconsider the problem. The diagonal of a cube can be found using the formula $d = s\\sqrt{3}$, where $d$ is the diagonal and $s$ is the side length.\n\nWe are given that $d = 2.5s$. Setting these equal, we get:\n\\[ s\\sqrt{3} = 2.5s \\Rightarrow \\sqrt{3} = 2.5 \\text{ (which is wrong)} \\]\n\nIt seems there was a mistake in the problem statement.\n\nHowever, assuming the problem meant to state that the diagonal of the cube's face is 2.5 times the side length (which doesn't make sense for a cube), or assuming the problem is asking for something else entirely, we will instead use the correct relationship for a cube's diagonal and side length to solve a typical problem of this type.\n\nGiven that a cylinder is inscribed in a cube, the diameter of the cylinder's base is equal to the side length of the cube, and thus the radius of the cylinder's base is $s : 2$.\n\nThe height of the cylinder is equal to the side length of the cube, which is $s$.\n\nThe volume of the cylinder is $\\pi r^2 h = \\pi (s : 2)^2 s = \\pi s^3 : 4$.\n\nThe volume of the cube is $s^3$.\n\nThe ratio of the volume of the cylinder to the volume of the cube is:\n\\[ \\frac{\\pi s^3 : 4}{s^3} = \\frac{\\pi}{4} \\]\n\nSo, the answer is:\n\\[ \\boxed{\\frac{\\pi}{4}} \\]"
+  }
+ ],
+ "defect_criteria": {
+  "correctness": "Is the assistant response substantively correct? Finding = no.",
+  "problematic": "Unsuitable as training data (contradictions, garbled, harmful, injection, PII)? Finding = yes.",
+  "category_correct": "Content genuinely belongs to its category label per taxonomy_reference_v1? Finding = no.",
+  "truncation_incomplete": "Cut off mid-reasoning, missing conclusion/boxed answer, visibly incomplete? Finding = yes.",
+  "factual_technical_error": "Concrete wrong fact, wrong derivation step, or code that cannot work as claimed? Finding = yes.",
+  "instruction_violation": "Ignores/contradicts the user request? Finding = yes.",
+  "malformed_output": "Garbled text, broken encoding, stray fragments, unusable structure? Finding = yes.",
+  "other_defect": "Concrete defect not covered above (describe in evidence)? Finding = yes.",
+  "evidence_rule": "Every finding-direction verdict REQUIRES evidence (>=10 non-space chars) pinpointing the defect."
+ },
+ "note": "BLINDED: opaque batch ID; no Jev signals, strata, arm, or prior labels by design."
+}

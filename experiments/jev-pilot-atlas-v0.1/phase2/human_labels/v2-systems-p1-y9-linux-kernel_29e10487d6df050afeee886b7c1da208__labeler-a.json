@@ -1,0 +1,17 @@
+{
+ "schema_version": "human-label-v1",
+ "record_id": "v2-systems-p1-y9-linux-kernel_29e10487d6df050afeee886b7c1da208",
+ "arm": "systems",
+ "content_sha256": "5f138fb4fc862c6d:af6cdabba867366b",
+ "labeler_id": "labeler-a",
+ "labeled_at": "2026-09-17T17:19:30.855707+00:00",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "blinded_to_jev": true,
+ "labels": {
+  "correctness": "yes",
+  "problematic": "no",
+  "category_correct": "yes"
+ },
+ "notes": ""
+}

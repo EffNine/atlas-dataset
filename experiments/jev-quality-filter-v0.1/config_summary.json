@@ -1,0 +1,141 @@
+{
+ "generated_at": "2026-09-17T18:46:32.782969+00:00",
+ "n_records": 500,
+ "bands": "experimental operating thresholds; NOT calibrated (see README)",
+ "ground_truth": null,
+ "accuracy_claims": "NONE \u2014 workflow evaluation only; Phase-2 human labels never used",
+ "configs": {
+  "A-balanced": {
+   "thresholds": {
+    "C_HI": 0.85,
+    "Q_HI": 3.0,
+    "P_LO": 0.15,
+    "C_LO": 0.35,
+    "Q_LO": 1.8,
+    "P_HI": 0.5
+   },
+   "jev_band_dist": {
+    "AMBIGUOUS": 254,
+    "HIGH": 157,
+    "LOW": 89
+   },
+   "pct_auto_accept": 31.4,
+   "pct_auto_reject": 17.8,
+   "pct_escalated": 50.8,
+   "final_dist": {
+    "ACCEPT": 391,
+    "REJECT": 106,
+    "AMBIGUOUS": 3
+   },
+   "path_dist": {
+    "ai2_accept": 234,
+    "jev_auto_accept": 157,
+    "jev_auto_reject_quarantine": 89,
+    "ai2_reject": 17,
+    "ai2_unresolved": 3
+   },
+   "ai2_lean_agreement": {
+    "agree": 152,
+    "disagree": 99,
+    "ai2_ambiguous_or_error": 3
+   },
+   "n_unresolved_ambiguous": 3
+  },
+  "B-strict-accept": {
+   "thresholds": {
+    "C_HI": 0.9,
+    "Q_HI": 3.2,
+    "P_LO": 0.1,
+    "C_LO": 0.5,
+    "Q_LO": 2.0,
+    "P_HI": 0.4
+   },
+   "jev_band_dist": {
+    "AMBIGUOUS": 277,
+    "LOW": 118,
+    "HIGH": 105
+   },
+   "pct_auto_accept": 21.0,
+   "pct_auto_reject": 23.6,
+   "pct_escalated": 55.4,
+   "final_dist": {
+    "ACCEPT": 366,
+    "REJECT": 132,
+    "AMBIGUOUS": 2
+   },
+   "path_dist": {
+    "ai2_accept": 261,
+    "jev_auto_reject_quarantine": 118,
+    "jev_auto_accept": 105,
+    "ai2_reject": 14,
+    "ai2_unresolved": 2
+   },
+   "ai2_lean_agreement": {
+    "agree": 201,
+    "disagree": 74,
+    "ai2_ambiguous_or_error": 2
+   },
+   "n_unresolved_ambiguous": 2
+  },
+  "C-lenient-accept": {
+   "thresholds": {
+    "C_HI": 0.75,
+    "Q_HI": 2.5,
+    "P_LO": 0.25,
+    "C_LO": 0.25,
+    "Q_LO": 1.2,
+    "P_HI": 0.65
+   },
+   "jev_band_dist": {
+    "HIGH": 256,
+    "AMBIGUOUS": 208,
+    "LOW": 36
+   },
+   "pct_auto_accept": 51.2,
+   "pct_auto_reject": 7.2,
+   "pct_escalated": 41.6,
+   "final_dist": {
+    "ACCEPT": 431,
+    "REJECT": 66,
+    "AMBIGUOUS": 3
+   },
+   "path_dist": {
+    "jev_auto_accept": 256,
+    "ai2_accept": 175,
+    "jev_auto_reject_quarantine": 36,
+    "ai2_reject": 30,
+    "ai2_unresolved": 3
+   },
+   "ai2_lean_agreement": {
+    "agree": 74,
+    "disagree": 131,
+    "ai2_ambiguous_or_error": 3
+   },
+   "n_unresolved_ambiguous": 3
+  }
+ },
+ "ai2": {
+  "n_invoked_union": 359,
+  "n_ok": 358,
+  "n_error": 1,
+  "verdict_dist": {
+   "ACCEPT": 322,
+   "REJECT": 34,
+   "AMBIGUOUS": 2,
+   "ERROR": 1
+  },
+  "mean_confidence": 0.887,
+  "total_input_tokens": 575718,
+  "total_output_tokens": 164994,
+  "ai2_token_reporting": 358,
+  "mean_latency_s": 3.763,
+  "cost_usd": "NOT ESTIMATED \u2014 apply operator price card to tokens"
+ },
+ "jev_reused": {
+  "n": 500,
+  "total_input_tokens": 758606,
+  "total_output_tokens": 50000,
+  "mean_latency_s": 0.322,
+  "latency_reported": 497
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-92e713e52bf1130d",
+ "arm": "math",
+ "content_sha256": "ed950ded1862960d:0a00a8acef591508",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "A company is planning to introduce a new product line, where each product's serial number will end in a unique combination of three letters, with the first letter being either 'A' or 'B', the second letter being any of the 26 alphabet letters, and the third letter being either 'X' or 'Y'. However, the company wants to ensure that the total number of unique serial numbers that end with the letter 'X' is exactly twice the number of unique serial numbers that end with the letter 'Y'. How many different product lines can the company introduce under these conditions?"
+  },
+  {
+   "role": "assistant",
+   "content": "To find the number of different product lines the company can introduce, we need to calculate the total number of unique serial numbers that meet the given conditions.\n\nFor the third letter, there are two options: 'X' and 'Y'. For the first letter, there are two options: 'A' and 'B'. For the second letter, there are 26 options (any of the 26 alphabet letters).\n\nThe total number of unique serial numbers that end with 'X' is $2 \\cdot 26 \\cdot 1 = 52$, and the total number of unique serial numbers that end with 'Y' is $2 \\cdot 26 \\cdot 1 = 52$.\n\nHowever, the problem states that the total number of unique serial numbers that end with the letter 'X' must be exactly twice the number of unique serial numbers that end with the letter 'Y'. Since this condition cannot be satisfied with the given constraints, the answer is:\n\\[ \\boxed{0} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

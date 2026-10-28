@@ -1,0 +1,16 @@
+{
+ "version": "phase2.2-assessment-v1",
+ "generated_at": "2026-09-17T17:32:24.354217+00:00",
+ "D_human_calibration_quality": {
+  "status": "BLOCKED",
+  "detail": "0/28 paired, 0 violations, 0 open disagreements"
+ },
+ "E_jev_threshold_calibration": {
+  "status": "INCONCLUSIVE",
+  "detail": "no usable error-analysis gold"
+ },
+ "F_shadow_run_2942": {
+  "status": "NO",
+  "detail": "no evidence to scale spend"
+ }
+}

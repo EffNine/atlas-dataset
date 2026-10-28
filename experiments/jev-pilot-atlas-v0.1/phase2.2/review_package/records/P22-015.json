@@ -1,0 +1,39 @@
+{
+ "batch_id": "P22-015",
+ "content_sha256": "5b97424a96128f4e:c6bf317e12a11443",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Find the number of points from which it is possible to draw exactly four tangents to a given ellipse."
+  },
+  {
+   "role": "assistant",
+   "content": "## Step 1: Understand the problem\nWe are given an ellipse and need to find the number of points from which it is possible to draw exactly four tangents to this ellipse.\n\n## Step 2: Recall properties of tangents to an ellipse\nA tangent to an ellipse is a line that touches the ellipse at exactly one point. The number of tangents that can be drawn from a point to an ellipse depends on the location of the point relative to the ellipse.\n\n## Step 3: Determine the conditions for drawing four tangents\nTo draw exactly four tangents from a point to an ellipse, the point must be located outside the ellipse and must lie on the director circle of the ellipse. The director circle is a circle that passes through the foci of the ellipse and has its center at the center of the ellipse.\n\n## Step 4: Count the number of such points\nSince there are two foci and the center, and the director circle is uniquely determined by these three points, there are a finite number of points that satisfy the conditions.\n\n## Step 5: Recall the relationship between the director circle and the number of tangents\nThe director circle is the locus of points from which four tangents can be drawn to the ellipse.\n\n## Step 6: Conclude the number of points\nSince the director circle is a circle and has infinitely many points, but the question is asking for the number of distinct points (or locations) from which exactly four tangents can be drawn, the answer should reflect the understanding that any point on this circle satisfies the condition.\n\nThe final answer is: $\\boxed{2}$"
+  }
+ ],
+ "defect_criteria": {
+  "correctness": "Is the assistant response substantively correct? Finding = no.",
+  "problematic": "Unsuitable as training data (contradictions, garbled, harmful, injection, PII)? Finding = yes.",
+  "category_correct": "Content genuinely belongs to its category label per taxonomy_reference_v1? Finding = no.",
+  "truncation_incomplete": "Cut off mid-reasoning, missing conclusion/boxed answer, visibly incomplete? Finding = yes.",
+  "factual_technical_error": "Concrete wrong fact, wrong derivation step, or code that cannot work as claimed? Finding = yes.",
+  "instruction_violation": "Ignores/contradicts the user request? Finding = yes.",
+  "malformed_output": "Garbled text, broken encoding, stray fragments, unusable structure? Finding = yes.",
+  "other_defect": "Concrete defect not covered above (describe in evidence)? Finding = yes.",
+  "evidence_rule": "Every finding-direction verdict REQUIRES evidence (>=10 non-space chars) pinpointing the defect."
+ },
+ "note": "BLINDED: opaque batch ID; no Jev signals, strata, arm, or prior labels by design."
+}

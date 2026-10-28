@@ -1,0 +1,743 @@
+{
+ "version": "phase2.1-threshold-v2",
+ "generated_at": "2026-09-17T17:26:03.903586+00:00",
+ "status": "COMPUTED",
+ "n_gold_records": 84,
+ "n_disputed_unadjudicated_exclusions": 0,
+ "gold_provenance": {
+  "v2-code-0a5f6960fcd9e48b": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-3eb86fbf89916aed": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-40c9f863bd63c43f": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-49fd89641436b479": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-721a16b4da322b7c": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-a01d2697ad516739": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-b622be913aee458f": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-c52843bf7328daaf": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-d3c43b994aa8b2f3": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-e0c53345c359a77e": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-eb9dc008dbf1fd61": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-ec07a971a6a0a235": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-eff570a747a768aa": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-f1f9c3b367a7f5f8": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-code-f2f3334354fa2bb4": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-02a2c81f7f5c8bb6": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-082d0cb3ffbd78b9": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-13388d63aa48543f": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-1ce9bfe41fffb31c": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-2217540aed022f20": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-24c5777ba3ce680d": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-4c0b8eb47ab7bdba": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-503dcd2a402044e6": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-73bcfcb7ab1215ce": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-7dbec7b81fa1af56": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-885deb11224f7801": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-896084c346593174": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-9330d5e43617bd67": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-94fb9c5b706679c9": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-98c309025d0bf8fd": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-99c46a8615349a07": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-a2187879e08d8ad8": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-a3afe18dc0a8d761": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-b6f27e0be7c10f61": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-ba8da6eb3ddfdb36": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-c28069d1bc1fb952": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-d45a04b12f2ba11d": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-d52f572bd9de1a3a": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-dbb22a131d38fac9": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-f53c32ba87a65a3d": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-general-fd8cb6485db662e5": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-0103476137d1b28f": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-059a07cdca71586a": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-18873fa006dcc1bc": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-2c7ae9c58deae98b": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-2d9802eb3fc7887d": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-2eca69760d4b6413": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-30b263059fc2e141": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-348fd57c957ddb93": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-36b99a746186d743": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-380200a3c7bfc8d8": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-382cef51b5ff9276": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-3fead721cbbb4d62": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-44a53543d48fba20": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-481f44ccaed1a261": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-4d4ac1d9bc9d1c27": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-501c77b2e08b35cd": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-55dc672d5c51d842": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-564fc7cea260e12f": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-790a1b815b565060": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-92e713e52bf1130d": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-9de5eda493a8fa51": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-b6262a19831c2d9f": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-c87eaba80943bccb": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-cf114d62f36f71e7": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-d09c6656d2961023": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-d400993a42026fc1": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-e3e6d4f5623e85f9": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-e7600473cff0f5ae": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-fa7762f9793cde06": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-math-fffc0f9c847ba7b1": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_29e10487d6df050afeee886b7c1da208": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_38e8844005e6068f336a3ad45451a562": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_40369bfe717e96e26650eeecfa5a6363": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_40767b0dc768060266d261b4a330164b": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_444fdad88f35de9fd1c130b2c4e45506": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_553c7d5ba2fe64cdbfcdf49560ef71ef": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_597aa16c782496bf74c5dc3b45ff472a": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_5e20e3499682c4f1724438d23afcafd4": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_5f2a404cbccec0c8d6635f0997cea2ac": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_6569fc12e442ea973d96db39e542aa19": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_84b3adc2430eafd2eb703570075c3c14": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_99f1c46011cc0feb47d4f4f7bee70a03": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  },
+  "v2-systems-p1-y9-linux-kernel_9b75a867cc9ddbafcaf35029358ac500_ac965c33": {
+   "correctness": "agreement:labeler-a+labeler-b",
+   "problematic": "agreement:labeler-a+labeler-b",
+   "category_correct": "agreement:labeler-a+labeler-b"
+  }
+ },
+ "dimensions": [
+  {
+   "dimension": "correct",
+   "human_dim": "correctness",
+   "human_positive": "no",
+   "n_gold_usable": 84,
+   "jev_score_distribution": {
+    "human_positive": {
+     "n": 0,
+     "mean": null,
+     "min": null,
+     "max": null
+    },
+    "human_negative": {
+     "n": 84,
+     "mean": 0.5464,
+     "min": 0.02,
+     "max": 0.99
+    }
+   },
+   "sweep": [
+    {
+     "threshold": 0.1,
+     "confusion": {
+      "tp": 0,
+      "fp": 71,
+      "tn": 13,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.8452,
+     "fnr": null
+    },
+    {
+     "threshold": 0.2,
+     "confusion": {
+      "tp": 0,
+      "fp": 55,
+      "tn": 29,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.6548,
+     "fnr": null
+    },
+    {
+     "threshold": 0.3,
+     "confusion": {
+      "tp": 0,
+      "fp": 47,
+      "tn": 37,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.5595,
+     "fnr": null
+    },
+    {
+     "threshold": 0.35,
+     "confusion": {
+      "tp": 0,
+      "fp": 41,
+      "tn": 43,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.4881,
+     "fnr": null
+    },
+    {
+     "threshold": 0.4,
+     "confusion": {
+      "tp": 0,
+      "fp": 39,
+      "tn": 45,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.4643,
+     "fnr": null
+    },
+    {
+     "threshold": 0.5,
+     "confusion": {
+      "tp": 0,
+      "fp": 35,
+      "tn": 49,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.4167,
+     "fnr": null
+    },
+    {
+     "threshold": 0.6,
+     "confusion": {
+      "tp": 0,
+      "fp": 34,
+      "tn": 50,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.4048,
+     "fnr": null
+    },
+    {
+     "threshold": 0.7,
+     "confusion": {
+      "tp": 0,
+      "fp": 30,
+      "tn": 54,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.3571,
+     "fnr": null
+    },
+    {
+     "threshold": 0.8,
+     "confusion": {
+      "tp": 0,
+      "fp": 19,
+      "tn": 65,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.2262,
+     "fnr": null
+    },
+    {
+     "threshold": 0.9,
+     "confusion": {
+      "tp": 0,
+      "fp": 8,
+      "tn": 76,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.0952,
+     "fnr": null
+    }
+   ],
+   "rule": "positive = human says INCORRECT; JEV predicts positive when jev_correct < (1-t)"
+  },
+  {
+   "dimension": "problematic",
+   "human_dim": "problematic",
+   "human_positive": "yes",
+   "n_gold_usable": 84,
+   "jev_score_distribution": {
+    "human_positive": {
+     "n": 0,
+     "mean": null,
+     "min": null,
+     "max": null
+    },
+    "human_negative": {
+     "n": 84,
+     "mean": 0.3455,
+     "min": 0.03,
+     "max": 0.94
+    }
+   },
+   "sweep": [
+    {
+     "threshold": 0.1,
+     "confusion": {
+      "tp": 0,
+      "fp": 66,
+      "tn": 18,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.7857,
+     "fnr": null
+    },
+    {
+     "threshold": 0.2,
+     "confusion": {
+      "tp": 0,
+      "fp": 45,
+      "tn": 39,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.5357,
+     "fnr": null
+    },
+    {
+     "threshold": 0.3,
+     "confusion": {
+      "tp": 0,
+      "fp": 40,
+      "tn": 44,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.4762,
+     "fnr": null
+    },
+    {
+     "threshold": 0.35,
+     "confusion": {
+      "tp": 0,
+      "fp": 36,
+      "tn": 48,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.4286,
+     "fnr": null
+    },
+    {
+     "threshold": 0.4,
+     "confusion": {
+      "tp": 0,
+      "fp": 35,
+      "tn": 49,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.4167,
+     "fnr": null
+    },
+    {
+     "threshold": 0.5,
+     "confusion": {
+      "tp": 0,
+      "fp": 29,
+      "tn": 55,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.3452,
+     "fnr": null
+    },
+    {
+     "threshold": 0.6,
+     "confusion": {
+      "tp": 0,
+      "fp": 17,
+      "tn": 67,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.2024,
+     "fnr": null
+    },
+    {
+     "threshold": 0.7,
+     "confusion": {
+      "tp": 0,
+      "fp": 9,
+      "tn": 75,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.1071,
+     "fnr": null
+    },
+    {
+     "threshold": 0.8,
+     "confusion": {
+      "tp": 0,
+      "fp": 6,
+      "tn": 78,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.0714,
+     "fnr": null
+    },
+    {
+     "threshold": 0.9,
+     "confusion": {
+      "tp": 0,
+      "fp": 2,
+      "tn": 82,
+      "fn": 0
+     },
+     "precision": 0.0,
+     "recall": null,
+     "fpr": 0.0238,
+     "fnr": null
+    }
+   ],
+   "rule": "positive = human says PROBLEMATIC; JEV predicts positive when jev_problematic >= t"
+  }
+ ],
+ "limitations": [
+  "Thresholds are fit AND evaluated on the same small calibration set (n<=84 unique records); no independent validation \u2014 do not claim generalization.",
+  "Stratified oversampling of low-JEV/flagged records means prevalence here does NOT match the ~2,942-record population; precision/recall do not transfer directly.",
+  "With n<=84, single-threshold cells shift on 1-2 records; any threshold choice is provisional pending the shadow run.",
+  "category_correct has no JEV counterpart signal in this sweep (JEV consistent_category is in-state plausibility, not reference comparison); it is reported via agreement only."
+ ]
+}

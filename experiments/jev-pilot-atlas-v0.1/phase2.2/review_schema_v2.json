@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "atlas-jev-pilot-human-review-v2",
+  "title": "Atlas × Jev Phase-2.2 independent defect review (one reviewer, one batch item)",
+  "description": "Schema for a SINGLE independent human defect judgment. One file per (batch_id, reviewer_id), stored as phase2.2/reviews/<batch_id>__<reviewer_id>.json. Reviewer-facing batch IDs (P22-XXX) are opaque: the record_id mapping lives ONLY in sealed files that reviewers must not open mid-pass. JEV signals/scores/flags, Phase-2.1 human labels, and threshold results must never appear in this file.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "batch_id",
+    "reviewer_id",
+    "reviewed_at",
+    "criteria_version",
+    "reference_version",
+    "blinded_to_jev",
+    "blinded_to_prior_labels",
+    "labels",
+    "evidence"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "human-review-v2"
+    },
+    "batch_id": {
+      "type": "string",
+      "pattern": "^P22-[0-9]{3}$",
+      "description": "Opaque batch item ID. Must exist in record_map.sealed.json. Never a raw Atlas record_id."
+    },
+    "reviewer_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,64}$",
+      "description": "Stable anonymous reviewer ID. Two DIFFERENT reviewer_ids required per batch item. Must match the __<reviewer_id> filename suffix."
+    },
+    "reviewed_at": {
+      "type": "string",
+      "description": "ISO-8601 timestamp of when this judgment was recorded."
+    },
+    "criteria_version": {
+      "type": "string",
+      "const": "phase2.2-defects-v1"
+    },
+    "reference_version": {
+      "type": "string",
+      "const": "taxonomy_reference_v1"
+    },
+    "blinded_to_jev": {
+      "type": "boolean",
+      "const": true,
+      "description": "Attestation: reviewer completed this item WITHOUT seeing JEV signals/scores/flags or threshold results."
+    },
+    "blinded_to_prior_labels": {
+      "type": "boolean",
+      "const": true,
+      "description": "Attestation: reviewer completed this item WITHOUT seeing Phase-2.1 (or any prior) human labels for this content."
+    },
+    "labels": {
+      "type": "object",
+      "required": [
+        "correctness",
+        "problematic",
+        "category_correct",
+        "truncation_incomplete",
+        "factual_technical_error",
+        "instruction_violation",
+        "malformed_output",
+        "other_defect"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "correctness": {
+          "type": "string",
+          "enum": ["yes", "no"],
+          "description": "Is the assistant response substantively correct? Finding direction: 'no'."
+        },
+        "problematic": {
+          "type": "string",
+          "enum": ["yes", "no"],
+          "description": "'yes' = unsuitable as training data. Finding direction: 'yes'."
+        },
+        "category_correct": {
+          "type": "string",
+          "enum": ["yes", "no"],
+          "description": "Content genuinely belongs to its category label per taxonomy_reference_v1. Finding direction: 'no'."
+        },
+        "truncation_incomplete": {
+          "type": "string",
+          "enum": ["yes", "no"],
+          "description": "'yes' = response cut off mid-reasoning, missing conclusion/boxed answer, or visibly incomplete. Finding direction: 'yes'."
+        },
+        "factual_technical_error": {
+          "type": "string",
+          "enum": ["yes", "no"],
+          "description": "'yes' = concrete wrong fact, wrong derivation step, or code that cannot work as claimed. Finding direction: 'yes'."
+        },
+        "instruction_violation": {
+          "type": "string",
+          "enum": ["yes", "no"],
+          "description": "'yes' = response ignores or contradicts the user request (answers a different question, wrong output contract). Finding direction: 'yes'."
+        },
+        "malformed_output": {
+          "type": "string",
+          "enum": ["yes", "no"],
+          "description": "'yes' = garbled text, broken encoding, stray pasted fragments, or structure so broken it is unusable. Finding direction: 'yes'."
+        },
+        "other_defect": {
+          "type": "string",
+          "enum": ["yes", "no"],
+          "description": "'yes' = concrete defect not covered above (describe in evidence). Finding direction: 'yes'."
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "description": "Short evidence/reason string per dimension. REQUIRED (min 10 non-space chars) for every finding-direction verdict; must pinpoint the defect (quote or step reference), not a bare restatement of the verdict.",
+      "additionalProperties": false,
+      "properties": {
+        "correctness": {"type": "string", "maxLength": 2000},
+        "problematic": {"type": "string", "maxLength": 2000},
+        "category_correct": {"type": "string", "maxLength": 2000},
+        "truncation_incomplete": {"type": "string", "maxLength": 2000},
+        "factual_technical_error": {"type": "string", "maxLength": 2000},
+        "instruction_violation": {"type": "string", "maxLength": 2000},
+        "malformed_output": {"type": "string", "maxLength": 2000},
+        "other_defect": {"type": "string", "maxLength": 2000}
+      }
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Optional free text (never a substitute for labels + evidence)."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,27 @@
+{
+ "record_id": "v2-code-f1f9c3b367a7f5f8",
+ "arm": "code",
+ "content_sha256": "9ab38d31087d297d:32bbca94cff00471",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": "p0-swe-bench-verified",
+ "category_label": "software_engineering",
+ "subcategory_label": "patch_generation",
+ "license": "MIT",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Product(n + 1 / 2**k, [k, 0, n-1]) is incorrect\n    >>> from sympy import *\r\n    >>> from sympy.abc import n,k\r\n    >>> p = Product(n + 1 / 2**k, [k, 0, n-1]).doit()\r\n    >>> print(simplify(p))\r\n    2**(n*(-n + 1)/2) + n**n\r\n    >>> print(p.subs(n,2))\r\n    9/2\r\n\r\nThis is incorrect- for example, the product for `n=2` is `(2 + 2^0) * (2 + 2^(-1)) = 15/2`. The correct expression involves the [q-Pochhammer symbol](https://www.wolframalpha.com/input/?i=product+of+n+%2B+1%2F2%5Ek+from+k%3D0+to+n-1).\n"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/sympy/concrete/products.py b/sympy/concrete/products.py\n--- a/sympy/concrete/products.py\n+++ b/sympy/concrete/products.py\n@@ -282,8 +282,8 @@ def _eval_product(self, term, limits):\n                 # There is expression, which couldn't change by\n                 # as_numer_denom(). E.g. n**(2/3) + 1 --> (n**(2/3) + 1, 1).\n                 # We have to catch this case.\n-\n-                p = sum([self._eval_product(i, (k, a, n)) for i in p.as_coeff_Add()])\n+                from sympy.concrete.summations import Sum\n+                p = exp(Sum(log(p), (k, a, n)))\n             else:\n                 p = self._eval_product(p, (k, a, n))\n             return p / q\n"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

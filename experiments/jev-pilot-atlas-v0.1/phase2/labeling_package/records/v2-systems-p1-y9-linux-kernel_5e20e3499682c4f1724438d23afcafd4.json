@@ -1,0 +1,27 @@
+{
+ "record_id": "v2-systems-p1-y9-linux-kernel_5e20e3499682c4f1724438d23afcafd4",
+ "arm": "systems",
+ "content_sha256": "891e045fc28a6373:260bd6e18700dbc1",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": "p1-y9-linux-kernel",
+ "category_label": "system_engineering",
+ "subcategory_label": "linux_kernel",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n\t/* Empty routine needed to avoid build errors. */\n}\n\nint machine_kexec_post_load(struct kimage *kimage)\n{\n\tvoid *reloc_code = page_to_virt(kimage->control_code_page);\n\n\tmemcpy(reloc_code, arm64_relocate_new_kernel,\n\t       arm64_relocate_new_kernel_size);\n\tkimage->arch.kern_reloc = __pa(reloc_code);\n\tkexec_image_info(kimage);\n\n\t/* Flush the reloc_code in preparation for its execution. */\n\t__flush_dcache_area(reloc_code, arm64_relocate_new_kernel_size);\n\tflush_icache_range((uintptr_t)reloc_code, (uintptr_t)reloc_code +\n\t\t\t   arm64_relocate_new_kernel_size);\n\n\treturn 0;\n}\n\n/**\n\nInstruction:\narm64: Downgrade flush_icache_range to invalidate\n\nSince __flush_dcache_area is called right before,\ninvalidate_icache_range is sufficient in this case.\n\nRewrite the comment to better explain the rationale behind the\ncache maintenance operations used here.\n\nNo functional change intended.\nPossible performance impact due to invalidating only the icache\nrather than invalidating and cleaning both caches.\n\nReported-by: Catalin Marinas <catalin.marinas@arm.com>\nReported-by: Will Deacon <will@kernel.org>\nLink: https://lore.kernel.org/linux-arch/20200511110014.lb9PEahJ4hVOYrbwIb_qUHXyNy9KQzNFdb_I3YlzY6A@z/\nAcked-by: Mark Rutland <mark.rutland@arm.com>\nSigned-off-by: Fuad Tabba <tabba@google.com>\nAcked-by: Catalin Marinas <catalin.marinas@arm.com>\nReviewed-by: Ard Biesheuvel <ardb@kernel.org>\nLink: https://lore.kernel.org/r/20210524083001.2586635-7-tabba@google.com\nSigned-off-by: Will Deacon <will@kernel.org>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/arch/arm64/kernel/machine_kexec.c b/arch/arm64/kernel/machine_kexec.c\nindex 90a335c..a03944f 100644\n--- a/arch/arm64/kernel/machine_kexec.c\n+++ b/arch/arm64/kernel/machine_kexec.c\n@@ -68,10 +68,14 @@ int machine_kexec_post_load(struct kimage *kimage)\n \tkimage->arch.kern_reloc = __pa(reloc_code);\n \tkexec_image_info(kimage);\n \n-\t/* Flush the reloc_code in preparation for its execution. */\n+\t/*\n+\t * For execution with the MMU off, reloc_code needs to be cleaned to the\n+\t * PoC and invalidated from the I-cache.\n+\t */\n \t__flush_dcache_area(reloc_code, arm64_relocate_new_kernel_size);\n-\tflush_icache_range((uintptr_t)reloc_code, (uintptr_t)reloc_code +\n-\t\t\t   arm64_relocate_new_kernel_size);\n+\tinvalidate_icache_range((uintptr_t)reloc_code,\n+\t\t\t\t(uintptr_t)reloc_code +\n+\t\t\t\t\tarm64_relocate_new_kernel_size);\n \n \treturn 0;\n }"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

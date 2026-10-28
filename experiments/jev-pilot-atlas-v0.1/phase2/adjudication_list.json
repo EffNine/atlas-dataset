@@ -1,0 +1,9 @@
+{
+ "version": "phase2.1-adjudication-v1",
+ "generated_at": "2026-09-17T17:26:03.897028+00:00",
+ "n_disagreements": 0,
+ "n_paired_records": 84,
+ "status": "COMPUTED",
+ "items": [],
+ "adjudication_protocol": "A third labeler (different id from both originals) resolves each item; the resolved gold is written to human_labels_adjudicated/<record_id>.json. Raw independent labels are NEVER modified."
+}

@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-55dc672d5c51d842",
+ "arm": "math",
+ "content_sha256": "f9ae665754cabfc3:ec89650cfb05cd9e",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Let $\\rho$ be the distance from the origin to the point $(x,y,z)$, let $\\theta$ be the angle between the $x$-axis and the projection of the line segment from the origin to the point on the $xy$-plane, and let $\\phi$ be the angle between the $z$-axis and the line segment from the origin to the point.\n\nA satellite is located at the point $(\\rho, \\theta, \\phi)$ in spherical coordinates, where $\\rho$ is the distance from the center of the Earth to the satellite, $\\theta$ is the angle between the satellite and the equatorial plane, and $\\phi$ is the angle between the satellite and the north-south axis of the Earth.\n\nLet $\\rho=1500$ be the distance from the center of the Earth to the satellite, and let $\\theta$ be $\\frac{\\pi}{3}$ radians. Let $\\phi$ be the angle that satisfies the following equation: $\\sin\\phi=\\frac{\\sqrt{3}}{2}$.\n\nFind the coordinates of the satellite in rectangular coordinates $(x,y,z)$."
+  },
+  {
+   "role": "assistant",
+   "content": "Given the spherical coordinates $(\\rho, \\theta, \\phi)$, we can convert to rectangular coordinates $(x, y, z)$ using the formulas:\n   \\begin{align*}\n   x &= \\rho \\sin \\phi \\cos \\theta \\\\\n   y &= \\rho \\sin \\phi \\sin \\theta \\\\\n   z &= \\rho \\cos \\phi\n   \\end{align*}\n\nWe are given $\\rho = 1500$, $\\theta = \\frac{\\pi}{3}$, and $\\sin \\phi = \\frac{\\sqrt{3}}{2}$.\n\nFirst, find $\\cos \\phi$:\n\\[ \\sin^2 \\phi + \\cos^2 \\phi = 1 \\Rightarrow \\cos^2 \\phi = 1 - \\sin^2 \\phi = 1 - \\left(\\frac{\\sqrt{3}}{2}\\right)^2 = 1 - \\frac{3}{4} = \\frac{1}{4} \\Rightarrow \\cos \\phi = \\sqrt{\\frac{1}{4}} = \\frac{1}{2} \\]\n\nNext, find $\\cos \\theta$ and $\\sin \\theta$:\n\\[ \\theta = \\frac{\\pi}{3} \\Rightarrow \\cos \\theta = \\frac{1}{2} \\text{ and } \\sin \\theta = \\frac{\\sqrt{3}}{2} \\]\n\nNow we can find the rectangular coordinates:\n   \\begin{align*}\n   x &= \\rho \\sin \\phi \\cos \\theta = 1500 \\cdot \\frac{\\sqrt{3}}{2} \\cdot \\frac{1}{2} = 375\\sqrt{3} \\\\\n   y &= \\rho \\sin \\phi \\sin \\theta = 1500 \\cdot \\frac{\\sqrt{3}}{2} \\cdot \\frac{\\sqrt{3}}{2} = 1125 \\\\\n   z &= \\rho \\cos \\phi = 1500 \\cdot \\frac{1}{2} = 750\n   \\end{align*}\n\nThe rectangular coordinates are $\\boxed{(375\\sqrt{3}, 1125, 750)}$"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

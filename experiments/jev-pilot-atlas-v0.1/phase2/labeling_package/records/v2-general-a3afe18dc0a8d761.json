@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-general-a3afe18dc0a8d761",
+ "arm": "general",
+ "content_sha256": "c2d44fdc7239895b:a96ab50514be84cd",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "general",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Find the geometric mean of the reciprocals of the first four perfect squares."
+  },
+  {
+   "role": "assistant",
+   "content": "The first four perfect squares are 1, 4, 9, and 16.\n\nThe reciprocals of these perfect squares are 1, $\\frac{1}{4}$, $\\frac{1}{9}$, and $\\frac{1}{16}$.\n\nThe geometric mean of these reciprocals is:\n\\[ \\sqrt[4]{1 \\cdot \\frac{1}{4} \\cdot \\frac{1}{9} \\cdot \\frac{1}{16}} = \\sqrt[4]{\\frac{1}{576}} = \\sqrt[4]{\\frac{1}{(24)^2}} = \\frac{1}{\\sqrt[4]{(24)^2}} = \\frac{1}{24^{\\frac{2}{4}}} = \\frac{1}{24^{\\frac{1}{2}}} = \\frac{1}{\\sqrt{24}} = \\frac{1}{\\sqrt{4 \\cdot 6}} = \\frac{1}{2\\sqrt{6}} = \\frac{\\sqrt{6}}{12} \\]\n\nThe geometric mean of the reciprocals of the first four perfect squares is $\\boxed{\\frac{\\sqrt{6}}{12}}$."
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

@@ -1,0 +1,17 @@
+{
+ "schema_version": "human-label-v1",
+ "record_id": "<record_id>",
+ "arm": "<math|code|general|systems>",
+ "content_sha256": "<copy from labeling_package manifest \u2014 do not recompute>",
+ "labeler_id": "<your-labeler-id>",
+ "labeled_at": "<ISO-8601 timestamp, e.g. 2026-09-18T10:00:00+00:00>",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "blinded_to_jev": true,
+ "labels": {
+  "correctness": "<yes|no>",
+  "problematic": "<yes|no>",
+  "category_correct": "<yes|no>"
+ },
+ "notes": "<optional rationale>"
+}

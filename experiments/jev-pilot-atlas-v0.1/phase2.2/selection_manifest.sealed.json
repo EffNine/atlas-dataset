@@ -1,0 +1,539 @@
+{
+ "sealed": true,
+ "warning": "SEALED \u2014 contains JEV signals, groups, and hypotheses. Reviewers must NOT open mid-pass.",
+ "version": "phase2.2-selection-v1",
+ "generated_at": "2026-09-17T17:32:24.350103+00:00",
+ "n_records": 28,
+ "groups": {
+  "R-retest-flagged": 12,
+  "F-fresh-flagged": 12,
+  "C-clean-control": 4
+ },
+ "arms": {
+  "math": 12,
+  "code": 5,
+  "general": 7,
+  "systems": 4
+ },
+ "method": "R: flagged\u2229in-84 human-clean, strongest-signal per-arm quotas math4/code3/general3/systems2; F: flagged\u2229fresh, quotas math5/code2/general3/systems2; C: strongest-clean 2 in-84 + 2 fresh. Rank keys deterministic; batch IDs assigned in sorted-record_id order.",
+ "rows": [
+  {
+   "record_id": "v2-math-059a07cdca71586a",
+   "arm": "math",
+   "group": "R-retest-flagged",
+   "hypothesis": "suspected-garbled/unsafe",
+   "jev": {
+    "quality": 0.86,
+    "correct": 0.03,
+    "problematic": 0.94,
+    "adherence": 0.24,
+    "consistent_category": 0.97,
+    "training_value": 1.3,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "batch_id": "P22-013"
+  },
+  {
+   "record_id": "v2-math-c87eaba80943bccb",
+   "arm": "math",
+   "group": "R-retest-flagged",
+   "hypothesis": "suspected-garbled/unsafe",
+   "jev": {
+    "quality": 0.28,
+    "correct": 0.02,
+    "problematic": 0.86,
+    "adherence": 0.26,
+    "consistent_category": 0.93,
+    "training_value": 1.0,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "batch_id": "P22-023"
+  },
+  {
+   "record_id": "v2-math-348fd57c957ddb93",
+   "arm": "math",
+   "group": "R-retest-flagged",
+   "hypothesis": "suspected-garbled/unsafe",
+   "jev": {
+    "quality": 0.5,
+    "correct": 0.03,
+    "problematic": 0.85,
+    "adherence": 0.39,
+    "consistent_category": 0.9,
+    "training_value": 1.03,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "batch_id": "P22-015"
+  },
+  {
+   "record_id": "v2-math-9de5eda493a8fa51",
+   "arm": "math",
+   "group": "R-retest-flagged",
+   "hypothesis": "suspected-garbled/unsafe",
+   "jev": {
+    "quality": 1.09,
+    "correct": 0.18,
+    "problematic": 0.82,
+    "adherence": 0.56,
+    "consistent_category": 0.97,
+    "training_value": 1.4,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-019"
+  },
+  {
+   "record_id": "v2-code-e0c53345c359a77e",
+   "arm": "code",
+   "group": "R-retest-flagged",
+   "hypothesis": "suspected-wrong-answer",
+   "jev": {
+    "quality": 0.92,
+    "correct": 0.09,
+    "problematic": 0.69,
+    "adherence": 0.26,
+    "consistent_category": 0.91,
+    "training_value": 2.01,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "batch_id": "P22-004"
+  },
+  {
+   "record_id": "v2-code-eff570a747a768aa",
+   "arm": "code",
+   "group": "R-retest-flagged",
+   "hypothesis": "clean-control",
+   "jev": {
+    "quality": 1.84,
+    "correct": 0.48,
+    "problematic": 0.58,
+    "adherence": 0.44,
+    "consistent_category": 0.74,
+    "training_value": 2.5,
+    "flags": [
+     "problematic"
+    ]
+   },
+   "batch_id": "P22-005"
+  },
+  {
+   "record_id": "v2-code-a01d2697ad516739",
+   "arm": "code",
+   "group": "R-retest-flagged",
+   "hypothesis": "suspected-wrong-answer",
+   "jev": {
+    "quality": 1.12,
+    "correct": 0.09,
+    "problematic": 0.55,
+    "adherence": 0.29,
+    "consistent_category": 0.93,
+    "training_value": 2.2,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-002"
+  },
+  {
+   "record_id": "v2-general-13388d63aa48543f",
+   "arm": "general",
+   "group": "R-retest-flagged",
+   "hypothesis": "suspected-garbled/unsafe",
+   "jev": {
+    "quality": 1.24,
+    "correct": 0.15,
+    "problematic": 0.91,
+    "adherence": 0.55,
+    "consistent_category": 0.91,
+    "training_value": 1.2,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-006"
+  },
+  {
+   "record_id": "v2-general-98c309025d0bf8fd",
+   "arm": "general",
+   "group": "R-retest-flagged",
+   "hypothesis": "suspected-garbled/unsafe",
+   "jev": {
+    "quality": 0.65,
+    "correct": 0.08,
+    "problematic": 0.86,
+    "adherence": 0.58,
+    "consistent_category": 0.95,
+    "training_value": 1.28,
+    "flags": [
+     "problematic",
+     "unlikely_correct",
+     "low_quality"
+    ]
+   },
+   "batch_id": "P22-010"
+  },
+  {
+   "record_id": "v2-general-d45a04b12f2ba11d",
+   "arm": "general",
+   "group": "R-retest-flagged",
+   "hypothesis": "suspected-wrong-answer",
+   "jev": {
+    "quality": 1.54,
+    "correct": 0.23,
+    "problematic": 0.68,
+    "adherence": 0.5,
+    "consistent_category": 0.88,
+    "training_value": 1.83,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-012"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_9b75a867cc9ddbafcaf35029358ac500_ac965c33",
+   "arm": "systems",
+   "group": "R-retest-flagged",
+   "hypothesis": "suspected-wrong-answer",
+   "jev": {
+    "quality": 1.11,
+    "correct": 0.14,
+    "problematic": 0.66,
+    "adherence": 0.33,
+    "consistent_category": 0.92,
+    "training_value": 2.26,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-028"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_444fdad88f35de9fd1c130b2c4e45506",
+   "arm": "systems",
+   "group": "R-retest-flagged",
+   "hypothesis": "suspected-wrong-answer",
+   "jev": {
+    "quality": 1.25,
+    "correct": 0.19,
+    "problematic": 0.66,
+    "adherence": 0.39,
+    "consistent_category": 0.93,
+    "training_value": 2.73,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-025"
+  },
+  {
+   "record_id": "v2-math-b41cb7b1fb721560",
+   "arm": "math",
+   "group": "F-fresh-flagged",
+   "hypothesis": "suspected-garbled/unsafe",
+   "jev": {
+    "quality": 1.56,
+    "correct": 0.39,
+    "problematic": 0.78,
+    "adherence": 0.23,
+    "consistent_category": 0.97,
+    "training_value": 1.85,
+    "flags": [
+     "problematic"
+    ]
+   },
+   "batch_id": "P22-021"
+  },
+  {
+   "record_id": "v2-math-cde8e89488c7170b",
+   "arm": "math",
+   "group": "F-fresh-flagged",
+   "hypothesis": "suspected-garbled/unsafe",
+   "jev": {
+    "quality": 1.64,
+    "correct": 0.37,
+    "problematic": 0.76,
+    "adherence": 0.62,
+    "consistent_category": 0.97,
+    "training_value": 1.56,
+    "flags": [
+     "problematic"
+    ]
+   },
+   "batch_id": "P22-024"
+  },
+  {
+   "record_id": "v2-math-a54da60f22df03bb",
+   "arm": "math",
+   "group": "F-fresh-flagged",
+   "hypothesis": "suspected-garbled/unsafe",
+   "jev": {
+    "quality": 2.15,
+    "correct": 0.32,
+    "problematic": 0.7,
+    "adherence": 0.63,
+    "consistent_category": 0.92,
+    "training_value": 2.09,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-020"
+  },
+  {
+   "record_id": "v2-math-1c63daec86c685d8",
+   "arm": "math",
+   "group": "F-fresh-flagged",
+   "hypothesis": "suspected-borderline-correctness",
+   "jev": {
+    "quality": 1.25,
+    "correct": 0.3,
+    "problematic": 0.67,
+    "adherence": 0.52,
+    "consistent_category": 0.97,
+    "training_value": 1.65,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-014"
+  },
+  {
+   "record_id": "v2-math-b6f0b4bd0323d7e4",
+   "arm": "math",
+   "group": "F-fresh-flagged",
+   "hypothesis": "suspected-borderline-correctness",
+   "jev": {
+    "quality": 1.43,
+    "correct": 0.28,
+    "problematic": 0.54,
+    "adherence": 0.57,
+    "consistent_category": 0.97,
+    "training_value": 1.97,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-022"
+  },
+  {
+   "record_id": "v2-code-de7599c274e46d27",
+   "arm": "code",
+   "group": "F-fresh-flagged",
+   "hypothesis": "clean-control",
+   "jev": {
+    "quality": 2.5,
+    "correct": 0.79,
+    "problematic": 0.63,
+    "adherence": 0.86,
+    "consistent_category": 0.96,
+    "training_value": 2.88,
+    "flags": [
+     "problematic"
+    ]
+   },
+   "batch_id": "P22-003"
+  },
+  {
+   "record_id": "v2-code-7a69cb67f947797c",
+   "arm": "code",
+   "group": "F-fresh-flagged",
+   "hypothesis": "suspected-wrong-answer",
+   "jev": {
+    "quality": 1.44,
+    "correct": 0.24,
+    "problematic": 0.37,
+    "adherence": 0.67,
+    "consistent_category": 0.93,
+    "training_value": 2.54,
+    "flags": [
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-001"
+  },
+  {
+   "record_id": "v2-general-60fcc87fcf34e44f",
+   "arm": "general",
+   "group": "F-fresh-flagged",
+   "hypothesis": "suspected-borderline-correctness",
+   "jev": {
+    "quality": 1.58,
+    "correct": 0.28,
+    "problematic": 0.68,
+    "adherence": 0.53,
+    "consistent_category": 0.88,
+    "training_value": 2.32,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-008"
+  },
+  {
+   "record_id": "v2-general-4f3b51f8d4b06443",
+   "arm": "general",
+   "group": "F-fresh-flagged",
+   "hypothesis": "suspected-wrong-answer",
+   "jev": {
+    "quality": 1.47,
+    "correct": 0.22,
+    "problematic": 0.61,
+    "adherence": 0.62,
+    "consistent_category": 0.94,
+    "training_value": 1.75,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-007"
+  },
+  {
+   "record_id": "v2-general-872aa79e00252fa9",
+   "arm": "general",
+   "group": "F-fresh-flagged",
+   "hypothesis": "suspected-borderline-correctness",
+   "jev": {
+    "quality": 1.76,
+    "correct": 0.33,
+    "problematic": 0.53,
+    "adherence": 0.69,
+    "consistent_category": 0.97,
+    "training_value": 2.11,
+    "flags": [
+     "problematic",
+     "unlikely_correct"
+    ]
+   },
+   "batch_id": "P22-009"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_90098efacc4c3e2e4f6262a657d6b520",
+   "arm": "systems",
+   "group": "F-fresh-flagged",
+   "hypothesis": "clean-control",
+   "jev": {
+    "quality": 1.62,
+    "correct": 0.39,
+    "problematic": 0.55,
+    "adherence": 0.56,
+    "consistent_category": 0.94,
+    "training_value": 2.43,
+    "flags": [
+     "problematic"
+    ]
+   },
+   "batch_id": "P22-027"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_5c14e51d2d7df49fe0d4e64a12c58d25",
+   "arm": "systems",
+   "group": "F-fresh-flagged",
+   "hypothesis": "clean-control",
+   "jev": {
+    "quality": 2.35,
+    "correct": 0.48,
+    "problematic": 0.53,
+    "adherence": 0.7,
+    "consistent_category": 0.95,
+    "training_value": 2.56,
+    "flags": [
+     "problematic"
+    ]
+   },
+   "batch_id": "P22-026"
+  },
+  {
+   "record_id": "v2-general-b6f27e0be7c10f61",
+   "arm": "general",
+   "group": "C-clean-control",
+   "hypothesis": "clean-control",
+   "jev": {
+    "quality": 3.43,
+    "correct": 0.99,
+    "problematic": 0.03,
+    "adherence": 0.97,
+    "consistent_category": 0.98,
+    "training_value": 2.72,
+    "flags": []
+   },
+   "batch_id": "P22-011"
+  },
+  {
+   "record_id": "v2-math-501c77b2e08b35cd",
+   "arm": "math",
+   "group": "C-clean-control",
+   "hypothesis": "clean-control",
+   "jev": {
+    "quality": 3.43,
+    "correct": 0.99,
+    "problematic": 0.04,
+    "adherence": 0.93,
+    "consistent_category": 0.99,
+    "training_value": 2.87,
+    "flags": []
+   },
+   "batch_id": "P22-016"
+  },
+  {
+   "record_id": "v2-math-96158aff303d74a0",
+   "arm": "math",
+   "group": "C-clean-control",
+   "hypothesis": "clean-control",
+   "jev": {
+    "quality": 3.68,
+    "correct": 0.99,
+    "problematic": 0.03,
+    "adherence": 0.96,
+    "consistent_category": 0.99,
+    "training_value": 2.91,
+    "flags": []
+   },
+   "batch_id": "P22-018"
+  },
+  {
+   "record_id": "v2-math-5e9a466b84eca5d2",
+   "arm": "math",
+   "group": "C-clean-control",
+   "hypothesis": "clean-control",
+   "jev": {
+    "quality": 3.59,
+    "correct": 0.99,
+    "problematic": 0.03,
+    "adherence": 0.92,
+    "consistent_category": 0.99,
+    "training_value": 2.95,
+    "flags": []
+   },
+   "batch_id": "P22-017"
+  }
+ ]
+}

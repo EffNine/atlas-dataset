@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-2d9802eb3fc7887d",
+ "arm": "math",
+ "content_sha256": "8576eaa047e4dbf8:cec4dcfbcc1efff5",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Find the domain of the function $f(x) = \\sqrt[5]{2x + 3} - \\sqrt[5]{7 - 3x}.$"
+  },
+  {
+   "role": "assistant",
+   "content": "## Step 1: Understand the nature of the function\nThe function $f(x) = \\sqrt[5]{2x + 3} - \\sqrt[5]{7 - 3x}$ involves the subtraction of two fifth roots. Since the fifth root of any real number is defined, the function does not have restrictions based on the sign of the radicand, unlike square roots or other even roots.\n\n## Step 2: Identify any potential restrictions\nFor real-valued functions involving roots, restrictions typically arise from non-negative requirements for even roots or from division by zero. However, since the fifth root does not require the radicand to be non-negative and there is no division in this function, the primary concern is ensuring the expression under the root is defined.\n\n## Step 3: Consider the domain of each root\nGiven that the fifth root of any real number is defined, both $\\sqrt[5]{2x + 3}$ and $\\sqrt[5]{7 - 3x}$ are defined for all real numbers $x$. This means there are no specific domain restrictions for either root individually.\n\n## Step 4: Look for any additional operations that could restrict the domain\nSince the function involves subtraction, which is defined for all real numbers, there are no additional restrictions from the operations involved.\n\n## Step 5: Conclude the domain based on the analysis\nGiven that both roots are defined for all real numbers and there are no additional restrictions from the operations involved, the domain of the function $f(x) = \\sqrt[5]{2x + 3} - \\sqrt[5]{7 - 3x}$ is all real numbers.\n\nThe final answer is: $\\boxed{(-\\infty, \\infty)}$"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

@@ -1,0 +1,146 @@
+{
+ "sealed": true,
+ "warning": "SEALED \u2014 reviewers must NOT open this file (or selection_manifest.sealed.json) until their blind pass is recorded. Unblinds batch IDs to record IDs and JEV signals.",
+ "map": {
+  "P22-013": {
+   "record_id": "v2-math-059a07cdca71586a",
+   "arm": "math",
+   "group": "R-retest-flagged"
+  },
+  "P22-023": {
+   "record_id": "v2-math-c87eaba80943bccb",
+   "arm": "math",
+   "group": "R-retest-flagged"
+  },
+  "P22-015": {
+   "record_id": "v2-math-348fd57c957ddb93",
+   "arm": "math",
+   "group": "R-retest-flagged"
+  },
+  "P22-019": {
+   "record_id": "v2-math-9de5eda493a8fa51",
+   "arm": "math",
+   "group": "R-retest-flagged"
+  },
+  "P22-004": {
+   "record_id": "v2-code-e0c53345c359a77e",
+   "arm": "code",
+   "group": "R-retest-flagged"
+  },
+  "P22-005": {
+   "record_id": "v2-code-eff570a747a768aa",
+   "arm": "code",
+   "group": "R-retest-flagged"
+  },
+  "P22-002": {
+   "record_id": "v2-code-a01d2697ad516739",
+   "arm": "code",
+   "group": "R-retest-flagged"
+  },
+  "P22-006": {
+   "record_id": "v2-general-13388d63aa48543f",
+   "arm": "general",
+   "group": "R-retest-flagged"
+  },
+  "P22-010": {
+   "record_id": "v2-general-98c309025d0bf8fd",
+   "arm": "general",
+   "group": "R-retest-flagged"
+  },
+  "P22-012": {
+   "record_id": "v2-general-d45a04b12f2ba11d",
+   "arm": "general",
+   "group": "R-retest-flagged"
+  },
+  "P22-028": {
+   "record_id": "v2-systems-p1-y9-linux-kernel_9b75a867cc9ddbafcaf35029358ac500_ac965c33",
+   "arm": "systems",
+   "group": "R-retest-flagged"
+  },
+  "P22-025": {
+   "record_id": "v2-systems-p1-y9-linux-kernel_444fdad88f35de9fd1c130b2c4e45506",
+   "arm": "systems",
+   "group": "R-retest-flagged"
+  },
+  "P22-021": {
+   "record_id": "v2-math-b41cb7b1fb721560",
+   "arm": "math",
+   "group": "F-fresh-flagged"
+  },
+  "P22-024": {
+   "record_id": "v2-math-cde8e89488c7170b",
+   "arm": "math",
+   "group": "F-fresh-flagged"
+  },
+  "P22-020": {
+   "record_id": "v2-math-a54da60f22df03bb",
+   "arm": "math",
+   "group": "F-fresh-flagged"
+  },
+  "P22-014": {
+   "record_id": "v2-math-1c63daec86c685d8",
+   "arm": "math",
+   "group": "F-fresh-flagged"
+  },
+  "P22-022": {
+   "record_id": "v2-math-b6f0b4bd0323d7e4",
+   "arm": "math",
+   "group": "F-fresh-flagged"
+  },
+  "P22-003": {
+   "record_id": "v2-code-de7599c274e46d27",
+   "arm": "code",
+   "group": "F-fresh-flagged"
+  },
+  "P22-001": {
+   "record_id": "v2-code-7a69cb67f947797c",
+   "arm": "code",
+   "group": "F-fresh-flagged"
+  },
+  "P22-008": {
+   "record_id": "v2-general-60fcc87fcf34e44f",
+   "arm": "general",
+   "group": "F-fresh-flagged"
+  },
+  "P22-007": {
+   "record_id": "v2-general-4f3b51f8d4b06443",
+   "arm": "general",
+   "group": "F-fresh-flagged"
+  },
+  "P22-009": {
+   "record_id": "v2-general-872aa79e00252fa9",
+   "arm": "general",
+   "group": "F-fresh-flagged"
+  },
+  "P22-027": {
+   "record_id": "v2-systems-p1-y9-linux-kernel_90098efacc4c3e2e4f6262a657d6b520",
+   "arm": "systems",
+   "group": "F-fresh-flagged"
+  },
+  "P22-026": {
+   "record_id": "v2-systems-p1-y9-linux-kernel_5c14e51d2d7df49fe0d4e64a12c58d25",
+   "arm": "systems",
+   "group": "F-fresh-flagged"
+  },
+  "P22-011": {
+   "record_id": "v2-general-b6f27e0be7c10f61",
+   "arm": "general",
+   "group": "C-clean-control"
+  },
+  "P22-016": {
+   "record_id": "v2-math-501c77b2e08b35cd",
+   "arm": "math",
+   "group": "C-clean-control"
+  },
+  "P22-018": {
+   "record_id": "v2-math-96158aff303d74a0",
+   "arm": "math",
+   "group": "C-clean-control"
+  },
+  "P22-017": {
+   "record_id": "v2-math-5e9a466b84eca5d2",
+   "arm": "math",
+   "group": "C-clean-control"
+  }
+ }
+}

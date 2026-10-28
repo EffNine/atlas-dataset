@@ -1,0 +1,32 @@
+{
+ "record_id": "v2-general-fd8cb6485db662e5",
+ "arm": "general",
+ "content_sha256": "b4820415473d3cd0:3af661ad2108a771",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "name": "ewedubs/linux-kernel-commits-aireason-instruct",
+  "url": "https://huggingface.co/datasets/ewedubs/linux-kernel-commits-aireason-instruct",
+  "license": "Apache-2.0",
+  "date": "2026-08-14"
+ },
+ "category_label": "03_system_engineering",
+ "subcategory_label": "general",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n\n\tpage = __alloc_pages_node(nodeid, flags, cachep->gfporder);\n\tif (!page) {\n\t\tslab_out_of_memory(cachep, flags, nodeid);\n\t\treturn NULL;\n\t}\n\n\taccount_slab_page(page, cachep->gfporder, cachep);\n\t__SetPageSlab(page);\n\t/* Record if ALLOC_NO_WATERMARKS was set when allocating the slab */\n\tif (sk_memalloc_socks() && page_is_pfmemalloc(page))\n\t\tSetPageSlabPfmemalloc(page);\n\n\treturn page;\n}\n\n/*\n * Interface to system's page release.\n */\nstatic void kmem_freepages(struct kmem_cache *cachep, struct page *page)\n{\n\tint order = cachep->gfporder;\n\n\tBUG_ON(!PageSlab(page));\n\t__ClearPageSlabPfmemalloc(page);\n\t__ClearPageSlab(page);\n\tpage_mapcount_reset(page);\n\t/* In union with page->mapping where page allocator expects NULL */\n\tpage->slab_cache = NULL;\n\n\tif (current->reclaim_state)\n\t\tcurrent->reclaim_state->reclaimed_slab += 1 << order;\n\tunaccount_slab_page(page, order, cachep);\n\t__free_pages(page, order);\n}\n\nstatic void kmem_rcu_free(struct rcu_head *head)\n{\n\tstruct kmem_cache *cachep;\n\tstruct page *page;\n\n\tpage = container_of(head, struct page, rcu_head);\n\tcachep = page->slab_cache;\n\n\tkmem_freepages(cachep, page);\n}\n\n#if DEBUG\nstatic bool is_debug_pagealloc_cache(struct kmem_cache *cachep)\n{\n\tif (debug_pagealloc_enabled_static() && OFF_SLAB(cachep) &&\n\t\t(cachep->size % PAGE_SIZE) == 0)\n\t\treturn true;\n\n\treturn false;\n}\n\n#ifdef CONFIG_DEBUG_PAGEALLOC\nstatic void slab_kernel_map(struct kmem_cache *cachep, void *objp, int map)\n{\n\tif (!is_debug_pagealloc_cache(cachep))\n\t\treturn;\n\n\t__kernel_map_pages(virt_to_page(objp), cachep->size / PAGE_SIZE, map);\n}\n\n#else\nstatic inline void slab_kernel_map(struct kmem_cache *cachep, void *objp,\n\t\t\t\tint map) {}\n\n#endif\n\nstatic void poison_obj(struct kmem_cache *cachep, void *addr, unsigned char val)\n{\n\tint size = cachep->object_size;\n\taddr = &((char *)addr)[obj_offset(cachep)];\n\n\tmemset(addr, val, size);\n\t*(unsigned char *)(addr + size - 1) = POISON_END;\n}\n\nstatic void dump_line(char *data, int offset, int limit)\n{\n\tint i;\n\tunsigned char error = 0;\n\tint bad_count = 0;\n\n\tpr_err(\"%03x: \", offset);\n\tfor (i = 0; i < limit; i++) {\n\t\tif (data[offset + i] != POISON_FREE) {\n\t\t\terror = data[offset + i];\n\nInstruction:\nmm: memcg/slab: pre-allocate obj_cgroups for slab caches with SLAB_ACCOUNT\n\nIn general it's unknown in advance if a slab page will contain accounted\nobjects or not.  In order to avoid memory waste, an obj_cgroup vector is\nallocated dynamically when a need to account of a new object arises.  Such\napproach is memory efficient, but requires an expensive cmpxchg() to set\nup the memcg/objcgs pointer, because an allocation can race with a\ndifferent allocation on another cpu.\n\nBut in some common cases it's known for sure that a slab page will contain\naccounted objects: if the page belongs to a slab cache with a SLAB_ACCOUNT\nflag set.  It includes such popular objects like vm_area_struct, anon_vma,\ntask_struct, etc.\n\nIn such cases we can pre-allocate the objcgs vector and simple assign it\nto the page without any atomic operations, because at this early stage the\npage is not visible to anyone else.\n\nA very simplistic benchmark (allocating 10000000 64-bytes objects in a\nrow) shows ~15% win.  In the real life it seems that most workloads are\nnot very sensitive to the speed of (accounted) slab allocations.\n\n[guro@fb.com: open-code set_page_objcgs() and add some comments, by Johannes]\n  Link: https://lkml.kernel.org/r/20201113001926.GA2934489@carbon.dhcp.thefacebook.com\n[akpm@linux-foundation.org: fix it for mm-slub-call-account_slab_page-after-slab-page-initialization-fix.patch]\n\nLink: https://lkml.kernel.org/r/20201110195753.530157-2-guro@fb.com\nSigned-off-by: Roman Gushchin <guro@fb.com>\nAcked-by: Johannes Weiner <hannes@cmpxchg.org>\nReviewed-by: Shakeel Butt <shakeelb@google.com>\nCc: Michal Hocko <mhocko@kernel.org>\nCc: Christoph Lameter <cl@linux.com>\nSigned-off-by: Andrew Morton <akpm@linux-foundation.org>\nSigned-off-by: Linus Torvalds <torvalds@linux-foundation.org>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/mm/slab.c b/mm/slab.c\nindex cdad64b..9c9e0c2 100644\n--- a/mm/slab.c\n+++ b/mm/slab.c\n@@ -1379,7 +1379,7 @@ static struct page *kmem_getpages(struct kmem_cache *cachep, gfp_t flags,\n \t\treturn NULL;\n \t}\n \n-\taccount_slab_page(page, cachep->gfporder, cachep);\n+\taccount_slab_page(page, cachep->gfporder, cachep, flags);\n \t__SetPageSlab(page);\n \t/* Record if ALLOC_NO_WATERMARKS was set when allocating the slab */\n \tif (sk_memalloc_socks() && page_is_pfmemalloc(page))"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

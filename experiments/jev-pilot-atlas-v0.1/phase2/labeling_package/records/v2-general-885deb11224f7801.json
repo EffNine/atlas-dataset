@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-general-885deb11224f7801",
+ "arm": "general",
+ "content_sha256": "17d7a62ffd0f5e05:25c44e2cd8b4ae2c",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "general",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Find the least integer value of $y$ for which $3|y| + 2 < 14$."
+  },
+  {
+   "role": "assistant",
+   "content": "To find the least integer value of $y$ that satisfies the inequality $3|y| + 2 < 14$, we can solve for $y$ step by step.\n\nFirst, isolate $|y|$ by subtracting 2 from both sides of the inequality:\n\\[ 3|y| + 2 - 2 < 14 - 2 \\Rightarrow 3|y| < 12 \\]\n\nNext, divide both sides by 3 to isolate $|y|$:\n\\[ 3|y| : 3 < 12 : 3 \\Rightarrow |y| < 4 \\]\n\nSince $|y|$ is always non-negative, the inequality $|y| < 4$ is equivalent to:\n\\[ -4 < y < 4 \\]\n\nHowever, we are looking for the least integer value of $y$ that satisfies this inequality. The least integer value within the range $-4 < y < 4$ is $-3$, since $y$ cannot be equal to $-4$.\n\nTherefore, the least integer value of $y$ that satisfies the inequality is:\n\\[ y = \\boxed{-3} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

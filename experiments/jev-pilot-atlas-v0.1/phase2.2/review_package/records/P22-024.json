@@ -1,0 +1,39 @@
+{
+ "batch_id": "P22-024",
+ "content_sha256": "a5b5e351c7c6c83d:037aeb41ecb8e15b",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "A cylindrical vessel with a diameter of 5 cm and a height of 10 cm is filled with a mixture of sand and water. The water level is 3 cm below the top of the vessel. When a metal sphere with a diameter of 2 cm is dropped into the vessel, the water level rises by 1 cm. What is the ratio of the volume of sand to the volume of water in the vessel?"
+  },
+  {
+   "role": "assistant",
+   "content": "First, we need to find the volume of the water in the vessel. The radius of the vessel is 5/2 cm, and the initial height of the water is 10 - 3 = 7 cm. So the initial volume of water is:\n\\[ V_{\\text{water}} = \\pi r^2 h = \\pi \\left( \\frac{5}{2} \\right)^2 (7) = \\frac{175\\pi}{4} \\text{ cm}^3 \\]\n\nWhen the metal sphere is dropped, the water level rises by 1 cm. This means the volume of the water increases by:\n\\[ \\Delta V_{\\text{water}} = \\pi r^2 \\Delta h = \\pi \\left( \\frac{5}{2} \\right)^2 (1) = \\frac{25\\pi}{4} \\text{ cm}^3 \\]\n\nSince the volume of the sphere is equal to the increase in water volume, we have:\n\\[ V_{\\text{sphere}} = \\frac{4}{3} \\pi r^3 = \\frac{4}{3} \\pi (1)^3 = \\frac{4\\pi}{3} \\text{ cm}^3 \\]\n\nHowever, this is not needed for our calculation.\n\nThe total volume of the vessel is:\n\\[ V_{\\text{total}} = \\pi r^2 h = \\pi \\left( \\frac{5}{2} \\right)^2 (10) = \\frac{250\\pi}{4} \\text{ cm}^3 \\]\n\nThe volume of sand is:\n\\[ V_{\\text{sand}} = V_{\\text{total}} - V_{\\text{water}} - \\Delta V_{\\text{water}} = \\frac{250\\pi}{4} - \\frac{175\\pi}{4} - \\frac{25\\pi}{4} = \\frac{50\\pi}{4} \\text{ cm}^3 \\]\n\nHowever, we forgot that the water level was initially 3 cm below the top. So the correct volume of sand is:\n\\[ V_{\\text{sand}} = \\pi r^2 h = \\pi \\left( \\frac{5}{2} \\right)^2 (3) = \\frac{75\\pi}{4} \\text{ cm}^3 \\]\n\nThe ratio of the volume of sand to the volume of water is:\n\\[ \\frac{V_{\\text{sand}}}{V_{\\text{water}}} = \\frac{75\\pi/4}{175\\pi/4} = \\frac{3}{7} \\]\n\nSo the answer is:\n\\[ \\boxed{\\frac{3}{7}} \\]"
+  }
+ ],
+ "defect_criteria": {
+  "correctness": "Is the assistant response substantively correct? Finding = no.",
+  "problematic": "Unsuitable as training data (contradictions, garbled, harmful, injection, PII)? Finding = yes.",
+  "category_correct": "Content genuinely belongs to its category label per taxonomy_reference_v1? Finding = no.",
+  "truncation_incomplete": "Cut off mid-reasoning, missing conclusion/boxed answer, visibly incomplete? Finding = yes.",
+  "factual_technical_error": "Concrete wrong fact, wrong derivation step, or code that cannot work as claimed? Finding = yes.",
+  "instruction_violation": "Ignores/contradicts the user request? Finding = yes.",
+  "malformed_output": "Garbled text, broken encoding, stray fragments, unusable structure? Finding = yes.",
+  "other_defect": "Concrete defect not covered above (describe in evidence)? Finding = yes.",
+  "evidence_rule": "Every finding-direction verdict REQUIRES evidence (>=10 non-space chars) pinpointing the defect."
+ },
+ "note": "BLINDED: opaque batch ID; no Jev signals, strata, arm, or prior labels by design."
+}

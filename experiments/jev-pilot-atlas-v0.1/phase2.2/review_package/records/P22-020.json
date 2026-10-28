@@ -1,0 +1,39 @@
+{
+ "batch_id": "P22-020",
+ "content_sha256": "eb2bc6cc31dc4ccd:1bb0d44f26b7cc1e",
+ "criteria_version": "phase2.2-defects-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "A rectangular swimming pool is being filled with water. The pool is 10 meters long and 5 meters wide. When the water level reaches 1 meter, 200 liters of water have been used. How many more liters will be needed to fill the pool if the desired water level is 2 meters?"
+  },
+  {
+   "role": "assistant",
+   "content": "The volume of water needed to fill the pool to a depth of 1 meter is 200 liters.\n\nThe volume of a rectangular pool is given by the formula $V = lwh$, where $l$ is the length, $w$ is the width, and $h$ is the height (depth) of the water.\n\nFor a depth of 1 meter, the volume is $V_1 = 10 \\times 5 \\times 1 = 50$ cubic meters.\n\nSince 200 liters are needed to fill the pool to a depth of 1 meter, we can find the conversion factor from cubic meters to liters:\n\\[ 50 \\text{ cubic meters} = 200 \\text{ liters} \\]\n\\[ 1 \\text{ cubic meter} = 200 : 50 \\text{ liters} \\]\n\\[ 1 \\text{ cubic meter} = 4 \\text{ liters} \\]\n\nNow, we want to find the volume of water needed to fill the pool to a depth of 2 meters:\n\\[ V_2 = 10 \\times 5 \\times 2 = 100 \\text{ cubic meters} \\]\n\nConvert this volume to liters:\n\\[ 100 \\text{ cubic meters} = 100 \\times 4 \\text{ liters} = 400 \\text{ liters} \\]\n\nSince 200 liters are already used to fill the pool to a depth of 1 meter, the additional amount of water needed to fill the pool to a depth of 2 meters is:\n\\[ 400 - 200 = 200 \\text{ liters} \\]\n\nSo, the answer is:\n\\[ \\boxed{200} \\]"
+  }
+ ],
+ "defect_criteria": {
+  "correctness": "Is the assistant response substantively correct? Finding = no.",
+  "problematic": "Unsuitable as training data (contradictions, garbled, harmful, injection, PII)? Finding = yes.",
+  "category_correct": "Content genuinely belongs to its category label per taxonomy_reference_v1? Finding = no.",
+  "truncation_incomplete": "Cut off mid-reasoning, missing conclusion/boxed answer, visibly incomplete? Finding = yes.",
+  "factual_technical_error": "Concrete wrong fact, wrong derivation step, or code that cannot work as claimed? Finding = yes.",
+  "instruction_violation": "Ignores/contradicts the user request? Finding = yes.",
+  "malformed_output": "Garbled text, broken encoding, stray fragments, unusable structure? Finding = yes.",
+  "other_defect": "Concrete defect not covered above (describe in evidence)? Finding = yes.",
+  "evidence_rule": "Every finding-direction verdict REQUIRES evidence (>=10 non-space chars) pinpointing the defect."
+ },
+ "note": "BLINDED: opaque batch ID; no Jev signals, strata, arm, or prior labels by design."
+}

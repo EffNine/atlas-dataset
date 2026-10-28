@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-36b99a746186d743",
+ "arm": "math",
+ "content_sha256": "0ded786c182c4549:dfaf711b7cc7f908",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Monica is trying to solve the following equation by completing the square: $$x^2-8x+8 = 0.$$She successfully rewrites the above equation in the following form: $$(x + b)^2 = c,$$where $b$ and $c$ are integers. What is the value of $b + c$?"
+  },
+  {
+   "role": "assistant",
+   "content": "Given the equation $x^2 - 8x + 8 = 0$, let's complete the square.\n\nWe know that to complete the square for $x^2 - 8x$, we need to add and subtract $(\\frac{8}{2})^2 = 16$.\n\nAdd 16 to both sides:\n\\[ x^2 - 8x + 16 = 8 \\]\n\nNow the left side can be written as a perfect square:\n\\[ (x - 4)^2 = 8 \\]\n\nComparing with the form $(x + b)^2 = c$, we have:\n\\[ b = -4 \\quad \\text{and} \\quad c = 8 \\]\n\nThus, $b + c = -4 + 8 = \\boxed{4}$"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-9de5eda493a8fa51",
+ "arm": "math",
+ "content_sha256": "ecb457f67ef9b34c:22a5bb4797a9bbee",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "The vertices of a rhombus are located at $(0,0)$, $(2a,0)$, $(2b,2c)$, and $(2a-2b,2c)$.\nThe area of the rhombus is $A$, and one of its diagonals is twice the length of the other diagonal.\nWhat is the perimeter of the rhombus?"
+  },
+  {
+   "role": "assistant",
+   "content": "The area of a rhombus is given by the formula $A = \\frac{1}{2} d_1 d_2$, where $d_1$ and $d_2$ are the lengths of its diagonals. We are given that one diagonal is twice the length of the other, so let's denote the length of the shorter diagonal as $d$ and the length of the longer diagonal as $2d$.\n\nThe area of the rhombus is given as $A$, so we have:\n\\[ A = \\frac{1}{2} d \\cdot 2d \\Rightarrow A = d^2 \\Rightarrow d = \\sqrt{A} \\]\n\nThe length of the longer diagonal is $2d = 2\\sqrt{A}$.\n\nThe diagonals of a rhombus bisect each other at right angles. Given the vertices, one diagonal is from $(0,0)$ to $(2a,0)$ with length $2a$, and the other diagonal is from $(2b,2c)$ to $(2a-2b,2c)$ with length $2a-4b$ (using distance formula).\n\nHowever, from the given condition that one diagonal is twice the length of the other, and since the diagonals are $2a$ and $2\\sqrt{A}$ (with $2a$ being the longer diagonal based on the given vertices), we can equate $2a = 2\\sqrt{A}$, giving $a = \\sqrt{A}$. The length of the shorter diagonal would then be $\\sqrt{A}$, but since we are focusing on the relationship between the diagonals' lengths and not their exact orientation in this step, let's proceed to find the side length of the rhombus to calculate its perimeter.\n\nThe diagonals of a rhombus also create four right-angled triangles, with the sides of the rhombus being the hypotenuses of these triangles. The legs of these triangles are half the lengths of the diagonals. Therefore, the side length $s$ of the rhombus can be found using the Pythagorean theorem, where $s^2 = (\\frac{d}{2})^2 + (\\frac{2d}{2})^2 = (\\frac{\\sqrt{A}}{2})^2 + (\\sqrt{A})^2$.\n\nHowever, recognizing the relationship between the diagonals and the sides directly, we note that since the diagonals perpendicularly bisect each other and bisect the internal angles of the rhombus, each side of the rhombus forms a right triangle with the halves of the diagonals. Given that one diagonal is twice the other, these right triangles are 30-60-90 triangles, with the side lengths in the ratio $1:\\sqrt{3}:2$.\n\nSince the diagonals are $2\\sqrt{A}$ and $\\sqrt{A}$, the half-lengths are $\\sqrt{A}$ and $\\frac{\\sqrt{A}}{2}$. Using the Pythagorean theorem correctly:\n\\[ s^2 = \\left(\\frac{\\sqrt{A}}{2}\\right)^2 + (\\sqrt{A})^2 = \\frac{A}{4} + A = \\frac{5A}{4} \\Rightarrow s = \\frac{\\sqrt{5A}}{2} \\]\n\nHowever, considering the simpler geometric interpretation might be more straightforward. For a 30-60-90 triangle, the ratio of the side opposite the 30-degree angle to the hypotenuse is $1:2$. Given that the diagonal lengths are in a $1:2$ ratio, each side (hypotenuse of the triangle formed by half the diagonals) is simply equal to the length of the shorter diagonal, since in a 30-60-90 triangle, the hypotenuse is twice the shortest side, which here would correspond to half the length of the shorter diagonal. Thus, the length of each side is simply $\\sqrt{A}$, simplifying the geometric interpretation.\n\nThe perimeter of the rhombus is $4s = 4\\sqrt{A}$.\n\nTherefore, the perimeter of the rhombus is:\n\\[ \\boxed{4\\sqrt{A}} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

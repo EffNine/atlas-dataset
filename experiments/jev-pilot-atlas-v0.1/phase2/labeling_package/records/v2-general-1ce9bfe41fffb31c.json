@@ -1,0 +1,32 @@
+{
+ "record_id": "v2-general-1ce9bfe41fffb31c",
+ "arm": "general",
+ "content_sha256": "f538794ed9145466:eaaefdbe80b47b8f",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "name": "ewedubs/linux-kernel-commits-aireason-instruct",
+  "url": "https://huggingface.co/datasets/ewedubs/linux-kernel-commits-aireason-instruct",
+  "license": "Apache-2.0",
+  "date": "2026-08-14"
+ },
+ "category_label": "03_system_engineering",
+ "subcategory_label": "general",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n\t\tval |= pad->out_value & PMIC_GPIO_REG_MODE_VALUE_SHIFT;\n\n\t\tret = pmic_gpio_write(state, pad, PMIC_GPIO_REG_MODE_CTL, val);\n\t\tif (ret < 0)\n\t\t\treturn ret;\n\t}\n\n\tval = pad->is_enabled << PMIC_GPIO_REG_MASTER_EN_SHIFT;\n\n\tret = pmic_gpio_write(state, pad, PMIC_GPIO_REG_EN_CTL, val);\n\n\treturn ret;\n}\n\nstatic void pmic_gpio_config_dbg_show(struct pinctrl_dev *pctldev,\n\t\t\t\t      struct seq_file *s, unsigned pin)\n{\n\tstruct pmic_gpio_state *state = pinctrl_dev_get_drvdata(pctldev);\n\tstruct pmic_gpio_pad *pad;\n\tint ret, val, function;\n\n\tstatic const char *const biases[] = {\n\t\t\"pull-up 30uA\", \"pull-up 1.5uA\", \"pull-up 31.5uA\",\n\t\t\"pull-up 1.5uA + 30uA boost\", \"pull-down 10uA\", \"no pull\"\n\nInstruction:\npinctrl: qcom: spmi: fix debugfs drive strength\n\nCommit 723e8462a4fe (\"pinctrl: qcom: spmi-gpio: Fix the GPIO strength\nmapping\") fixed a long-standing issue in the Qualcomm SPMI PMIC gpio\ndriver which had the 'low' and 'high' drive strength settings switched\nbut failed to update the debugfs interface which still gets this wrong.\n\nFix the debugfs code so that the exported values match the hardware\nsettings.\n\nNote that this probably means that most devicetrees that try to describe\nthe firmware settings got this wrong if the settings were derived from\ndebugfs. Before the above mentioned commit the settings would have\nactually matched the firmware settings even if they were described\nincorrectly, but now they are inverted.\n\nFixes: 723e8462a4fe (\"pinctrl: qcom: spmi-gpio: Fix the GPIO strength mapping\")\nFixes: eadff3024472 (\"pinctrl: Qualcomm SPMI PMIC GPIO pin controller driver\")\nCc: Anjelique Melendez <quic_amelende@quicinc.com>\nCc: stable@vger.kernel.org\t# 3.19\nSigned-off-by: Johan Hovold <johan+linaro@kernel.org>\nReviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>\nLink: https://lore.kernel.org/20241025121622.1496-1-johan+linaro@kernel.org\nSigned-off-by: Linus Walleij <linus.walleij@linaro.org>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c\nindex ab07299..0c806b8 100644\n--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c\n+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c\n@@ -667,7 +667,7 @@ static void pmic_gpio_config_dbg_show(struct pinctrl_dev *pctldev,\n \t\t\"push-pull\", \"open-drain\", \"open-source\"\n \t};\n \tstatic const char *const strengths[] = {\n-\t\t\"no\", \"high\", \"medium\", \"low\"\n+\t\t\"no\", \"low\", \"medium\", \"high\"\n \t};\n \n \tpad = pctldev->desc->pins[pin].drv_data;"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

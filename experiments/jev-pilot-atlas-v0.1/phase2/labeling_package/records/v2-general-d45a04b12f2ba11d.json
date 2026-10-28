@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-general-d45a04b12f2ba11d",
+ "arm": "general",
+ "content_sha256": "4352c84598ef1fb9:a9d2877f97f865e4",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "general",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "In the complex plane, four points are given by the solutions to the equation $z^4 - 6z^2 + 5 = 0$. These points form a rectangle with two of the sides having length $\\sqrt{2}$. Find the area of the rectangle."
+  },
+  {
+   "role": "assistant",
+   "content": "First, factor the equation:\n\\[ z^4 - 6z^2 + 5 = (z^2 - 5)(z^2 - 1) = (z - \\sqrt{5})(z + \\sqrt{5})(z - 1)(z + 1) = 0 \\]\n\nThus, the roots are $z = \\sqrt{5}$, $z = -\\sqrt{5}$, $z = 1$, and $z = -1$.\n\nWe can represent these roots in the complex plane as points $(\\sqrt{5}, 0)$, $(-\\sqrt{5}, 0)$, $(1, 0)$, and $(-1, 0)$.\n\nThese four points form a rectangle with sides of length $\\sqrt{5} - 1$ and $\\sqrt{5} + 1$.\n\nThe area of the rectangle is the product of these two sides:\n\\[ (\\sqrt{5} - 1)(\\sqrt{5} + 1) = (\\sqrt{5})^2 - (1)^2 = 5 - 1 = 4 \\]\n\nSo, the area of the rectangle is:\n\\[ \\boxed{4} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

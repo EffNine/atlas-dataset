@@ -1,0 +1,780 @@
+{
+ "version": "phase2.1-labeling-package-v1",
+ "generated_at": "2026-09-17T17:26:03.862623+00:00",
+ "n_manifest_rows": 96,
+ "n_unique_records": 84,
+ "note": "96 manifest rows reference 84 unique records (9 ids repeat across low_jev/flagged/outliers strata). Label each unique record ONCE per labeler.",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "blinded": true,
+ "records": [
+  {
+   "record_id": "v2-code-0a5f6960fcd9e48b",
+   "arm": "code",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "8c35fba9272466ee:d0b9b8daa663676e",
+   "package_file": "records/v2-code-0a5f6960fcd9e48b.json"
+  },
+  {
+   "record_id": "v2-code-3eb86fbf89916aed",
+   "arm": "code",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "75075130dacc2494:778ef34b5f5da694",
+   "package_file": "records/v2-code-3eb86fbf89916aed.json"
+  },
+  {
+   "record_id": "v2-code-40c9f863bd63c43f",
+   "arm": "code",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "f86e27ce1f598af9:ca103b1d37b3bb14",
+   "package_file": "records/v2-code-40c9f863bd63c43f.json"
+  },
+  {
+   "record_id": "v2-code-49fd89641436b479",
+   "arm": "code",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "938971021e89cd88:57a810467af331eb",
+   "package_file": "records/v2-code-49fd89641436b479.json"
+  },
+  {
+   "record_id": "v2-code-721a16b4da322b7c",
+   "arm": "code",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "92e9410d9f1fe201:7da97e8979686c7a",
+   "package_file": "records/v2-code-721a16b4da322b7c.json"
+  },
+  {
+   "record_id": "v2-code-a01d2697ad516739",
+   "arm": "code",
+   "strata": [
+    "low_jev"
+   ],
+   "content_sha256": "efbac10cda6c1ef7:5f79fbb7e321b24a",
+   "package_file": "records/v2-code-a01d2697ad516739.json"
+  },
+  {
+   "record_id": "v2-code-b622be913aee458f",
+   "arm": "code",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "70c79d6da0284ce8:b720439fe90e5673",
+   "package_file": "records/v2-code-b622be913aee458f.json"
+  },
+  {
+   "record_id": "v2-code-c52843bf7328daaf",
+   "arm": "code",
+   "strata": [
+    "flagged",
+    "low_jev",
+    "outliers"
+   ],
+   "content_sha256": "7eec6e997311bf10:2dcab4569a942fed",
+   "package_file": "records/v2-code-c52843bf7328daaf.json"
+  },
+  {
+   "record_id": "v2-code-d3c43b994aa8b2f3",
+   "arm": "code",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "658b186e181f63e4:d09c1eff4eb13be7",
+   "package_file": "records/v2-code-d3c43b994aa8b2f3.json"
+  },
+  {
+   "record_id": "v2-code-e0c53345c359a77e",
+   "arm": "code",
+   "strata": [
+    "flagged",
+    "low_jev"
+   ],
+   "content_sha256": "cf4081c50e2bce78:994791bc1468bd91",
+   "package_file": "records/v2-code-e0c53345c359a77e.json"
+  },
+  {
+   "record_id": "v2-code-eb9dc008dbf1fd61",
+   "arm": "code",
+   "strata": [
+    "spread"
+   ],
+   "content_sha256": "2ffeda0f37f0b31f:4d9894b021f03db2",
+   "package_file": "records/v2-code-eb9dc008dbf1fd61.json"
+  },
+  {
+   "record_id": "v2-code-ec07a971a6a0a235",
+   "arm": "code",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "2260a8491280312f:1d2160f01959bb4e",
+   "package_file": "records/v2-code-ec07a971a6a0a235.json"
+  },
+  {
+   "record_id": "v2-code-eff570a747a768aa",
+   "arm": "code",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "d9558af32ba6cbcd:b5ab77d37fb636b5",
+   "package_file": "records/v2-code-eff570a747a768aa.json"
+  },
+  {
+   "record_id": "v2-code-f1f9c3b367a7f5f8",
+   "arm": "code",
+   "strata": [
+    "flagged",
+    "low_jev",
+    "outliers"
+   ],
+   "content_sha256": "9ab38d31087d297d:32bbca94cff00471",
+   "package_file": "records/v2-code-f1f9c3b367a7f5f8.json"
+  },
+  {
+   "record_id": "v2-code-f2f3334354fa2bb4",
+   "arm": "code",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "1a82e3a4fcebb5f0:1112300429f02c45",
+   "package_file": "records/v2-code-f2f3334354fa2bb4.json"
+  },
+  {
+   "record_id": "v2-general-02a2c81f7f5c8bb6",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "f1cff6130b126bdd:4ee37ed2825c6d75",
+   "package_file": "records/v2-general-02a2c81f7f5c8bb6.json"
+  },
+  {
+   "record_id": "v2-general-082d0cb3ffbd78b9",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "175ae8bb33947daf:d9919fc7662b55d3",
+   "package_file": "records/v2-general-082d0cb3ffbd78b9.json"
+  },
+  {
+   "record_id": "v2-general-13388d63aa48543f",
+   "arm": "general",
+   "strata": [
+    "spread"
+   ],
+   "content_sha256": "6ffad925244a6950:ddfac4d062d51e46",
+   "package_file": "records/v2-general-13388d63aa48543f.json"
+  },
+  {
+   "record_id": "v2-general-1ce9bfe41fffb31c",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "f538794ed9145466:eaaefdbe80b47b8f",
+   "package_file": "records/v2-general-1ce9bfe41fffb31c.json"
+  },
+  {
+   "record_id": "v2-general-2217540aed022f20",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "c3c7cf588dabed60:c783704bc0d3dd7b",
+   "package_file": "records/v2-general-2217540aed022f20.json"
+  },
+  {
+   "record_id": "v2-general-24c5777ba3ce680d",
+   "arm": "general",
+   "strata": [
+    "spread"
+   ],
+   "content_sha256": "7032b70cdb21a3d6:51be9525a4ea875b",
+   "package_file": "records/v2-general-24c5777ba3ce680d.json"
+  },
+  {
+   "record_id": "v2-general-4c0b8eb47ab7bdba",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "7a117615fccd4d48:b64a54727d6c514f",
+   "package_file": "records/v2-general-4c0b8eb47ab7bdba.json"
+  },
+  {
+   "record_id": "v2-general-503dcd2a402044e6",
+   "arm": "general",
+   "strata": [
+    "spread"
+   ],
+   "content_sha256": "1f07796a60c95eb7:a1f6c1f9598eda33",
+   "package_file": "records/v2-general-503dcd2a402044e6.json"
+  },
+  {
+   "record_id": "v2-general-73bcfcb7ab1215ce",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "047988baa5af80d3:7dfc8d4cfe8d5f4a",
+   "package_file": "records/v2-general-73bcfcb7ab1215ce.json"
+  },
+  {
+   "record_id": "v2-general-7dbec7b81fa1af56",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "0183a0fabfe0276a:686d63a8c9b8ee17",
+   "package_file": "records/v2-general-7dbec7b81fa1af56.json"
+  },
+  {
+   "record_id": "v2-general-885deb11224f7801",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "17d7a62ffd0f5e05:25c44e2cd8b4ae2c",
+   "package_file": "records/v2-general-885deb11224f7801.json"
+  },
+  {
+   "record_id": "v2-general-896084c346593174",
+   "arm": "general",
+   "strata": [
+    "low_jev"
+   ],
+   "content_sha256": "2563cdee2682870c:039d06ff74019b21",
+   "package_file": "records/v2-general-896084c346593174.json"
+  },
+  {
+   "record_id": "v2-general-9330d5e43617bd67",
+   "arm": "general",
+   "strata": [
+    "low_jev",
+    "outliers"
+   ],
+   "content_sha256": "efbac10cda6c1ef7:5f79fbb7e321b24a",
+   "package_file": "records/v2-general-9330d5e43617bd67.json"
+  },
+  {
+   "record_id": "v2-general-94fb9c5b706679c9",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "1a089ebde40b260f:5c9b92a2d4944839",
+   "package_file": "records/v2-general-94fb9c5b706679c9.json"
+  },
+  {
+   "record_id": "v2-general-98c309025d0bf8fd",
+   "arm": "general",
+   "strata": [
+    "low_jev"
+   ],
+   "content_sha256": "c18335eceeddd431:ee3a2db72e4e058f",
+   "package_file": "records/v2-general-98c309025d0bf8fd.json"
+  },
+  {
+   "record_id": "v2-general-99c46a8615349a07",
+   "arm": "general",
+   "strata": [
+    "outliers"
+   ],
+   "content_sha256": "e09f2f06fba2878e:b15079ba0b887c43",
+   "package_file": "records/v2-general-99c46a8615349a07.json"
+  },
+  {
+   "record_id": "v2-general-a2187879e08d8ad8",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "ac4843e0786eb8b1:9159f59fecd8441a",
+   "package_file": "records/v2-general-a2187879e08d8ad8.json"
+  },
+  {
+   "record_id": "v2-general-a3afe18dc0a8d761",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "c2d44fdc7239895b:a96ab50514be84cd",
+   "package_file": "records/v2-general-a3afe18dc0a8d761.json"
+  },
+  {
+   "record_id": "v2-general-b6f27e0be7c10f61",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "33a8845680be78b9:63681c16468a7886",
+   "package_file": "records/v2-general-b6f27e0be7c10f61.json"
+  },
+  {
+   "record_id": "v2-general-ba8da6eb3ddfdb36",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "08003fdc8b6d0912:f7402dead346c5d7",
+   "package_file": "records/v2-general-ba8da6eb3ddfdb36.json"
+  },
+  {
+   "record_id": "v2-general-c28069d1bc1fb952",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "360343632af96cb5:96c38d39b936d027",
+   "package_file": "records/v2-general-c28069d1bc1fb952.json"
+  },
+  {
+   "record_id": "v2-general-d45a04b12f2ba11d",
+   "arm": "general",
+   "strata": [
+    "outliers"
+   ],
+   "content_sha256": "4352c84598ef1fb9:a9d2877f97f865e4",
+   "package_file": "records/v2-general-d45a04b12f2ba11d.json"
+  },
+  {
+   "record_id": "v2-general-d52f572bd9de1a3a",
+   "arm": "general",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "8c1d40e9a2845ead:d68f13d00c14ddd3",
+   "package_file": "records/v2-general-d52f572bd9de1a3a.json"
+  },
+  {
+   "record_id": "v2-general-dbb22a131d38fac9",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "faf7b66f4394bbb0:351d2a5344e0f4fd",
+   "package_file": "records/v2-general-dbb22a131d38fac9.json"
+  },
+  {
+   "record_id": "v2-general-f53c32ba87a65a3d",
+   "arm": "general",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "4b380870769adba6:da6516669926be90",
+   "package_file": "records/v2-general-f53c32ba87a65a3d.json"
+  },
+  {
+   "record_id": "v2-general-fd8cb6485db662e5",
+   "arm": "general",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "b4820415473d3cd0:3af661ad2108a771",
+   "package_file": "records/v2-general-fd8cb6485db662e5.json"
+  },
+  {
+   "record_id": "v2-math-0103476137d1b28f",
+   "arm": "math",
+   "strata": [
+    "low_jev"
+   ],
+   "content_sha256": "7dca6f39159cb5dd:a2123c9dbc2c7d79",
+   "package_file": "records/v2-math-0103476137d1b28f.json"
+  },
+  {
+   "record_id": "v2-math-059a07cdca71586a",
+   "arm": "math",
+   "strata": [
+    "low_jev"
+   ],
+   "content_sha256": "fb372544f419efc8:ac1a905fe52cfd63",
+   "package_file": "records/v2-math-059a07cdca71586a.json"
+  },
+  {
+   "record_id": "v2-math-18873fa006dcc1bc",
+   "arm": "math",
+   "strata": [
+    "low_jev",
+    "outliers"
+   ],
+   "content_sha256": "3760d03e6bc4ac54:581ab22c6c103c10",
+   "package_file": "records/v2-math-18873fa006dcc1bc.json"
+  },
+  {
+   "record_id": "v2-math-2c7ae9c58deae98b",
+   "arm": "math",
+   "strata": [
+    "outliers"
+   ],
+   "content_sha256": "7ce9e6bc4aa7aa48:73ae65203188107e",
+   "package_file": "records/v2-math-2c7ae9c58deae98b.json"
+  },
+  {
+   "record_id": "v2-math-2d9802eb3fc7887d",
+   "arm": "math",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "8576eaa047e4dbf8:cec4dcfbcc1efff5",
+   "package_file": "records/v2-math-2d9802eb3fc7887d.json"
+  },
+  {
+   "record_id": "v2-math-2eca69760d4b6413",
+   "arm": "math",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "86c91e0c93251a3b:a88e9ace69b01411",
+   "package_file": "records/v2-math-2eca69760d4b6413.json"
+  },
+  {
+   "record_id": "v2-math-30b263059fc2e141",
+   "arm": "math",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "26dfb6022c8f5b1e:ab46002023fb2dca",
+   "package_file": "records/v2-math-30b263059fc2e141.json"
+  },
+  {
+   "record_id": "v2-math-348fd57c957ddb93",
+   "arm": "math",
+   "strata": [
+    "low_jev"
+   ],
+   "content_sha256": "5b97424a96128f4e:c6bf317e12a11443",
+   "package_file": "records/v2-math-348fd57c957ddb93.json"
+  },
+  {
+   "record_id": "v2-math-36b99a746186d743",
+   "arm": "math",
+   "strata": [
+    "spread"
+   ],
+   "content_sha256": "0ded786c182c4549:dfaf711b7cc7f908",
+   "package_file": "records/v2-math-36b99a746186d743.json"
+  },
+  {
+   "record_id": "v2-math-380200a3c7bfc8d8",
+   "arm": "math",
+   "strata": [
+    "low_jev"
+   ],
+   "content_sha256": "f7ca006d415d0fc4:32b36f459f1e9d30",
+   "package_file": "records/v2-math-380200a3c7bfc8d8.json"
+  },
+  {
+   "record_id": "v2-math-382cef51b5ff9276",
+   "arm": "math",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "73ec3ab3327f1ae9:d65931acf8641e09",
+   "package_file": "records/v2-math-382cef51b5ff9276.json"
+  },
+  {
+   "record_id": "v2-math-3fead721cbbb4d62",
+   "arm": "math",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "4357884fcd7bc983:e958bb0f327f2991",
+   "package_file": "records/v2-math-3fead721cbbb4d62.json"
+  },
+  {
+   "record_id": "v2-math-44a53543d48fba20",
+   "arm": "math",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "f05aac8d1e1d0c3b:c9e456e2bc4b0db6",
+   "package_file": "records/v2-math-44a53543d48fba20.json"
+  },
+  {
+   "record_id": "v2-math-481f44ccaed1a261",
+   "arm": "math",
+   "strata": [
+    "low_jev"
+   ],
+   "content_sha256": "401330949586efe9:3c16e1049d5cd156",
+   "package_file": "records/v2-math-481f44ccaed1a261.json"
+  },
+  {
+   "record_id": "v2-math-4d4ac1d9bc9d1c27",
+   "arm": "math",
+   "strata": [
+    "flagged",
+    "low_jev",
+    "outliers"
+   ],
+   "content_sha256": "5e023b22b4094695:67a7a3c538471373",
+   "package_file": "records/v2-math-4d4ac1d9bc9d1c27.json"
+  },
+  {
+   "record_id": "v2-math-501c77b2e08b35cd",
+   "arm": "math",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "ea0279034a3c843d:3568865ba4e67b7b",
+   "package_file": "records/v2-math-501c77b2e08b35cd.json"
+  },
+  {
+   "record_id": "v2-math-55dc672d5c51d842",
+   "arm": "math",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "f9ae665754cabfc3:ec89650cfb05cd9e",
+   "package_file": "records/v2-math-55dc672d5c51d842.json"
+  },
+  {
+   "record_id": "v2-math-564fc7cea260e12f",
+   "arm": "math",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "e47baac91cfc2d02:ad04c854bcb52244",
+   "package_file": "records/v2-math-564fc7cea260e12f.json"
+  },
+  {
+   "record_id": "v2-math-790a1b815b565060",
+   "arm": "math",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "175ae8bb33947daf:d9919fc7662b55d3",
+   "package_file": "records/v2-math-790a1b815b565060.json"
+  },
+  {
+   "record_id": "v2-math-92e713e52bf1130d",
+   "arm": "math",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "ed950ded1862960d:0a00a8acef591508",
+   "package_file": "records/v2-math-92e713e52bf1130d.json"
+  },
+  {
+   "record_id": "v2-math-9de5eda493a8fa51",
+   "arm": "math",
+   "strata": [
+    "flagged",
+    "low_jev"
+   ],
+   "content_sha256": "ecb457f67ef9b34c:22a5bb4797a9bbee",
+   "package_file": "records/v2-math-9de5eda493a8fa51.json"
+  },
+  {
+   "record_id": "v2-math-b6262a19831c2d9f",
+   "arm": "math",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "4352c84598ef1fb9:a9d2877f97f865e4",
+   "package_file": "records/v2-math-b6262a19831c2d9f.json"
+  },
+  {
+   "record_id": "v2-math-c87eaba80943bccb",
+   "arm": "math",
+   "strata": [
+    "low_jev"
+   ],
+   "content_sha256": "ad3ed84d23795584:39174d0f097b4a42",
+   "package_file": "records/v2-math-c87eaba80943bccb.json"
+  },
+  {
+   "record_id": "v2-math-cf114d62f36f71e7",
+   "arm": "math",
+   "strata": [
+    "flagged",
+    "low_jev"
+   ],
+   "content_sha256": "39b7bc401e34e953:b8b94088bfbbadcb",
+   "package_file": "records/v2-math-cf114d62f36f71e7.json"
+  },
+  {
+   "record_id": "v2-math-d09c6656d2961023",
+   "arm": "math",
+   "strata": [
+    "outliers"
+   ],
+   "content_sha256": "dfb1d0899cae53a4:7eb4a59b6b58f515",
+   "package_file": "records/v2-math-d09c6656d2961023.json"
+  },
+  {
+   "record_id": "v2-math-d400993a42026fc1",
+   "arm": "math",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "1a0e71bc68a642a4:db7a62a2b2a8d6e9",
+   "package_file": "records/v2-math-d400993a42026fc1.json"
+  },
+  {
+   "record_id": "v2-math-e3e6d4f5623e85f9",
+   "arm": "math",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "1874e7a1c27bcc7b:22245cf72a3d5b1c",
+   "package_file": "records/v2-math-e3e6d4f5623e85f9.json"
+  },
+  {
+   "record_id": "v2-math-e7600473cff0f5ae",
+   "arm": "math",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "1cc0dfd5b05f5538:3027ec5dd0c1ec9e",
+   "package_file": "records/v2-math-e7600473cff0f5ae.json"
+  },
+  {
+   "record_id": "v2-math-fa7762f9793cde06",
+   "arm": "math",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "a3a3db5654aba0d3:177a9c084959aa42",
+   "package_file": "records/v2-math-fa7762f9793cde06.json"
+  },
+  {
+   "record_id": "v2-math-fffc0f9c847ba7b1",
+   "arm": "math",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "a1934ca2b6422d2a:93c245c613a826b4",
+   "package_file": "records/v2-math-fffc0f9c847ba7b1.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_29e10487d6df050afeee886b7c1da208",
+   "arm": "systems",
+   "strata": [
+    "spread"
+   ],
+   "content_sha256": "5f138fb4fc862c6d:af6cdabba867366b",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_29e10487d6df050afeee886b7c1da208.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_38e8844005e6068f336a3ad45451a562",
+   "arm": "systems",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "a1885950ed567f4d:585256ed257c2397",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_38e8844005e6068f336a3ad45451a562.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_40369bfe717e96e26650eeecfa5a6363",
+   "arm": "systems",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "02c9ed1f3384cb4d:cdff2f1580b55e9f",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_40369bfe717e96e26650eeecfa5a6363.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_40767b0dc768060266d261b4a330164b",
+   "arm": "systems",
+   "strata": [
+    "low_jev"
+   ],
+   "content_sha256": "47405ccbb043fb6d:57b8409b9e6ec6f5",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_40767b0dc768060266d261b4a330164b.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_444fdad88f35de9fd1c130b2c4e45506",
+   "arm": "systems",
+   "strata": [
+    "outliers"
+   ],
+   "content_sha256": "603670a61c931c5b:c13103deadcc164c",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_444fdad88f35de9fd1c130b2c4e45506.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_553c7d5ba2fe64cdbfcdf49560ef71ef",
+   "arm": "systems",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "f51ca8508188aa68:14cb79d72b5846bc",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_553c7d5ba2fe64cdbfcdf49560ef71ef.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_597aa16c782496bf74c5dc3b45ff472a",
+   "arm": "systems",
+   "strata": [
+    "flagged",
+    "low_jev"
+   ],
+   "content_sha256": "1c83b01f036369c4:96adce9e66a45efe",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_597aa16c782496bf74c5dc3b45ff472a.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_5e20e3499682c4f1724438d23afcafd4",
+   "arm": "systems",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "891e045fc28a6373:260bd6e18700dbc1",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_5e20e3499682c4f1724438d23afcafd4.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_5f2a404cbccec0c8d6635f0997cea2ac",
+   "arm": "systems",
+   "strata": [
+    "flagged"
+   ],
+   "content_sha256": "231cef09b9e36784:8750299cf2ecf06d",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_5f2a404cbccec0c8d6635f0997cea2ac.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_6569fc12e442ea973d96db39e542aa19",
+   "arm": "systems",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "4ea797785a0363ee:fd9cc667e388a3c8",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_6569fc12e442ea973d96db39e542aa19.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_84b3adc2430eafd2eb703570075c3c14",
+   "arm": "systems",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "3df976ee7dbc1770:553aec23f72d6d79",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_84b3adc2430eafd2eb703570075c3c14.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_99f1c46011cc0feb47d4f4f7bee70a03",
+   "arm": "systems",
+   "strata": [
+    "normal"
+   ],
+   "content_sha256": "38d0e5f64cbf2d19:5b8eee0664f38345",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_99f1c46011cc0feb47d4f4f7bee70a03.json"
+  },
+  {
+   "record_id": "v2-systems-p1-y9-linux-kernel_9b75a867cc9ddbafcaf35029358ac500_ac965c33",
+   "arm": "systems",
+   "strata": [
+    "low_jev"
+   ],
+   "content_sha256": "8b2e1880a236aa05:ac965c3392fb7da1",
+   "package_file": "records/v2-systems-p1-y9-linux-kernel_9b75a867cc9ddbafcaf35029358ac500_ac965c33.json"
+  }
+ ]
+}

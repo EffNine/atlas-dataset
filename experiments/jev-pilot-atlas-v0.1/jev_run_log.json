@@ -1,0 +1,14 @@
+{
+ "ran_at": "2026-09-17T07:22:42.168432+00:00",
+ "batch_records": 497,
+ "skipped_already_done": 3,
+ "ok": 497,
+ "errors": 0,
+ "workers": 8,
+ "elapsed_s": 20.4,
+ "avg_latency_s": 0.322,
+ "total_input_tokens": 754986,
+ "total_output_tokens": 49700,
+ "tokens_reported": 497,
+ "state_sha256_note": "state_sha256 is over the (possibly truncated) state payload sent to Jev; content_sha256 is over the full original messages"
+}

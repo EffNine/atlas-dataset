@@ -1,0 +1,34 @@
+{
+ "record_id": "v2-math-2eca69760d4b6413",
+ "arm": "math",
+ "content_sha256": "86c91e0c93251a3b:a88e9ace69b01411",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": {
+  "source_id": "expert-math-002",
+  "name": "OpenMathInstruct-2",
+  "url": "https://huggingface.co/datasets/nvidia/OpenMathInstruct-2",
+  "license": "CC-BY-4.0",
+  "accessed_at": "2026-08-02",
+  "version": "nvidia/OpenMathInstruct-2 train split, stream snapshot"
+ },
+ "category_label": "mathematics",
+ "subcategory_label": "math",
+ "license": "CC-BY-4.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "What is the degree of the polynomial obtained by multiplying the three polynomials $x^2+1$, $x^3+x+1$, and $x^4+x^2+1$?"
+  },
+  {
+   "role": "assistant",
+   "content": "When we multiply the three polynomials, the degree of the resulting polynomial will be the sum of the degrees of the individual polynomials.\n\nThe degrees of the polynomials are:\n- $x^2+1$ has degree 2\n- $x^3+x+1$ has degree 3\n- $x^4+x^2+1$ has degree 4\n\nAdding these degrees together, we get:\n\\[ 2 + 3 + 4 = 5 + 4 = 9 \\]\n\nSo, the resulting polynomial has a degree of 9.\n\nThe answer is:\n\\[ \\boxed{9} \\]"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}

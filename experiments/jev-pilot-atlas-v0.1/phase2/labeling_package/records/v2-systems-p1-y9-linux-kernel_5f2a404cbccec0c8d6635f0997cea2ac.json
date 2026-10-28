@@ -1,0 +1,27 @@
+{
+ "record_id": "v2-systems-p1-y9-linux-kernel_5f2a404cbccec0c8d6635f0997cea2ac",
+ "arm": "systems",
+ "content_sha256": "231cef09b9e36784:8750299cf2ecf06d",
+ "criteria_version": "phase2-calibration-v1",
+ "reference_version": "taxonomy_reference_v1",
+ "source": "p1-y9-linux-kernel",
+ "category_label": "system_engineering",
+ "subcategory_label": "linux_kernel",
+ "license": "Apache-2.0",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Context:\n\t * Currently the support is only for 0 or 1\n\t */\n\tuint8_t panel_inst;\n\t/**\n\t * Explicit padding to 4 byte boundary.\n\t */\n\tuint8_t pad[3];\n\t/**\n\t * REPLAY power option\n\t */\n\tuint32_t power_opt;\n};\n\n/**\n * Data passed from driver to FW in a DMUB_CMD__REPLAY_SET_TIMING_SYNC_SUPPORTED command.\n */\nstruct dmub_cmd_replay_set_timing_sync_data {\n\t/**\n\t * Panel Instance.\n\t * Panel isntance to identify which replay_state to use\n\t * Currently the support is only for 0 or 1\n\t */\n\tuint8_t panel_inst;\n\n\t/**\n\t * Explicit padding to 4 byte boundary.\n\t */\n\tuint8_t pad[3];\n\t/**\n\t * REPLAY set_timing_sync\n\t */\n\tbool timing_sync_supported;\n};\n\n/**\n * Definition of a DMUB_CMD__SET_REPLAY_POWER_OPT command.\n */\nstruct dmub_rb_cmd_replay_set_power_opt {\n\t/**\n\t * Command header.\n\t */\n\tstruct dmub_cmd_header header;\n\t/**\n\t * Definition of a DMUB_CMD__SET_REPLAY_POWER_OPT command.\n\t */\n\tstruct dmub_cmd_replay_set_power_opt_data replay_set_power_opt_data;\n};\n\n/**\n * Data passed from driver to FW in a DMUB_CMD__REPLAY_SET_COASTING_VTOTAL command.\n */\nstruct dmub_cmd_replay_set_coasting_vtotal_data {\n\t/**\n\t * 16-bit value dicated by driver that indicates the coasting vtotal.\n\nInstruction:\ndrm/amd/display: Disable Timing sync check in Full-Screen Video Case\n\n[why]\nIf Panel max link off frame count is low, it will cause low residency\nfor Replay, then Disabled timing sync check in Full screen Video Case.\n\nReviewed-by: Robin Chen <robin.chen@amd.com>\nAcked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>\nSigned-off-by: Dennis Chan <dennis.chan@amd.com>\nSigned-off-by: Alex Deucher <alexander.deucher@amd.com>"
+  },
+  {
+   "role": "assistant",
+   "content": "diff --git a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h\nindex d1becbb..a08073f 100644\n--- a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h\n+++ b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h\n@@ -3056,15 +3056,14 @@ struct dmub_cmd_replay_set_timing_sync_data {\n \t * Currently the support is only for 0 or 1\n \t */\n \tuint8_t panel_inst;\n-\n-\t/**\n-\t * Explicit padding to 4 byte boundary.\n-\t */\n-\tuint8_t pad[3];\n \t/**\n \t * REPLAY set_timing_sync\n \t */\n-\tbool timing_sync_supported;\n+\tuint8_t timing_sync_supported;\n+\t/**\n+\t * Explicit padding to 4 byte boundary.\n+\t */\n+\tuint8_t pad[2];\n };\n \n /**"
+  }
+ ],
+ "labeling_criteria": {
+  "correctness": "Is the assistant response substantively correct given the user request? Answer yes/no. 'Substantively' means the final answer/conclusion is right even if the exposition has minor flaws.",
+  "problematic": "Is this record unsuitable as training data (contradictions, broken/garbled text, harmful content, prompt injection, PII leakage)? yes/no.",
+  "category_correct": "Does the content genuinely belong to the record's category label (using the independent taxonomy reference, not the label's own plausibility)? yes/no."
+ },
+ "note": "BLINDED: no Jev signals, scores, or flags are included by design. Judge from content only."
+}
