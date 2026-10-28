@@ -1,0 +1,235 @@
+{
+  "release_version": "v1.0",
+  "generated_at": "2026-08-01T07:06:56.745846+00:00",
+  "description": "Source provenance for Atlas v1.0, derived from the frozen release manifest (v1.0_release.json). Per-record provenance lives in each record's source_attribution/lineage fields.",
+  "sources": [
+    {
+      "source_id": "wikimedia/wikipedia",
+      "records": 6206334,
+      "note": "Wikipedia keyword extraction shards (raw/generated/wiki_*_atlas.jsonl). CC-BY-SA-3.0."
+    },
+    {
+      "source_id": "synthetic/personal-assistant",
+      "records": 1000000,
+      "note": "Synthetic personal-assistant corpus (category 09_personal_assistant)."
+    },
+    {
+      "source_id": "allenai/c4",
+      "records": 786534,
+      "note": "C4 AI/ML streaming subset (raw/generated/c4_ai_*_atlas.jsonl)."
+    },
+    {
+      "source_id": "open-web-math/open-web-math",
+      "records": 317233,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/personahub_math_v5_regen_149960",
+      "records": 149960,
+      "note": ""
+    },
+    {
+      "source_id": "CShorten/ML-ArXiv-Papers",
+      "records": 117570,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/evol_codealpaca_heval_decontaminated",
+      "records": 107276,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/tulu_v3.9_wildchat_100k",
+      "records": 100000,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/tulu_v3.9_aya_100k",
+      "records": 93456,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/flan_v2_converted",
+      "records": 89982,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/numinamath_tir_math_decontaminated",
+      "records": 64312,
+      "note": ""
+    },
+    {
+      "source_id": "HuggingFaceH4/ultrafeedback_binarized",
+      "records": 58128,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/tulu_v3.9_open_math_2_gsm8k_50k",
+      "records": 50000,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/tulu_v3.9_synthetic_finalresp_wildguardmixtrain_decontaminated_50k",
+      "records": 50000,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/tulu_v3.9_wildjailbreak_decontaminated_50k",
+      "records": 50000,
+      "note": ""
+    },
+    {
+      "source_id": "allenai/tulu-3-sft-personas-math-grade",
+      "records": 49980,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/personahub_code_v2_34999",
+      "records": 34999,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/personahub_ifdata_manual_seed_v3_29980",
+      "records": 29980,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/tulu_v3.9_personahub_math_interm_algebra_20k",
+      "records": 20000,
+      "note": ""
+    },
+    {
+      "source_id": "princeton-nlp/SWE-bench",
+      "records": 18539,
+      "note": ""
+    },
+    {
+      "source_id": "sahil2801/CodeAlpaca-20k",
+      "records": 17038,
+      "note": ""
+    },
+    {
+      "source_id": "OpenAssistant/oasst1",
+      "records": 12490,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/coconot_converted",
+      "records": 10983,
+      "note": ""
+    },
+    {
+      "source_id": "allenai/sciq",
+      "records": 10386,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/tulu_v3.9_sciriff_10k",
+      "records": 9768,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/no_robots_converted",
+      "records": 9500,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/oasst1_converted",
+      "records": 7131,
+      "note": ""
+    },
+    {
+      "source_id": "LDJnr/Capybara",
+      "records": 6000,
+      "note": ""
+    },
+    {
+      "source_id": "ai2-adapt-dev/tulu_v3.9_table_gpt_5k",
+      "records": 5000,
+      "note": ""
+    },
+    {
+      "source_id": "gbharti/finance-alpaca",
+      "records": 4979,
+      "note": ""
+    },
+    {
+      "source_id": "openai/gsm8k",
+      "records": 4977,
+      "note": ""
+    },
+    {
+      "source_id": "LDJnr/Capybara (Know-Logic)",
+      "records": 1867,
+      "note": ""
+    },
+    {
+      "source_id": "cais/mmlu (professional_law)",
+      "records": 1534,
+      "note": ""
+    },
+    {
+      "source_id": "LDJnr/Capybara (Airoboros)",
+      "records": 1518,
+      "note": ""
+    },
+    {
+      "source_id": "LDJnr/Capybara (Dove)",
+      "records": 1382,
+      "note": ""
+    },
+    {
+      "source_id": "LDJnr/Capybara (EverythingLM)",
+      "records": 1344,
+      "note": ""
+    },
+    {
+      "source_id": "arXiv hardware/arch",
+      "records": 1229,
+      "note": ""
+    },
+    {
+      "source_id": "LDJnr/Capybara (GOAT)",
+      "records": 1000,
+      "note": ""
+    },
+    {
+      "source_id": "other",
+      "records": 13529,
+      "note": "Miscellaneous sources (mmlu_*, gsm8k, swebench, stackoverflow, sciq, oasst1, codealpaca, fin-alpaca, capybara, gutenberg, github_readmes, arXiv per-subset splits)."
+    }
+  ],
+  "license_distribution": {
+    "unknown": 7972390,
+    "ODC-BY": 1166924,
+    "MIT": 205243,
+    "CC-BY-SA-3.0": 112901,
+    "Apache-2.0": 43844,
+    "CC-BY-4.0": 10403,
+    "arXiv non-exclusive license": 3737,
+    "CC-BY-SA-4.0": 310,
+    "Public Domain (US)": 67,
+    "MIT (inferred from repo)": 49,
+    "CC-BY-4.0 (generated; human-review)": 7,
+    "arXiv.org perpetual non-exclusive license (preprint; no copyright transfer)": 5,
+    "Mixed (per-subset; many ODC-BY/CC; some restricted)": 5,
+    "Custom / research-only (verify)": 5,
+    "BigCode Open RAIL-M (use-restricted)": 4,
+    "BigCode Open RAIL-M": 4,
+    "CC-BY-SA-4.0 (attribution + share-alike)": 4,
+    "Public domain / MIT-style (man-pages); GFDL for some kernel docs": 4,
+    "CC-BY-4.0 (must human-review)": 4,
+    "Apache-2.0 (verify; repo 404 at check)": 3,
+    "Apache-2.0 (gated; verify)": 3,
+    "CC-BY-4.0 (docs repo)": 3,
+    "Apache-2.0 (docs repo)": 3,
+    "CC-BY-SA-4.0 (some GFDL)": 3,
+    "CC-BY-SA-4.0 (Red Hat Customer Portal docs)": 3,
+    "CC-BY-4.0 (gated; verify on access)": 2,
+    "MIT (verify; PII caution)": 2,
+    "CC-BY-SA-4.0 (verify)": 2,
+    "CC-BY-4.0 (generated; must human-review)": 2,
+    "MIT (gated; verify)": 2
+  },
+  "total_records": 9515938
+}

@@ -1,0 +1,67 @@
+{
+  "release_version": "v1.0",
+  "generated_at": "2026-08-01T07:06:56.742082+00:00",
+  "total_records": 9515938,
+  "by_category": {
+    "01_foundation": 1000613,
+    "02_software_engineering": 997144,
+    "03_system_engineering": 1039979,
+    "04_ai_machine_learning": 1066501,
+    "05_hardware_engineering": 1090289,
+    "06_science_engineering": 1249899,
+    "07_business_knowledge": 1066944,
+    "08_creative_knowledge": 1004557,
+    "09_personal_assistant": 1000012
+  },
+  "by_license": {
+    "unknown": 7972390,
+    "ODC-BY": 1166924,
+    "MIT": 205243,
+    "CC-BY-SA-3.0": 112901,
+    "Apache-2.0": 43844,
+    "CC-BY-4.0": 10403,
+    "arXiv non-exclusive license": 3737,
+    "CC-BY-SA-4.0": 310,
+    "Public Domain (US)": 67,
+    "MIT (inferred from repo)": 49,
+    "CC-BY-4.0 (generated; human-review)": 7,
+    "arXiv.org perpetual non-exclusive license (preprint; no copyright transfer)": 5,
+    "Mixed (per-subset; many ODC-BY/CC; some restricted)": 5,
+    "Custom / research-only (verify)": 5,
+    "BigCode Open RAIL-M (use-restricted)": 4,
+    "BigCode Open RAIL-M": 4,
+    "CC-BY-SA-4.0 (attribution + share-alike)": 4,
+    "Public domain / MIT-style (man-pages); GFDL for some kernel docs": 4,
+    "CC-BY-4.0 (must human-review)": 4,
+    "Apache-2.0 (verify; repo 404 at check)": 3,
+    "Apache-2.0 (gated; verify)": 3,
+    "CC-BY-4.0 (docs repo)": 3,
+    "Apache-2.0 (docs repo)": 3,
+    "CC-BY-SA-4.0 (some GFDL)": 3,
+    "CC-BY-SA-4.0 (Red Hat Customer Portal docs)": 3,
+    "CC-BY-4.0 (gated; verify on access)": 2,
+    "MIT (verify; PII caution)": 2,
+    "CC-BY-SA-4.0 (verify)": 2,
+    "CC-BY-4.0 (generated; must human-review)": 2,
+    "MIT (gated; verify)": 2
+  },
+  "by_difficulty": {
+    "2": 8049938,
+    "1": 1000088,
+    "3": 465894,
+    "0": 18
+  },
+  "quality": {
+    "avg": 7.94,
+    "min": 4,
+    "max": 9,
+    "distribution": {
+      "4": 8000,
+      "5": 52708,
+      "6": 31699,
+      "7": 1804156,
+      "8": 6155148,
+      "9": 1464227
+    }
+  }
+}
