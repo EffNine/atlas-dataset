@@ -1,0 +1,28 @@
+# Smoke test: tiny data slice, tiny model, verifies loss flow + ckpt + inference.
+seed: 7
+splits: data/splits
+tokenizer: data/tokenizer_smoke/tokenizer.json
+run_dir: checkpoints/smoke
+
+vocab_size: 4000
+d_model: 128
+n_heads: 4
+d_ff: 512
+n_enc_layers: 2
+n_dec_layers: 2
+dropout: 0.1
+max_len: 64
+
+batch_size: 32
+lr: 0.0003
+weight_decay: 0.01
+label_smoothing: 0.1
+warmup_steps: 50
+max_epochs: 2
+patience: 10
+min_delta: 0.0
+clip: 1.0
+amp: true
+num_workers: 0
+log_every: 20
+train_scale: 0.01

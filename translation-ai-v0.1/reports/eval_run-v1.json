@@ -1,0 +1,227 @@
+{
+  "checkpoint": "checkpoints/run-v1/ckpt_best.pt",
+  "hardware": {
+    "torch_version": "2.13.0+cu130",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 5070",
+    "gpu_capability": "12.0",
+    "cudnn_version": 92000,
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.43",
+    "cpu_count": 16
+  },
+  "per_lang": {
+    "zh": {
+      "val_loss": 3.0458,
+      "val_rows": 2904,
+      "test_loss": 3.0753,
+      "test_rows": 2985,
+      "test_decode_rows": 2000,
+      "bleu": 12.89,
+      "chrf": 38.13,
+      "baseline_echo_bleu": 0.06,
+      "baseline_echo_chrf": 2.23,
+      "samples": [
+        {
+          "source": "第六十一届会议",
+          "reference": "Sixty-first session",
+          "hypothesis": "Sixth session"
+        },
+        {
+          "source": "在这方面，联合国开发计划署可在每个国家发挥作用。",
+          "reference": "The United Nations Development Programme has a role to play in each country in this regard.",
+          "hypothesis": "In that regard, UNDP can play a role in each country."
+        },
+        {
+          "source": "在六日内创造天地万物，然后升上宝座的，是至仁主。你应当以他（的德行）请教精明者。",
+          "reference": "In six days He created the earth and the heavens and all that is between them; then He established Himself on the \"Throne\" (of the Kingdom of the uriverse). (He is) the Merciful: as to His Glory, ask the one who knows.",
+          "hypothesis": "and then He created the heavens and the earth, then He sees the mountains, and He will call upon you to be the right path."
+        },
+        {
+          "source": "如果他是可以制霸铃兰的人",
+          "reference": "If he has what it takes to conquer Suzuran.",
+          "hypothesis": "If he is a ghost, he could be a ghost."
+        },
+        {
+          "source": "- 而...",
+          "reference": "And...",
+          "hypothesis": "- And..."
+        },
+        {
+          "source": "如果你不张开眼睛... 我会把你的眼皮钉在你的额头上",
+          "reference": "If you won't open them... l'll staple your eyelids to your forehead.",
+          "hypothesis": "If you open your eyes... and open your eyes on your eyes, I'll open your eyes."
+        },
+        {
+          "source": "- 她吃了避孕药",
+          "reference": "- She's on the pill.",
+          "hypothesis": "- She's in the cartel."
+        },
+        {
+          "source": "可以免费用你的洗衣液 和烧烤炉吗",
+          "reference": "Could you throw in free detergent and the use of your barbecue?",
+          "hypothesis": "Can you get your costume and cook?"
+        }
+      ]
+    },
+    "ja": {
+      "val_loss": 3.4013,
+      "val_rows": 2807,
+      "test_loss": 3.3432,
+      "test_rows": 2990,
+      "test_decode_rows": 2000,
+      "bleu": 5.28,
+      "chrf": 20.72,
+      "baseline_echo_bleu": 0.17,
+      "baseline_echo_chrf": 0.69,
+      "samples": [
+        {
+          "source": "ドク？",
+          "reference": "Doc?",
+          "hypothesis": "Doc?"
+        },
+        {
+          "source": "ドク！",
+          "reference": "Doc!",
+          "hypothesis": "Doc!"
+        },
+        {
+          "source": "ドク",
+          "reference": "Doc ?",
+          "hypothesis": "Doc."
+        },
+        {
+          "source": "ドク",
+          "reference": "Okey doke.",
+          "hypothesis": "Doc."
+        },
+        {
+          "source": "ここから彼女を出してくれ!",
+          "reference": "Get her out of here!",
+          "hypothesis": "Get her out of here!"
+        },
+        {
+          "source": "その日アッラーは，かれらが受けるべき応報を（凡て）払い戻され，かれらは，アッラーが真理であり，（凡てのことを）明瞭になされることを，知るであろう。",
+          "reference": "On that Day, God will pay them their account in full, and they will know that God is the Evident Reality.",
+          "hypothesis": "And Allah has recited them all that which they should have received, and He has power over all things, and know what is in the truth, and He is."
+        },
+        {
+          "source": "それで今は 問題の紫",
+          "reference": "And now... the purple.",
+          "hypothesis": "So, now it's the problem."
+        },
+        {
+          "source": "飛行機に乗れよ",
+          "reference": "Go catch your plane.",
+          "hypothesis": "We got to go on the plane."
+        }
+      ]
+    },
+    "ko": {
+      "val_loss": 3.4914,
+      "val_rows": 1830,
+      "test_loss": 3.5424,
+      "test_rows": 1884,
+      "test_decode_rows": 1884,
+      "bleu": 4.87,
+      "chrf": 19.9,
+      "baseline_echo_bleu": 1.59,
+      "baseline_echo_chrf": 1.66,
+      "samples": [
+        {
+          "source": "정보 메시지가 표시됨Name",
+          "reference": "An information message is being shown",
+          "hypothesis": "Message date"
+        },
+        {
+          "source": "- 그래서 장례식도 안오셨구만!",
+          "reference": "Ah, so that's why they weren't at the funeral!",
+          "hypothesis": "- So you're not gonna be fun!"
+        },
+        {
+          "source": "볼 수 있으시군요",
+          "reference": "You can see.",
+          "hypothesis": "You're in there."
+        },
+        {
+          "source": "불량 교도관 없나?",
+          "reference": "Is there some sort of evil janitor or something?",
+          "hypothesis": "No, no, no, no, no, no, no, no, no."
+        },
+        {
+          "source": "당신한테 한 소리일 거예요",
+          "reference": "I think that was meant for you.",
+          "hypothesis": "You're telling me you're saying that."
+        },
+        {
+          "source": "그런후 하나님께서 우리의 선지자들과 믿는 자들을 구제하리 니 하나님은 반드시 믿는 자들을 구제하시니라",
+          "reference": "Then We shall save Our Noble Messengers and the believers – this is it; it is incumbent upon Our mercy to save the Muslims.",
+          "hypothesis": "Then Allah made the believers and those who believe and do not believe in Our verses, and We saved the believers."
+        },
+        {
+          "source": "그런후 하나님께서 우리의 선지자들과 믿는 자들을 구제하리 니 하나님은 반드시 믿는 자들을 구제하시니라",
+          "reference": "Then We shall deliver Our Messengers and the believers. Even so, as is Our bounden duty, We shall deliver the believers.",
+          "hypothesis": "Then Allah made the believers and those who believe and do not believe in Our verses, and We saved the believers."
+        },
+        {
+          "source": "그런후 하나님께서 우리의 선지자들과 믿는 자들을 구제하리 니 하나님은 반드시 믿는 자들을 구제하시니라",
+          "reference": "Thus do We deliver our apostles and those who believe. As a matter of duty We save the believers.",
+          "hypothesis": "Then Allah made the believers and those who believe and do not believe in Our verses, and We saved the believers."
+        }
+      ]
+    },
+    "ms": {
+      "val_loss": 2.8479,
+      "val_rows": 1869,
+      "test_loss": 2.9047,
+      "test_rows": 1815,
+      "test_decode_rows": 1815,
+      "bleu": 13.43,
+      "chrf": 29.69,
+      "baseline_echo_bleu": 3.24,
+      "baseline_echo_chrf": 14.47,
+      "samples": [
+        {
+          "source": "Dan di langit pula terdapat (sebab-sebab) rezeki kamu, dan juga terdapat apa yang telah (ditakdirkan dan) dijanjikan kepada kamu.",
+          "reference": "And in heaven is your Sustenance, as (also) that which ye are promised.",
+          "hypothesis": "And there are those of the heavens and the earth, and what you have promised."
+        },
+        {
+          "source": "Saya telah menyakiti awak.",
+          "reference": "I have hurt you.",
+          "hypothesis": "I have hurt you."
+        },
+        {
+          "source": "Dan dia bukanlah Raja Versailles.",
+          "reference": "And that's not the King of Versailles.",
+          "hypothesis": "And he's not the King Rill."
+        },
+        {
+          "source": "Kawan, ada labah-labah di luar tingkap ini sekarang.",
+          "reference": "My friends, there is a spider on the outside of the window here.",
+          "hypothesis": "Guys, there's no way out of the louds right now."
+        },
+        {
+          "source": "minggu",
+          "reference": "2 Weeks",
+          "hypothesis": " weekend"
+        },
+        {
+          "source": "Minggu.",
+          "reference": "Weeks.",
+          "hypothesis": "I'm a week."
+        },
+        {
+          "source": "- Kamu okey? - Ya.",
+          "reference": "Are you ok?",
+          "hypothesis": "- You okay?"
+        },
+        {
+          "source": "Anda kelihatan sangat tegas.",
+          "reference": "You look very stern.",
+          "hypothesis": "You look very handsome."
+        }
+      ]
+    }
+  },
+  "eval_time_s": 130.6
+}

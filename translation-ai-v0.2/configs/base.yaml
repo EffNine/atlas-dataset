@@ -1,0 +1,31 @@
+# translation-ai-v0.2 — first real zh→en run (controlled data-scaling experiment).
+# Architecture IDENTICAL to translation-ai-v0.1 run-v1 (35M params) so the only
+# deliberate change is the training data (v1.1 zh ALLOW corpus, ~2.04M pairs).
+seed: 7
+encoded: data/encoded
+tokenizer: data/tokenizer/tokenizer.json
+run_dir: checkpoints/run-zh-v1
+
+vocab_size: 16000
+d_model: 384
+n_heads: 6
+d_ff: 1536
+n_enc_layers: 4
+n_dec_layers: 4
+dropout: 0.1
+max_len: 128
+
+batch_size: 64
+accum_steps: 2
+lr: 0.0005
+weight_decay: 0.01
+label_smoothing: 0.1
+warmup_steps: 2000
+max_epochs: 15
+patience: 3
+min_delta: 0.0001
+clip: 1.0
+amp: true
+num_workers: 2
+log_every: 100
+train_scale: 1.0

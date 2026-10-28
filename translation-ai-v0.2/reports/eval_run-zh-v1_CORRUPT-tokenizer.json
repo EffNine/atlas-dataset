@@ -1,0 +1,402 @@
+{
+  "checkpoint": "checkpoints/run-zh-v1/ckpt_best.pt",
+  "pair": "zh->en",
+  "hardware": {
+    "torch_version": "2.13.0+cu130",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 5070",
+    "gpu_capability": "12.0",
+    "cudnn_version": 92000,
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.43",
+    "cpu_count": 16
+  },
+  "method": "teacher-forced loss on ALL rows; sacrebleu BLEU/chrF greedy on deterministic stride samples (grouped file order)",
+  "val_loss": 0.6532,
+  "val_rows": 113496,
+  "val_loss_per_source": {
+    "hsc-wuxia-100k": 1.1739,
+    "tomato-zh2en": 0.6388
+  },
+  "test_loss": 0.6528,
+  "test_rows": 113318,
+  "test_loss_per_source": {
+    "hsc-wuxia-100k": 1.1682,
+    "tomato-zh2en": 0.6385
+  },
+  "primary": {
+    "rows": 2000,
+    "bleu": 0.0,
+    "chrf": 10.73,
+    "baseline_echo_bleu": 0.0,
+    "baseline_echo_chrf": 0.24,
+    "failures": {
+      "empty": 0,
+      "copy": 0,
+      "cjk_leak": 0,
+      "repetition": 0,
+      "truncated_decode": 0,
+      "ref_much_longer": 1720
+    }
+  },
+  "per_source": {
+    "hsc-wuxia-100k": {
+      "rows": 2000,
+      "bleu": 0.01,
+      "chrf": 47.46,
+      "baseline_echo_bleu": 0.0,
+      "baseline_echo_chrf": 0.0,
+      "failures": {
+        "empty": 0,
+        "copy": 0,
+        "cjk_leak": 0,
+        "repetition": 0,
+        "truncated_decode": 0,
+        "ref_much_longer": 4
+      },
+      "samples": [
+        {
+          "source": "上官天佑冷哼，盯着白小纯，一字一顿开口",
+          "reference": "That soured Bai Xiaochun’s mood immediately",
+          "hypothesis": "ShangguanTianyousnortedcoldly,staringatBaiXiaochunandspeakingslowly"
+        },
+        {
+          "source": "尤其是他不能升空，只能在这沼泽内，虽有念丹直觉，可这里终究是危险无尽，他有那么几次，差点就葬身水蛭之口",
+          "reference": "He was almost out of energy. Furthermore, things were made more difficult by the fact that he didn’twant to fly through the air higher up, and thus had to brave the dangers of the swamp. On more than a few occasions, he had nearly been killed by leeches",
+          "hypothesis": "Hecouldn’tascendintotheair,andcouldonlybefoundintheswamp.Althoughhehadtheintuitionofapill,itwasstilldangeroushere.Hehadbeenindangerforafewmoments,andhadalmostdiedinthemouthofawaterleech"
+        },
+        {
+          "source": "你看，我都说了没事，这不，三天来，没出现火海吧",
+          "reference": "Look, didn’tI say we’d be fine? After three days, there hasn’t been a single explosion",
+          "hypothesis": "Look,Itoldyoueverythingwasfine,butinthreedays,therewasnoseaoffire"
+        },
+        {
+          "source": "不要",
+          "reference": "Noooo",
+          "hypothesis": "No"
+        },
+        {
+          "source": "他是不会动手的，也不可能动手",
+          "reference": "He will not attack or kill me",
+          "hypothesis": "Hecouldnotattack,hecouldnotdoit"
+        },
+        {
+          "source": "方源为难地道",
+          "reference": "Fang Yuan looked troubled",
+          "hypothesis": "FangYuansaidwithdifficulty"
+        },
+        {
+          "source": "我为什么会做这种事情呢",
+          "reference": "Why am I doing this",
+          "hypothesis": "WhywouldIdosuchathing"
+        },
+        {
+          "source": "这是要坑我，往我头上倒屎盆子啊",
+          "reference": "You’re trying to screw me up one side and down the other",
+          "hypothesis": "Thisistryingtotrickmeintopouringapooponmyhead"
+        },
+        {
+          "source": "在这些气运烟气之间，有一道特别显眼的运气",
+          "reference": "And among the traces of luck in the luck cloud, there was one especially eye-catching portion of luck",
+          "hypothesis": "Amongtheseqilucksmoke,therewasaveryconspicuousluck"
+        },
+        {
+          "source": "正点中他的眉心，破了他多年苦练的",
+          "reference": "hit him on the eyebrow and broke his many years of training the",
+          "hypothesis": "Hehadbeenpracticinghardformanyyearsrightinthecenterofhisforehead"
+        },
+        {
+          "source": "有距离近的，还可以一鼓作气的疯狂后退，可至少有二十万的修士，他们被分散在战场上，距离阵法光幕有些范围，且中间又阻隔了大量的土著巨人，根本就无法冲破",
+          "reference": "However, there at least , who were too far away to make it, or who were blocked by the vast numbers of giants",
+          "hypothesis": "Somewerecloseenoughtoretreatinafitofanger,butatleasttwohundredthousandcultivatorswerescatteredonthebattlefield.Theywerequiteadistancefromtheformationlightscreen,andthemiddlewasblockedbyalargenumberofsavagegiants,whichwereimpossibletobreakthrough"
+        },
+        {
+          "source": "在这众目睽睽之下，白小纯有些害羞，他是真的不在乎拿出多少号，于是很随意的抓了一个小球，拿出来一看，自己也都愣了一下",
+          "reference": "Being the focus of attention in this way caused Bai Xiaochun to feel a bit embarrassed. Actually, he didn’t even really care which marble he pulled out, and yet when he finally did remove his hand, his eyes went wide with shock",
+          "hypothesis": "BaiXiaochunwasabitshytothepointwherehedidn’tcarehowmanynumbershehadtakenout.Hecasuallygrabbedasmallballandtookitouttotakealookatit,andwasalsotakenaback"
+        }
+      ]
+    },
+    "tomato-zh2en": {
+      "rows": 2000,
+      "bleu": 0.0,
+      "chrf": 10.5,
+      "baseline_echo_bleu": 0.0,
+      "baseline_echo_chrf": 0.25,
+      "failures": {
+        "empty": 0,
+        "copy": 0,
+        "cjk_leak": 0,
+        "repetition": 0,
+        "truncated_decode": 0,
+        "ref_much_longer": 1858
+      },
+      "samples": [
+        {
+          "source": "“大家同学一场，还是给学姐留点体面好了。”\n藤井树的话让千叶筱子悄悄松了口气。\n“毕竟我也不是什么魔鬼嘛。”\n千叶筱子心头一堵，一口气好些没喘上来。\n「混蛋！」\n「这家伙就是一个彻头彻尾的混蛋！」\n藤井树拎起千叶筱子、松井葵和小野寺玲的校服外套，塞进抽水马桶里，举着手机拉远视角，退到了厕所门口。\n“三位学姐，请看镜头。”\n“cheese——!”\n伴随着手机发出“咔嚓”的轻响，闪光灯强制亮起，藤井树拉开女厕所的门，带着荻原咲大步流星走了出去。",
+          "reference": "\"We're all classmates here, let's leave a little dignity for our senior.\"\nFujii Itsuki's words let Chiba Shoko quietly breathe a sigh of relief.\n\"After all, I'm not some kind of devil.\"\nChiba Shoko's heart felt blocked, and she almost couldn't catch her breath.\n\"Bastard!\"\n\"This guy is a complete and utter bastard!\"\nFujii Itsuki picked up Chiba Shoko's, Matsui Aoi's, and Onodera Rei's school unifor",
+          "hypothesis": "\"It'sabigdealforeveryone,justleavesomenoodlesforyoursenior.\"FujiiShu'swordsmadeChibaShinokosecretlybreatheasighofrelief.\"Afterall,I'mnotsomedevileither.\"ChibaShinoko'sheartskippedabeat,andshecouldn'tcatchherbreathforawhile.\"Bastard!\"\"This"
+        },
+        {
+          "source": "“不过三条只知狺狺狂吠的忠犬，来得倒是挺快！”\n赵无殇冷笑，此刻即便面临三大仙尊降临，依旧镇定从容，毫无惧色。\n仙尊？\n不过狂妄无知者的自称罢了！\n终究只是准仙王，哪怕是其中佼佼者又如何？\n与他之间的距离依旧大到无法逾越！\n就如若昔日自己面对那仙帝之子，萧凌天那般！\n但此刻对方，才是那坐井观天的无知者！\n“圣月仙主，我等师尊罗天仙王有令！要生擒这大楚太子回去，我等今日在此大战一场，你应当不会有意见吧？”\n蓦然，乾坤仙尊向着圣月城的方向开口。\n话语刚落，一道明月伴随清风吹拂，圣月仙主的身影亦于此刻显现虚空。\n她乃是女子，一袭淡紫长裙加身，面容倾国倾城。\n乌黑秀发倾泻而下，飘洒在肩上，给人一种高高在上，圣洁无比的气质。\n“可。”\n“但今日无论谁胜谁败，都与我圣月城毫无干系。”\n圣月仙主始终闭眸而立，无暇容颜仿佛散发莹莹光辉，轻语开口。\n也是在于此刻表明态度，选择中立，不参与今日任何一方的争斗！",
+          "reference": "\"Just three loyal dogs that only know how to bark and yap, but they're certainly quick to arrive!\"\nZhao Wushang sneered, remaining calm and composed even when facing the descent of three Great Immortal Reverends, showing no fear.\nImmortal Reverend?\nJust a self-proclaimed title of arrogant and ignorant fools!\nIn the end, they're only Quasi Immortal Kings, even if they are outstanding among them, so",
+          "hypothesis": "\"However,threeloyaldogswhoonlyknowhowtobarkandbargearecomingquitequickly!\"ZhaoWushangsneered.EvenfacingthearrivalofthethreeImmortalVenerables,heremainedcalmandcomposed,showingnofear.ImmortalVenerable?Butit'sjusttheself-proclaimedself-proclaimedbyarrogantandignorant!Intheend,"
+        },
+        {
+          "source": "“至于警戒的话，也好办！” Luci 的右手剑指一转，一个大型的火焰圈出现了。\n并且令人惊奇的还是火焰圈子竟然只是将一些植木灼烧，但并没有蔓延开去。\n“你的 Nen 现在已经到了这种程度吗？”这种肆无忌惮使用能力的程度，让 Biscuit 忍不住说了这句话。\n“强大的身体和精神，本身便会带来 Nen 的壮大，这些年我可是吃了不少好东西，你现在不也体验到了，不是吗！”\nLuci 的反问，让 Biscuit 回忆起楼主的一些料理套餐。\nLuci 的改革，在 Heaven's Arena 是有着饮食差距的，这个世界存在许多对人体有好处的料理食材。\n有钱的情况下， Luci 自然肯定不会吝啬。\n努力修炼，吸收那些珍稀食材带来的营养，身体素质的蜕变，也会带动 Nen 量的变化。\n身体越发强壮健康，那么“炼”也会更加具备效果。\n“穷文富武”可不是简单说说的，放在仙侠世界，怕是每天都在用灵石进行修炼的状",
+          "reference": "\"As for the precautions, that's easy!\" Luci spun the sword-fingers of his right hand, and a large ring of fire appeared.\nSurprisingly, the ring of fire only scorched some of the plants, but did not spread.\n\"Your Nen has reached this level now?\" The extent of this unrestrained use of abilities made Biscuit unable to resist saying this.\n\"A strong body and spirit naturally bring about the growth of N",
+          "hypothesis": "\"Asforalert,it'seasy!\"Luci'srightswordfingerspun,andalargecircleofflamesappeared.Andsurprisingly,thecircleofflamesonlyburnedsomevegetation,butitdidn'tspread.\"HasyourNenreachedthislevelnow?\"ThisunrestraineduseofhisabilitiesmadeBiscuitunabletoresistsayingthis.\""
+        },
+        {
+          "source": "担心江誉误闯，秦薇趁着江誉不注意拿钥匙给反锁了。\n江誉也没多想，他忽然提了句：“薇薇你还记得我生日吗？”\n秦薇当然记得，每年江誉的生日她都有准备，哪怕他在国外她也会准备一份给他寄过去，然后还要踩点给他打电话，从不缺席。\n但今年……\n要不是江誉提了一下，她差点就忘记了。\n江誉的生日在10月20日，也就是这周五，马上就要到了，她居然连这么重要的日子都给忘掉了，都怪林澈，要不是林澈打乱了她的生活，她也不会忘记江誉的生日。\n与其责怪自己，不如埋怨他人。\n好在江誉提醒了她，让她还有时间去准备生日礼物。\n秦薇稳住心态，表情平和微笑：“我当然记得，你的生日我哪年忘记过？”\n“家里要给我办生日宴，到时候把你朋友也一起叫上。”\n“行，我叫人给你捧场。”\n两人在客厅里聊了一会儿，看时间不早了就各自回房间休息。\n秦薇在想送江誉什么礼物，定制手工品耗费时间，看来只能买现成的了。\n江誉回卧室后坐在床上看手机，他点进",
+          "reference": "Worried that Jiang Yu might accidentally enter, Qin Wei took advantage of his inattention to lock the door with the key.\nJiang Yu didn't think much of it, then suddenly asked, \"Weiwei, do you remember my birthday?\"\nOf course Qin Wei remembered. Every year, she prepared something for Jiang Yu's birthday. Even when he was abroad, she would prepare a gift and send it to him, and would always call him",
+          "hypothesis": "WorriedthatJiangYumightaccidentallymakeanameforhimself,QinWeitookadvantageofJiangYu'sinattentiontounlockthekeys.JiangYudidn'tthinkmuchofit,andsuddenlysaid,\"Weiwei,doyouremembermybirthday?\"Ofcourse,QinWeirememberedthatshewaspreparedforJiangYu'sbirthdayeveryyear,even"
+        },
+        {
+          "source": "“他到底是什么身份？竟然有这样的妖族强者，为其出面！”\n“难不成……是妖族的子嗣？”\n“还是妖帝之子？”\n众人惊恐畏惧。\n全都亡命四散。\n生怕沾染到自身，死无全尸。\n天机阁的众人大惊。\n再看地上的紫麟城主，已经气绝身亡！\n神识破碎！\n天机阁少阁主莫名心头猛地一颤。\n看着那头角峥嵘的中年男子，浑身忍不住的哆嗦。\n“神……神王？”\n“这怎么可能！”\n莫名大骇。\n身后的一众天机阁成员亡魂皆冒。\n随后目光，紧紧锁定在杨帝辰的身上。\n这个外乡人。\n到底是什么样的存在？\n竟然有神王境的妖族大能在守护。\n“跪下！”\n龙王断喝。\n霎时间。\n仅仅是他一丝一毫的气息，就令天机阁少阁主莫名跪地匍匐。\n浑身颤抖。\n衣袍尽湿。\n神色慌张，根本不敢抬头看。\n“外乡人？”杨帝辰淡然无比，背负双手闲庭信步的走入城门之下，在路过紫麟尸体时，看了一眼旁侧的天机阁莫名。\n“就得死？”\n“在我看来，你们都是外乡人啊。”\n话音一落",
+          "reference": "\"What is his identity exactly? To actually have such a powerful demon clan expert stepping forward for him!\"\n\"Could it be... a descendant of the demon race?\"\n\"Or even the son of a Demon Emperor?\"\nEveryone was terrified and fearful.\nThey all scattered in a desperate flight.\nAfraid of being tainted, and dying without a whole corpse.\nThe people of the Heaven's Secrets Pavilion were greatly shocked.\nL",
+          "hypothesis": "\"Whatexactlyishisidentity?Heactuallyhassuchapowerfuldemonclanexperttostepforwardforhim!\"\"Coulditbe...adescendantofthedemonclan?\"\"OrthesonoftheDemonEmperor?\"Everyonewasterrifiedandfearful.Allofthemscatteredwiththeirlives.Theywereafraidofgettinginvolvedinthemselves,leavingno"
+        },
+        {
+          "source": "“颜七风！啊啊啊！我爱你！”\n“我要给你生孩子！！！”\n众人下意识看去。\n只见一名肥头大耳的平头男弟子，把白袜子包裹在裤腿外，激动的拿着颜七风的画像。\n神情激动的叫喊起来。\n轰——！\n下一刻，一道凭空出现的能量直接给他轰飞出去。\n问剑天抬手捂住嘴，轻声咳了咳，淡淡道：\n“有损风化的畜生……”\n【ps.没有任何歧视男*的意思，小说抽象，莫要带入！】\n就在这时，天空之际飞来一名白衣少年，众人下意识看去。\n是云陌辰！\n“老公！！”\n人群中的祝卿安，一眼便认出云陌辰，右手提住的兔耳朵不由激动的多用了几分力气。\n双眼放光，内心惊呼道。\n“哎哎哎！坏女人！痛！！！”\n“嘘——不能暴露你会说话的事，听明白了吗？天天！”",
+          "reference": "“Yan Qifeng! Ah ah ah! I love you!”\n“I want to have your children!!!”\nThe crowd instinctively looked over.\nThey saw a chubby, big-eared male disciple with a buzz cut, excitedly holding a picture of Yan Qifeng, with his white socks wrapped over his pant legs.\nHe shouted out in an agitated manner.\nBoom——!\nIn the next moment, a burst of energy appeared out of nowhere and sent him flying.\nWen Jiantian",
+          "hypothesis": "\"YanQifeng!Ahhh!Iloveyou!\"\"Iwanttohaveachildforyou!!!\"Everyonesubconsciouslylookedover.Theysawafat,large-earedmaledisciplewrappinghiswhitesocksaroundhistrouserleg,excitedlyholdingYanQifeng'sportrait.Heshoutedexcitedly.Boom—!Thenextmoment,anenergythatappearedout"
+        },
+        {
+          "source": "然而，当众人来到下一个十字路口，竟发现了迷雾笼罩的红绿灯上飘着什么……\n随着大巴车缓缓靠近，他们才看清楚，那红绿灯上一直飘扬着的……赫然是先前离开的胖子血淋淋的人皮！\n那张皮被完整地剥离，众人甚至还能看见胖子的表情极度惊恐扭曲，像是死前看见了什么特别可怕的事！\n而红绿灯的灯杆上，不断淌下大片猩红的鲜血！\n这一幕，直接把车上的众人吓傻了！\n有人不信邪，拉开车窗，于是那股让人闻之欲呕的血腥味，就这么飘了一车……\n…\n提起了那个胖子，众人脸色都十分难看，有人甚至开始干呕。\n“……既然没有人敢走近那片迷雾，那我们就只能进入这座黑色的别墅了……”\n宁秋水深吸一口气。\n他同样害怕。\n但不知为何，无论是看见红绿灯上飘着的那张血淋淋的人皮，还是闻到那股血腥味，他的反应都远没有众人那么大。\n而且，他对先前那封神秘的信很感兴趣。\n信的主人……究竟想要告诉自己什么呢？\n随着宁秋水带头，众人也跟在了他的身后，推开",
+          "reference": "However, when everyone arrived at the next intersection, they were shocked to find something floating on the fog-covered traffic light...\nAs the bus slowly approached, they could finally see that what was fluttering on the traffic light was... the bloody human skin of the fat man who had left earlier!\nThe skin had been completely peeled off, and everyone could even see the fat man's face twisted i",
+          "hypothesis": "However,wheneveryonearrivedatthenextintersection,theydiscoveredsomethingfloatingonthemistyred-greenlight...Asthebusslowlyapproached,theycouldclearlyseethatthered-greenlightthathadbeenfloatingonitwasnoneotherthanthebloodyhumanskinthathadleftearlier!Theskinwascompletelypeeledaway,andeveryone"
+        },
+        {
+          "source": "如果是以前，听到对方如此关心自己的未来，姜宁只怕要感动的泪目。\n可如今，亲情已断。\n姜宁孑然一身，再无任何姐弟间的羁绊，内心自然不会再起任何波澜。\n“我不去。”他冷冷拒绝。\n“为什么？”姜书凝不理解，“阿宁你别自暴自弃好吗？你无法成为武者，进文院是你唯一的出路，你再怎么恨我们，也不能拿自己的前途赌气啊！”\n她是站在姐姐的角度替弟弟操心，才这么着急。\n她觉得阿宁应该能够理解自己这个当姐姐的心情，也能感受到自己如今是多么关心他、爱护他。\n的确。\n姜宁感受到了。\n可那又如何？\n迟来的深情，比草都贱！\n何况……\n姜宁玩味的看着对方，呵的一声冷笑：“我记得你以前不是这么说的。”\n“我以前说什么了。”姜书凝面露茫然。\n“还记得我年初模拟考，考了全校第一，把试卷拿回家给你们看，你们当时是怎么说的吗？”\n姜宁只觉得好笑，这位姜二小姐，还真是健忘呢。\n“我们……”\n姜书凝脸色苍白。\n她想起来了。\n年初姜宁参",
+          "reference": "If it were in the past, hearing someone care so much about his future would have brought tears to Jiang Ning's eyes.\nBut now, the familial bond has been severed.\nJiang Ning stands alone, with no ties left between siblings, and naturally, his heart will not stir any longer.\n\"I won't go,\" he coldly refused.\n\"Why not?\" Jiang Shuning didn't understand, \"A Ning, please don't give up on yourself! You ca",
+          "hypothesis": "Ifitwerebefore,hearingtheotherpartycareaboutherfuturesomuch,JiangNingwouldprobablyhavebeenmovedtotears.Butnow,familytiesaresevered.JiangNingisalone,withnobondsbetweensiblingsanymore,sonaturallyherheartwon'tstirinanymoreturmoil.\"Iwon'tgo,\"hecoldlyrefused."
+        },
+        {
+          "source": "两个时辰悄然而过，有不少没能及时赶到另外一个试炼考场的，望着那巨大无比的空间屏障只能摇头叹气折返了回去。\n“两个时辰已到，传承试炼正式开始，第一关很简单，一个时辰之后还停留在上方平台之人就算通过。”\n“下面我宣布，试炼正式开始！”\n轰——！！！\n秘境之灵声音刚落，传承山内发出了震耳欲聋的响动，一个巨大无比的石质平台从山体内部推出。\n“不是吧大哥…你给我说这叫很简单，我看一眼少说我们这也有数千万人，而这平台挤一挤最多也就能站个十几万人，第一关就要淘汰99%的人也太离谱了！”\n“呵呵，阁下要是这种心性我看就趁早退出传承试炼吧，我先去也！”\n“就是说啊，我看着第一关的试炼就很不错，不然几千万人争夺四个传承要花多久啊！”\n无数道流光飞出冲上了石质平台，平台之上的位置肉眼可见的被人所挤占。\n“陆姑娘，我们也上去吧！”\n“好！”\n林莫和陆芊芊说着御剑来到平台之上，找了一个还算空旷的位置落下，两人向四周",
+          "reference": "Two hours passed quietly, and many who couldn't arrive at the other trial venue in time could only shake their heads and sigh as they looked at the enormous spatial barrier before turning back.\n\"The two hours are up; the inheritance trial officially begins. The first stage is very simple: anyone who remains on the upper platform after one hour will be considered to have passed.\"\n\"Now I declare, th",
+          "hypothesis": "Twohourspassedquietly,andmanyfailedtoreachanothertrialgroundintime.Lookingattheenormousspatialbarrier,theycouldonlyshaketheirheadsandsighastheyreturned.\"Twohourshavepassed.Theinheritancetrialofficiallybegins.Thefirstlevelissimple:thosewhoremainontheplatformabovewillpassafteranhour.\"\"Now"
+        },
+        {
+          "source": "负责肃清的吕蒙面无表情，带着自己所部继续向未央宫前挺近。\n身后的士兵麻木地拉栓，退掉弹壳，重新上膛新的子弹，端起枪继续瞄准前方。\n“敢动手？看老子不跟你们拼了！”\n一名后天巅峰武者立马催动体内所有内力，在左右掌心各自浮现一团赤色火焰。\n“看我的五雷化极手……呀……”\n砰砰砰砰——\n下一刻，十几支步枪齐齐开火，飞驰的子弹无情洞穿他的躯体。\n“呃……”\n一时间他满脸不可置信地望着前方，凝聚而起的真气瞬间烟消云散。\n“为什么，会这样，这可是道尊的，遗武啊，为……什……么……”\n带着满脸的不可思议，武者直挺挺倒在了血泊之中。\n在他闭眼前最后看到的，是一双双皮鞋从自己脸上踩过。\n也许，他从来没有想过，自己苦练了几十年的武道战技，居然不堪到连出手机会都没有，就被一根根“烧火棍”终结了性命。\n“狗日的，给我死吧。”\n另一名同样后天境的武者，举着一把关刀，纵身一跃向武者冲杀而去。\n“让你们见识下道尊沈昭留",
+          "reference": "Lü Meng, responsible for the purge, approached the Weiyang Palace with an expressionless face, leading his troops forward.\nThe soldiers behind him numbly pulled the bolts, ejected the spent cartridges, reloaded fresh bullets, and raised their rifles to continue aiming ahead.\n“Dare to make a move? Just watch me fight you to the end!”\nA peak martial artist immediately summoned all his internal energ",
+          "hypothesis": "LuMeng,responsibleforclearingthearea,remainedexpressionlessandcontinuedtoapproachWeiyangPalacewithhisownforces.Thesoldiersbehindhimnumblypulledthebolt,reloadedtheirshells,reloadednewbullets,andraisedtheirgunstocontinueaimingahead.\"Daretoattack?Let'sseeifIwon'tfightyouanymore"
+        },
+        {
+          "source": "剑冢，字面意思就是剑的坟墓。\n不过，云海宗的剑冢，并不是将剑埋在地下。\n而是插在星罗峰西面一片绝壁之上。\n叶风在方同二人的带领下，花了足足半个时辰，这才来到了剑冢的下方。\n这里是一处距离地面大概千丈的断崖平台，站在断崖边缘向下看去，云海飞卷，深不见底。\n抬头看去，只见头顶上方的悬崖峭壁上，插满了仙剑。\n这些仙剑几乎大半个剑身都没入岩壁之中，只露出短短的一截剑柄。\n从上而下垂落很多手臂粗的藤蔓。\n他们来的已经很晚了，此刻可以看到有十几个少年男女，正抓着藤蔓，如蜘蛛人一般爬在悬崖绝壁之上，正在不断的将仙剑用力的从岩壁中抽出来，然后再插进去，寻找适合自己的仙剑。\n方同仰着脖子道：“这里就是咱们云海宗的剑冢了，老大，你上去选剑吧，我和老三在这儿等着你啊。”\n叶风看着那几乎是垂直的岩壁，看着那些宛如蜘蛛人一般的少年男女，抓着藤蔓荡来荡去，他的心中一阵发怵。\n来之前，谁也没有告诉他，剑冢竟然是在悬崖绝",
+          "reference": "The Sword Tomb, literally meaning the grave of swords.\nHowever, the Sword Tomb of the Yunhai Sect is not about burying swords underground.\nInstead, they are inserted into a sheer cliff on the west side of Xingluo Peak.\nUnder the guidance of Fang Tong and the others, Ye Feng spent a full half an hour to finally arrive at the foot of the Sword Tomb.\nThis is a cliff platform about a thousand zhang ab",
+          "hypothesis": "SwordTomb,theliteralmeaningistheSword'stomb.However,theSwordTomboftheYunhaiSectwasn'tburiedunderground.Instead,itwasstuckinadesolatewallonthewestsideofStarLuoPeak.UndertheleadershipofFangTongandtheother,YeFengspentafullhalfhourfinallyarrivingatthe"
+        },
+        {
+          "source": "众人震惊的目瞪口呆，随即眼中爆发出狂喜，盯着秦长青哈哈大笑：“长青兄，你果然所言不虚，好好好！”\n很快，秦正阳闻讯赶来，亲眼见证了婴儿的资质后亦是露出狂喜之色，当即赏给了秦长青五百灵石。\n“长青兄，你是我秦家的福星，这是你的奖励！”\n秦长青连忙结果道谢。\n秦正阳看着秦长青越看越顺眼，开口道：“长青啊，我欲将小女嫁给你，你意下如何？”\n秦长青顿时吃了一惊，也是没想到秦正阳竟然会舍得把女儿嫁给他，拱手道：“家主厚爱长青感激不尽，不过大小姐嫁给在下是不是有点突然了？”\n秦家大小姐秦凤岚那可是中品灵根资质，根本不是他们这些赘婿能够惦记的。\n他已经有了这么多老婆，秦正阳竟然舍得让她宝贝女儿也加入他的大家庭？\n老子的魅力有这么大吗？\n好吧，我知道，就是为了更好的孩子！\n这系统……秦长青心里吐槽。\n秦正阳摆手道：“你是我秦家大功臣，怎么会委屈，既然你没意见，那就这么定了，挑个良辰吉日完婚！”\n见秦正阳都",
+          "reference": "Everyone was shocked and speechless, but soon their eyes burst with joy as they stared at Qin Changqing and laughed heartily: \"Brother Changqing, you truly did not speak falsely, wonderful, wonderful!\"\nBefore long, Qin Zhengyang rushed over upon hearing the news. After witnessing the baby's talent with his own eyes, he also showed an expression of wild joy and immediately rewarded Qin Changqing wi",
+          "hypothesis": "Everyonewasstunned,thentheireyesburstwithecstasy,staringatQinChangqingandlaughingheartily,\"BrotherChangqing,youareindeedtrue,good,good!\"Soon,QinZhengyangarriveduponhearingthenews,witnessingthebaby'saptitudewithhisowneyes,andalsoshowedecstasy,immediatelyrewardingQinChangqingwithfivehundredspirit"
+        }
+      ]
+    }
+  },
+  "by_length": {
+    "long>500": {
+      "rows": 1297,
+      "bleu": 0.0,
+      "chrf": 8.52
+    },
+    "mid101-500": {
+      "rows": 500,
+      "bleu": 0.0,
+      "chrf": 28.45
+    },
+    "short<=100": {
+      "rows": 203,
+      "bleu": 0.65,
+      "chrf": 53.67
+    }
+  },
+  "subset_dialogue_like": {
+    "rows": 1729,
+    "bleu": 0.0,
+    "chrf": 10.31
+  },
+  "subset_latin_in_source": {
+    "rows": 371,
+    "bleu": 0.0,
+    "chrf": 9.68
+  },
+  "samples": [
+    {
+      "source": "上官天佑冷哼，盯着白小纯，一字一顿开口",
+      "reference": "That soured Bai Xiaochun’s mood immediately",
+      "hypothesis": "ShangguanTianyousnortedcoldly,staringatBaiXiaochunandspeakingslowly",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    },
+    {
+      "source": "画面中，是一片浩瀚的星空，这星空漆黑，无边无际",
+      "reference": "He saw a starry sky that was completely dark, and stretched on without end",
+      "hypothesis": "Inthescenewasavaststarrysky,whichwaspitchblackandboundless",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    },
+    {
+      "source": "大阵轰鸣，血光大放。 大阵中各个阵眼里的蛊仙们，纷纷身躯微颤，脸色扭曲，体内的血液被大量抽取，同时力量、修为都迅速衰减",
+      "reference": "The formation buzzed loudly as blood-red light bloomed",
+      "hypothesis": "Theformationroared,bloodlightburstout,theGuImmortalsintheformationeyestrembledastheirexpressionstwisted,theirbloodwasextractedandtheirstrengthandcultivationlevelrapidlydecreased",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    },
+    {
+      "source": "嫌贵可以去别的地方买啊",
+      "reference": "Expensive? You can go buy in other places then",
+      "hypothesis": "Ifyouthinkitisexpensive,gobuyitsomewhereelse",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    },
+    {
+      "source": "老朽代表葛家上下，十万分感激你出手相助的恩德",
+      "reference": "I, on behalf of the whole Ge tribe, express my utmost gratitude to your favor of helping us",
+      "hypothesis": "IamgratefultoyouforyourhelponbehalfofGetribe",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    },
+    {
+      "source": "为什么要打打杀杀 为什么要有人死去 为什么",
+      "reference": "Why? Why are people always fighting and killing each other? Why do people have to die",
+      "hypothesis": "Whyfightandkill?WhydidsomeonedieWhydidtheydothis",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    },
+    {
+      "source": "方源细细感悟",
+      "reference": "Fang Yuan carefully assessed his gains",
+      "hypothesis": "FangYuancarefullysensedit",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    },
+    {
+      "source": "这声音一次比一次强烈，似在这半个月的时间里，要把所有于心中的呼喊，全部从口中一次性的爆发出来",
+      "reference": "Their voices were louder this time as they gave voice to the emotions which had been building up for the past half month",
+      "hypothesis": "Thevoicewasmoreintensethaneverinthepasttwoweeks,anditwasasifitwouldbethesameastheshoutsinhisheartthatwoulderuptoutofhismouth",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    },
+    {
+      "source": "三弟，三弟，你不认得他们啊",
+      "reference": "You do not know what they look like",
+      "hypothesis": "Thirdbrother,Thirdbrother,youdonotrecognizethem",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    },
+    {
+      "source": "打狗棒法 ，在钢杖闪光中欺身直上",
+      "reference": "She increased her pace and used the Dog-Beating Skill and slid the stick up the bronze staff",
+      "hypothesis": "DogBeatingStickTechniqueIntheflashofthesteelstaff,itcloseditsbodyandwentstraightup",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    },
+    {
+      "source": "也是在那个时代，魂魄的买卖就应运而生，并且大张旗鼓，堂而皇之",
+      "reference": "Thus, during that era, the trading of souls appeared, they were undergone openly and on a grand scale",
+      "hypothesis": "Itwasalsointhaterathatsoultransactionswerebornandwereopenandgrand,theywereallproudandupright",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    },
+    {
+      "source": "洪七公走远之后，果然施展绝顶轻功，从树林后绕回，纵在树上，窃听他两人谈话，想查知这二人是否黄药师派来偷学他的武功，听得黄蓉如此转述她父亲的言语，不禁暗自得意",
+      "reference": "In fact, after he had moved away, Qigong had used his incomparable qinggong and had returned to the top of the tree, high above the heads of the young people. He wanted to hear their conversation and to assure himself that they had not been sent by Huang Yaoshi to steal his skills. The words of Huang Rong filled him with pride",
+      "hypothesis": "AfterHongQigongwalkedfaraway,heusedtheUntopLightnessSkilltoreversetheforestandstealthilylistenedtothetwoofthemtalkingonthetree.HewantedtoknowifHuangYaoshihadsentthemtolearnhismartialarts.HuangRongcouldnothelpbutfeelpleasedwithherself",
+      "source_id": "hsc-wuxia-100k",
+      "flags": {
+        "empty": false,
+        "copy": false,
+        "cjk_leak": false,
+        "repetition": false,
+        "truncated_decode": false,
+        "ref_much_longer": false
+      }
+    }
+  ],
+  "terminology_diagnostic": {
+    "note": "EVAL-ONLY heuristic on primary decoded rows; CC-CEDICT-derived sidecar terms (RESTRICTED share-alike, local analysis only). First-matching-term per row; gloss match is substring-based.",
+    "term_list": 20000,
+    "rows_with_term": 1947,
+    "rows_with_gloss": 672,
+    "coverage": 0.3451
+  },
+  "eval_time_s": 401.1
+}

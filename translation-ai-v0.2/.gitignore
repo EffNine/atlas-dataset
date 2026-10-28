@@ -1,0 +1,5 @@
+# Bulk derived data (encoded npz, tokenizer outputs are small but regenerated;
+# keep tokenizer + manifests, ignore heavy artifacts).
+data/encoded/*.npz
+checkpoints/*/ckpt_*.pt
+__pycache__/

@@ -1,0 +1,5 @@
+data/raw/
+data/clean/rejected_*.jsonl
+checkpoints/
+__pycache__/
+*.pyc
