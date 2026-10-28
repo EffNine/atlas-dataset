@@ -75,6 +75,7 @@ Do not couple Atlas architecture directly to one specific model implementation.
 |------|--------|
 | Dataset v1.0 | **Released** — 9,515,938 records across 9 categories |
 | v1.0 Release | `metadata/releases/v1.0_release.json` — status: final |
+| v1.0 licence correction | `metadata/releases/v1.0_correction_release.json` — see the note below |
 | Release chain | Hash-linked from v0.1 through v1.0-RC1/RC2 to v1.0 |
 | Phase 6.1 | **Completed** — Atlas Research Protocol v1.0 adopted |
 | Intelligence Layer v1.1 | **Complete** — 2,575,622 records classified (difficulty L1-L5) |
@@ -83,6 +84,18 @@ Do not couple Atlas architecture directly to one specific model implementation.
 | Pilot v0.2 data | **Available** — 4,499 records (math 1000, code 401, general 1098, systems 2000) |
 | SFT views | **Built** — `atlas-sft-v0.1` / `atlas-sft-v0.2` superviews via `expert_pipeline.sft_view` |
 | model-eval-finetune | **Separate project** — Qwen3-8B LoRA pipeline ready |
+
+> **Licence statistics correction (2026-10-28).** The v1.0 manifest's
+> `statistics.by_license` was computed from the top-level `license` field only;
+> 92 % of records carry the licence on `source.license`, so 7,972,390 records
+> were reported as `unknown`. Recomputing with
+> `atlas_constants.effective_license()` over the verified bytes gives **0
+> denied / 0 unknown** (CC-BY-SA-3.0 6,206,350 · ODC-BY 2,036,365 · MIT
+> 1,213,017 · Apache-2.0 45,570 · CC-BY-4.0 10,403 · other declared ~9,000).
+> The corrected record is `metadata/releases/v1.0_correction_release.json`;
+> ADR-011 forbids editing the v1.0 manifest in place. The release gate now
+> computes from `effective_license()` and fails closed
+> (`scripts/release/dedup_release.py`, `scripts/acquisition_engine/release.py`).
 
 ### 3.2 Current Blockers
 

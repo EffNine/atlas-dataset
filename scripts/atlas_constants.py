@@ -12,7 +12,7 @@ This module is stdlib-only and importable from anywhere in the project.
 from __future__ import annotations
 
 import re
-from typing import Callable
+from typing import Any, Callable
 
 # ---------------------------------------------------------------------------
 # Category enums
@@ -118,6 +118,31 @@ def is_denied_license(lic: str) -> bool:
         return True
     low = lic.strip().lower()
     return any(p in low for p in _DENIED_LICENSE_PATTERNS)
+
+
+def effective_license(record: dict[str, Any]) -> str:
+    """Return the licence that governs a record.
+
+    Canonical Atlas records declare the licence on ``source.license``; a few
+    legacy or expanded records also carry a top-level ``license``. Reading only
+    one of the two fields produced the v1.0 statistics defect: 92 % of records
+    have no top-level ``license``, so a top-level-only reader classified them
+    ``unknown`` (and a gate built on it would have denied 7,972,390 records that
+    are in fact ODC-BY / CC-BY-SA / MIT / Apache).
+
+    The top-level value wins only when it is a real value: an explicit
+    ``"unknown"`` must not hide a declared source licence. Returns ``"unknown"``
+    when neither field is declared.
+    """
+    top = record.get("license")
+    if isinstance(top, str) and top.strip() and top.strip().lower() != "unknown":
+        return top.strip()
+    source = record.get("source")
+    if isinstance(source, dict):
+        src = source.get("license")
+        if isinstance(src, str) and src.strip():
+            return src.strip()
+    return "unknown"
 
 
 def is_share_alike(lic: str) -> bool:

@@ -35,6 +35,7 @@ from atlas_constants import (
     VALID_CATEGORIES,
     VERIFICATION_STATUSES,
     VERIFICATION_STATUS_RANK,
+    effective_license,
     is_denied_license,
     is_share_alike,
     requires_attribution,
@@ -152,11 +153,11 @@ class ReleaseGates:
         if not self.records:
             return ReleaseGateResult("license_gate", "fail", "No records to check")
         denied = [r for r in self.records
-                  if is_denied_license(r.get("license", "unknown"))]
+                  if is_denied_license(effective_license(r))]
         if denied:
             lic_counts: dict[str, int] = {}
             for r in denied:
-                l = r.get("license", "unknown")
+                l = effective_license(r)
                 lic_counts[l] = lic_counts.get(l, 0) + 1
             return ReleaseGateResult(
                 "license_gate", "fail",

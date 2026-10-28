@@ -48,6 +48,13 @@ from common import (
     utc_now,
 )
 
+# The licence policy lives in scripts/atlas_constants.py; put scripts/ on the
+# path so this release tool and the acquisition-engine gate read the same rule.
+_SCRIPTS_DIR = Path(__file__).resolve().parents[1]
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
+from atlas_constants import effective_license, is_denied_license  # noqa: E402
+
 DEDUP_GATE = "lossless-dedup-v1: keep first occurrence per ID; drop only byte-identical (SHA-256 of raw line)"
 
 
@@ -207,7 +214,10 @@ def compute_statistics(src_dir: Path) -> dict[str, Any]:
                 rec = json.loads(line)
                 n += 1
                 total += 1
-                lic = rec.get("license") or "unknown"
+                # Canonical records declare source.license; a top-level-only
+                # reader classified 92 % of v1.0 as "unknown" (see
+                # atlas_constants.effective_license and the v1.0 correction).
+                lic = effective_license(rec)
                 by_license[lic] += 1
                 diff = str(rec.get("difficulty", "?"))
                 by_difficulty[diff] += 1
@@ -265,6 +275,42 @@ def build_manifest(
         else:
             review_gate["error"] = review_check["error"]
 
+    # Licence gate — computed from the records' effective licences, never assumed.
+    # The v1.0 manifest carried a literal {"passed": true} here while 92 % of the
+    # corpus had no top-level `license` field; the real policy (unknown => denied)
+    # was therefore bypassed. This gate fails closed and states the counts.
+    denied_licences = {
+        lic: n for lic, n in stats["by_license"].items() if is_denied_license(lic)
+    }
+    denied_count = sum(denied_licences.values())
+    license_gate = {
+        "passed": denied_count == 0,
+        "checked_at": now,
+        "checked_records": total_records,
+        "denied_count": denied_count,
+        "denied_by_license": denied_licences,
+        "policy": "scripts/atlas_constants.py:is_denied_license",
+    }
+
+    gates = {
+        "quality_gate": {
+            "passed": True,
+            "threshold": 4,
+            "min_score": stats["quality"]["min"],
+            "checked_at": now,
+        },
+        "license_gate": license_gate,
+        "human_review_gate": review_gate,
+        "dedup_gate": {
+            "passed": True,
+            "checked_at": now,
+            "note": DEDUP_GATE,
+            "audit_ref": "reports/releases/v1.0-RC1_duplicate_audit.json",
+            "duplicates_removed": 377906,
+            "unique_ids": total_records,
+        },
+    }
+
     manifest: dict[str, Any] = {
         "release_version": release_version,
         "release_type": "major",
@@ -283,29 +329,9 @@ def build_manifest(
             "quality": stats["quality"],
         },
         "sources": stats["sources"],
-        "gates": {
-            "quality_gate": {
-                "passed": True,
-                "threshold": 4,
-                "min_score": stats["quality"]["min"],
-                "checked_at": now,
-            },
-            "license_gate": {
-                "passed": True,
-                "checked_at": now,
-            },
-            "human_review_gate": review_gate,
-            "dedup_gate": {
-                "passed": True,
-                "checked_at": now,
-                "note": DEDUP_GATE,
-                "audit_ref": "reports/releases/v1.0-RC1_duplicate_audit.json",
-                "duplicates_removed": 377906,
-                "unique_ids": total_records,
-            },
-        },
-        "gates_passed": True,
-        "status": "release_candidate",
+        "gates": gates,
+        "gates_passed": all(g.get("passed") for g in gates.values()),
+        "status": "release_candidate" if all(g.get("passed") for g in gates.values()) else "gate_failed",
     }
 
     # Sign: content_hash over everything except signature/release_id.
@@ -476,6 +502,13 @@ def main(argv: list[str] | None = None) -> int:
     stats = compute_statistics(dst_dataset)
     stats_total = stats["total_records"]
 
+    # Licence gate is part of the release decision, not decoration: a denied
+    # licence (including "unknown") blocks signing.
+    denied_by_license = {
+        lic: n for lic, n in stats["by_license"].items() if is_denied_license(lic)
+    }
+    denied_count = sum(denied_by_license.values())
+
     # ---- Validation ----
     # On a resumed run (registry-completed categories skipped), per-category
     # totals cover only THIS run's completions; the strict disk-truth gates
@@ -490,11 +523,15 @@ def main(argv: list[str] | None = None) -> int:
         "expected_software": args.expect_software,
         "software_matches_expected": stats["by_category"].get("02_software_engineering") == args.expect_software,
         "expected_total_matches": stats_total == args.expect_total,
+        "license_gate_passed": denied_count == 0,
+        "license_denied_count": denied_count,
+        "license_denied_by_license": denied_by_license,
         "all_ok": (
             total_conflicts == 0
             and (stats_total == total_kept or resumed)
             and stats_total == args.expect_total
             and stats["by_category"].get("02_software_engineering") == args.expect_software
+            and denied_count == 0
         ),
     }
     print(f"  validation: {validation}")

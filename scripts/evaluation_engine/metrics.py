@@ -387,12 +387,12 @@ class ProvenanceLicensePassRate(BaseMetric):
             return {"metric_id": self.metric_id, "value": 0.0, "status": "not_available", "message": "No records."}
 
         try:
-            from atlas_constants import is_denied_license
+            from atlas_constants import effective_license, is_denied_license
         except ImportError:
             # Fallback if atlas_constants not importable
-            from ..atlas_constants import is_denied_license  # type: ignore[import]
+            from ..atlas_constants import effective_license, is_denied_license  # type: ignore[import]
 
-        passing = sum(1 for r in records if not is_denied_license(r.get("license", "")))
+        passing = sum(1 for r in records if not is_denied_license(effective_license(r)))
         rate = round(passing / len(records), 4) if records else 0.0
 
         return {
@@ -503,14 +503,14 @@ class ContentSafetyRate(BaseMetric):
         # Content safety pass criteria: verification_status != 'rejected',
         # no known hallucination markers, license is not denied.
         try:
-            from atlas_constants import is_denied_license
+            from atlas_constants import effective_license, is_denied_license
         except ImportError:
-            from ..atlas_constants import is_denied_license  # type: ignore[import]
+            from ..atlas_constants import effective_license, is_denied_license  # type: ignore[import]
 
         safe = 0
         for r in records:
             vs = r.get("verification_status", "pending")
-            lic = r.get("license", "")
+            lic = effective_license(r)
             if vs != "rejected" and not is_denied_license(lic):
                 safe += 1
 
