@@ -1,0 +1,37 @@
+{
+  "manifest_version": "sd-v1.1",
+  "written_utc": "2026-09-18T01:15:47.538659+00:00",
+  "n_raw_shaped": 30000,
+  "n_malformed_shape": 0,
+  "n_normalized": 30000,
+  "normalized_sha256": "b405e429393965180b6b822d25b321daf37033da97ed74870b280256fa5b0c0e",
+  "quality_filter": {
+    "n_input": 30000,
+    "kept": 29758,
+    "misaligned_ratio": 187,
+    "wrong_language_source_ja": 45,
+    "wrong_language_target_en": 7,
+    "copy_pair": 1,
+    "html_boilerplate": 1,
+    "repeated_text": 1,
+    "n_kept": 29758,
+    "n_rejected": 242
+  },
+  "dedup": {
+    "n_input": 29758,
+    "n_kept": 29758,
+    "n_duplicates": 0
+  },
+  "n_kept": 29758,
+  "kept_sha256": "ef84020b3c74e4e9f1d32c7ea1a32d00295bcdb07b2efdfa35f2dd0be8b7eee4",
+  "n_rejected": 242,
+  "rejected_sha256": "7f1345222cda7e0d91bf2a1b365cdf5b41dc10e4b5c581ca5fab5a43985e6c50",
+  "archive": "split.tar.gz",
+  "archive_sha256": "9cc6f2b31225d84b204a1bc4599e5fbb158d5739ba4aa76eab30fea05ed8ccd5",
+  "archive_bytes": 102198329,
+  "cap": 30000,
+  "license": "unknown",
+  "license_state": "UNKNOWN",
+  "license_note": "research-baseline only; NEVER training-ready",
+  "domain": "subtitle"
+}

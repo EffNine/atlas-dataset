@@ -1,0 +1,30 @@
+{
+  "n_raw_shaped": 50000,
+  "n_malformed_shape": 0,
+  "n_normalized": 50000,
+  "normalized_sha256": "844e59f5ae55bb93ff73dab37a5febf857c1d4501f38fb7f77e4e5a1702fb039",
+  "quality_filter": {
+    "n_input": 50000,
+    "kept": 47470,
+    "wrong_language_source_zh": 165,
+    "copy_pair": 880,
+    "duplicate_content": 567,
+    "misaligned_ratio": 356,
+    "wrong_language_target_en": 60,
+    "html_boilerplate": 8,
+    "wrong_language_source_ja": 118,
+    "wrong_language_source_ko": 347,
+    "wrong_language_source_ms": 29,
+    "n_kept": 47470,
+    "n_rejected": 2530
+  },
+  "dedup": {
+    "n_input": 47470,
+    "n_kept": 47470,
+    "n_duplicates": 567
+  },
+  "n_kept": 47470,
+  "kept_sha256": "d5e93e63b4cb4ec1fdecb9d6d45879781eade98bfde81a033a4b8d164e144b27",
+  "n_rejected": 2530,
+  "rejected_sha256": "7794bb42d6454f12e9614a0879d3cb75dfafed195c176fda970a8bd6605d25aa"
+}

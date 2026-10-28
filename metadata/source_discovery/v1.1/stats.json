@@ -1,0 +1,43 @@
+{
+  "by_source": {
+    "hsc-wuxia-100k": 180021,
+    "tomato-zh2en": 2091399,
+    "tatoeba-koen": 11552,
+    "tatoeba-msen": 3944,
+    "opus-100": 47470,
+    "jesc": 29758,
+    "jparacrawl-verah": 29605
+  },
+  "by_language": {
+    "zh": 2285817,
+    "ko": 20884,
+    "ms": 13150,
+    "ja": 73898
+  },
+  "by_domain": {
+    "web_novel": 2271420,
+    "general": 45101,
+    "subtitle": 77228
+  },
+  "by_license_state": {
+    "ALLOW": 2286916,
+    "UNKNOWN": 77228,
+    "RESTRICTED": 29605
+  },
+  "rejections": {
+    "misaligned_ratio": 4494,
+    "duplicate_content": 38805,
+    "html_boilerplate": 7278,
+    "_raw_total": 2447014,
+    "_kept_total": 2393749,
+    "wrong_language_target_en": 501,
+    "wrong_language_source_zh": 276,
+    "copy_pair": 982,
+    "repeated_text": 10,
+    "too_long": 93,
+    "corrupted_encoding": 43,
+    "wrong_language_source_ja": 239,
+    "wrong_language_source_ko": 347,
+    "wrong_language_source_ms": 197
+  }
+}

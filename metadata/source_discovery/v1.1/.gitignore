@@ -1,0 +1,4 @@
+# v1.1 bulk JSONL is regenerable from pinned sources; manifests + reports are tracked.
+corpus/*.jsonl
+corpus/splits/*.jsonl
+staging/**/*.jsonl

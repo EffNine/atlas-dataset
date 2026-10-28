@@ -1,0 +1,40 @@
+{
+  "manifest_version": "sd-v1.1",
+  "written_utc": "2026-09-18T02:13:34.343159+00:00",
+  "n_raw_shaped": 2097046,
+  "n_malformed_shape": 0,
+  "n_normalized": 2097046,
+  "normalized_sha256": "de9d706abb4d469b5f7d0486b4c57b6aab3a0e98a5490e5cf1c9bb61ab4c1ed9",
+  "quality_filter": {
+    "n_input": 2097046,
+    "kept": 2091399,
+    "html_boilerplate": 5130,
+    "wrong_language_target_en": 156,
+    "duplicate_content": 6,
+    "wrong_language_source_zh": 111,
+    "copy_pair": 100,
+    "repeated_text": 8,
+    "too_long": 93,
+    "corrupted_encoding": 43,
+    "n_kept": 2091399,
+    "n_rejected": 5647
+  },
+  "dedup": {
+    "n_input": 2091399,
+    "n_kept": 2091399,
+    "n_duplicates": 6
+  },
+  "n_kept": 2091399,
+  "kept_sha256": "8e5c0dcb0012c48128eff5b0b5894434ac113a1ca5c7303b4224e03501a1a494",
+  "n_rejected": 5647,
+  "rejected_sha256": "a630c26791f3a824bee01bb5e3101da3868ceda4e381bc07a39c5bf2c53b69cc",
+  "repo": "TomatoMTL/tomato-zh2en",
+  "revision": "ef8f3982420e540be981976493d0bfabac5a50f7",
+  "archive": "zh-en.zip",
+  "archive_sha256": "bd83bcb909aee9a92b0bebe0dcc214fc7dc429b73503d05edad8458ac592c5c9",
+  "archive_bytes": 5883041582,
+  "license": "apache-2.0",
+  "license_state": "ALLOW",
+  "domain": "web_novel",
+  "target_origin": "machine_translated (EN side is MT output, not human gold — distillation-grade)"
+}

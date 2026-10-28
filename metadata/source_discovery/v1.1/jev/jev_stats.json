@@ -1,0 +1,20 @@
+{
+  "ran_utc": "2026-09-18T02:52:09.968339+00:00",
+  "policy": "balanced",
+  "formula_version": "v0.2-router-v1",
+  "n_evaluated_total": 100,
+  "n_new_this_run": 0,
+  "n_ok": 0,
+  "n_errors": 0,
+  "total_input_tokens": 0,
+  "total_output_tokens": 0,
+  "mean_latency_s": 0.0,
+  "final_dist": {
+    "KEEP": 81,
+    "REJECT": 17,
+    "QUARANTINE": 2
+  },
+  "ai2_calls": 53,
+  "ai2_cached_reuse": 0,
+  "note": "routing signals only — not ground truth, no accuracy claims"
+}

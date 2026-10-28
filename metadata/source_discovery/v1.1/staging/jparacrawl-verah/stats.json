@@ -1,0 +1,27 @@
+{
+  "n_raw_shaped": 50000,
+  "n_malformed_shape": 0,
+  "n_normalized": 50000,
+  "normalized_sha256": "e9f506f547063d539fa9e8e262130d10c37c116f6c674837d407a699069c753d",
+  "quality_filter": {
+    "n_input": 50000,
+    "kept": 29605,
+    "duplicate_content": 17898,
+    "html_boilerplate": 2136,
+    "wrong_language_target_en": 278,
+    "wrong_language_source_ja": 76,
+    "repeated_text": 1,
+    "misaligned_ratio": 6,
+    "n_kept": 29605,
+    "n_rejected": 20395
+  },
+  "dedup": {
+    "n_input": 29605,
+    "n_kept": 29605,
+    "n_duplicates": 17898
+  },
+  "n_kept": 29605,
+  "kept_sha256": "569e06f2679ed703f04d387fd1547a9a2485a55e1dc12a0c38028a045c61a728",
+  "n_rejected": 20395,
+  "rejected_sha256": "359fad2c625e94f9e6d35eb3ecedade25cdd52b66d5ead12593f7c82de0e2181"
+}

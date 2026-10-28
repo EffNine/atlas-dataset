@@ -1,0 +1,121 @@
+{
+  "generated_utc": "2026-09-18T02:52:09.969481+00:00",
+  "note": "tombstone overlay: consumers MUST exclude these ids from training_ready.jsonl and its splits",
+  "n_removed": 19,
+  "removed": [
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-test-0006590",
+      "final": "REJECT",
+      "band": "LOW",
+      "path": "jev_auto_reject_quarantine"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-test-0013080",
+      "final": "REJECT",
+      "band": "AMBIGUOUS",
+      "path": "ai2_reject"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-test-0017941",
+      "final": "REJECT",
+      "band": "LOW",
+      "path": "jev_auto_reject_quarantine"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-test-0019741",
+      "final": "REJECT",
+      "band": "LOW",
+      "path": "jev_auto_reject_quarantine"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-test-0049502",
+      "final": "REJECT",
+      "band": "LOW",
+      "path": "jev_auto_reject_quarantine"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-train-0006658",
+      "final": "REJECT",
+      "band": "LOW",
+      "path": "jev_auto_reject_quarantine"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-train-0008997",
+      "final": "REJECT",
+      "band": "AMBIGUOUS",
+      "path": "ai2_reject"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-train-0012065",
+      "final": "REJECT",
+      "band": "LOW",
+      "path": "jev_auto_reject_quarantine"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-train-0019171",
+      "final": "REJECT",
+      "band": "LOW",
+      "path": "jev_auto_reject_quarantine"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-train-0031488",
+      "final": "REJECT",
+      "band": "LOW",
+      "path": "problematic_rail_quarantine"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-train-0044831",
+      "final": "REJECT",
+      "band": "LOW",
+      "path": "jev_auto_reject_quarantine"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-train-0050277",
+      "final": "QUARANTINE",
+      "band": "AMBIGUOUS",
+      "path": "ai2_ambiguous"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-train-0080881",
+      "final": "QUARANTINE",
+      "band": "AMBIGUOUS",
+      "path": "ai2_ambiguous"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-validation-0003029",
+      "final": "REJECT",
+      "band": "AMBIGUOUS",
+      "path": "ai2_reject"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-validation-0010439",
+      "final": "REJECT",
+      "band": "LOW",
+      "path": "jev_auto_reject_quarantine"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-validation-0011500",
+      "final": "REJECT",
+      "band": "AMBIGUOUS",
+      "path": "ai2_reject"
+    },
+    {
+      "record_id": "hsc-wuxia-100k:7510b5b4:hsc-validation-0017355",
+      "final": "REJECT",
+      "band": "AMBIGUOUS",
+      "path": "ai2_reject"
+    },
+    {
+      "record_id": "tomato-zh2en:ef8f3982:tomato-1671574",
+      "final": "REJECT",
+      "band": "AMBIGUOUS",
+      "path": "ai2_reject"
+    },
+    {
+      "record_id": "tomato-zh2en:ef8f3982:tomato-395375",
+      "final": "REJECT",
+      "band": "LOW",
+      "path": "jev_auto_reject_quarantine"
+    }
+  ]
+}

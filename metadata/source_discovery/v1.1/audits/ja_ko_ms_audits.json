@@ -1,0 +1,56 @@
+{
+  "audited_utc": "2026-09-18T00:55:58.418667+00:00",
+  "jparacrawl": {
+    "audited_utc": "2026-09-18T00:55:58.418679+00:00",
+    "checks": [
+      {
+        "url": "https://www.kecl.ntt.co.jp/icl/lirg/jparacrawl/",
+        "ok": false,
+        "error": "HTTPError: HTTP Error 503: Service Unavailable"
+      },
+      {
+        "url": "https://jparacrawl.org/",
+        "ok": false,
+        "error": "URLError: <urlopen error [Errno -2] Name or service not known>"
+      }
+    ],
+    "domain": "general/web (NOT literary)",
+    "license_note": "UNVERIFIED — usage terms require a human read of the official site before any use.",
+    "reachable": [],
+    "verdict": "no candidate URL reachable; JA web-parallel still open"
+  },
+  "jesc": {
+    "audited_utc": "2026-09-18T00:55:58.957824+00:00",
+    "page": {
+      "url": "https://nlp.stanford.edu/projects/jesc/",
+      "ok": true,
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8"
+    },
+    "domain": "subtitle/dialogue (NOT novel)",
+    "license_note": "UNVERIFIED — confirm project terms before any use.",
+    "download_links_found": [
+      "https://github.com/rpryzant/JESC",
+      "https://nlp.stanford.edu/projects/jesc/data/raw.tar.gz",
+      "https://nlp.stanford.edu/projects/jesc/data/split.tar.gz"
+    ],
+    "verdict": "page reachable; download surface reported above; bulk fetch deferred (subtitle domain, lower priority than literary)"
+  },
+  "tatoeba": {
+    "audited_utc": "2026-09-18T00:56:00.749522+00:00",
+    "index": "https://downloads.tatoeba.org/exports/per_language/eng/",
+    "n_files": 428,
+    "ko_files": [
+      "eng-kor_links.tsv.bz2"
+    ],
+    "ms_files": [],
+    "ok": true
+  },
+  "aihub": {
+    "status": "BLOCKED_ACCESS",
+    "note": "HTTP 403 (v1.0); gated application required; never bypassed in v1.1"
+  },
+  "ja_literary_verdict": "NO verified open JA literary parallel corpus found — recorded as explicit gap",
+  "ko_literary_verdict": "NO verified open KO literary parallel corpus found — recorded as explicit gap",
+  "ms_literary_verdict": "NO verified open MS literary parallel corpus found — recorded as explicit gap"
+}

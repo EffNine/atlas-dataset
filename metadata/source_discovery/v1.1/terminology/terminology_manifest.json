@@ -1,0 +1,39 @@
+{
+  "built_utc": "2026-09-18T01:08:05.908514+00:00",
+  "sources": {
+    "jmdict": {
+      "status": "INGESTED",
+      "url": "http://ftp.edrdg.org/pub/Nihongo/JMdict_e.gz",
+      "bytes": 10574053,
+      "sha256": "e40b35352337812b1f0e6ee9429b57591e5b141f5ad7a54ae3335024c33e916c",
+      "acquired_utc": "2026-09-18T01:08:48.548511+00:00",
+      "n_terms": 443275,
+      "license": "CC-BY-SA per EDRDG site terms (site HTTP 200 verified v1.0; confirm live before redistribution)",
+      "license_state": "RESTRICTED",
+      "license_evidence": "file carries no in-band license header; EDRDG publishes JMdict under CC-BY-SA — verify on edrdg.org before any redistribution"
+    },
+    "cc-cedict": {
+      "status": "INGESTED",
+      "url": "https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.zip",
+      "bytes": 3974549,
+      "sha256": "862c8390754edebffc89631c37f5169bf17834f8cc00760184419b0622b3c2f8",
+      "acquired_utc": "2026-09-18T01:09:11.182032+00:00",
+      "inner": "cedict_ts.u8",
+      "n_terms": 199668,
+      "license": "CC-BY-SA-4.0",
+      "license_state": "RESTRICTED",
+      "license_evidence": "in-file header: Creative Commons Attribution-ShareAlike 4.0 International License (verified in downloaded cedict_ts.u8)"
+    },
+    "koen-wikt": {
+      "status": "GAP",
+      "note": "no verified open ko-en dictionary release; not scraped"
+    },
+    "msmy-dict": {
+      "status": "GAP",
+      "note": "no verified open ms-en dictionary release; not scraped"
+    }
+  },
+  "n_terms": 642943,
+  "sha256": "7cdaab94303fa732b68bcb98553c3d4c55f67c2f9e9d8e9c6f856aa5757d31db",
+  "note": "sidecar only — never sentence-pair training data"
+}

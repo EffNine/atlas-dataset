@@ -1,0 +1,24 @@
+{
+  "n_raw_shaped": 204302,
+  "n_malformed_shape": 0,
+  "n_normalized": 204302,
+  "normalized_sha256": "168200a79ae08d8555e59f59cf0bb9d529b94abea882261517fd379f54054a0f",
+  "quality_filter": {
+    "n_input": 204302,
+    "kept": 180021,
+    "misaligned_ratio": 3944,
+    "duplicate_content": 20334,
+    "html_boilerplate": 3,
+    "n_kept": 180021,
+    "n_rejected": 24281
+  },
+  "dedup": {
+    "n_input": 180021,
+    "n_kept": 180021,
+    "n_duplicates": 20334
+  },
+  "n_kept": 180021,
+  "kept_sha256": "1a67c046a9249be0b0706f240d0eb277c739782f0d6d82cfd54c2a5b14be329f",
+  "n_rejected": 24281,
+  "rejected_sha256": "520d54b489dd7cc498902bd84267b5ec7b883ef12377712a1365e64f456bdf72"
+}

@@ -1,0 +1,518 @@
+{
+  "verified_at": "2026-09-18T00:20:12.060809+00:00",
+  "n_sources": 20,
+  "n_hf_ok": 4,
+  "n_http_ok": 12,
+  "results": [
+    {
+      "source_id": "aihub-koen",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://aihub.or.kr/",
+          "verified_at": "2026-09-18T00:19:45.962339+00:00",
+          "ok": false,
+          "error": "HTTPError: HTTP Error 403: 403"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:46.671776+00:00"
+    },
+    {
+      "source_id": "aozora-ja-lit",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://www.aozora.gr.jp/",
+          "verified_at": "2026-09-18T00:19:47.171874+00:00",
+          "ok": true,
+          "http_status": 200,
+          "content_type": "text/html",
+          "content_length": "22388"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:47.644611+00:00"
+    },
+    {
+      "source_id": "cc-cedict",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://github.com/mdbg/cc-cedict",
+          "verified_at": "2026-09-18T00:19:48.144716+00:00",
+          "ok": false,
+          "error": "HTTPError: HTTP Error 404: Not Found"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:48.544560+00:00"
+    },
+    {
+      "source_id": "diting",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "",
+          "verified_at": "2026-09-18T00:19:49.044651+00:00",
+          "ok": false,
+          "error": "no_http_url_to_check"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:49.044669+00:00"
+    },
+    {
+      "source_id": "flores-plus",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "repo_id": "facebook/flores",
+          "verified_at": "2026-09-18T00:19:49.544751+00:00",
+          "ok": true,
+          "revision_sha": "71abf77d8b7beb5cfef59898d6b24d92ab7654fc",
+          "card_license": "cc-by-sa-4.0",
+          "tags_sample": [
+            "task_categories:text-generation",
+            "task_categories:translation",
+            "annotations_creators:found",
+            "language_creators:expert-generated",
+            "multilinguality:multilingual",
+            "multilinguality:translation",
+            "source_datasets:extended|flores",
+            "language:ace",
+            "language:acm",
+            "language:acq",
+            "language:aeb",
+            "language:af",
+            "language:ajp",
+            "language:ak",
+            "language:als",
+            "language:am",
+            "language:apc",
+            "language:ar",
+            "language:ars",
+            "language:ary"
+          ],
+          "siblings_sample": [
+            ".gitattributes",
+            "README.md",
+            "data/all/dev-00000-of-00001.parquet",
+            "data/all/devtest-00000-of-00001.parquet",
+            "data/language/ace_Arab/dev-00000-of-00001.parquet",
+            "data/language/ace_Arab/devtest-00000-of-00001.parquet",
+            "data/language/ace_Latn/dev-00000-of-00001.parquet",
+            "data/language/ace_Latn/devtest-00000-of-00001.parquet",
+            "data/language/acm_Arab/dev-00000-of-00001.parquet",
+            "data/language/acm_Arab/devtest-00000-of-00001.parquet"
+          ],
+          "likes": 120,
+          "downloads": 5509
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://huggingface.co/datasets/facebook/flores",
+          "verified_at": "2026-09-18T00:19:50.081783+00:00",
+          "ok": true,
+          "http_status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "content_length": "1005294"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:50.431443+00:00"
+    },
+    {
+      "source_id": "hsc-wuxia-100k",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "repo_id": "HSilvosa/hsc-wuxia-100k",
+          "verified_at": "2026-09-18T00:19:50.931541+00:00",
+          "ok": true,
+          "revision_sha": "7510b5b496ee492c04f23902023f1c75e1379f6e",
+          "card_license": "mit",
+          "tags_sample": [
+            "task_categories:translation",
+            "language:zh",
+            "language:en",
+            "license:mit",
+            "size_categories:100K<n<1M",
+            "region:us",
+            "translation",
+            "wuxia",
+            "parallel-corpus",
+            "machine-translation"
+          ],
+          "siblings_sample": [
+            ".gitattributes",
+            "README.md",
+            "dataset_dict.json",
+            "test/data-00000-of-00001.arrow",
+            "test/dataset_info.json",
+            "test/state.json",
+            "train/data-00000-of-00001.arrow",
+            "train/dataset_info.json",
+            "train/state.json",
+            "validation/data-00000-of-00001.arrow"
+          ],
+          "likes": 0,
+          "downloads": 48
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://huggingface.co/datasets/HSilvosa/hsc-wuxia-100k",
+          "verified_at": "2026-09-18T00:19:51.424247+00:00",
+          "ok": true,
+          "http_status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "content_length": "116098"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:52.125750+00:00"
+    },
+    {
+      "source_id": "jesc",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://nlp.stanford.edu/projects/jesc/",
+          "verified_at": "2026-09-18T00:19:52.625854+00:00",
+          "ok": true,
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "content_length": "6241"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:53.570388+00:00"
+    },
+    {
+      "source_id": "jmdict",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://www.edrdg.org/jmdict/j_jmdict.html",
+          "verified_at": "2026-09-18T00:19:54.070477+00:00",
+          "ok": true,
+          "http_status": 200,
+          "content_type": "text/html",
+          "content_length": "2710"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:55.131861+00:00"
+    },
+    {
+      "source_id": "jparacrawl",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://jparacrawl.org/",
+          "verified_at": "2026-09-18T00:19:55.631953+00:00",
+          "ok": false,
+          "error": "URLError: <urlopen error [Errno -2] Name or service not known>"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:55.755873+00:00"
+    },
+    {
+      "source_id": "koen-wikt",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://dumps.wikimedia.org/",
+          "verified_at": "2026-09-18T00:19:56.256242+00:00",
+          "ok": true,
+          "http_status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "content_length": "4745"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:56.996073+00:00"
+    },
+    {
+      "source_id": "msmy-dict",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "",
+          "verified_at": "2026-09-18T00:19:57.496162+00:00",
+          "ok": false,
+          "error": "no_http_url_to_check"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:57.496180+00:00"
+    },
+    {
+      "source_id": "noveldataset",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "repo_id": "NabeelShar/noveldataset",
+          "verified_at": "2026-09-18T00:19:57.996267+00:00",
+          "ok": false,
+          "error": "RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-6aac83ae-2d88218d5a45d52828dc5a8f;c2a0a753-a8e2-4dfa-9458-22ec022cd75e)\n\nRepository Not Found for url: https://huggingface.co/api/datasets/NabeelShar/noveldataset.\nPlease make sure you specified the correct `repo_id` and `repo_type`.\nIf you are trying to access "
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://huggingface.co/datasets/NabeelShar/noveldataset",
+          "verified_at": "2026-09-18T00:19:58.386236+00:00",
+          "ok": false,
+          "error": "HTTPError: HTTP Error 401: Unauthorized"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:58.684460+00:00"
+    },
+    {
+      "source_id": "openmantra",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "",
+          "verified_at": "2026-09-18T00:19:59.184550+00:00",
+          "ok": false,
+          "error": "no_http_url_to_check"
+        }
+      },
+      "verified_at": "2026-09-18T00:19:59.184568+00:00"
+    },
+    {
+      "source_id": "opus-100",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "repo_id": "Helsinki-NLP/opus-100",
+          "verified_at": "2026-09-18T00:19:59.684648+00:00",
+          "ok": true,
+          "revision_sha": "805090dc28bf78897da9641cdf08b61287580df9",
+          "card_license": "unknown",
+          "tags_sample": [
+            "task_categories:translation",
+            "annotations_creators:no-annotation",
+            "language_creators:found",
+            "multilinguality:translation",
+            "source_datasets:extended",
+            "language:af",
+            "language:am",
+            "language:an",
+            "language:ar",
+            "language:as",
+            "language:az",
+            "language:be",
+            "language:bg",
+            "language:bn",
+            "language:br",
+            "language:bs",
+            "language:ca",
+            "language:cs",
+            "language:cy",
+            "language:da"
+          ],
+          "siblings_sample": [
+            ".gitattributes",
+            "README.md",
+            "af-en/test-00000-of-00001.parquet",
+            "af-en/train-00000-of-00001.parquet",
+            "af-en/validation-00000-of-00001.parquet",
+            "am-en/test-00000-of-00001.parquet",
+            "am-en/train-00000-of-00001.parquet",
+            "am-en/validation-00000-of-00001.parquet",
+            "an-en/train-00000-of-00001.parquet",
+            "ar-de/test-00000-of-00001.parquet"
+          ],
+          "likes": 244,
+          "downloads": 20114
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://huggingface.co/datasets/Helsinki-NLP/opus-100",
+          "verified_at": "2026-09-18T00:20:00.046789+00:00",
+          "ok": true,
+          "http_status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "content_length": "908091"
+        }
+      },
+      "verified_at": "2026-09-18T00:20:00.431636+00:00"
+    },
+    {
+      "source_id": "opus-qed-koen",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://opus.nlpl.eu/QED/en&ko/v2a/QED",
+          "verified_at": "2026-09-18T00:20:00.931738+00:00",
+          "ok": false,
+          "error": "HTTPError: HTTP Error 404: Not Found"
+        }
+      },
+      "verified_at": "2026-09-18T00:20:02.394609+00:00"
+    },
+    {
+      "source_id": "paracrawl-zhen",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://paracrawl.eu/",
+          "verified_at": "2026-09-18T00:20:02.894699+00:00",
+          "ok": true,
+          "http_status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "content_length": ""
+        }
+      },
+      "verified_at": "2026-09-18T00:20:03.746351+00:00"
+    },
+    {
+      "source_id": "qidian-webnovel",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://www.qidian.com/",
+          "verified_at": "2026-09-18T00:20:04.246440+00:00",
+          "ok": true,
+          "http_status": 202,
+          "content_type": "text/html; charset=utf-8",
+          "content_length": "209"
+        }
+      },
+      "verified_at": "2026-09-18T00:20:05.260906+00:00"
+    },
+    {
+      "source_id": "tatoeba-msen",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://tatoeba.org/",
+          "verified_at": "2026-09-18T00:20:05.760997+00:00",
+          "ok": true,
+          "http_status": 200,
+          "content_type": "text/html; charset=UTF-8",
+          "content_length": ""
+        }
+      },
+      "verified_at": "2026-09-18T00:20:08.793396+00:00"
+    },
+    {
+      "source_id": "tomato-zh2en",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "repo_id": "TomatoMTL/tomato-zh2en",
+          "verified_at": "2026-09-18T00:20:09.293488+00:00",
+          "ok": true,
+          "revision_sha": "ef8f3982420e540be981976493d0bfabac5a50f7",
+          "card_license": "apache-2.0",
+          "tags_sample": [
+            "task_categories:translation",
+            "language:zh",
+            "language:en",
+            "license:apache-2.0",
+            "region:us"
+          ],
+          "siblings_sample": [
+            ".gitattributes",
+            "README.md",
+            "zh-en.zip"
+          ],
+          "likes": 2,
+          "downloads": 11
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://huggingface.co/datasets/TomatoMTL/tomato-zh2en",
+          "verified_at": "2026-09-18T00:20:09.601337+00:00",
+          "ok": true,
+          "http_status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "content_length": "120428"
+        }
+      },
+      "verified_at": "2026-09-18T00:20:09.928854+00:00"
+    },
+    {
+      "source_id": "wmt-eval",
+      "checks": {
+        "huggingface": {
+          "method": "hf_hub_api",
+          "ok": false,
+          "reason": "no_hf_repo_id"
+        },
+        "http": {
+          "method": "http_head",
+          "url": "https://www.statmt.org/wmt23/",
+          "verified_at": "2026-09-18T00:20:10.428945+00:00",
+          "ok": true,
+          "http_status": 200,
+          "content_type": "text/html",
+          "content_length": "13320"
+        }
+      },
+      "verified_at": "2026-09-18T00:20:11.560698+00:00"
+    }
+  ]
+}

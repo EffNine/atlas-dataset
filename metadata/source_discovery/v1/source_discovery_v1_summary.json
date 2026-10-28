@@ -1,0 +1,76 @@
+{
+  "registry_version": "1.0",
+  "registry": {
+    "n_sources": 20,
+    "by_status": {
+      "BLOCKED_ACCESS": 1,
+      "VERIFIED": 9,
+      "DISCOVERED": 8,
+      "FAILED": 1,
+      "INGESTED": 1
+    },
+    "by_license_state": {
+      "UNKNOWN": 12,
+      "RESTRICTED": 4,
+      "ALLOW": 3,
+      "BLOCKED": 1
+    },
+    "by_domain": {
+      "general": 5,
+      "literary": 1,
+      "dictionary": 4,
+      "other": 2,
+      "web_novel": 3,
+      "subtitle": 3,
+      "novel": 1,
+      "academic": 1
+    },
+    "by_source_type": {
+      "parallel_corpus": 9,
+      "literary_corpus": 3,
+      "dictionary": 4,
+      "other": 2,
+      "eval_benchmark": 2
+    }
+  },
+  "verification": {
+    "verified_at": "2026-09-18T00:20:12.060809+00:00",
+    "n_sources": 20,
+    "n_hf_ok": 4,
+    "n_http_ok": 12
+  },
+  "smoke": {
+    "smoke": "opus-100",
+    "n_normalized": 120,
+    "n_usable": 112,
+    "by_direction": {
+      "zh→en": 28,
+      "ja→en": 29,
+      "ko→en": 26,
+      "ms→en": 29
+    },
+    "by_domain": {
+      "subtitle": 112
+    },
+    "quality_filter": {
+      "n_input": 120,
+      "kept": 112,
+      "wrong_language_source_zh": 1,
+      "copy_pair": 4,
+      "wrong_language_source_ja": 1,
+      "wrong_language_source_ko": 2,
+      "n_kept": 112,
+      "n_rejected": 8
+    },
+    "dedup": {
+      "n_input": 112,
+      "n_kept": 112,
+      "n_duplicates": 0
+    },
+    "jev_boundary_smoke": {
+      "ok": true,
+      "synthetic": true
+    },
+    "source_revision": "805090dc28bf78897da9641cdf08b61287580df9"
+  }
+}

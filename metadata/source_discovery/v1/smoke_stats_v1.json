@@ -1,0 +1,81 @@
+{
+  "smoke": "opus-100",
+  "acquired_utc": "2026-09-18T00:21:36.008530+00:00",
+  "source_revision": "805090dc28bf78897da9641cdf08b61287580df9",
+  "per_lang": {
+    "zh": {
+      "n_streamed": 30
+    },
+    "ja": {
+      "n_streamed": 30
+    },
+    "ko": {
+      "n_streamed": 30
+    },
+    "ms": {
+      "n_streamed": 30
+    }
+  },
+  "n_normalized": 120,
+  "quality_filter": {
+    "n_input": 120,
+    "kept": 112,
+    "wrong_language_source_zh": 1,
+    "copy_pair": 4,
+    "wrong_language_source_ja": 1,
+    "wrong_language_source_ko": 2,
+    "n_kept": 112,
+    "n_rejected": 8
+  },
+  "dedup": {
+    "n_input": 112,
+    "n_kept": 112,
+    "n_duplicates": 0
+  },
+  "n_usable": 112,
+  "by_direction": {
+    "zh→en": 28,
+    "ja→en": 29,
+    "ko→en": 26,
+    "ms→en": 29
+  },
+  "by_domain": {
+    "subtitle": 112
+  },
+  "staged_files": [
+    "metadata/source_discovery/staging/opus-100/normalized_zh-en.jsonl",
+    "metadata/source_discovery/staging/opus-100/normalized_ja-en.jsonl",
+    "metadata/source_discovery/staging/opus-100/normalized_ko-en.jsonl",
+    "metadata/source_discovery/staging/opus-100/normalized_ms-en.jsonl",
+    "metadata/source_discovery/staging/opus-100/rejected.jsonl"
+  ],
+  "jev_boundary_smoke": {
+    "ok": true,
+    "synthetic": true
+  },
+  "ai2_boundary_probe": [
+    {
+      "id": "opus-100:805090dc:opus100-en-zh-train-0000000",
+      "verdict": "NOT-CALLED",
+      "quarantine": true,
+      "blind": true
+    },
+    {
+      "id": "opus-100:805090dc:opus100-en-zh-train-0000001",
+      "verdict": "NOT-CALLED",
+      "quarantine": true,
+      "blind": true
+    },
+    {
+      "id": "opus-100:805090dc:opus100-en-zh-train-0000002",
+      "verdict": "NOT-CALLED",
+      "quarantine": true,
+      "blind": true
+    }
+  ],
+  "meta": {
+    "source_id": "opus-100",
+    "method": "hf_streaming_sample",
+    "per_lang_cap": 30
+  }
+}

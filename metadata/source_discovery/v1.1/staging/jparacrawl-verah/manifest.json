@@ -1,0 +1,46 @@
+{
+  "manifest_version": "sd-v1.1",
+  "written_utc": "2026-09-18T01:19:15.712761+00:00",
+  "n_raw_shaped": 50000,
+  "n_malformed_shape": 0,
+  "n_normalized": 50000,
+  "normalized_sha256": "e9f506f547063d539fa9e8e262130d10c37c116f6c674837d407a699069c753d",
+  "quality_filter": {
+    "n_input": 50000,
+    "kept": 29605,
+    "duplicate_content": 17898,
+    "html_boilerplate": 2136,
+    "wrong_language_target_en": 278,
+    "wrong_language_source_ja": 76,
+    "repeated_text": 1,
+    "misaligned_ratio": 6,
+    "n_kept": 29605,
+    "n_rejected": 20395
+  },
+  "dedup": {
+    "n_input": 29605,
+    "n_kept": 29605,
+    "n_duplicates": 17898
+  },
+  "n_kept": 29605,
+  "kept_sha256": "569e06f2679ed703f04d387fd1547a9a2485a55e1dc12a0c38028a045c61a728",
+  "n_rejected": 20395,
+  "rejected_sha256": "359fad2c625e94f9e6d35eb3ecedade25cdd52b66d5ead12593f7c82de0e2181",
+  "repo": "Verah/JParaCrawl-Filtered-English-Japanese-Parallel-Corpus",
+  "revision": "b9e28c23dc1484974523a9ec7b523208ee2d803f",
+  "file": "1m_filtered.tsv.gz",
+  "archive_sha256": "a0de9e7243585b737dcab33de040d15e058f386128a62a0991db8f46ee2ebb1f",
+  "archive_bytes": 103852669,
+  "cap": 50000,
+  "license": "ntt-research (research purposes; verify NTT terms)",
+  "license_state": "RESTRICTED",
+  "license_note": "third-party mirror of NTT JParaCrawl v3; research-only upstream terms; NEVER training-ready",
+  "domain": "general",
+  "third_party_filter_flags": {
+    "m1_0_m2_0": 12817,
+    "m1_1_m2_0": 19263,
+    "m1_1_m2_1": 16009,
+    "m1_0_m2_1": 1911
+  },
+  "quality_note": "web-crawl noise observed (repeated EN across unrelated JA, boilerplate); our filters apply, third-party model flags recorded only"
+}

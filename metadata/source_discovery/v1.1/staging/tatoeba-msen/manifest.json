@@ -1,0 +1,31 @@
+{
+  "manifest_version": "sd-v1.1",
+  "written_utc": "2026-09-18T01:17:26.512413+00:00",
+  "n_raw_shaped": 4113,
+  "n_malformed_shape": 0,
+  "n_normalized": 4113,
+  "normalized_sha256": "747958dcc3b83091276b7a1a353eb01ada75f56ff3992e5ede4597eef9a47395",
+  "quality_filter": {
+    "n_input": 4113,
+    "kept": 3944,
+    "wrong_language_source_ms": 168,
+    "copy_pair": 1,
+    "n_kept": 3944,
+    "n_rejected": 169
+  },
+  "dedup": {
+    "n_input": 3944,
+    "n_kept": 3944,
+    "n_duplicates": 0
+  },
+  "n_kept": 3944,
+  "kept_sha256": "bf82c93f507d0ca404abfd03aafb0553048484be3b95cee1aa7a2bd2323f9967",
+  "n_rejected": 169,
+  "rejected_sha256": "c57edb110c764fbb6d89dd233549edc5371dd0ecaed803e6e142b6577ad34073",
+  "lang": "ms",
+  "cap": 20000,
+  "n_link_pairs": 4125,
+  "license": "CC-BY-2.0-FR (verify Tatoeba terms)",
+  "license_state": "ALLOW",
+  "domain": "general"
+}
